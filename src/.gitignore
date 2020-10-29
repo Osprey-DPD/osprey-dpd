@@ -1,0 +1,16 @@
+*.o
+.DS_Store
+*.pov
+*.tga
+*.mov
+*.zip
+dmpcas.*
+dmpccs.*
+dmpchs.*
+dmpci.*
+dmpcis.*
+dmpcls.*
+dmpcrs.*
+dmpctads.*
+sdmpc*
+data*
