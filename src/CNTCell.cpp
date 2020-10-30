@@ -71,7 +71,7 @@ double CCNTCell::m_lamdt				= 0.0;
 double CCNTCell::m_lgnorm               = 0.0;
 double CCNTCell::m_dtoverkt			    = 0.0;
 double CCNTCell::m_dispmag			    = 0.0;
-unsigned long long   CCNTCell::m_RNGSeed	 = -1ull;
+uint64_t   CCNTCell::m_RNGSeed	        = -1ull;
 long double CCNTCell::m_2Power32             =  4294967296.0l;              // 2**32
 long double CCNTCell::m_Inv2Power32          =  1.0l/CCNTCell::m_2Power32;  // Inverse of 2**32
 

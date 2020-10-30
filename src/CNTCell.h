@@ -209,7 +209,7 @@ private:
     static double m_dtoverkt;          // Prefactor of the BD force term: not including diffusion constant
     static double m_dispmag;           // Prefactor of the BD displacement term: not including diffusion constant
 
-    static unsigned long long m_RNGSeed;   // 64-bit seed for the lcg RNG
+    static uint64_t m_RNGSeed;   // 64-bit seed for the lcg RNG
     static long double m_2Power32;         // 2**32
     static long double m_Inv2Power32;      // Inverse of 2**32
 
