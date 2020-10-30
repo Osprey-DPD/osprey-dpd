@@ -12,7 +12,7 @@ $ g++ -c -O3 *.cpp
 $ g++ -o dpd *.o
 ```
 
-Once can also build it using cmake:
+One can also build it using cmake:
 ```shell
 $ mkdir build
 $ cd build
