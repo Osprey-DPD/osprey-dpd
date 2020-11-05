@@ -54,17 +54,13 @@ CSolventFreeFormat::~CSolventFreeFormat()
 // all the bead data in the header and ignore the loop in the SerializeBead function. This is inefficient as the current state object
 // will still iterate over all beads, but I cannot alter this without changing the CCurrentState class or creating a new type of
 // xxState-derived object.
-//
-// This is hard-wired to ignore all polymers of type 0, which are assumed to be solvent polymers. Therefore the solvent must be
-// the first polymer type defined in the input file.
-
 void CSolventFreeFormat::SerializeHeader(zOutStream& os, const long beadTotal)
 {
     for(cPolymerVectorIterator iterPoly=m_pISimBox->GetPolymers().begin(); iterPoly!=m_pISimBox->GetPolymers().end(); iterPoly++ )
     {
-        if((*iterPoly)->GetType() != 0)
-        {
-            for(cBeadVectorIterator iterBead=(*iterPoly)->GetBeads().begin(); iterBead!=(*iterPoly)->GetBeads().end(); iterBead++)
+        for(cBeadVectorIterator iterBead=(*iterPoly)->GetBeads().begin(); iterBead!=(*iterPoly)->GetBeads().end(); iterBead++)
+            {
+                if((*iterBead)->GetVisible())
             {
                 os << (*iterPoly)->GetId()			<< " " << (*iterPoly)->GetType()		<< " ";
                 os << (*iterBead)->GetId()			<< " " << (*iterBead)->GetType()		<< " ";

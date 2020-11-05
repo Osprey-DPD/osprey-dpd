@@ -3046,15 +3046,11 @@ bool CBuilder::isFibril::Assemble(CInitialState& riState)
     }
     
     std::cout << "Building fibril out of " << m_CoreTotal << " core polymers, and " << m_LinkerTotal << " linker polymers" << zEndl;
-    std::cout << "Core and linker bead types  = " << m_CoreBeadType << " " << m_LinkerBeadType << zEndl;
     std::cout << "Fibril normal               = " << m_XN << " " << m_YN << " " << m_ZN << zEndl;
     std::cout << "Fibril centre               = " << m_XC << " " << m_YC << " " << m_ZC << zEndl;
     std::cout << "Fibril halflength           = " << m_HalfLength << zEndl;
     std::cout << "Core and linker radii       = " << m_CoreRadius << " " << m_LinkerRadius << zEndl;
     std::cout << "Pitch and angle             = " << m_Pitch << " " << m_PitchAngle << zEndl;
-
-    std:: cout << "Core Polymers have " << vFibrilBeads.size() << " total beads, of which " << coreTotal
-               << " are core, and " << linkerTotal << " are linker beads" << zEndl;
 
     // ****************************************
     // Arrange the polymers with their first core beads at the centre of the fibril
@@ -3090,27 +3086,31 @@ bool CBuilder::isFibril::Assemble(CInitialState& riState)
     
     // Fix the inner diameter to a fraction of the core radius so the beads are not identically overlapping
 
-    m_InnerRadius    = 0.1*m_CoreRadius;
+    m_InnerRadius    = 0.5*m_CoreRadius;
     m_Length        = m_RightEnd - m_LeftEnd;
     m_Circumference = xxBase::m_globalTwoPI*m_CoreRadius;
     m_Area            = m_Circumference*m_Length;
 
     std::cout << "Creating fibril with axis coords: " << m_Axis[0] << " " << m_Axis[1] << " " << m_Axis[2] << zEndl;
+    std::cout << "Length, pitch and pitch angle: "    << m_Length << " " << m_Pitch << " " << m_PitchAngle << zEndl;
     std::cout << " and left and right ends: " << m_LeftEnd << " " << m_RightEnd << zEndl;
     std::cout << " and inner and outer radii: " << m_InnerRadius << " " << m_CoreRadius << zEndl;
     
     // Fix the number of rows by the box size and pitch, and then set the number of polymers per row by spacing
-    // them equally around the circumference of the rows.
+    // them equally around the circumference of the rows. Note that the number of polymers per row should be chosen
+    
+    // so that the last core beads of the polymers are fairly close to each other. Otherwise, the fibril's surface will
+    // have gaps between the polymers.
     
     m_DZ = m_Pitch;
     
-    long rowTotal = static_cast<long>(m_Length/m_DZ) + 1;
-    long polyPerRow = (m_CoreTotal + m_LinkerTotal)/rowTotal;
+    long rowTotal = static_cast<long>((m_Length+0.5)/m_DZ);
+    long polyPerRow = static_cast<long>(0.5 + static_cast<double>(m_CoreTotal + m_LinkerTotal)/static_cast<double>(rowTotal));
     
     std::cout << "Estimated row total and polymers per row = " << rowTotal << " " << polyPerRow << zEndl;
     
-    // If all of the polymers are not used, add or subtract the appropriate number of rows to accomodate them.
-    // We only really have to adjust the upper limit as too few polymers is not a problem.
+    // Adjust the row total upwards if there are polymers left over once the estimated number of rows are filled.
+    // We ignore too few polymers as it is not a problem.
     
     const long excessPoly = m_CoreTotal + m_LinkerTotal - rowTotal*polyPerRow;
     
@@ -3118,11 +3118,6 @@ bool CBuilder::isFibril::Assemble(CInitialState& riState)
     {
         rowTotal += (1 + excessPoly/polyPerRow);
     }
-    else if(excessPoly < 0)
-    {
-        rowTotal--;
-    }
-
     m_DPhi =xxBase::m_globalTwoPI/static_cast<double>(polyPerRow);
     
     std::cout << "Actual row total and polymers per row  " << rowTotal << " " << polyPerRow << " " << m_DZ << " " << m_DPhi << zEndl;
@@ -3212,7 +3207,7 @@ bool CBuilder::isFibril::Assemble(CInitialState& riState)
                     double newYPos = m_Axis[1] + xp1[1] + 5.0*deltaR*(1.0 - CCNTCell::GetRandomNo());
                     double newZPos = m_Axis[2] + 0.05*deltaR*(1.0 - CCNTCell::GetRandomNo());
 
-                    const long coordAdjustmentLimit = 10;
+                    const long coordAdjustmentLimit = 20;
                     long coordCounter = 0;
                     
                     while( newXPos > (riState.GetSimBoxXLength() - deltaR) && coordCounter++ < coordAdjustmentLimit)
@@ -3220,7 +3215,7 @@ bool CBuilder::isFibril::Assemble(CInitialState& riState)
                         newXPos -= deltaR*(1.0 - 2.0*CCNTCell::GetRandomNo());
                     }
                     
-                    if(coordCounter == coordAdjustmentLimit)
+                    if(coordCounter == coordAdjustmentLimit && newXPos > riState.GetSimBoxXLength())
                     {
                         std::cout << "Linker X coordinate outside box" << zEndl;
                     }
@@ -3231,7 +3226,7 @@ bool CBuilder::isFibril::Assemble(CInitialState& riState)
                         newYPos -= deltaR*(1.0 - 2.0*CCNTCell::GetRandomNo());
                     }
                     
-                    if(coordCounter == coordAdjustmentLimit)
+                    if(coordCounter == coordAdjustmentLimit && newYPos > riState.GetSimBoxYLength())
                     {
                         std::cout << "Linker Y coordinate outside box" << zEndl;
                     }
@@ -3242,7 +3237,7 @@ bool CBuilder::isFibril::Assemble(CInitialState& riState)
                         newZPos -= deltaR*(1.0 - 2.0*CCNTCell::GetRandomNo());
                     }
                     
-                    if(coordCounter == coordAdjustmentLimit)
+                    if(coordCounter == coordAdjustmentLimit && newZPos > riState.GetSimBoxZLength())
                     {
                         std::cout << "Linker Z coordinate outside box" << zEndl;
                     }
