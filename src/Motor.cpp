@@ -47,37 +47,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "Builder.h"					// Needed to access pi
 
 
-#if Platform == DECALPHA 
-#elif Platform == SGICC
-	#define MOTOR_NO_USE_VALARRAY 1
-#elif Platform == CRAYJ90
-	#define MOTOR_NO_USE_VALARRAY 1
-#elif Platform == BORLAND6
-	using std::transform;
-	using std::slice;
-	using std::gslice;
-	using std::find_if;
-#elif Platform == I7XEON
-#elif Platform == I7ITANIUM
-#elif Platform == GCC
-#elif Platform == CW55MAC
-#elif Platform == XCMAC
-#elif Platform == NEWPLATFORM1
-#elif Platform == NEWPLATFORM2
-#elif Platform == NEWPLATFORM3
-#elif Platform == NEWPLATFORM4
-#elif Platform == NEWPLATFORM5
-#elif Platform == NEWPLATFORM6
-#elif Platform == NEWPLATFORM7
-#elif Platform == NEWPLATFORM8
-#elif Platform == NEWPLATFORM9
-#elif Platform == NEWPLATFORM10
-#else							
-	using std::transform;
-	using std::slice;
-	using std::gslice;
-	using std::find_if;
-#endif			
 
 
 //////////////////////////////////////////////////////////////////////

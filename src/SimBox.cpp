@@ -247,48 +247,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #endif
 
 
-#if Platform == DECALPHA 
-#elif Platform == SGICC
-#elif Platform == CRAYJ90
-#elif Platform == BORLAND6
-	using std::cout;
-	using std::remove_if;
-	using std::for_each;
-	using std::mem_fun;
-	using std::mem_fun1;
-	using std::bind2nd;
-#elif Platform == I7XEON
-	using std::cout;
-	using std::remove_if;
-	using std::for_each;
-	using std::mem_fun;
-	using std::mem_fun1;
-	using std::bind2nd;
-#elif Platform == I7ITANIUM
-#elif Platform == GCC
-#elif Platform == CW55MAC
 	using std::cout;
 	using std::mem_fun;
-#elif Platform == XCMAC
-	using std::cout;
-	using std::mem_fun;
-#elif Platform == NEWPLATFORM1
-#elif Platform == NEWPLATFORM2
-#elif Platform == NEWPLATFORM3
-#elif Platform == NEWPLATFORM4
-#elif Platform == NEWPLATFORM5
-#elif Platform == NEWPLATFORM6
-#elif Platform == NEWPLATFORM7
-#elif Platform == NEWPLATFORM8
-#elif Platform == NEWPLATFORM9
-#elif Platform == NEWPLATFORM10
-#else							
-	using std::cout;
-	using std::remove_if;
-	using std::for_each;
-	using std::mem_fun;
-	using std::bind2nd;
-#endif			
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -1105,22 +1065,12 @@ void CSimBox::Evolve()
 	// the Cray STL list<> class does not have an erase() member function we have 
 	// to remove the element differently on that platform.
 
-#if Platform == CRAYJ90
-	TargetIterator nextTarget = 0;
-#endif
 
 	for(ForceTargetIterator iterTarget=m_ActiveForceTargets.begin(); iterTarget!=m_ActiveForceTargets.end();)
 	{
 		if(!(*iterTarget)->AddForce(m_SimTime))
 		{
-#if Platform == CRAYJ90
-			nextTarget = iterTarget;
-			nextTarget++;
-			m_ActiveForceTargets.erase(iterTarget);
-			iterTarget = nextTarget;
-#else
 			iterTarget = m_ActiveForceTargets.erase(iterTarget);
-#endif
 		}
 		else
 			iterTarget++;
@@ -3968,9 +3918,6 @@ void CSimBox::UnchargeBeadType(const xxCommand *const pCommand)
 		// in a list, we can delete a contiguous range of elements without invalidating
 		// the remainder of the container.
 
-#if Platform == CRAYJ90
-		ChargedBeadListIterator nextBead = 0;
-#endif
 
 		// Note the absence of the increment step because we use erase()  
 		// to remove beads of the specified type, and increment it manually when
@@ -3982,14 +3929,7 @@ void CSimBox::UnchargeBeadType(const xxCommand *const pCommand)
 			{
 				delete *iterBead;
 
-#if Platform == CRAYJ90
-				nextBead = iterBead;
-				nextBead++;
-				m_lAllChargedBeads.erase(iterBead);
-				iterBead = nextBead;
-#else
 				iterBead = m_lAllChargedBeads.erase(iterBead);
-#endif
 			}
 			else
 				iterBead++;

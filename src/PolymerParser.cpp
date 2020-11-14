@@ -255,30 +255,11 @@ zString CPolymerParser::CDR(const zString oldString)
 	startPos = oldString.find(head);
 	startPos+= head.length();
 
-#if Platform == CRAYJ90
-	tail = '(' + tail.remove(0,startPos);
-#else
 	tail = '(' + tail.erase(0,startPos);	// add opening bracket back
-#endif
 
 // The Modena string class does not have the erase() member function nor an
 // iterator: we have to use remove() to remove the leading white space.
 
-#if Platform == CRAYJ90
-
-	long j = 1;					// We leave the leading ( alone
-	bool bWhiteSpace = true;
-
-	while(bWhiteSpace && j<tail.size())
-	{
-		if(tail[j] == ' ')
-			tail.remove(j,1);
-		else
-			bWhiteSpace = false;
-		j++;
-	}
-
-#else
 
 	zStringIterator iterChar=tail.begin();	// remove leading whitespace
 	iterChar++;
@@ -287,7 +268,6 @@ zString CPolymerParser::CDR(const zString oldString)
 		tail.erase(iterChar);
 	}
 
-#endif
 
 	return tail;
 }
@@ -310,15 +290,10 @@ zString CPolymerParser::RemoveOuterBrackets(zString element)
 		return element;
 	else
 	{
-#if Platform == CRAYJ90
-		element.remove(0,1);
-		element.remove(element.size()-1,1);
-#else
 		element.erase(element.begin());
 		zStringIterator iterLast = element.end();
 		iterLast--;
 		element.erase(iterLast);
-#endif
 	}
 
 	return element;

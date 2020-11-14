@@ -20,27 +20,6 @@
 //
 // **********************************************************************
 
-#if Platform == DECALPHA 
-	#include <algorithm>
-#elif Platform == SGICC
-	#include <algo.h>
-#elif Platform == CRAYJ90
-	#include <algo.h>
-#elif Platform == BORLAND6
-	#include <algorithm>
-	using std::copy;
-	using std::find;
-	using std::find_if;
-	using std::back_inserter;
-#elif Platform == I7XEON
-	#include <algorithm>
-	using std::copy;
-	using std::find;
-	using std::find_if;
-	using std::back_inserter;
-#elif Platform == I7ITANIUM
-#elif Platform == GCC
-#elif Platform == CW55MAC
 	#include <algorithm>
 	using std::copy;
 	using std::find;
@@ -48,31 +27,4 @@
 	using std::back_inserter;
 	using std::pair;
 	using std::make_pair;
-#elif Platform == XCMAC
-	#include <algorithm>
-	using std::copy;
-	using std::find;
-	using std::find_if;
-	using std::back_inserter;
-	using std::pair;
-	using std::make_pair;
-#elif Platform == NEWPLATFORM1
-#elif Platform == NEWPLATFORM2
-#elif Platform == NEWPLATFORM3
-#elif Platform == NEWPLATFORM4
-#elif Platform == NEWPLATFORM5
-#elif Platform == NEWPLATFORM6
-#elif Platform == NEWPLATFORM7
-#elif Platform == NEWPLATFORM8
-#elif Platform == NEWPLATFORM9
-#elif Platform == NEWPLATFORM10
-#else							
-	#include <algorithm>
-	using std::copy;
-	using std::find;
-	using std::find_if;
-	using std::back_inserter;
-	using std::pair;
-	using std::make_pair;
-#endif					
 

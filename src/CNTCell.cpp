@@ -88,14 +88,6 @@ const zArray2dDouble* CCNTCell::m_pvvSCRange = 0;
 
 // Platform-dependent initialisation of static arrays
 
-#if Platform == DECALPHA 
-#elif Platform == SGICC
-#elif Platform == CRAYJ90
-#elif Platform == BORLAND6
-#elif Platform == I7XEON
-#elif Platform == I7ITANIUM
-#elif Platform == GCC
-#elif Platform == CW55MAC
 
 zArray2dDouble	     CCNTCell::m_vvConsInt;
 zArray2dDouble	     CCNTCell::m_vvDissInt;
@@ -112,54 +104,6 @@ zArray2dDouble	     CCNTCell::m_vvLJSlope;
 zArray2dDouble	     CCNTCell::m_vvSCDelta;
 zArray2dDouble	     CCNTCell::m_vvSCSlope;
 
-#elif Platform == XCMAC
-
-zArray2dDouble	     CCNTCell::m_vvConsInt;
-zArray2dDouble	     CCNTCell::m_vvDissInt;
-zArray2dDouble	     CCNTCell::m_vvLGInt;
-zArray2dDouble	     CCNTCell::m_vvConsIntBackup;
-zArray2dDouble	     CCNTCell::m_vvDissIntBackup;
-zArray2dDouble	     CCNTCell::m_vvLGIntBackup;
-zArray2dDouble	     CCNTCell::m_vvLJDepth;
-zArray2dDouble	     CCNTCell::m_vvLJRange;
-zArray2dDouble	     CCNTCell::m_vvSCDepth;
-zArray2dDouble	     CCNTCell::m_vvSCRange;
-zArray2dDouble	     CCNTCell::m_vvLJDelta;
-zArray2dDouble	     CCNTCell::m_vvLJSlope;
-zArray2dDouble	     CCNTCell::m_vvSCDelta;
-zArray2dDouble	     CCNTCell::m_vvSCSlope;
-
-#elif Platform == NEWPLATFORM1
-#elif Platform == NEWPLATFORM2
-#elif Platform == NEWPLATFORM3
-#elif Platform == NEWPLATFORM4
-#elif Platform == NEWPLATFORM5
-#elif Platform == NEWPLATFORM6
-#elif Platform == NEWPLATFORM7
-#elif Platform == NEWPLATFORM8
-#elif Platform == NEWPLATFORM9
-#elif Platform == NEWPLATFORM10
-#else 
-
-// Static arrays to hold the above data without a dereference being needed
-// for every access.
-
-zArray2dDouble	     CCNTCell::m_vvConsInt		  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvDissInt		  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvLGInt		  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvConsIntBackup  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvDissIntBackup  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvLGIntBackup    = 0.0;
-zArray2dDouble	     CCNTCell::m_vvLJDepth		  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvLJRange		  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvSCDepth		  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvSCRange	  	  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvLJDelta		  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvLJSlope		  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvSCDelta		  = 0.0;
-zArray2dDouble	     CCNTCell::m_vvSCSlope		  = 0.0;
-
-#endif
 
 // Function to set the static member variable that holds a pointer to the
 // CMonitor object. This is used inside the force calculation loop to pass
@@ -1684,9 +1628,6 @@ void CCNTCell::UpdatePos()
 	// However, the Cray list<>::erase function does not return the next iterator
 	// so we have to provide a method for incrementing it manually.
 
-#if Platform == CRAYJ90
-	BeadListIterator nextBead = NULL;
-#endif
 
 	double dx[3];
 
@@ -1842,14 +1783,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[26]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else if( (*iterBead)->m_Pos[2] < m_BLCoord[2] )	// bead moves DTR
 					{
@@ -1864,14 +1798,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[8]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else	// bead moves TR
 					{
@@ -1884,14 +1811,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[17]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 #elif SimDimension == 2
 					if(m_bExternal && m_aNNCells[8]->IsExternal())
@@ -1903,14 +1823,7 @@ void CCNTCell::UpdatePos()
 					}
 					(*iterBead)->SetNotMovable();
 					m_aNNCells[8]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 #endif
 				}
 				else if( (*iterBead)->m_Pos[1] < m_BLCoord[1] )
@@ -1929,14 +1842,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[20]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else if( (*iterBead)->m_Pos[2] < m_BLCoord[2] )	// bead moves DBR
 					{
@@ -1951,14 +1857,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[2]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else	// bead moves BR
 					{
@@ -1971,14 +1870,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[11]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 #elif SimDimension == 2
 					if(m_bExternal && m_aNNCells[2]->IsExternal())
@@ -1990,14 +1882,7 @@ void CCNTCell::UpdatePos()
 					}
 						(*iterBead)->SetNotMovable();
 					m_aNNCells[2]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 #endif
 				}
 				else	// no change in Y direction
@@ -2014,14 +1899,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[23]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else if( (*iterBead)->m_Pos[2] < m_BLCoord[2] )	// bead moves DR
 					{
@@ -2034,14 +1912,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[5]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else	// bead moves R
 					{
@@ -2052,14 +1923,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[14]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 #elif SimDimension == 2
 					if(m_bExternal && m_aNNCells[5]->IsExternal())
@@ -2069,14 +1933,7 @@ void CCNTCell::UpdatePos()
 					}
 					(*iterBead)->SetNotMovable();
 					m_aNNCells[5]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 #endif
 				}
 			}
@@ -2098,14 +1955,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[24]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else if( (*iterBead)->m_Pos[2] < m_BLCoord[2] )	// bead moves DTL
 					{
@@ -2120,14 +1970,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[6]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else	// bead moves TL
 					{
@@ -2140,14 +1983,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[15]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 #elif SimDimension == 2
 					if(m_bExternal && m_aNNCells[6]->IsExternal())
@@ -2159,14 +1995,7 @@ void CCNTCell::UpdatePos()
 					}
 					(*iterBead)->SetNotMovable();
 					m_aNNCells[6]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 #endif
 				}
 				else if( (*iterBead)->m_Pos[1] < m_BLCoord[1] )	
@@ -2185,14 +2014,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[18]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else if( (*iterBead)->m_Pos[2] < m_BLCoord[2] )	// bead moves DBL
 					{
@@ -2207,14 +2029,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[0]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else	// bead moves BL
 					{
@@ -2227,14 +2042,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[9]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 #elif SimDimension == 2
 					if(m_bExternal && m_aNNCells[0]->IsExternal())
@@ -2246,14 +2054,7 @@ void CCNTCell::UpdatePos()
 					}
 					(*iterBead)->SetNotMovable();
 					m_aNNCells[0]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 #endif
 				}
 				else	// no change in Y direction
@@ -2270,14 +2071,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[21]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else if( (*iterBead)->m_Pos[2] < m_BLCoord[2] )	// bead moves DL
 					{
@@ -2290,14 +2084,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[3]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else	// bead moves L
 					{
@@ -2308,14 +2095,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[12]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 #elif SimDimension == 2
 					if(m_bExternal && m_aNNCells[3]->IsExternal())
@@ -2325,14 +2105,7 @@ void CCNTCell::UpdatePos()
 					}
 					(*iterBead)->SetNotMovable();
 					m_aNNCells[3]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 #endif
 				}
 			}
@@ -2352,14 +2125,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[25]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else if( (*iterBead)->m_Pos[2] < m_BLCoord[2] )	// bead moves DT
 					{
@@ -2372,14 +2138,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[7]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else	// bead moves T
 					{
@@ -2390,14 +2149,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[16]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 #elif SimDimension == 2
 					if(m_bExternal && m_aNNCells[7]->IsExternal())
@@ -2407,14 +2159,7 @@ void CCNTCell::UpdatePos()
 					}
 					(*iterBead)->SetNotMovable();
 					m_aNNCells[7]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 #endif
 				}
 				else if( (*iterBead)->m_Pos[1] < m_BLCoord[1] )
@@ -2431,14 +2176,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[19]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else if( (*iterBead)->m_Pos[2] < m_BLCoord[2] )	// bead moves DB
 					{
@@ -2451,14 +2189,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[1]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else	// bead moves B
 					{
@@ -2469,14 +2200,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[10]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 #elif SimDimension == 2
 					if(m_bExternal && m_aNNCells[1]->IsExternal())
@@ -2486,14 +2210,7 @@ void CCNTCell::UpdatePos()
 					}
 					(*iterBead)->SetNotMovable();
 					m_aNNCells[1]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 #endif
 				}
 				else	// no change in X, Y directions
@@ -2508,14 +2225,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[22]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else if( (*iterBead)->m_Pos[2] < m_BLCoord[2] )	// bead moves D
 					{
@@ -2526,14 +2236,7 @@ void CCNTCell::UpdatePos()
 						}
 						(*iterBead)->SetNotMovable();
 						m_aNNCells[4]->m_lBeads.push_front((*iterBead));
-#if Platform == CRAYJ90
-						nextBead = iterBead;
-						nextBead++;
-						m_lBeads.erase(iterBead);
-						iterBead = nextBead;
-#else
 						iterBead = m_lBeads.erase(iterBead);
-#endif
 					}
 					else
 					{

@@ -301,11 +301,7 @@ void CPolymer::ChangeHeadtoWallBead()
 
 	// now remove the old head bead from m_vBeads
 
-#if Platform == CRAYJ90
-	m_vBeads.erase(find(m_vBeads.begin(), m_vBeads.end(), m_pHead));
-#else
 	m_vBeads.erase(std::find(m_vBeads.begin(), m_vBeads.end(), m_pHead));
-#endif
 
 	// The remove() function appears to leave the length of the vector unchanged
 	//	remove(m_vBeads.begin(), m_vBeads.end(), m_pHead);	// remove the old head

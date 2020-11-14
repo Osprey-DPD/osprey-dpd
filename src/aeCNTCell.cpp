@@ -24,34 +24,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 // STL using declarations
 
-#if Platform == DECALPHA 
 	using std::random_shuffle;
-#elif Platform == SGICC
-	using std::random_shuffle;
-#elif Platform == CRAYJ90
-#elif Platform == BORLAND6
-	using std::random_shuffle;
-#elif Platform == I7XEON
-	using std::random_shuffle;
-#elif Platform == I7ITANIUM
-#elif Platform == GCC
-#elif Platform == CW55MAC
-	using std::random_shuffle;
-#elif Platform == XCMAC
-	using std::random_shuffle;
-#elif Platform == NEWPLATFORM1
-#elif Platform == NEWPLATFORM2
-#elif Platform == NEWPLATFORM3
-#elif Platform == NEWPLATFORM4
-#elif Platform == NEWPLATFORM5
-#elif Platform == NEWPLATFORM6
-#elif Platform == NEWPLATFORM7
-#elif Platform == NEWPLATFORM8
-#elif Platform == NEWPLATFORM9
-#elif Platform == NEWPLATFORM10
-#else							
-	using std::random_shuffle;
-#endif					
 
 
 //////////////////////////////////////////////////////////////////////

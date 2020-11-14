@@ -275,15 +275,7 @@ void xxBase::TraceEndl() const
 {
 #if SimMPS == SimulationDisabled
 
-#if Platform == DECALPHA
 	std::cout << zEndl;
-#elif Platform == SGICC
-	cout << zEndl;
-#elif Platform == CRAYJ90
-	cout << zEndl;
-#else
-	std::cout << zEndl;
-#endif
 
 #endif
 }
@@ -292,15 +284,7 @@ void xxBase::TraceStringNoEndl(zString msgStr) const
 {
 #if SimMPS == SimulationDisabled
 
-#if Platform == DECALPHA
 	std::cout << msgStr.c_str() << "  ";
-#elif Platform == SGICC
-	cout << msgStr.c_str() << "  ";
-#elif Platform == CRAYJ90
-	cout << msgStr.c_str() << "  ";
-#else
-	std::cout << msgStr.c_str() << "  ";
-#endif
 
 #endif
 }
@@ -309,15 +293,7 @@ void xxBase::TraceIntNoEndl(long var1) const
 {
 #if SimMPS == SimulationDisabled
 
-#if Platform == DECALPHA
 	std::cout << var1 << " ";
-#elif Platform == SGICC
-	cout << var1 << " ";
-#elif Platform == CRAYJ90
-	cout << var1 << " ";
-#else
-	std::cout << var1 << " ";
-#endif
 
 #endif
 }
@@ -326,15 +302,7 @@ void xxBase::TraceDoubleNoEndl(double var1) const
 {
 #if SimMPS == SimulationDisabled
 
-#if Platform == DECALPHA
 	std::cout << var1 << " ";
-#elif Platform == SGICC
-	cout << var1 << " ";
-#elif Platform == CRAYJ90
-	cout << var1 << " ";
-#else
-	std::cout << var1 << " ";
-#endif
 
 #endif
 
@@ -347,15 +315,7 @@ void xxBase::TraceVector(zString msgStr, double var1, double var2, double var3) 
 {
 #if SimMPS == SimulationDisabled
 
-#if Platform == DECALPHA
 	std::cout << msgStr.c_str() << "  " << var1 << "  " << var2 << "  " << var3 << zEndl;
-#elif Platform == SGICC
-	cout << msgStr.c_str() << "  " << var1 << "  " << var2 << "  " << var3 << zEndl;
-#elif Platform == CRAYJ90
-	cout << msgStr.c_str() << "  " << var1 << "  " << var2 << "  " << var3 << zEndl;
-#else
-	std::cout << msgStr.c_str() << "  " << var1 << "  " << var2 << "  " << var3 << zEndl;
-#endif
 
 #endif
 }

@@ -28,32 +28,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 // STL using declarations
 
-#if Platform == DECALPHA
 	using std::find;
-#elif Platform == SGICC
-#elif Platform == CRAYJ90
-#elif Platform == BORLAND6
-	using std::find;
-#elif Platform == I7XEON
-#elif Platform == I7ITANIUM
-#elif Platform == GCC
-#elif Platform == CW55MAC
-	using std::find;
-#elif Platform == XCMAC
-	using std::find;
-#elif Platform == NEWPLATFORM1
-#elif Platform == NEWPLATFORM2
-#elif Platform == NEWPLATFORM3
-#elif Platform == NEWPLATFORM4
-#elif Platform == NEWPLATFORM5
-#elif Platform == NEWPLATFORM6
-#elif Platform == NEWPLATFORM7
-#elif Platform == NEWPLATFORM8
-#elif Platform == NEWPLATFORM9
-#elif Platform == NEWPLATFORM10
-#else
-	using std::find;
-#endif					
 
 
 //////////////////////////////////////////////////////////////////////

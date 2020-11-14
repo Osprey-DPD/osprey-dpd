@@ -279,13 +279,8 @@ bool ccAddBeadsInRow::IsDataValid(const CInputData &riData) const
 
 					const StringSequence targetBeads = pTarget->GetNames();
 
-#if Platform == CRAYJ90
-					if(find(targetBeads.begin(), targetBeads.end(), name) != targetBeads.end())
-						bDistinctNames = false;
-#else
 					if(std::find(targetBeads.begin(), targetBeads.end(), name) != targetBeads.end())
 						bDistinctNames = false;
-#endif
 				}
 				if(!bDistinctNames)
 					return ErrorTrace("Error: Beads overlap with previous Select/Add command");;
