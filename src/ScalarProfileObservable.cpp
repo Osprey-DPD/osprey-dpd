@@ -32,27 +32,10 @@ zOutStream& operator<<(zOutStream& os, const CScalarProfileObservable& rOb)
 	for(long i=0; i<rOb.m_Size; i++)
 	{
 
-#if Platform == DECALPHA
 		os << std::setw(12) << std::setprecision(8);	// set field width and precision
 		os << rOb.m_MeanData.at(i) << "  ";
 		os << std::setw(12) << std::setprecision(8);
 		os << rOb.m_SDevData.at(i) << zEndl;
-#elif Platform == SGICC
-		os << setw(12) << setprecision(8);	// set field width and precision
-		os << rOb.m_MeanData.at(i) << "  ";
-		os << setw(12) << setprecision(8);
-		os << rOb.m_SDevData.at(i) << zEndl;
-#elif Platform == CRAYJ90
-		os << setw(12) << setprecision(8);	// set field width and precision
-		os << rOb.m_MeanData.at(i) << "  ";
-		os << setw(12) << setprecision(8);
-		os << rOb.m_SDevData.at(i) << zEndl;
-#else
-		os << std::setw(12) << std::setprecision(8);	// set field width and precision
-		os << rOb.m_MeanData.at(i) << "  ";
-		os << std::setw(12) << std::setprecision(8);
-		os << rOb.m_SDevData.at(i) << zEndl;
-#endif
 
 	}
 

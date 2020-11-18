@@ -30,53 +30,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 // STL using declarations
 
-#if Platform == DECALPHA 
-#elif Platform == SGICC
-#elif Platform == CRAYJ90
-#elif Platform == BORLAND6
-	#include <limits>
-	using std::numeric_limits;
-	using std::streamsize;
-	using std::find;
-	using std::find_if;
-	using std::ios_base;
-#elif Platform == I7XEON
-	#include <limits>
-	using std::numeric_limits;
-	using std::streamsize;
-	using std::find;
-	using std::find_if;
-	using std::ios_base;
-#elif Platform == I7ITANIUM
-#elif Platform == GCC
-#elif Platform == CW55MAC
 	#include <limits>
 	using std::numeric_limits;
 	using std::streamsize;
 	using std::ios_base;
-#elif Platform == XCMAC
-	#include <limits>
-	using std::numeric_limits;
-	using std::streamsize;
-	using std::ios_base;
-#elif Platform == NEWPLATFORM1
-#elif Platform == NEWPLATFORM2
-#elif Platform == NEWPLATFORM3
-#elif Platform == NEWPLATFORM4
-#elif Platform == NEWPLATFORM5
-#elif Platform == NEWPLATFORM6
-#elif Platform == NEWPLATFORM7
-#elif Platform == NEWPLATFORM8
-#elif Platform == NEWPLATFORM9
-#elif Platform == NEWPLATFORM10
-#else				
-	#include <limits>
-	using std::numeric_limits;
-	using std::streamsize;
-	using std::find;
-	using std::find_if;
-	using std::ios_base;
-#endif	
 				
 //////////////////////////////////////////////////////////////////////
 // Global members

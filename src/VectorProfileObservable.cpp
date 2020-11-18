@@ -32,7 +32,6 @@ zOutStream& operator<<(zOutStream& os, const CVectorProfileObservable& rOb)
 	for(long i=0; i<rOb.m_Size; i++)
 	{
 
-#if Platform == DECALPHA
 		os << std::setw(8) << std::setprecision(4);	// set field width and precision
 		os << rOb.m_MeanX.at(i) << "  ";
 		os << std::setw(8) << std::setprecision(4);	
@@ -50,61 +49,6 @@ zOutStream& operator<<(zOutStream& os, const CVectorProfileObservable& rOb)
 		os << rOb.m_SDevZ.at(i) << "  ";
 		os << std::setw(8) << std::setprecision(4);
 		os << rOb.m_SDevMag.at(i) << zEndl;
-#elif Platform == SGICC
-		os << setw(8) << setprecision(4);	// set field width and precision
-		os << rOb.m_MeanX.at(i) << "  ";
-		os << setw(8) << setprecision(4);	
-		os << rOb.m_MeanY.at(i) << "  ";
-		os << setw(8) << setprecision(4);	
-		os << rOb.m_MeanZ.at(i) << "  ";
-		os << setw(8) << setprecision(4);	
-		os << rOb.m_MeanMag.at(i)   << "  ";
-
-		os << setw(8) << setprecision(4);
-		os << rOb.m_SDevX.at(i) << "  ";
-		os << setw(8) << setprecision(4);
-		os << rOb.m_SDevY.at(i) << "  ";
-		os << setw(8) << setprecision(4);
-		os << rOb.m_SDevZ.at(i) << "  ";
-		os << setw(8) << setprecision(4);
-		os << rOb.m_SDevMag.at(i) << zEndl;
-#elif Platform == CRAYJ90
-		os << setw(8) << setprecision(4);	// set field width and precision
-		os << rOb.m_MeanX.at(i) << "  ";
-		os << setw(8) << setprecision(4);	
-		os << rOb.m_MeanY.at(i) << "  ";
-		os << setw(8) << setprecision(4);	
-		os << rOb.m_MeanZ.at(i) << "  ";
-		os << setw(8) << setprecision(4);	
-		os << rOb.m_MeanMag.at(i)   << "  ";
-
-		os << setw(8) << setprecision(4);
-		os << rOb.m_SDevX.at(i) << "  ";
-		os << setw(8) << setprecision(4);
-		os << rOb.m_SDevY.at(i) << "  ";
-		os << setw(8) << setprecision(4);
-		os << rOb.m_SDevZ.at(i) << "  ";
-		os << setw(8) << setprecision(4);
-		os << rOb.m_SDevMag.at(i) << zEndl;
-#else
-		os << std::setw(8) << std::setprecision(4);	// set field width and precision
-		os << rOb.m_MeanX.at(i) << "  ";
-		os << std::setw(8) << std::setprecision(4);	
-		os << rOb.m_MeanY.at(i) << "  ";
-		os << std::setw(8) << std::setprecision(4);	
-		os << rOb.m_MeanZ.at(i) << "  ";
-		os << std::setw(8) << std::setprecision(4);	
-		os << rOb.m_MeanMag.at(i)   << "  ";
-
-		os << std::setw(8) << std::setprecision(4);
-		os << rOb.m_SDevX.at(i) << "  ";
-		os << std::setw(8) << std::setprecision(4);
-		os << rOb.m_SDevY.at(i) << "  ";
-		os << std::setw(8) << std::setprecision(4);
-		os << rOb.m_SDevZ.at(i) << "  ";
-		os << std::setw(8) << std::setprecision(4);
-		os << rOb.m_SDevMag.at(i) << zEndl;
-#endif
 
 	}
 

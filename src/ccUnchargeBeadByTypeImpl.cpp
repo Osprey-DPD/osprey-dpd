@@ -75,9 +75,6 @@ void ccUnchargeBeadByTypeImpl::UnchargeBeadByType(const xxCommand* const pComman
 		// in a list, we can delete a contiguous range of elements without invalidating
 		// the remainder of the container.
 
-#if Platform == CRAYJ90
-		ChargedBeadListIterator nextBead = 0;
-#endif
 
 		// Note the absence of the increment step because we use erase()  
 		// to remove beads of the specified type, and increment it manually when
@@ -89,14 +86,7 @@ void ccUnchargeBeadByTypeImpl::UnchargeBeadByType(const xxCommand* const pComman
 			{
 				delete *iterBead;
 
-#if Platform == CRAYJ90
-				nextBead = iterBead;
-				nextBead++;
-				pSimBox->m_lAllChargedBeads.erase(iterBead);
-				iterBead = nextBead;
-#else
 				iterBead = pSimBox->m_lAllChargedBeads.erase(iterBead);
-#endif
 			}
 			else
 				iterBead++;

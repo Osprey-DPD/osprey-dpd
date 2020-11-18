@@ -129,21 +129,13 @@ void CForceTarget::RemoveDuplicateBeads()
 {
 	// Sort the beads according to their (unique) id
 
-#if Platform == CRAYJ90
-	sort(m_Beads.begin(), m_Beads.end(), aaBeadIdLess() );
-#else
 	std::sort(m_Beads.begin(), m_Beads.end(), aaBeadIdLess() );
-#endif
 
 	// Now remove adjacent duplicates
 
 	BeadVectorIterator new_end;
 
-#if Platform == CRAYJ90
-	new_end = unique(m_Beads.begin(), m_Beads.end());
-#else
 	new_end = std::unique(m_Beads.begin(), m_Beads.end());
-#endif
 
 	m_Beads.erase(new_end, m_Beads.end());
 

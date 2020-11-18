@@ -26,7 +26,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 zOutStream& operator<<(zOutStream& os, const CVectorObservable& rOb)
 {
-#if Platform == DECALPHA
 	os << rOb.GetName() << zEndl;
 	for(short int j=0; j<3; j++)
 	{
@@ -40,50 +39,6 @@ zOutStream& operator<<(zOutStream& os, const CVectorObservable& rOb)
 	os << std::setw(14) << std::setprecision(8) << zLeft;
 	os << rOb.m_SDevMag << zEndl;
 	os << zEndl;
-
-#elif Platform == SGICC
-	os << rOb.GetName() << zEndl;
-	for(short int j=0; j<3; j++)
-	{
-		os << setw(14) << setprecision(8) << zLeft;
-		os << rOb.m_MeanData[j] << " ";
-		os << setw(14) << setprecision(8) << zLeft;
-		os << rOb.m_SDevData[j] << zEndl;
-	}
-	os << setw(14) << setprecision(8) << zLeft;
-	os << rOb.m_MeanMag << " ";
-	os << setw(14) << setprecision(8) << zLeft;
-	os << rOb.m_SDevMag << zEndl;
-	os << zEndl;
-#elif Platform == CRAYJ90
-	os << rOb.GetName() << zEndl;
-	for(short int j=0; j<3; j++)
-	{
-		os << setw(14) << setprecision(8) << zLeft;
-		os << rOb.m_MeanData[j] << " ";
-		os << setw(14) << setprecision(8) << zLeft;
-		os << rOb.m_SDevData[j] << zEndl;
-	}
-	os << setw(14) << setprecision(8) << zLeft;
-	os << rOb.m_MeanMag << " ";
-	os << setw(14) << setprecision(8) << zLeft;
-	os << rOb.m_SDevMag << zEndl;
-	os << zEndl;
-#else
-	os << rOb.GetName() << zEndl;
-	for(short int j=0; j<3; j++)
-	{
-		os << std::setw(14) << std::setprecision(8) << zLeft;
-		os << rOb.m_MeanData[j] << " ";
-		os << std::setw(14) << std::setprecision(8) << zLeft;
-		os << rOb.m_SDevData[j] << zEndl;
-	}
-	os << std::setw(14) << std::setprecision(8) << zLeft;
-	os << rOb.m_MeanMag << " ";
-	os << std::setw(14) << std::setprecision(8) << zLeft;
-	os << rOb.m_SDevMag << zEndl;
-	os << zEndl;
-#endif
 
 	return os;
 }

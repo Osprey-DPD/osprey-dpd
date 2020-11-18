@@ -148,29 +148,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 // STL include files
 
-#if Platform == DECALPHA 
-#elif Platform == SGICC
-	#define MICELLE_NO_USE_VALARRAY 1
-#elif Platform == CRAYJ90
-	#define MICELLE_NO_USE_VALARRAY 1
-#elif Platform == BORLAND6
-#elif Platform == I7XEON
-#elif Platform == I7ITANIUM
-#elif Platform == GCC
-#elif Platform == CW55MAC
-#elif Platform == XCMAC
-#elif Platform == NEWPLATFORM1
-#elif Platform == NEWPLATFORM2
-#elif Platform == NEWPLATFORM3
-#elif Platform == NEWPLATFORM4
-#elif Platform == NEWPLATFORM5
-#elif Platform == NEWPLATFORM6
-#elif Platform == NEWPLATFORM7
-#elif Platform == NEWPLATFORM8
-#elif Platform == NEWPLATFORM9
-#elif Platform == NEWPLATFORM10
-#else							
-#endif			
 
 
 //////////////////////////////////////////////////////////////////////
@@ -384,19 +361,11 @@ CMonitor::CMonitor(CSimState* const psState, const ISimBox* const pISimBox) : IS
 
 	m_vAggregates.clear();
 
-#if Platform == CRAYJ90
-
-	copy(m_pSimState->GetAnalysisState().GetAggregates().begin(), 
-		 m_pSimState->GetAnalysisState().GetAggregates().end(), 
-		 back_inserter(m_vAggregates));
-
-#else
 
 	std::copy(m_pSimState->GetAnalysisState().GetAggregates().begin(), 
 			  m_pSimState->GetAnalysisState().GetAggregates().end(), 
 			  std::back_inserter(m_vAggregates));
 
-#endif
 
 	// **********************************************************************
 	// Create the CObservable objects and store pointers to them in containers

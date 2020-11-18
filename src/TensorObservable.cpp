@@ -32,7 +32,6 @@ zOutStream& operator<<(zOutStream& os, const CTensorObservable& rOb)
 	for(short int j=0; j<3; j++)
 	{
 
-#if Platform == DECALPHA
 		os << std::setw(12) << std::setprecision(6) << zLeft;	// set field width and precision
 		os << rOb.m_MeanData[3*j]   << " ";
 		os << std::setw(12) << std::setprecision(6) << zLeft;
@@ -45,46 +44,6 @@ zOutStream& operator<<(zOutStream& os, const CTensorObservable& rOb)
 		os << rOb.m_SDevData[3*j+1] << " ";
 		os << std::setw(12) << std::setprecision(6) << zLeft;
 		os << rOb.m_SDevData[3*j+2] << zEndl;
-#elif Platform == SGICC
-		os << setw(12) << setprecision(6) << zLeft;	// set field width and precision
-		os << rOb.m_MeanData[3*j]   << " ";
-		os << setw(12) << setprecision(6) << zLeft;
-		os << rOb.m_MeanData[3*j+1] << " ";
-		os << setw(12) << setprecision(6) << zLeft;
-		os << rOb.m_MeanData[3*j+2] << "  ";
-		os << setw(12) << setprecision(6) << zLeft;
-		os << rOb.m_SDevData[3*j] << " ";
-		os << setw(12) << setprecision(6) << zLeft;
-		os << rOb.m_SDevData[3*j+1] << " ";
-		os << setw(12) << setprecision(6) << zLeft;
-		os << rOb.m_SDevData[3*j+2] << zEndl;
-#elif Platform == CRAYJ90
-		os << setw(12) << setprecision(6) << zLeft;	// set field width and precision
-		os << rOb.m_MeanData[3*j]   << " ";
-		os << setw(12) << setprecision(6) << zLeft;
-		os << rOb.m_MeanData[3*j+1] << " ";
-		os << setw(12) << setprecision(6) << zLeft;
-		os << rOb.m_MeanData[3*j+2] << "  ";
-		os << setw(12) << setprecision(6) << zLeft;
-		os << rOb.m_SDevData[3*j] << " ";
-		os << setw(12) << setprecision(6) << zLeft;
-		os << rOb.m_SDevData[3*j+1] << " ";
-		os << setw(12) << setprecision(6) << zLeft;
-		os << rOb.m_SDevData[3*j+2] << zEndl;
-#else
-		os << std::setw(12) << std::setprecision(6) << zLeft;	// set field width and precision
-		os << rOb.m_MeanData[3*j]   << " ";
-		os << std::setw(12) << std::setprecision(6) << zLeft;
-		os << rOb.m_MeanData[3*j+1] << " ";
-		os << std::setw(12) << std::setprecision(6) << zLeft;
-		os << rOb.m_MeanData[3*j+2] << "  ";
-		os << std::setw(12) << std::setprecision(6) << zLeft;
-		os << rOb.m_SDevData[3*j] << " ";
-		os << std::setw(12) << std::setprecision(6) << zLeft;
-		os << rOb.m_SDevData[3*j+1] << " ";
-		os << std::setw(12) << std::setprecision(6) << zLeft;
-		os << rOb.m_SDevData[3*j+2] << zEndl;
-#endif
 
 	}
 

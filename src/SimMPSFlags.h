@@ -31,25 +31,6 @@
 #define SimMPSEnabled	1
 #define SimMPSDisabled	2
 
-#if Platform   == DECALPHA 
-#elif Platform == SGICC
-#elif Platform == CRAYJ90
-#elif Platform == BORLAND6
-#elif Platform == I7XEON
-#elif Platform == I7ITANIUM
-#elif Platform == GCC
-#elif Platform == CW55MAC
-	#define EnableParallelACN           SimMPSDisabled
-	#define EnableParallelAggregates    SimMPSDisabled
-	#define EnableParallelCommands      SimMPSEnabled
-	#define EnableParallelEvents        SimMPSDisabled
-	#define EnableParallelExperiment    SimMPSEnabled
-	#define EnableParallelMonitor       SimMPSEnabled
-	#define EnableParallelProcesses     SimMPSDisabled
-	#define EnableParallelRestart       SimMPSDisabled
-	#define EnableParallelSimBox        SimMPSEnabled
-	#define EnableParallelTargets       SimMPSDisabled
-#elif Platform == XCMAC
 	#define EnableParallelACN           SimMPSDisabled
 	#define EnableParallelAggregates    SimMPSDisabled
 	#define EnableParallelCommands      SimMPSDisabled
@@ -60,26 +41,4 @@
 	#define EnableParallelRestart       SimMPSDisabled
 	#define EnableParallelSimBox        SimMPSDisabled
 	#define EnableParallelTargets       SimMPSDisabled
-#elif Platform == NEWPLATFORM1
-#elif Platform == NEWPLATFORM2
-#elif Platform == NEWPLATFORM3
-#elif Platform == NEWPLATFORM4
-#elif Platform == NEWPLATFORM5
-#elif Platform == NEWPLATFORM6
-#elif Platform == NEWPLATFORM7
-#elif Platform == NEWPLATFORM8
-#elif Platform == NEWPLATFORM9
-#elif Platform == NEWPLATFORM10
-#else							
-	#define EnableParallelACN           SimMPSDisabled
-	#define EnableParallelAggregates    SimMPSDisabled
-	#define EnableParallelCommands      SimMPSDisabled
-	#define EnableParallelEvents        SimMPSDisabled
-	#define EnableParallelExperiment    SimMPSDisabled
-	#define EnableParallelMonitor       SimMPSDisabled
-	#define EnableParallelProcesses     SimMPSDisabled
-	#define EnableParallelRestart       SimMPSDisabled
-	#define EnableParallelSimBox        SimMPSDisabled
-	#define EnableParallelTargets       SimMPSDisabled
-#endif					
 

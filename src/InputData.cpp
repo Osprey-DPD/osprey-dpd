@@ -68,47 +68,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 // STL using declarations
 
-#if Platform == DECALPHA
-	typedef std::pair<long, CInputData::LoopTarget*>	idPairLongLoopTarget;
-	typedef std::map<long, CInputData::LoopTarget*>::iterator	idLoopIterator;
-#elif Platform == SGICC
-	typedef std::pair<long, CInputData::LoopTarget*>	idPairLongLoopTarget;
-	typedef std::map<long, CInputData::LoopTarget*>::iterator	idLoopIterator;
-#elif Platform == CRAYJ90
-	typedef pair<const long, CInputData::LoopTarget*>	idPairLongLoopTarget;
-	typedef map<long, CInputData::LoopTarget*>::iterator	idLoopIterator;
-#elif Platform == BORLAND6
 	typedef std::pair<long, CInputData::LoopTarget*>	idPairLongLoopTarget;
 	typedef std::map<long, CInputData::LoopTarget*>::iterator	idLoopIterator;
 	using std::find;
-#elif Platform == I7XEON
-	typedef std::pair<long, CInputData::LoopTarget*>	idPairLongLoopTarget;
-	typedef std::map<long, CInputData::LoopTarget*>::iterator	idLoopIterator;
-#elif Platform == I7ITANIUM
-#elif Platform == GCC
-#elif Platform == CW55MAC
-	typedef std::pair<long, CInputData::LoopTarget*>	idPairLongLoopTarget;
-	typedef std::map<long, CInputData::LoopTarget*>::iterator	idLoopIterator;
-	using std::find;
-#elif Platform == XCMAC
-	typedef std::pair<long, CInputData::LoopTarget*>	idPairLongLoopTarget;
-	typedef std::map<long, CInputData::LoopTarget*>::iterator	idLoopIterator;
-	using std::find;
-#elif Platform == NEWPLATFORM1
-#elif Platform == NEWPLATFORM2
-#elif Platform == NEWPLATFORM3
-#elif Platform == NEWPLATFORM4
-#elif Platform == NEWPLATFORM5
-#elif Platform == NEWPLATFORM6
-#elif Platform == NEWPLATFORM7
-#elif Platform == NEWPLATFORM8
-#elif Platform == NEWPLATFORM9
-#elif Platform == NEWPLATFORM10
-#else
-	typedef std::pair<long, CInputData::LoopTarget*>	idPairLongLoopTarget;
-	typedef std::map<long, CInputData::LoopTarget*>::iterator	idLoopIterator;
-	using std::find;
-#endif					
 
 // Valid characters that can appear in bead/polymer names, operators and
 // elements. Note that names must begin with a letter to distinguish them 
@@ -1007,11 +969,7 @@ zString CInputData::CDR(const zString oldString) const
 	startPos = oldString.find(head);
 	startPos+= head.length();
 
-#if Platform == CRAYJ90
-	tail = '(' + tail.remove(0,startPos);
-#else
 	tail = '(' + tail.erase(0,startPos);	// add opening bracket back
-#endif
 
 	if( !IsShapeValid(tail))
 		return "()";
@@ -1019,21 +977,6 @@ zString CInputData::CDR(const zString oldString) const
 // The Modena string class does not have the erase() member function nor an
 // iterator: we have to use remove() to remove the leading white space.
 
-#if Platform == CRAYJ90
-
-	long j = 1;					// We leave the leading ( alone
-	bool bWhiteSpace = true;
-
-	while(bWhiteSpace && j<tail.size())
-	{
-		if(tail[j] == ' ')
-			tail.remove(j,1);
-		else
-			bWhiteSpace = false;
-		j++;
-	}
-
-#else
 
 	zStringIterator iterChar=tail.begin();	// remove leading whitespace
 	iterChar++;
@@ -1042,7 +985,6 @@ zString CInputData::CDR(const zString oldString) const
 		tail.erase(iterChar);
 	}
 
-#endif
 
 	return tail;
 }
@@ -1057,15 +999,10 @@ zString CInputData::RemoveBrackets(zString oldString) const
 		return oldString;
 	else
 	{
-#if Platform == CRAYJ90
-		oldString.remove(0,1);
-		oldString.remove(oldString.size()-1,1);
-#else
 		oldString.erase(oldString.begin());
 		zStringIterator iterLast = oldString.end();
 		iterLast--;
 		oldString.erase(iterLast);
-#endif
 	}
 
 	return oldString;
@@ -1884,17 +1821,6 @@ zString CInputData::RemoveSpaces(zString oldString) const
     if(!oldString.empty())
     {
         
-#if Platform == CRAYJ90
-	long j = 0;
-	bool bWhiteSpace = true;
-
-	while(bWhiteSpace && j<oldString.size())
-	{
-		if(oldString[j] == ' ')
-			oldString.remove(j,1);
-		j++;
-	}
-#else
 	zStringIterator iterFor	 = oldString.begin();
 	zStringIterator iterBack = oldString.end();
 	iterBack--;
@@ -1910,7 +1836,6 @@ zString CInputData::RemoveSpaces(zString oldString) const
 		}
 	}
     
-#endif
         
     }
     
@@ -2787,19 +2712,11 @@ bool CInputData::IsBeadUniqueInPolymer(const zString bead, const zString shape) 
 			// This relies on the find() algorithm returning the first occurrence 
 			// of a sub-string.
 
-#if Platform == CRAYJ90
-			localElement.remove(0, localElement.find(bead)+bead.size());
-#else
 			localElement.erase(0, localElement.find(bead)+bead.size());
-#endif
 
 			while(!nextChar.empty() && validNameChars.find(nextChar) < validNameChars.length())
 			{
-#if Platform == CRAYJ90
-				localElement.remove(0, 1);
-#else
 				localElement.erase(0, 1);
-#endif
 				nextChar.assign(localElement, 0, 1);
 			}
 		}
