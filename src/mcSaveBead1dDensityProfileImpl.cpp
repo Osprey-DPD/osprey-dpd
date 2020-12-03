@@ -48,14 +48,14 @@ void mcSaveBead1dDensityProfileImpl::SaveBead1dDensityProfile(const xxCommand* c
 {
 	const mcSaveBead1dDensityProfile* const pCmd = dynamic_cast<const mcSaveBead1dDensityProfile*>(pCommand);
 
-	const long beadType			= pCmd->GetBeadType();
-	const long start			= pCmd->GetStartTime();
-	const long end				= pCmd->GetEndTime();
-	const long sample			= pCmd->GetSamplePeriod();
-	const long nx				= pCmd->GetXNormal();
-	const long ny				= pCmd->GetYNormal();
-	const long nz				= pCmd->GetZNormal();
-	const long sliceTotal		= pCmd->GetSliceTotal();
+	const long beadType         = pCmd->GetBeadType();
+	const long start            = pCmd->GetStartTime();
+	const long end              = pCmd->GetEndTime();
+	const long sample           = pCmd->GetSamplePeriod();
+	const long nx               = pCmd->GetXNormal();
+	const long ny               = pCmd->GetYNormal();
+	const long nz               = pCmd->GetZNormal();
+	const long sliceTotal       = pCmd->GetSliceTotal();
 	const double lowerFraction  = pCmd->GetLowerFraction();
 	const double upperFraction  = pCmd->GetUpperFraction();
 
@@ -63,8 +63,11 @@ void mcSaveBead1dDensityProfileImpl::SaveBead1dDensityProfile(const xxCommand* c
 
 	const zString runId    = pMon->GetISimBox()->GetRunId();
 	const long    time     = pMon->GetCurrentTime();
-    const zString beadName = pMon->GetISimBox()->GetBeadNameFromType(beadType) + "_" + pMon->GetISimBox()->ToString(beadType);
+    
+	// Append the axis to the bead name to distinguish it from other analyses using the same bead
 
+        const zString normal   = pMon->GetISimBox()->ToString(nx) + pMon->GetISimBox()->ToString(ny) + pMon->GetISimBox()->ToString(nz);
+        const zString beadName = pMon->GetISimBox()->GetBeadNameFromType(beadType) + "_" + pMon->GetISimBox()->ToString(beadType) + "_" + normal;
 
 	// Convert the fractional coordinate range into absolute values
 
