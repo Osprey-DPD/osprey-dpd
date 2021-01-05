@@ -853,14 +853,15 @@ zString CInputData::ExpandElement(zString op, zString token)
 //
 // Examples
 //
-// CAR( "(A B C)" )			= A
+// CAR( "(A B C)" )		= A
 // CAR( "(  A B C)" )		= A
-// CAR( "((A) B C)" )		= A
+// CAR( "((A) B C)" )		= (A)
 // CAR( "(  (A) B C)" )		= (A)
 // CAR( "((2 A) B C)" )		= (2 A)
 // CAR( "( (2 A) B C)" )	= (2 A)
-// CAR( "(A2) B C)"			= (A2)  NB A2 is a valid token name but 2A is not
-// CAR( "(A (* (A B) ) B)"    = 
+// CAR( "( (A2) B C)" )		= (A2)  NB A2 is a valid token name but 2A is not
+// CAR( "( A (* (A B) ) B )"    = A
+
 
 
 
