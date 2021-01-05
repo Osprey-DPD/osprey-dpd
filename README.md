@@ -1,12 +1,11 @@
-Welcome to the official distribution of the Osprey simulation engine
+Welcome to the official distribution of the Osprey simulation engine.
 
-Osprey-DPD - Open Source Polymer Research Engine-Dissipative Particle Dynamics - is free software distributed under the BSD 3-clause license.
-It was developed by the author at the Max Planck Institute of Colloids and Interfaces, Germany, 1999-2007. You may use the code in any way you wish,
-modify and redistribute it or embed it in other software, subject to the conditions of the license. See the license file for details.
+**Osprey-DPD - Open Source Polymer Research Engine-Dissipative Particle Dynamics*** - is free software distributed under the BSD 3-clause license. It was developed by the author at the Max Planck Institute of Colloids and Interfaces, Germany, 1999-2007. You may use the code in any way you wish, modify and redistribute it or embed it in other software, subject to the conditions of the license. See the license file for details.
 
 The code is written in standard  C++03 and uses the STL. It has run successfully on Linux, Mac OS X and Windows 10 platforms.
 
 On Linux platforms, the code is compiled and linked using the GNU C++ compiler with the following two commands executed in the source code directory:
+
 ```shell
 $ g++ -c -O3 *.cpp
 $ g++ -o dpd *.o
