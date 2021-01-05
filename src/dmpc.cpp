@@ -99,7 +99,6 @@ int main(int argc, char* argv[])
 
         if(my_rank == 0)
         {
-            // All codes are property of Complex Fluid Simulations GmbH
 			#if SimIdentifier == BD
 				std::cout << "BD Experiment Code 1.5" << zEndl;
 			#elif SimIdentifier == DPD
