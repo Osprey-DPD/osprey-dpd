@@ -209,10 +209,6 @@ void CVectorProfileObservable::AddData(const aaVectorProfile *const pID)
 
 	for(long i=0; i<m_Size; i++)
 	{
-		double xval = pID->GetData(i,0);
-		double yval = pID->GetData(i,1);
-		double zval = pID->GetData(i,2);
-
 		m_SumX.at(i) += pID->GetData(i,0);
 		m_SumY.at(i) += pID->GetData(i,1);
 		m_SumZ.at(i) += pID->GetData(i,2);

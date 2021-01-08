@@ -85,9 +85,6 @@ CSingleSliceEnergy::CSingleSliceEnergy(const ISimBox* pISimBox, bool bNormalize,
 
 	m_pSlice = new CCNTCellSlice(m_SliceIndex, m_Xn, m_Yn, m_Zn, pISimBox);
 
-	const long firstTotal  = m_pSlice->GetCellsPerSlice();
-	const long secondTotal = m_pSlice->GetSize();
-
 	for(long cellIndex=0; cellIndex<m_pSlice->GetSize(); cellIndex++)
 	{
 		const CCNTCell* const pCell = m_pSlice->GetCell(cellIndex);

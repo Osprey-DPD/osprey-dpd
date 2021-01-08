@@ -31,13 +31,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 zOutStream& operator<<(zOutStream& os, const CTimeSeriesData& rTSD)
 {
-	cStringSequenceIterator iterLabel = rTSD.m_vDataLabels.begin();
-
 	// If XML output is enabled wrap the data in start and end tags and place each
 	// data item inside an element whose name is given by the item's label.
 	// Note that the label strings are not used if XML output is disabled.
 
 #if EnableXMLProcesses == SimXMLEnabled
+	cStringSequenceIterator iterLabel = rTSD.m_vDataLabels.begin();
 
 	os << "<Data>";
 	for(czDoubleVectorIterator iterData=rTSD.m_vDataSet.begin(); iterData!=rTSD.m_vDataSet.end(); iterData++)

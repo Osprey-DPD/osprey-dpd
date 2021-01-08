@@ -47,11 +47,11 @@ zOutStream& operator<<(zOutStream& os, const CObservable& rOb)
 // m_SampleSize double because it is used to normalize the data and 
 // we thus avoid having to cast it.
 
-CObservable::CObservable(zString name, long analysisPeriod, long samplePeriod) : m_AnalysisPeriod(analysisPeriod),
-																					 m_SamplePeriod(samplePeriod),
-																					 m_SampleSize(static_cast<double>(analysisPeriod/samplePeriod)),
-																					 m_CurrentTime(0),
-																					 m_Name(name)
+CObservable::CObservable(zString name, long analysisPeriod, long samplePeriod) : m_SampleSize(static_cast<double>(analysisPeriod/samplePeriod)),
+									            m_CurrentTime(0),
+									            m_Name(name),
+									            m_AnalysisPeriod(analysisPeriod), 
+                                                                                 m_SamplePeriod(samplePeriod)
 {
 }
 

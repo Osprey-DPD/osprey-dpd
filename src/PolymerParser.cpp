@@ -190,8 +190,8 @@ zString CPolymerParser::CAR(const zString oldString)
 		}
 	}
 
-	if( !bFound)
-		return oldString;	// return the empty zString
+	if( !bFound) {
+		return oldString; }	// return the empty zString
 
 	// now we have the ending condition and the first character find the 
 	// end of the first element in the whole zString and return it. But make
@@ -224,8 +224,8 @@ zString CPolymerParser::CAR(const zString oldString)
 		}
 		else if( endChar == ' ')
 		{
-			if(*iterChar == endChar || *iterChar == '(')
-				bFound = true;			// don't include spaces
+			if(*iterChar == endChar || *iterChar == '(') {
+				bFound = true;	}		// don't include spaces
 			else
 			{
 				head+= *iterChar;
@@ -286,8 +286,8 @@ const zString CPolymerParser::BeadNameTag(const zString beadName) const
 
 zString CPolymerParser::RemoveOuterBrackets(zString element)
 {
-	if( (*element.begin() != '(') || (*element.rbegin() != ')') )
-		return element;
+	if( (*element.begin() != '(') || (*element.rbegin() != ')') ) {
+		return element; }
 	else
 	{
 		element.erase(element.begin());
@@ -305,14 +305,14 @@ zString CPolymerParser::RemoveOuterBrackets(zString element)
 
 bool CPolymerParser::IsBeadName(const zString name) const
 {
-	if(name.empty())
-		return false;
-	else if(name.find_first_not_of(m_ValidNameChars) < name.length())
-		return false;
-    else if(name.find_first_of(m_ValidNumOpChars) == 0)
-		return false;
-    else if(name.find_first_of(m_ValidSeparatorOpChars) == 0)
-		return false;
+	if(name.empty()) {
+		return false; }
+	else if(name.find_first_not_of(m_ValidNameChars) < name.length()) {
+		return false; }
+       else if(name.find_first_of(m_ValidNumOpChars) == 0) {
+		return false; }
+       else if(name.find_first_of(m_ValidSeparatorOpChars) == 0) {
+		return false; }
 
 	return true;
 }
@@ -324,10 +324,10 @@ bool CPolymerParser::IsBeadName(const zString name) const
 
 bool CPolymerParser::IsTailEmpty(const zString tail) const
 {
-	if(SpaceStrippedString(tail) == "()")
-		return true;
-	else
-		return false;
+	if(SpaceStrippedString(tail) == "()") {
+		return true; }
+	else {
+		return false; }
 }
 
 // Function to check if a string is empty or contains only spaces. Any other 
@@ -335,10 +335,10 @@ bool CPolymerParser::IsTailEmpty(const zString tail) const
 
 bool CPolymerParser::IsStringEmpty(const zString oldString) const
 {
-	if(oldString.empty())
-		return true;
-	else
-		return (oldString.find_first_not_of(m_SpaceChar) < oldString.length());
+	if(oldString.empty()) {
+		return true; }
+	else {
+		return (oldString.find_first_not_of(m_SpaceChar) < oldString.length()); }
 }
 
 // Function to delete all spaces from a string and return what is left.
@@ -347,14 +347,14 @@ zString CPolymerParser::SpaceStrippedString(const zString oldString) const
 {
 	zString newString = oldString;
 
-	zStringIterator iterFor	= newString.begin();
+	zStringIterator iterFor = newString.begin();
 
-	for(long j=0; j<newString.size(); j++)
+	for(long unsigned j=0; j<newString.size(); j++)
 	{
-		if(*iterFor == ' ')
-			newString.erase(iterFor);	// erase automatically increments iterator
-		else
-			iterFor++;
+		if(*iterFor == ' ') {
+			newString.erase(iterFor); }	// erase automatically increments iterator
+		else {
+			iterFor++; }
 	}
 
 	return newString;

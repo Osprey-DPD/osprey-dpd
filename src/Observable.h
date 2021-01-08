@@ -48,7 +48,7 @@ protected:
 	// It needs to be different so that it can force a derived class to handle its
 	// own serialization when invoked on a CObservable base class pointer.
 
-	virtual	void Serialize(zOutStream& os) const = 0;
+	virtual void Serialize(zOutStream& os) const = 0;
 
 	// debug display routine to print out data values
 
@@ -57,12 +57,12 @@ protected:
 
 protected:
 	double m_SampleSize;
-	long m_CurrentTime;
+	long   m_CurrentTime;
 
 private:
 	const zString m_Name;
-	long m_AnalysisPeriod;
-	long m_SamplePeriod;
+	long  m_AnalysisPeriod;
+	long  m_SamplePeriod;
 
 };
 

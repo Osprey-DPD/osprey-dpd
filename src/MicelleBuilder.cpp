@@ -64,10 +64,7 @@ CMicelleBuilder::~CMicelleBuilder()
 bool CMicelleBuilder::Assemble(CInitialState& riState)
 {
     bool bSuccess = true;
-	long j = 0;
-	long ip = 0;
 	long index = 0;	// counter used everywhere below
-	long iBead = 0;
 	cPolymerVectorIterator iterPoly;
 	cBeadVectorIterator    iterBead;
 
@@ -98,7 +95,7 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
 
 	nonMicellePolymerTypes.clear();
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
 		if(find(m_PolymerTypes.begin(), m_PolymerTypes.end(), ip) == m_PolymerTypes.end())
 		{
@@ -118,7 +115,7 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
 	long firstPolymer = 0;
 	long lastPolymer  = 0;
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
 		lastPolymer += riState.GetPolymerTotalForType(ip);
 
@@ -146,7 +143,7 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
   
 	zLongVector vAllFreeCNTCells(CNTXNo*CNTYNo*CNTZNo);
 
-	for(j=0; j<vAllFreeCNTCells.size(); j++)
+	for(long unsigned int j=0; j<vAllFreeCNTCells.size(); j++)
 	{
 		vAllFreeCNTCells.at(j) = 1;
 	}
@@ -206,8 +203,6 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
 		}
 	}
 
-	long emptyCNTCells = vAllFreeCNTCells.size();
-
 	// Now exclude the CNT cells than contain beads within the micelle. We perform
     // checks to ensure that all such cells lie within the simulation box, and
     // abort the run if not. If the user specifies a micelle radius that
@@ -253,20 +248,18 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
     // Abort the run on error
     if(!bSuccess)
     {
-        CLogSimErrorTrace* pMsg = new CLogSimErrorTrace(0, "Error in micelle builder (outer radius too large for box): stopping run");
+        new CLogSimErrorTrace(0, "Error in micelle builder (outer radius too large for box): stopping run");
         return bSuccess;
     }
-
-	emptyCNTCells = vAllFreeCNTCells.size();
 
 	// Now copy the remaining free CNT cell indices to the vFreeCNTCells vector
 
 	zLongVector vFreeCNTCells;
 
-	for(j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
+	for(long j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
 	{
-		if(vAllFreeCNTCells.at(j) == 1)
-			vFreeCNTCells.push_back(j);
+		if(vAllFreeCNTCells.at(j) == 1) {
+			vFreeCNTCells.push_back(j); }
 	}
 
 	// Now assign coordinates to the beads in non-micelle polymers among
@@ -283,8 +276,8 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
 	long rCNTCellIndex;
 	bool bFirstBead;
 	double xFirstBead = 0.0;
-    double yFirstBead = 0.0;
-    double zFirstBead = 0.0;
+        double yFirstBead = 0.0;
+        double zFirstBead = 0.0;
 
 	for(iterPoly=riState.GetPolymers().begin(); iterPoly!=riState.GetPolymers().end(); iterPoly++)
 	{
@@ -302,8 +295,8 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
 					// algorithm breaking the assignment of positions for single-bead polymers such as water.
 					
 				    rCellIndex = static_cast<long>(freeCells*CCNTCell::GetRandomNo());
-				    if(rCellIndex == freeCells)
-					    rCellIndex = 0;
+				    if(rCellIndex == freeCells) {
+					    rCellIndex = 0; }
 
 				    rCNTCellIndex = vFreeCNTCells.at(rCellIndex); // cells outside  vesicle
 
@@ -411,7 +404,7 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
     // Abort the run on error
     if(!bSuccess)
     {
-        CLogSimErrorTrace* pMsg = new CLogSimErrorTrace(0, "Error in micelle builder (unable to assign coordinates to non-micelle polymers): stopping run");
+        new CLogSimErrorTrace(0, "Error in micelle builder (unable to assign coordinates to non-micelle polymers): stopping run");
         return bSuccess;
     }
 
@@ -449,7 +442,7 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
 	vcm[2] = 0.0;
 
 
-	for(iBead=0; iBead<riState.GetBeadTotal(); iBead++)
+	for(long iBead=0; iBead<riState.GetBeadTotal(); iBead++)
 	{
 		index	= static_cast<long>(rvelDist.size()*CCNTCell::GetRandomNo());
 		vmag	= rvelDist.at(index);
@@ -475,23 +468,22 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
 		velZDist.at(iBead) = vp[2];
 	}
 
-	double vmean[3], v2mean[3], var[3];
+	double vmean[3], v2mean[3];
 
 	for(short i=0; i<3; i++)
 	{
 		vcm[i]	   /= static_cast<double>(riState.GetBeadTotal());
 		vmean[i]	= 0.0;
 		v2mean[i]	= 0.0;
-		var[i]		= 0.0;
 	}
 
 	// remove CM velocity from bead velocities
 
 	double vtotal = 0.0;
 
-	for(iBead=0; iBead<riState.GetBeadTotal(); iBead++)
+	for(long iBead=0; iBead<riState.GetBeadTotal(); iBead++)
 	{
-		velXDist.at(iBead)	-= vcm[0];
+		velXDist.at(iBead)  -= vcm[0];
 		velYDist.at(iBead)  -= vcm[1];
 		velZDist.at(iBead)  -= vcm[2];
 
@@ -512,7 +504,7 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
 	// finally normalize the velocities to the required temperature, 
 	// calculate the mean and variance, and assign the bead velocities
 
-	for(iBead=0; iBead<riState.GetBeadTotal(); iBead++)
+	for(long iBead=0; iBead<riState.GetBeadTotal(); iBead++)
 	{
 		velXDist.at(iBead)	= velXDist.at(iBead)/vtotal;
 		velYDist.at(iBead)	= velYDist.at(iBead)/vtotal;
@@ -531,15 +523,21 @@ bool CMicelleBuilder::Assemble(CInitialState& riState)
 		v2mean[2] += velZDist.at(iBead)*velZDist.at(iBead);
 	}
 
-	for(short jv=0; jv<3; jv++)
+	for(long jv=0; jv<3; jv++)
 	{
 		vmean[jv]  =  vmean[jv]/static_cast<double>(riState.GetBeadTotal());
 		v2mean[jv] = v2mean[jv]/static_cast<double>(riState.GetBeadTotal());
-		var[jv]    = v2mean[jv] - vmean[jv]*vmean[jv];
 	}
 
 
 #ifdef TraceOn
+
+       double var[3];
+       
+	var[0] = v2mean[0] - vmean[0]*vmean[0];
+	var[1] = v2mean[1] - vmean[1]*vmean[1];
+	var[2] = v2mean[2] - vmean[2]*vmean[2];
+
 	Trace("Initial vel distn");
 	TraceVector("Mean Vel      = ", vmean[0],  vmean[1],  vmean[2]);
 	TraceVector("Mean Sq Vel   = ", v2mean[0], v2mean[1], v2mean[2]);

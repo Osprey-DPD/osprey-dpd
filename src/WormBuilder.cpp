@@ -75,10 +75,7 @@ CWormBuilder::~CWormBuilder()
 
 bool CWormBuilder::Assemble(CInitialState &riState)
 {
-	long j = 0;
-	long ip = 0;
 	long index = 0;	// counter used everywhere below
-	long iBead = 0;
 	cPolymerVectorIterator iterPoly;
 	cBeadVectorIterator    iterBead;
 
@@ -109,15 +106,13 @@ bool CWormBuilder::Assemble(CInitialState &riState)
 
 	nonVesiclePolymerTypes.clear();
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
 		if(find(m_PolymerTypes.begin(), m_PolymerTypes.end(), ip) == m_PolymerTypes.end())
 		{
 			nonVesiclePolymerTypes.push_back(ip);
 		}	
 	}
-
-	long nonVesicleTypeNo = nonVesiclePolymerTypes.size();
 
 	// Copy the polymers in the CInitialState into local vectors for ease of access.
 	// The non-vesicle non-interior polymers are stored in vRandomPolymers, and the
@@ -133,7 +128,7 @@ bool CWormBuilder::Assemble(CInitialState &riState)
 	long firstPolymer = 0;
 	long lastPolymer  = 0;
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
 		lastPolymer += riState.GetPolymerTotalForType(ip);
 
@@ -148,12 +143,10 @@ bool CWormBuilder::Assemble(CInitialState &riState)
 		firstPolymer += riState.GetPolymerTotalForType(ip);
 	}
 
-	long randomPolymerTotal   = vRandomPolymers.size();		// All polymers not in vesicle nor its interior
-
 	// Exclude any CNT cells that contain wall beads. We just mark the cells whose
 	// indices are within the walls. We first set a flag in a vector showing that
 	// the corresponding index is for a free CNT cell, next we exclude all cells
-    // that lie within the wall regions, and finally we copy all the 
+       // that lie within the wall regions, and finally we copy all the 
 	// free CNT cell indeices into another vector to allow them to be randomly accessed
 	// using a second index into the vector.
 
@@ -163,7 +156,7 @@ bool CWormBuilder::Assemble(CInitialState &riState)
 
 	zLongVector vAllFreeCNTCells(CNTXNo*CNTYNo*CNTZNo);
 
-	for(j=0; j<vAllFreeCNTCells.size(); j++)
+	for(long unsigned int j=0; j<vAllFreeCNTCells.size(); j++)
 	{
 		vAllFreeCNTCells.at(j) = 1;
 	}
@@ -300,7 +293,7 @@ bool CWormBuilder::Assemble(CInitialState &riState)
 
 	zLongVector vFreeCNTCells;
 
-	for(j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
+	for(long j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
 	{
 		if(vAllFreeCNTCells.at(j) == 1)
 			vFreeCNTCells.push_back(j);

@@ -25,9 +25,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CRaft::CRaft(zLongVector headTypes, zLongVector tailTypes) : m_HeadBeadTypes(headTypes),
-															 m_TailBeadTypes(tailTypes),
-															 m_PolymerTotal(0)
+CRaft::CRaft(zLongVector headTypes, zLongVector tailTypes) : m_HeadBeadTypes(headTypes), m_TailBeadTypes(tailTypes), m_PolymerTotal(0)
 {
 	m_Cells.Clear();
 }
@@ -53,8 +51,6 @@ long CRaft::GetPolymerTotal()
 
 		for(czLongVectorIterator cIterBeadType=m_HeadBeadTypes.begin(); cIterBeadType!=m_HeadBeadTypes.end(); cIterBeadType++)
 		{
-			const long beadType = *cIterBeadType;
-
 			const long beadNo = count_if(lBeads.begin(), lBeads.end(), aaBeadType(*cIterBeadType));
 
 			m_PolymerTotal += beadNo;

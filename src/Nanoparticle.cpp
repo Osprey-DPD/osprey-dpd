@@ -94,13 +94,13 @@ CNanoparticle::CNanoparticle(BondVector vBonds) : m_id(++CNanoparticle::m_Nanopa
     
     double oldR = 0.0;
 	
-    for (long i=0; i<XVector.size(); i++)
+    for (long unsigned i=0; i<XVector.size(); i++)
     {
-        for (long j=i;j<XVector.size();j++)
+        for (long unsigned j=i;j<XVector.size();j++)
         {
             oldR=sqrt((XVector.at(i)-XVector.at(j))*(XVector.at(i)-XVector.at(j)) + 
-			          (YVector.at(i)-YVector.at(j))*(YVector.at(i)-YVector.at(j)) + 
-					  (ZVector.at(i)-ZVector.at(j))*(ZVector.at(i)-ZVector.at(j)));
+		(YVector.at(i)-YVector.at(j))*(YVector.at(i)-YVector.at(j)) + 
+		(ZVector.at(i)-ZVector.at(j))*(ZVector.at(i)-ZVector.at(j)));
 					  
             if (m_MaxWidth < oldR)
             {
@@ -111,7 +111,7 @@ CNanoparticle::CNanoparticle(BondVector vBonds) : m_id(++CNanoparticle::m_Nanopa
 	
     CalculateCM();
     
-	std::cout << "Nanoparticle " << GetId() << " has max diam: "<< m_MaxWidth << " and CM: " << GetXCM() << " " << GetYCM() << " " << GetZCM() << zEndl;
+    std::cout << "Nanoparticle " << GetId() << " has max diam: "<< m_MaxWidth << " and CM: " << GetXCM() << " " << GetYCM() << " " << GetZCM() << zEndl;
 
 }
 

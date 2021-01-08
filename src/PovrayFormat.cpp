@@ -88,7 +88,7 @@ void CPovrayFormat::SerializeHeader(zOutStream& os, const long beadTotal)
 	os << m_Target[1] << ", ";
 	os << m_Target[2] << " >	}" << zEndl << zEndl;
 
-	for(short int lno = 0; lno < m_vLightX.size(); lno++)
+	for(long unsigned int lno = 0; lno < m_vLightX.size(); lno++)
 	{
 		os << "light_source{ < ";
 		os << m_vLightX.at(lno) << ", ";

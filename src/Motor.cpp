@@ -231,11 +231,6 @@ void CMotor::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 
 	transform(m_pFuelSP->Begin(), m_pFuelSP->End(), m_pFuelDensity->Begin(), aaDensity(m_FuelHeadType));
 
-	for(short int iSlice = 0; iSlice<10; iSlice++)
-	{
-		double fuelDens		= m_pFuelDensity->GetData(iSlice);
-	}
-
 	// Is there any fuel in the neighbouring CNT cells?
 
 	zLongVector nnCellFuelProfile(nnCells.Size());

@@ -400,12 +400,8 @@ void CMicelle::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 
 		for(long m=0; m<m_VACTimeLag; m++)
 		{
-			double x = m_pVAC->GetAutoCorrValue(m);
-
 			zLongVector sams = m_pVAC->GetSampleTotals();
-			long total = sams.at(m);
-
-//			std::cout << "lag = " << m << " # samples =  " << total << "  C2(m) = " << x << zEndl;
+//			std::cout << "lag = " << m << " # samples =  " << sams.at(m) << "  C2(m) = " << m_pVAC->GetAutoCorrValue(m) << zEndl;
 		}
 
 		// Copy the data from the CAutoCorr object to a local profile

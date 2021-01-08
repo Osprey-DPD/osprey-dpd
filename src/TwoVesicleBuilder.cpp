@@ -48,9 +48,9 @@ CTwoVesicleBuilder::CTwoVesicleBuilder(zLongVector polymerTypes1,  zLongVector p
 {
 	for(short int i=0; i<2; i++)
 	{
-		m_XC[i]				= xc[i];
-		m_YC[i]				= yc[i]; 
-		m_ZC[i]				= zc[i];
+		m_XC[i]		= xc[i];
+		m_YC[i]		= yc[i]; 
+		m_ZC[i]		= zc[i];
 		m_OuterRadius[i]	= outerRadius[i];
 		m_InnerRadius[i]	= innerRadius[i];
 		m_Thickness[i]		= thickness[i];
@@ -91,10 +91,7 @@ CTwoVesicleBuilder::~CTwoVesicleBuilder()
 
 bool CTwoVesicleBuilder::Assemble(CInitialState &riState)
 {
-	long j = 0;
-	long ip = 0;
 	long index = 0;	// counter used everywhere below
-	long iBead = 0;
 	cPolymerVectorIterator iterPoly;
 	cBeadVectorIterator    iterBead;
 
@@ -141,7 +138,7 @@ bool CTwoVesicleBuilder::Assemble(CInitialState &riState)
 	vintPolymerTypes.clear();
 	nonVesiclePolymerTypes.clear();
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
 		if(find(m_PolymerTypes1.begin(), m_PolymerTypes1.end(), ip) != m_PolymerTypes1.end() ||
 		   find(m_PolymerTypes2.begin(), m_PolymerTypes2.end(), ip) != m_PolymerTypes2.end() ||
@@ -172,7 +169,7 @@ bool CTwoVesicleBuilder::Assemble(CInitialState &riState)
 	long firstPolymer = 0;
 	long lastPolymer  = 0;
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
 		lastPolymer += riState.GetPolymerTotalForType(ip);
 
@@ -209,7 +206,7 @@ bool CTwoVesicleBuilder::Assemble(CInitialState &riState)
 
 	zLongVector vAllFreeCNTCells(CNTXNo*CNTYNo*CNTZNo);
 
-	for(j=0; j<vAllFreeCNTCells.size(); j++)
+	for(long unsigned int j=0; j<vAllFreeCNTCells.size(); j++)
 	{
 		vAllFreeCNTCells.at(j) = 1;
 	}
@@ -327,7 +324,6 @@ bool CTwoVesicleBuilder::Assemble(CInitialState &riState)
 
 	long interiorSum1 = 0;
 	long interiorSum2 = 0;
-	long exteriorSum = 0;
 
 	for(xCellId=0; xCellId<riState.GetCNTXCellNo(); xCellId++)
 	{
@@ -385,7 +381,7 @@ bool CTwoVesicleBuilder::Assemble(CInitialState &riState)
 	zLongVector vFreeInterior1CNTCells;
 	zLongVector vFreeInterior2CNTCells;
 
-	for(j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
+	for(long j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
 	{
 		if(vAllFreeCNTCells.at(j) == 1)
 			vFreeCNTCells.push_back(j);
@@ -516,7 +512,6 @@ bool CTwoVesicleBuilder::Assemble(CInitialState &riState)
 				if(check != rCNTCellIndex)
 				{
 					std::cout << "Error assigning vesicle interior 1 coordinates" << zEndl;
-					long help = 1;
 				}
 
 				xp[0] = riState.GetCNTXCellWidth()*(ix + CCNTCell::GetRandomNo());
@@ -547,7 +542,6 @@ bool CTwoVesicleBuilder::Assemble(CInitialState &riState)
 				if(check != rCNTCellIndex)
 				{
 					std::cout << "Error assigning vesicle interior 2 coordinates" << zEndl;
-					long help = 1;
 				}
 
 				xp[0] = riState.GetCNTXCellWidth()*(ix + CCNTCell::GetRandomNo());

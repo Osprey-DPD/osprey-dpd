@@ -48,11 +48,11 @@ CSliceEnergy::CSliceEnergy(const ISimBox* pISimBox, bool bNormalize,
 	// lie outside the SimBox we adjust them to the SimBox size; and if the
 	// lower fraction is less than the upper we adjust them to select the whole SimBox.
 
-	if(m_LowerFraction < 0.0)
-		m_LowerFraction = 0.0;
+	if(m_LowerFraction < 0.0) {
+		m_LowerFraction = 0.0; }
 	
-	if(m_UpperFraction > 1.0)
-		m_UpperFraction = 1.0;
+	if(m_UpperFraction > 1.0) {
+		m_UpperFraction = 1.0; }
 
 	if(m_LowerFraction > m_UpperFraction)
 	{
@@ -115,9 +115,6 @@ CSliceEnergy::CSliceEnergy(const ISimBox* pISimBox, bool bNormalize,
 	{
 		CCNTCellSlice slice1(index, xn, yn, zn, pISimBox);
 
-		long firstTotal = slice1.GetCellsPerSlice();
-		long secondTotal = slice1.GetSize();
-
 		for(long cellIndex=0; cellIndex<slice1.GetSize(); cellIndex++)
 		{
 			CCNTCell* pCell = const_cast<CCNTCell*>(slice1.GetCell(cellIndex));
@@ -125,12 +122,7 @@ CSliceEnergy::CSliceEnergy(const ISimBox* pISimBox, bool bNormalize,
 			m_Cells.AddCell(pCell);
 			m_BeadTotal += pCell->CellBeadTotal();
 		}
-
 	}
-
-	long thirdTotal = m_Cells.Size();
-
-
 }
 
 // Do NOT delete any CNT cells here as we have only copied pointers from one container
@@ -157,7 +149,7 @@ void CSliceEnergy::UpdateState(CSimState& rSimState, const ISimBox* const pISimB
 	// Update the total number of beads in the region: although the number of cells
 	// is constant, beads can move in and out of the region
 
-	m_BeadTotal		  = 0;
+	m_BeadTotal	   = 0;
 	m_KineticEnergy   = 0.0;
 	m_PotentialEnergy = 0.0;
 	m_TotalEnergy	  = 0.0;
@@ -198,9 +190,9 @@ void CSliceEnergy::UpdateState(CSimState& rSimState, const ISimBox* const pISimB
 	CTimeSeriesData* const m_pTSD = new CTimeSeriesData(dataTotal);
 
 	m_pTSD->SetValue(0, pISimBox->GetCurrentTime(), "Time");
-	m_pTSD->SetValue(1, m_KineticEnergy,			"KE");
-	m_pTSD->SetValue(2, m_PotentialEnergy,			"PE");
-	m_pTSD->SetValue(3, m_TotalEnergy,				"totalE");
+	m_pTSD->SetValue(1, m_KineticEnergy,		"KE");
+	m_pTSD->SetValue(2, m_PotentialEnergy,	"PE");
+	m_pTSD->SetValue(3, m_TotalEnergy,		"totalE");
 
 	AddTimeSeriesData(m_pTSD);
 

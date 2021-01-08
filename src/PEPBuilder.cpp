@@ -34,33 +34,33 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CPEPBuilder::CPEPBuilder(const zLongVector&				blmPolymerTypes,
-									   const zLongVector&				blmReservoirTypes,
-									   const zDoubleVector&				blmUpperFractions,
-									   const PolymerCrossLinkVector&	blmCrossLinks,
-									   long blmx, long blmy, long blmz,
-									   double blmCentre, double blmThickness,
-									   bool bblmLinear, const bool bblmPatches[2], bool bblmPolymerise,
-									   double area, double l1, double l2, double bilayerCentre, 
-									   double upperHead, double lowerHead) : m_BLMPolymerTypes(blmPolymerTypes),
-															m_BLMReservoirTypes(blmReservoirTypes),
-															m_BLMUpperFractions(blmUpperFractions),
-															m_BLMCrossLinks(blmCrossLinks),
-															m_BLMX(blmx), m_BLMY(blmy), m_BLMZ(blmz),
-															m_BLMCentre(blmCentre),
-															m_BLMThickness(blmThickness),
-															m_bBLMLinearise(bblmLinear),
-															m_bBLMPolymerise(bblmPolymerise),
-															m_BilayerArea(area),
-															m_Bilayer1Length(l1),
-															m_Bilayer2Length(l2),
-															m_BilayerCentre(bilayerCentre),
-															m_BilayerUpperHead(upperHead),
-															m_BilayerLowerHead(lowerHead),
-															m_bBLMMonolayer(false),
-															m_BLMPolymerTotal(0),
-															m_BLMUpperTotal(0),
-															m_BLMLowerTotal(0)
+CPEPBuilder::CPEPBuilder(const zLongVector&  blmPolymerTypes,
+			const zLongVector&	blmReservoirTypes,
+			const zDoubleVector&  blmUpperFractions,
+			const PolymerCrossLinkVector&  blmCrossLinks,
+		        long blmx, long blmy, long blmz,
+		        double blmCentre, double blmThickness,
+			bool bblmLinear, const bool bblmPatches[2], bool bblmPolymerise,
+			double area, double l1, double l2, double bilayerCentre, 
+			double upperHead, double lowerHead) : m_BLMPolymerTypes(blmPolymerTypes),
+								m_BLMReservoirTypes(blmReservoirTypes),
+								m_BLMUpperFractions(blmUpperFractions),
+								m_BLMCrossLinks(blmCrossLinks),
+								m_BLMX(blmx), m_BLMY(blmy), m_BLMZ(blmz),
+								m_BLMCentre(blmCentre),
+								m_BLMThickness(blmThickness),
+								m_bBLMLinearise(bblmLinear),
+								m_bBLMPolymerise(bblmPolymerise),
+								m_BilayerArea(area),
+								m_Bilayer1Length(l1),
+								m_Bilayer2Length(l2),
+								m_BilayerCentre(bilayerCentre),
+								m_BilayerUpperHead(upperHead),
+								m_BilayerLowerHead(lowerHead),
+								m_bBLMMonolayer(false),
+								m_BLMPolymerTotal(0),
+								m_BLMUpperTotal(0),
+								m_BLMLowerTotal(0)
 {
 	m_bBLMPatches[0] = bblmPatches[0];
 	m_bBLMPatches[1] = bblmPatches[1];
@@ -76,16 +76,6 @@ CPEPBuilder::~CPEPBuilder()
 
 bool CPEPBuilder::Assemble(CInitialState& riState)
 {
-	// Declare some counters used everywhere below
-
-	long j			= 0;
-	long ip			= 0;
-	long index		= 0;	
-	long iBead		= 0;	
-	long iPolymer	= 0;
-	cPolymerVectorIterator iterPoly;
-	cBeadVectorIterator    iterBead;
-
 	// ****************************************
 	// Position the wall beads first because they cannot move and may be 
 	// bonded to beads in the bulk whose positions can be arranged so 
@@ -96,8 +86,6 @@ bool CPEPBuilder::Assemble(CInitialState& riState)
 		AssignWallBeadCoords(riState);
 	}
 
-
- 
 	// Copy the coordinates of all beads into the other bead arrays used to ensure
 	// that analysis of diffusion etc, is calculated from the initial bead positions.
 
@@ -113,3 +101,4 @@ bool CPEPBuilder::Assemble(CInitialState& riState)
 
 	return true;
 }
+

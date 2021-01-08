@@ -88,10 +88,7 @@ CVesicleFusionBuilder::~CVesicleFusionBuilder()
 
 bool CVesicleFusionBuilder::Assemble(CInitialState &riState)
 {
-	long j = 0;
-	long ip = 0;
 	long index = 0;	// counter used everywhere below
-	long iBead = 0;
 	cPolymerVectorIterator iterPoly;
 	cBeadVectorIterator    iterBead;
 
@@ -137,7 +134,7 @@ bool CVesicleFusionBuilder::Assemble(CInitialState &riState)
 	vesiclePolymerTypes.clear();
 	nonVesiclePolymerTypes.clear();
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
 		if(find(m_PolymerTypes1.begin(), m_PolymerTypes1.end(), ip) != m_PolymerTypes1.end())
 		{
@@ -151,7 +148,7 @@ bool CVesicleFusionBuilder::Assemble(CInitialState &riState)
 		}
 	}
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
 		if(find(vesiclePolymerTypes.begin(), vesiclePolymerTypes.end(), ip) == vesiclePolymerTypes.end())
 		{
@@ -159,9 +156,6 @@ bool CVesicleFusionBuilder::Assemble(CInitialState &riState)
 		}
 
 	}
-
-	long vesicleTypeNo		= vesiclePolymerTypes.size();
-	long nonVesicleTypeNo	= nonVesiclePolymerTypes.size();
 
 	// Copy the polymers in the CInitialState into a local vector for ease of access.
 	// We loop over all types of polymer adding them to a local vector if
@@ -172,15 +166,11 @@ bool CVesicleFusionBuilder::Assemble(CInitialState &riState)
 
 	vRandomPolymers.clear();
 
-	long t = vPolymers.size();
-
 	long firstPolymer = 0;
 	long lastPolymer  = 0;
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
-		long tt = riState.GetPolymerTotalForType(ip);
-
 		lastPolymer += riState.GetPolymerTotalForType(ip);
 
 		if(find(nonVesiclePolymerTypes.begin(), nonVesiclePolymerTypes.end(), ip) != nonVesiclePolymerTypes.end())
@@ -193,8 +183,6 @@ bool CVesicleFusionBuilder::Assemble(CInitialState &riState)
 
 		firstPolymer += riState.GetPolymerTotalForType(ip);
 	}
-
-	long randomPolymerTotal = vRandomPolymers.size();	// All polymers not in vesicle
 
 	// Exclude any CNT cells that contain wall beads. We just mark the cells whose
 	// indices are within the walls. We first set a flag in a vector showing that
@@ -209,7 +197,7 @@ bool CVesicleFusionBuilder::Assemble(CInitialState &riState)
 
 	zLongVector vAllFreeCNTCells(CNTXNo*CNTYNo*CNTZNo);
 
-	for(j=0; j<vAllFreeCNTCells.size(); j++)
+	for(long unsigned int j=0; j<vAllFreeCNTCells.size(); j++)
 	{
 		vAllFreeCNTCells.at(j) = 1;
 	}
@@ -269,8 +257,6 @@ bool CVesicleFusionBuilder::Assemble(CInitialState &riState)
 		}
 	}
 
-	long emptyCNTCells = vAllFreeCNTCells.size();
-
 	// Now exclude the CNT cells than contain beads within the vesicles
 
 	const double CNTXCellWidth = riState.GetCNTXCellWidth();
@@ -294,8 +280,6 @@ bool CVesicleFusionBuilder::Assemble(CInitialState &riState)
 				iz = static_cast<long>((*iterBead)->GetZPos()/CNTZCellWidth);		
 #endif
 
-				double zpos = (*iterBead)->GetZPos();
-
 				index = CNTXNo*(CNTYNo*iz+iy) + ix;
 
 				vAllFreeCNTCells.at(index) = 0;
@@ -303,13 +287,11 @@ bool CVesicleFusionBuilder::Assemble(CInitialState &riState)
 		}
 	}
 
-	emptyCNTCells = vAllFreeCNTCells.size();
-
 	// Now copy the remaining free CNT cell indices to the vFreeCNTCells vector
 
 	zLongVector vFreeCNTCells;
 
-	for(j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
+	for(long j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
 	{
 		if(vAllFreeCNTCells.at(j) == 1)
 			vFreeCNTCells.push_back(j);

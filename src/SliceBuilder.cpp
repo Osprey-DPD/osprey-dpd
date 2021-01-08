@@ -67,10 +67,8 @@ CSliceBuilder::CSliceBuilder(long slabTotal, long xn, long yn, long zn,
         {
             do 
             {
-                long slab = imm->first;
                 const zString polymerName =  imm->second;
-
-		        long polymerType = (*m_mPolymerTypes.find(polymerName)).second;
+		long polymerType = (*m_mPolymerTypes.find(polymerName)).second;
 
                 std::cout << " " << polymerName << " (type " << polymerType << ")";
 
@@ -159,8 +157,8 @@ bool CSliceBuilder::Assemble(CInitialState &riState)
         long polymerType =  in->second;
 
         exRegions.clear();          // Empty the container for the next polymer
-	    exRegions.push_back(0.0);   // and exclude the wall if present
-		exRegions.push_back(m_WallWidth);
+	exRegions.push_back(0.0);   // and exclude the wall if present
+        exRegions.push_back(m_WallWidth);
 
         // Now add excluded regions for all slabs that do NOT have the given 
         // polymer type in them. Note that this does not depend on the normal vector,
@@ -184,7 +182,6 @@ bool CSliceBuilder::Assemble(CInitialState &riState)
             {
                 do 
                 {
-                    long slab = imm->first;
                     const zString testName =  imm->second;
 
                     if(testName == polymerName)
@@ -212,13 +209,13 @@ bool CSliceBuilder::Assemble(CInitialState &riState)
         // End with the opposite wall if it exists
 
         exRegions.push_back(m_SimBoxWidth - m_WallWidth);
-		exRegions.push_back(m_SimBoxWidth);
+	exRegions.push_back(m_SimBoxWidth);
 
-	    // Fill the slabs with randomly-positioned polymers
+	// Fill the slabs with randomly-positioned polymers
 
-	    isRandomPolymerSlabs random(polymerType, exRegions, m_XN, m_YN, m_ZN);
+	isRandomPolymerSlabs random(polymerType, exRegions, m_XN, m_YN, m_ZN);
 
-	    random.Assemble(riState);
+	random.Assemble(riState);
     }
 
 	// Copy the coordinates of all beads into the other bead arrays used to ensure
