@@ -116,41 +116,40 @@ void xxProcess::ZeroProcessTotal()
 // note that we fake the user-assigned pid for now and make it a string version
 // of the id itself
 
-xxProcess::xxProcess() : m_id(++xxProcess::m_ProcessTotal), 
-						m_pid(ToString(m_id)),
-						m_Start(0), m_End(0), 
-						m_bProcessValid(true),
-						m_bInitialise(true), 
-						m_bIsModifiable(true),
-						m_bNeverModifiable(false),
-						m_pState(0)
+xxProcess::xxProcess() : m_pState(0), 
+			m_bIsModifiable(true),
+			m_bNeverModifiable(false),
+			m_id(++xxProcess::m_ProcessTotal), 
+			m_pid(ToString(m_id)),
+			m_Start(0), m_End(0), 
+			m_bProcessValid(true),
+			m_bInitialise(true)	
 {
 }
 
-xxProcess::xxProcess(bool bValid) : m_id(++xxProcess::m_ProcessTotal), 
-									m_pid(ToString(m_id)),
-									m_Start(0), m_End(0), 
-									m_bProcessValid(bValid),
-									m_bInitialise(true), 
-									m_bIsModifiable(true),
-						            m_bNeverModifiable(false),
-									m_pState(0)
+xxProcess::xxProcess(bool bValid) : m_pState(0), 
+					m_bIsModifiable(true),
+					m_bNeverModifiable(false),
+					m_id(++xxProcess::m_ProcessTotal), 
+					m_pid(ToString(m_id)),
+					m_Start(0), m_End(0), 
+					m_bProcessValid(bValid),
+					m_bInitialise(true)
 {
 }
 
 // Copying a process does not change its id. Also the same xxProcessState
 // object pointer is passed to the new xxProcess.
 
-xxProcess::xxProcess(const xxProcess& oldProcess) : xxBase(oldProcess), 
+xxProcess::xxProcess(const xxProcess& oldProcess) : xxBase(oldProcess), m_pState(oldProcess.m_pState),
+						      m_bIsModifiable(oldProcess.m_bIsModifiable),
+						      m_bNeverModifiable(oldProcess.m_bNeverModifiable),
                                                     m_id(oldProcess.m_id), 
-													m_pid(oldProcess.m_pid),
-													m_Start(oldProcess.m_Start),
-													m_End(oldProcess.m_End),
-													m_bProcessValid(oldProcess.m_bProcessValid),
-													m_bInitialise(oldProcess.m_bInitialise),
-													m_bIsModifiable(oldProcess.m_bIsModifiable),
-													m_bNeverModifiable(oldProcess.m_bNeverModifiable),
-													m_pState(oldProcess.m_pState)
+						      m_pid(oldProcess.m_pid),
+						      m_Start(oldProcess.m_Start),
+						      m_End(oldProcess.m_End),
+						      m_bProcessValid(oldProcess.m_bProcessValid),
+						      m_bInitialise(oldProcess.m_bInitialise)
 {
 }
 
@@ -254,7 +253,9 @@ bool xxProcess::SaveState()	const
 		return m_pState->Serialize();
 	}
 	else
+	{
 		return true;
+	}
 }
 
 // Public function to allow processes that are created internally as
@@ -344,11 +345,11 @@ void xxProcess::InternalSetModifiable(const xxCommand* const pCommand)
 	{
 		m_bIsModifiable = true;
 
-		CLogpcToggleProcessModificationStatus* pMsg = new CLogpcToggleProcessModificationStatus(pCmd->GetExecutionTime(), GetPid(), m_bIsModifiable);
+		new CLogpcToggleProcessModificationStatus(pCmd->GetExecutionTime(), GetPid(), m_bIsModifiable);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 
 #endif
@@ -366,11 +367,11 @@ void xxProcess::InternalSetUnmodifiable(const xxCommand* const pCommand)
 	{
 		m_bIsModifiable = false;
 
-		CLogpcToggleProcessModificationStatus* pMsg = new CLogpcToggleProcessModificationStatus(pCmd->GetExecutionTime(), GetPid(), m_bIsModifiable);
+		new CLogpcToggleProcessModificationStatus(pCmd->GetExecutionTime(), GetPid(), m_bIsModifiable);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 
 #endif
@@ -393,11 +394,11 @@ void xxProcess::InternalSetIrreversibleUnmodifiable(const xxCommand* const pComm
 		m_bNeverModifiable = true;
 		m_bIsModifiable    = false;
 
-		CLogpcProcessModificationForbidden* pMsg = new CLogpcProcessModificationForbidden(pCmd->GetExecutionTime(), pid);
+		new CLogpcProcessModificationForbidden(pCmd->GetExecutionTime(), pid);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 
 #endif

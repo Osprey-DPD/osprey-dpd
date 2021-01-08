@@ -117,8 +117,7 @@ bool CBLMVesicleBuilder::Assemble(CInitialState& riState)
 
 	// Declare some counters used everywhere below
 
-	unsigned long j	= 0;
-	long ip			= 0;
+	long ip		= 0;
 	long index		= 0;	
 	cPolymerVectorIterator iterPoly;
 	cBeadVectorIterator    iterBead;
@@ -234,7 +233,7 @@ bool CBLMVesicleBuilder::Assemble(CInitialState& riState)
 
 	zLongVector vAllFreeCNTCells(CNTXNo*CNTYNo*CNTZNo);
 
-	for(j=0; j<vAllFreeCNTCells.size(); j++)
+	for(long unsigned int j=0; j<vAllFreeCNTCells.size(); j++)
 	{
 		vAllFreeCNTCells.at(j) = 1;
 	}
@@ -553,7 +552,7 @@ bool CBLMVesicleBuilder::Assemble(CInitialState& riState)
 	zLongVector vFreeCNTCells;
 	zLongVector vFreeInteriorCNTCells;
 
-	for(j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
+	for(long int j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
 	{
 		if(vAllFreeCNTCells.at(j) == 1)
 			vFreeCNTCells.push_back(j);

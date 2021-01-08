@@ -946,8 +946,8 @@ void CMonitor::CalculateSingleBeadData()
 				const zString beadName = m_pSimState->cGetAnalysisState().GetBeadNameFromType(beadType);
 				const zString afterMsg = "MSD is negative after divide";
 
-				CLogNegativeBeadDiffusionCoefficient* pMsg = new CLogNegativeBeadDiffusionCoefficient(currentTime, beadName, beadType);
-				CLogTextMessage* pTextMsg = new CLogTextMessage(currentTime, afterMsg);
+				new CLogNegativeBeadDiffusionCoefficient(currentTime, beadName, beadType);
+				new CLogTextMessage(currentTime, afterMsg);
 			}
 		}
 	}
@@ -2823,8 +2823,6 @@ void CMonitor::UpdateBeadTypes()
 	// Update the local bead type counter, and use it to resize
 	// all other dependent local containers.
 
-	const long oldBeadTypeSize = m_BeadTypeSize;
-
 	m_BeadTypeSize = m_pSimState->GetBeadTypeTotal();
 
     const zString beadName = m_pSimState->cGetAnalysisState().GetBeadNameFromType(m_BeadTypeSize-1);
@@ -3022,7 +3020,7 @@ void CMonitor::InternalTogglePolymerDisplay(const zString polymerName) const
 
 void CMonitor::Saveud() const 
 {
-    CLogud* pMsg = new CLogud(GetCurrentTime(), "b814faa7-de6a-4d49-9296-4d3661916716");
+    new CLogud(GetCurrentTime(), "b814faa7-de6a-4d49-9296-4d3661916716");
 }
 
 // Function to return a pointer to the last saved density state. This can be used

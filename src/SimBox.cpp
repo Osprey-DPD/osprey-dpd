@@ -434,7 +434,7 @@ CSimBox::CSimBox(CSimState& simState, const ISimBox* const pISimBox) : ISimState
         std::cout << "Proc " << GetRank() << " unable to assign beads to CNT Cells - aborting run" << zEndl;
 		m_SimTime = 1;
 #else
-        CLogSimErrorTrace* pMsg = new CLogSimErrorTrace(m_SimTime, "Unable to assign beads to cells: stopping run");
+        new CLogSimErrorTrace(m_SimTime, "Unable to assign beads to cells: stopping run");
 	    AddCommandToFront(new ccStopNoSave(m_SimTime+1));
 #endif
     }
@@ -445,7 +445,7 @@ CSimBox::CSimBox(CSimState& simState, const ISimBox* const pISimBox) : ISimState
         std::cout << "Proc " << GetRank() << " unable to assign wall beads to CNT Cells - aborting run" << zEndl;
 		m_SimTime = 1;
 #else
-        CLogSimErrorTrace* pMsg = new CLogSimErrorTrace(m_SimTime, "Unable to assign wall beads to cells: stopping run");
+        new CLogSimErrorTrace(m_SimTime, "Unable to assign wall beads to cells: stopping run");
 		AddCommandToFront(new ccStopNoSave(m_SimTime+1));
 #endif
     }
@@ -1660,8 +1660,6 @@ void CSimBox::FreezeBeadsInSphericalShell(const xxCommand *const pCommand)
 
 	const double shellOuterRadius	= shellInnerRadius + shellThickness;
 
-	long index, ix, iy, iz;
-
 	double dx, dy, dz;
 	double radius = 0.0;
 
@@ -1678,19 +1676,12 @@ void CSimBox::FreezeBeadsInSphericalShell(const xxCommand *const pCommand)
 		dx = (*iterBead)->GetXPos() - m_HalfSimBoxXLength;
 		dy = (*iterBead)->GetYPos() - m_HalfSimBoxYLength;
 
-		ix = static_cast<long>((*iterBead)->GetXPos()/m_CNTXCellWidth);
-		iy = static_cast<long>((*iterBead)->GetYPos()/m_CNTYCellWidth);
-
 #if SimDimension == 2
-		iz = 0;
 		radius = sqrt(dx*dx + dy*dy);
 #elif SimDimension == 3
 		dz = (*iterBead)->GetZPos() - m_HalfSimBoxZLength;
-		iz = static_cast<long>((*iterBead)->GetZPos()/m_CNTZCellWidth);	
 		radius = sqrt(dx*dx + dy*dy + dz*dz);
 #endif
-
-		index = m_CNTXCellNo*(m_CNTYCellNo*iz+iy) + ix;
 
 		if(radius > shellInnerRadius && radius < shellOuterRadius)
 		{
@@ -3566,7 +3557,7 @@ void CSimBox::SetBondStrength(const xxCommand* const pCommand)
 
 void CSimBox::ToggleBeadStressContribution(const xxCommand* const pCommand)
 {
-	const ccToggleBeadStressContribution* const pCmd = dynamic_cast<const ccToggleBeadStressContribution*>(pCommand);
+//	const ccToggleBeadStressContribution* const pCmd = dynamic_cast<const ccToggleBeadStressContribution*>(pCommand);
 
 	if(IsBeadStressAdded())
 	{
@@ -3590,7 +3581,7 @@ void CSimBox::ToggleBeadStressContribution(const xxCommand* const pCommand)
 
 void CSimBox::ToggleBondStressContribution(const xxCommand* const pCommand)
 {
-	const ccToggleBondStressContribution* const pCmd = dynamic_cast<const ccToggleBondStressContribution*>(pCommand);
+//	const ccToggleBondStressContribution* const pCmd = dynamic_cast<const ccToggleBondStressContribution*>(pCommand);
 
 	if(IsBondStressAdded())
 	{
@@ -3614,7 +3605,7 @@ void CSimBox::ToggleBondStressContribution(const xxCommand* const pCommand)
 
 void CSimBox::ToggleBondPairStressContribution(const xxCommand* const pCommand)
 {
-	const ccToggleBondPairStressContribution* const pCmd = dynamic_cast<const ccToggleBondPairStressContribution*>(pCommand);
+//	const ccToggleBondPairStressContribution* const pCmd = dynamic_cast<const ccToggleBondPairStressContribution*>(pCommand);
 
 	if(IsBondPairStressAdded())
 	{
@@ -4257,7 +4248,6 @@ void CSimBox::SetCommandTimer(const xxCommand* const pCommand)
 	const ccSetCommandTimer* const pCmd = dynamic_cast<const ccSetCommandTimer*>(pCommand);
 
 	const long delay			= pCmd->GetDelay();
-	const long commandTotal		= pCmd->GetCommandTotal();
 	CommandSequence commands	= pCmd->GetCommands();
 
 	// Loop over the payload of commands scheduling each one for execution
@@ -5309,8 +5299,6 @@ void CSimBox::FreezeBeadsInTarget(const xxCommand* const pCommand)
 
 	if(pCmdTarget)
 	{
-		const long beadTotal		= pCmdTarget->GetBeadTotal();
-		const long beadType         = pCmdTarget->GetCurrentBeadType();
 		const long originalBeadType = pCmdTarget->GetOriginalBeadType();
 		const zString beadName      = GetBeadNameFromType(originalBeadType);
 
@@ -5352,8 +5340,6 @@ void CSimBox::UnFreezeBeadsInTarget(const xxCommand* const pCommand)
 
 	if(pCmdTarget)
 	{
-		const long beadTotal		= pCmdTarget->GetBeadTotal();
-		const long beadType         = pCmdTarget->GetCurrentBeadType();
 		const long originalBeadType = pCmdTarget->GetOriginalBeadType();
 		const zString beadName      = GetBeadNameFromType(originalBeadType);
 

@@ -131,11 +131,10 @@ protected:
 	class isBilayer
 	{
 	public:
-		isBilayer(const zLongVector& polymerTypes, long Xn, long Yn, long Zn,
-				  double centre, double thickness, 
-				  bool bLinear, const zDoubleVector& upperFractions,
+		isBilayer(const zLongVector& polymerTypes, const zDoubleVector& upperFractions,
+		                 long Xn, long Yn, long Zn, double centre, double thickness,
 				  double area, double length1, double length2,
-				  double upperHead, double lowerHead);
+				  double upperHead, double lowerHead, bool bLinear);
 
 		isBilayer(const zLongVector& polymerTypes, const zDoubleVector& upperFractions,
 				  long Xn, long Yn, long Zn, double centre, double thickness, 
@@ -151,6 +150,7 @@ protected:
 	// Local data relating to construction of a bilayer
 
 		const zLongVector &  m_PolymerTypes;	// Polymer types present in bilayer
+		const zDoubleVector& m_UpperFractions;	// Fractions of polymers in upper monolayer
 		const long   m_X;
 		const long   m_Y;						// Normal to bilayer
 		const long	 m_Z;
@@ -165,7 +165,6 @@ protected:
 		const long	 m_LowerTotal;
 		const bool	 m_bMonolayer;				// Flag showing whether all polymers are in one monolayer
 		const bool   m_bLinearise;				// Flag showing whether polymers are to be linearised
-		const zDoubleVector& m_UpperFractions;	// Fractions of polymers in upper monolayer
         
 		      bool   m_bPatches[2];				// Flag showing if polymers are randomly distributed
 

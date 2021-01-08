@@ -39,26 +39,26 @@ CFusionLamellaBuilder::CFusionLamellaBuilder(zLongVector polymerTypes1,	zLongVec
 							double area, double l1, double l2, 
 							const double bilayercentre[2], 
 							const double lowerHead[2], const double upperHead[2]) : m_PolymerTypes1(polymerTypes1),
-																  m_PolymerTypes2(polymerTypes2),
-																  m_X(x), m_Y(y), m_Z(z),
-																  m_bLinearise(bLinear),
-																  m_UpperFractions(upperFractions),
-																  m_BilayerArea(area),
-																  m_Bilayer1Length(l1),
-																  m_Bilayer2Length(l2)
+														m_PolymerTypes2(polymerTypes2),
+													        m_X(x), m_Y(y), m_Z(z),
+														m_bLinearise(bLinear),
+														m_UpperFractions(upperFractions),
+														m_BilayerArea(area),
+														m_Bilayer1Length(l1),
+														m_Bilayer2Length(l2)
 {
 	for(short int i=0; i<2; i++)
 	{
-		m_Centre[i]			= centre[i];
+		m_Centre[i]		= centre[i];
 		m_Thickness[i]		= thickness[i];
 		m_bPatches[i]		= false;		// unused flags needed by CBuilder::isBilayer
 		m_BilayerCentre[i]	= bilayercentre[i];
 		m_UpperHead[i]		= upperHead[i];
 		m_LowerHead[i]		= lowerHead[i];
-		m_bMonolayer[i]		= false;
+		m_bMonolayer[i]	= false;
 		m_PolymerTotal[i]	= 0;
-		m_UpperTotal[i]		= 0;
-		m_LowerTotal[i]		= 0;
+		m_UpperTotal[i]	= 0;
+		m_LowerTotal[i]	= 0;
 	}
 }
 
@@ -78,10 +78,6 @@ CFusionLamellaBuilder::~CFusionLamellaBuilder()
 
 bool CFusionLamellaBuilder::Assemble(CInitialState& riState)
 {
-	short int i		= 0;
-	long iBead		= 0;
-	long iPolymer	= 0;
-
 	// ****************************************
 	// Position the wall beads first because they cannot move and may be 
 	// bonded to beads in the bulk whose positions can be arranged so 
@@ -96,51 +92,51 @@ bool CFusionLamellaBuilder::Assemble(CInitialState& riState)
 	// We do the lower bilayer first but check the upper monolayer in each bilayer first.
 
 	m_PolymerTotal[0]	= 0;	// Lower bilayer in SimBox
-	m_UpperTotal[0]		= 0;	// Upper monolayer in lower bilayer
-	m_LowerTotal[0]		= 0;	// Lower monolayer in lower bilayer
+	m_UpperTotal[0]	= 0;	// Upper monolayer in lower bilayer
+	m_LowerTotal[0]	= 0;	// Lower monolayer in lower bilayer
 
-	for(iPolymer=0; iPolymer<m_PolymerTypes1.size(); iPolymer++)
+	for(long unsigned int iPolymer=0; iPolymer<m_PolymerTypes1.size(); iPolymer++)
 	{
 		long polyNo = riState.GetPolymerTotalForType(m_PolymerTypes1.at(iPolymer));
 		long upperNo = static_cast<long>(m_UpperFractions.at(iPolymer)*polyNo);
 
 		m_PolymerTotal[0]	+= polyNo;
-		m_UpperTotal[0]		+= upperNo;
-		m_LowerTotal[0]		+= (polyNo - upperNo);
+		m_UpperTotal[0]	+= upperNo;
+		m_LowerTotal[0]	+= (polyNo - upperNo);
 	}
 
 	m_PolymerTotal[1]	= 0;	// Upper bilayer in SimBox
-	m_UpperTotal[1]		= 0;	// Upper monolayer in upper bilayer
-	m_LowerTotal[1]		= 0;	// Lower monolayer in upper bilayer
+	m_UpperTotal[1]	= 0;	// Upper monolayer in upper bilayer
+	m_LowerTotal[1]	= 0;	// Lower monolayer in upper bilayer
 
-	for(iPolymer=0; iPolymer<m_PolymerTypes2.size(); iPolymer++)
+	for(long unsigned int iPolymer=0; iPolymer<m_PolymerTypes2.size(); iPolymer++)
 	{
 		long polyNo = riState.GetPolymerTotalForType(m_PolymerTypes2.at(iPolymer));
 		long upperNo = static_cast<long>(m_UpperFractions.at(iPolymer)*polyNo);
 
 		m_PolymerTotal[1]	+= polyNo;
-		m_UpperTotal[1]		+= upperNo;
-		m_LowerTotal[1]		+= (polyNo - upperNo);
+		m_UpperTotal[1]	+= upperNo;
+		m_LowerTotal[1]	+= (polyNo - upperNo);
 	}
 
 	// If either monolayer in either bilayer is empty recalculate the free space 
 	// outside the bilayer to be filled with non-bilayer polymers.
 
-	for(i=0; i<2; i++)
+	for(unsigned int i=0; i<2; i++)
 	{
-		if(m_UpperTotal[i] == 0)			// Upper monolayer empty
+		if(m_UpperTotal[i] == 0)	// Upper monolayer empty
 		{
-			m_bMonolayer[i]	= true;
+			m_bMonolayer[i] = true;
 			m_UpperHead[i]	= m_BilayerCentre[i];
 		}
 		else if(m_LowerTotal[i] == 0)
 		{
-			m_bMonolayer[i]	= true;
+			m_bMonolayer[i] = true;
 			m_LowerHead[i]	= m_BilayerCentre[i];
 		}
 		else
 		{
-			m_bMonolayer[i]	= false;
+			m_bMonolayer[i] = false;
 		}
 	}
 

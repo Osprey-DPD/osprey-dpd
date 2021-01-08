@@ -75,8 +75,6 @@ CFusionPoreBuilder::~CFusionPoreBuilder()
 
 bool CFusionPoreBuilder::Assemble(CInitialState& riState)
 {
-	long iBead;
-
 	// ****************************************
 	// Position the wall beads first because they cannot move and may be 
 	// bonded to beads in the bulk whose positions can be arranged so 
@@ -90,21 +88,21 @@ bool CFusionPoreBuilder::Assemble(CInitialState& riState)
 	// Create the first bilayer: note that the m_BilayerCentre[] gives the
 	// coordinates in bead diameters wherease the m_Centre[] are fractions.
 
-	isBilayer bilayer1(m_PolymerTypes1, m_X, m_Y, m_Z, 
+	isBilayer bilayer1(m_PolymerTypes1, m_UpperFractions, 
+	                                  m_X, m_Y, m_Z, 
 					   m_BilayerCentre[0], m_Thickness[0], 
-					   m_bLinearise, m_UpperFractions, 
 					   m_BilayerArea, m_Bilayer1Length, m_Bilayer2Length,
-					   m_LowerHead[0], m_UpperHead[0]);
+					   m_LowerHead[0], m_UpperHead[0],  m_bLinearise);
 
 	bilayer1.Assemble(riState);
 
 	// Create the second bilayer
 
-	isBilayer bilayer2(m_PolymerTypes2, m_X, m_Y, m_Z, 
+	isBilayer bilayer2(m_PolymerTypes2, m_UpperFractions, 
+	                                  m_X, m_Y, m_Z, 
 					   m_BilayerCentre[1], m_Thickness[1], 
-					   m_bLinearise, m_UpperFractions, 
 					   m_BilayerArea, m_Bilayer1Length, m_Bilayer2Length,
-					   m_LowerHead[1], m_UpperHead[1]);
+					   m_LowerHead[1], m_UpperHead[1], m_bLinearise);
 
 	bilayer2.Assemble(riState);
 
@@ -199,7 +197,7 @@ bool CFusionPoreBuilder::Assemble(CInitialState& riState)
 	vcm[1] = 0.0;
 	vcm[2] = 0.0;
 
-	for(iBead=0; iBead<riState.GetBeadTotal(); iBead++)
+	for(long int iBead=0; iBead<riState.GetBeadTotal(); iBead++)
 	{
 		index	= static_cast<long>(rvelDist.size()*CCNTCell::GetRandomNo());
 		vmag	= rvelDist.at(index);
@@ -219,23 +217,22 @@ bool CFusionPoreBuilder::Assemble(CInitialState& riState)
 		velZDist.at(iBead) = vp[2];
 	}
 
-	double vmean[3], v2mean[3], var[3];
+	double vmean[3], v2mean[3];
 
-	for(short i=0; i<3; i++)
+	for(short int i=0; i<3; i++)
 	{
 		vcm[i]	   /= static_cast<double>(riState.GetBeadTotal());
 		vmean[i]	= 0.0;
 		v2mean[i]	= 0.0;
-		var[i]		= 0.0;
 	}
 
 	// remove CM velocity from bead velocities
 
 	double vtotal = 0.0;
 
-	for(iBead=0; iBead<riState.GetBeadTotal(); iBead++)
+	for(long int iBead=0; iBead<riState.GetBeadTotal(); iBead++)
 	{
-		velXDist.at(iBead)	-= vcm[0];
+		velXDist.at(iBead)  -= vcm[0];
 		velYDist.at(iBead)  -= vcm[1];
 		velZDist.at(iBead)  -= vcm[2];
 
@@ -249,10 +246,10 @@ bool CFusionPoreBuilder::Assemble(CInitialState& riState)
 	// finally normalize the velocities to the required temperature, 
 	// calculate the mean and variance, and assign the bead velocities
 
-	for(iBead=0; iBead<riState.GetBeadTotal(); iBead++)
+	for(long int iBead=0; iBead<riState.GetBeadTotal(); iBead++)
 	{
-		velXDist.at(iBead)	= sqrt(riState.GetkT())*velXDist.at(iBead)/vtotal;
-		velYDist.at(iBead)	= sqrt(riState.GetkT())*velYDist.at(iBead)/vtotal;
+		velXDist.at(iBead)  = sqrt(riState.GetkT())*velXDist.at(iBead)/vtotal;
+		velYDist.at(iBead)  = sqrt(riState.GetkT())*velYDist.at(iBead)/vtotal;
 		velZDist.at(iBead)  = 0.0;
 
 		(riState.GetBeads()).at(iBead)->SetXMom(velXDist.at(iBead));
@@ -268,15 +265,19 @@ bool CFusionPoreBuilder::Assemble(CInitialState& riState)
 		v2mean[2] += velZDist.at(iBead)*velZDist.at(iBead);
 	}
 
-	for(short j=0; j<3; j++)
+	for(short int j=0; j<3; j++)
 	{
-		vmean[j]  =  vmean[j]/static_cast<double>(riState.GetBeadTotal());
+		vmean[j]  = vmean[j]/static_cast<double>(riState.GetBeadTotal());
 		v2mean[j] = v2mean[j]/static_cast<double>(riState.GetBeadTotal());
-		var[j]    = v2mean[j] - vmean[j]*vmean[j];
 	}
 
 
 #ifdef TraceOn
+	double var[3];
+	var[0] = v2mean[0] - vmean[0]*vmean[0];
+	var[1] = v2mean[1] - vmean[1]*vmean[1];
+	var[2] = v2mean[2] - vmean[2]*vmean[2];
+	
 	Trace("Initial vel distn");
 	TraceVector("Mean Vel      = ", vmean[0],  vmean[1],  vmean[2]);
 	TraceVector("Mean Sq Vel   = ", v2mean[0], v2mean[1], v2mean[2]);

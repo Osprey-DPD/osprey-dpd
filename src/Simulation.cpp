@@ -378,7 +378,7 @@ bool CSimulation::Initialize()
 
 	if(!m_pSimState->AssembleP())
 	{
-		CLogSimISError* pMsg = new CLogSimISError(0);
+		new CLogSimISError(0);
 		return false;
 	}
 
@@ -397,7 +397,7 @@ bool CSimulation::Initialize()
 	if(!m_pInputData->GetInputData(m_iFileName))
 	{
         // We cannot create an error message yet
-//		CLogSimCDError* pMsg = new CLogSimCDError(0);
+//		new CLogSimCDError(0);
 		return false;
 	}
 
@@ -405,7 +405,7 @@ bool CSimulation::Initialize()
 
 	if(!m_pSimState->Assemble())
 	{
-		CLogSimISError* pMsg = new CLogSimISError(0);
+		CLogSimISError(0);
 		return false;
 	}
 

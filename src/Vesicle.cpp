@@ -429,18 +429,6 @@ void CVesicle::UpdateState(CSimState &rSimState, const ISimBox *const pISimBox)
 	m_InertiaTensor.at(6) = m_InertiaTensor.at(2);
 	m_InertiaTensor.at(7) = m_InertiaTensor.at(5);
 
-	// Output the tensor for debug
-
-	double a11 = m_InertiaTensor.at(0);
-	double a12 = m_InertiaTensor.at(1);
-	double a13 = m_InertiaTensor.at(2);
-	double a21 = m_InertiaTensor.at(3);
-	double a22 = m_InertiaTensor.at(4);
-	double a23 = m_InertiaTensor.at(5);
-	double a31 = m_InertiaTensor.at(6);
-	double a32 = m_InertiaTensor.at(7);
-	double a33 = m_InertiaTensor.at(8);
-
 	// Diagonalise the inertia tensor using the CDiagonaliseMatrix class.
 	// The order of the symmetric matrix is passed in to the constructor.
  

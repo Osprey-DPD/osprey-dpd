@@ -103,9 +103,6 @@ CFreeLamellaBuilder::~CFreeLamellaBuilder()
 
 bool CFreeLamellaBuilder::Assemble(CInitialState& riState)
 {
-	long iBead		= 0;	// counter used everywhere below
-	long iPolymer	= 0;	// counter used everywhere below
-
 	// ****************************************
 	// Position the wall beads first because they cannot move and may be 
 	// bonded to beads in the bulk whose positions can be arranged so 
@@ -126,7 +123,7 @@ bool CFreeLamellaBuilder::Assemble(CInitialState& riState)
 	m_UpperTotal	= 0;
 	m_LowerTotal	= 0;
 
-	for(iPolymer=0; iPolymer<m_PolymerTypes.size(); iPolymer++)
+	for(long unsigned int iPolymer=0; iPolymer<m_PolymerTypes.size(); iPolymer++)
 	{
 		long polyNo = riState.GetPolymerTotalForType(m_PolymerTypes.at(iPolymer));
 		long upperNo = static_cast<long>(m_UpperFractions.at(iPolymer)*polyNo);
@@ -156,15 +153,16 @@ bool CFreeLamellaBuilder::Assemble(CInitialState& riState)
 
 	// Check the contents of the cross-links
 
-	for(cPolymerCrossLinkIterator iterLink=m_CrossLinks.begin(); iterLink!=m_CrossLinks.end(); iterLink++)
+/*	for(cPolymerCrossLinkIterator iterLink=m_CrossLinks.begin(); iterLink!=m_CrossLinks.end(); iterLink++)
 	{
 		const zString name	= (*iterLink)->GetName();
-		double fraction		= (*iterLink)->GetFraction();
+		double fraction	= (*iterLink)->GetFraction();
 		long position		= (*iterLink)->GetPosition();
-		long type			= (*iterLink)->GetType();
+		long type		= (*iterLink)->GetType();
 		double spring		= (*iterLink)->GetSpringConstant();
 		double length		= (*iterLink)->GetUnstretchedLength();
 	}
+*/
 
 
 	// Create a bilayer
@@ -192,7 +190,7 @@ bool CFreeLamellaBuilder::Assemble(CInitialState& riState)
 
 	nonBilayerPolymerTypes.clear();
 
-	for(iPolymer=0; iPolymer<riState.GetPolymerTypeTotal(); iPolymer++)
+	for(long int iPolymer=0; iPolymer<riState.GetPolymerTypeTotal(); iPolymer++)
 	{
 		if(find(m_PolymerTypes.begin(), m_PolymerTypes.end(), iPolymer) == m_PolymerTypes.end())
 		{

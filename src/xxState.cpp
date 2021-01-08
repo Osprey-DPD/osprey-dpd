@@ -26,22 +26,16 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 // Constructor for use when the derived class wants to store the run id.
 
 xxState::xxState(zString FileName, bool IOFlag, long currentTime, 
-				 const zString runId) : xxFile(FileName, IOFlag),
-									    m_RunId(runId),
-									    m_CurrentTime(currentTime)																		
+		const zString runId) : xxFile(FileName, IOFlag),  m_CurrentTime(currentTime), m_RunId(runId)
 {
 
 }
-
 // Constructor for derived classes that do not store the run id.
 
-xxState::xxState(zString FileName, bool IOFlag, long currentTime) : xxFile(FileName, IOFlag),
-																	m_RunId(""),
-																	m_CurrentTime(currentTime)																		
+xxState::xxState(zString FileName, bool IOFlag, long currentTime) : xxFile(FileName, IOFlag), m_CurrentTime(currentTime), m_RunId("")
 {
 
 }
-
 
 xxState::~xxState()
 {

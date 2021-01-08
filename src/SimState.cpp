@@ -48,14 +48,14 @@ CSimState::CSimState(ISimulation* pISim, const CInputData& rInputData) : m_pISim
 													m_bIsShearOn(rInputData.IsShearPresent()),
 													m_bIsActiveBondsOn(false),
 													m_bIsBeadChargeOn(false),
-													m_bIsDPDBeadConsForceZero(false),
-													m_bIsDPDBeadForceZero(false),
-													m_bIsDPDBeadThermostatZero(false),
 													m_bIsBeadStressAdded(true),
 													m_bIsBeadChargeStressAdded(false),
 													m_bIsBondStressAdded(true),
 													m_bIsBondPairStressAdded(true),
 													m_bEnergyOutput(false),
+													m_bIsDPDBeadConsForceZero(false),
+													m_bIsDPDBeadForceZero(false),
+													m_bIsDPDBeadThermostatZero(false),
 													m_bRenormaliseMomenta(false)
 {
 	// Initialise the random number generator prior to any possible use. A valid 
@@ -180,14 +180,14 @@ CSimState::CSimState(const CInputData& rInputData) : m_pISimulation(0),
 													m_bIsShearOn(rInputData.IsShearPresent()),
 													m_bIsActiveBondsOn(false),
 													m_bIsBeadChargeOn(false),
-													m_bIsDPDBeadConsForceZero(false),
-													m_bIsDPDBeadForceZero(false),
-													m_bIsDPDBeadThermostatZero(false),
 													m_bIsBeadStressAdded(true),
 													m_bIsBeadChargeStressAdded(false),
 													m_bIsBondStressAdded(true),
 													m_bIsBondPairStressAdded(true),
 													m_bEnergyOutput(false),
+													m_bIsDPDBeadConsForceZero(false),
+													m_bIsDPDBeadForceZero(false),
+													m_bIsDPDBeadThermostatZero(false),
 													m_bRenormaliseMomenta(false)
 {
 	// Initialise the random number generator prior to any possible use. A valid 

@@ -150,7 +150,7 @@ bool CRandomBuilder::Assemble(CInitialState& riState)
 
 		if(xp[0] > riState.GetSimBoxXLength())		// Bead outside box
 		{
-			CLogBuilderError* pMsg = new CLogBuilderError(0, "Bead "+ ToString(i) +" X coord outside box");
+			new CLogBuilderError(0, "Bead "+ ToString(i) +" X coord outside box");
 			return ErrorTrace("Error creating random initial state");
 		}
 		else if(riState.GetSimBoxXLength() - xp[0] < m_CoordErrorLimit)	// Bead just within box
@@ -158,7 +158,7 @@ bool CRandomBuilder::Assemble(CInitialState& riState)
 
 		if(xp[1] > riState.GetSimBoxYLength())		// Bead outside box
 		{
-			CLogBuilderError* pMsg = new CLogBuilderError(0, "Bead "+ ToString(i) +" Y coord outside box");
+			new CLogBuilderError(0, "Bead "+ ToString(i) +" Y coord outside box");
 			return ErrorTrace("Error creating random initial state");
 		}
 		else if(riState.GetSimBoxYLength() - xp[1] < m_CoordErrorLimit)	// Bead just within box
@@ -191,7 +191,7 @@ bool CRandomBuilder::Assemble(CInitialState& riState)
 
 		if(xp[2] > riState.GetSimBoxZLength())		// Bead outside box
 		{
-			CLogBuilderError* pMsg = new CLogBuilderError(0, "Bead "+ ToString(i) +" Z coord outside box");
+			new CLogBuilderError(0, "Bead "+ ToString(i) +" Z coord outside box");
 			return ErrorTrace("Error creating random initial state");
 		}
 		else if(riState.GetSimBoxZLength() - xp[2] < m_CoordErrorLimit)	// Bead just within box
@@ -399,7 +399,7 @@ bool CRandomBuilder::Assemble(CInitialState& riState)
 	// Write the initial velocity distribution to the CLogState object using
 	// a CLogVelDistMessage object. And only write it to the screen in debug.
 
-	CLogVelDistMessage* pMsg = new CLogVelDistMessage(0, riState.GetkT(), vmean, v2mean, var);
+	new CLogVelDistMessage(0, riState.GetkT(), vmean, v2mean, var);
 
 #ifdef TraceOn
 	Trace("Initial vel distn");

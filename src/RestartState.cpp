@@ -496,12 +496,12 @@ bool CRestartState::CheckBeadWithinBox(long id, long type, double& xp, double& y
     if(xp > m_SimBoxXLength) // Bead outside box
 	{
         bWithinBox = false;
-		CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") X coord " + ToString(xp) + " outside box");
+		new CLogRestartStateBuilderError(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") X coord " + ToString(xp) + " outside box");
     }
 	else if(xp > m_SimBoxXMinusEpsilon || xp < m_CoordErrorLimit)	// Bead close to boundary
     {
         if(AreWarningMessagesLogged())
- 		    CLogRestartStateBuilderWarning* pMsg = new CLogRestartStateBuilderWarning(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") X coord " + ToString(xp) + " shifted to origin");
+ 		    new CLogRestartStateBuilderWarning(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") X coord " + ToString(xp) + " shifted to origin");
 
         xp = m_CoordErrorLimit;
    }
@@ -509,12 +509,12 @@ bool CRestartState::CheckBeadWithinBox(long id, long type, double& xp, double& y
 	if(yp > m_SimBoxYLength)
 	{
         bWithinBox = false;
-		CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") Y coord " + ToString(yp) + " outside box");
+		new CLogRestartStateBuilderError(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") Y coord " + ToString(yp) + " outside box");
 	}
 	else if(yp > m_SimBoxYMinusEpsilon || yp < m_CoordErrorLimit)	// Bead close to boundary
     {
         if(AreWarningMessagesLogged())
-            CLogRestartStateBuilderWarning* pMsg = new CLogRestartStateBuilderWarning(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") Y coord " + ToString(yp) + " shifted to origin");
+            new CLogRestartStateBuilderWarning(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") Y coord " + ToString(yp) + " shifted to origin");
 
         yp = m_CoordErrorLimit;
     }
@@ -522,12 +522,12 @@ bool CRestartState::CheckBeadWithinBox(long id, long type, double& xp, double& y
 	if(zp > m_SimBoxZLength)
 	{
         bWithinBox = false;
-		CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") Z coord " + ToString(zp) + " outside box");
+		new CLogRestartStateBuilderError(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") Z coord " + ToString(zp) + " outside box");
 	}
 	else if(zp > m_SimBoxZMinusEpsilon || zp < m_CoordErrorLimit)	// Bead close to boundary
     {
         if(AreWarningMessagesLogged())
- 		    CLogRestartStateBuilderWarning* pMsg = new CLogRestartStateBuilderWarning(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") Z coord " + ToString(zp) + " shifted to origin");
+ 		    new CLogRestartStateBuilderWarning(m_CurrentTime, "Bead "+ ToString(id) + " (type " + ToString(type) + ") Z coord " + ToString(zp) + " shifted to origin");
 
         zp = m_CoordErrorLimit;
     }

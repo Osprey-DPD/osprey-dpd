@@ -75,7 +75,6 @@ CMultiVesicleBuilder::~CMultiVesicleBuilder()
 
 bool CMultiVesicleBuilder::Assemble(CInitialState &riState)
 {
-	long j = 0;
 	long ip = 0;
 	long index = 0;	// counter used everywhere below
 	cPolymerVectorIterator iterPoly;
@@ -114,8 +113,6 @@ bool CMultiVesicleBuilder::Assemble(CInitialState &riState)
 			nonVesiclePolymerTypes.push_back(ip);
 		}	
 	}
-
-	long nonVesicleTypeNo = nonVesiclePolymerTypes.size();
 
 	// Copy the polymers in the CInitialState into a local vector for ease of access.
 	// We loop over all types of polymer adding them to a local vector if
@@ -157,7 +154,7 @@ bool CMultiVesicleBuilder::Assemble(CInitialState &riState)
 
 	zLongVector vAllFreeCNTCells(CNTXNo*CNTYNo*CNTZNo);
 
-	for(j=0; j<vAllFreeCNTCells.size(); j++)
+	for(long unsigned int j=0; j<vAllFreeCNTCells.size(); j++)
 	{
 		vAllFreeCNTCells.at(j) = 1;
 	}
@@ -217,8 +214,6 @@ bool CMultiVesicleBuilder::Assemble(CInitialState &riState)
 		}
 	}
 
-	long emptyCNTCells = vAllFreeCNTCells.size();
-
 	// Now exclude the CNT cells than contain beads within the vesicle
 
 	const double CNTXCellWidth = riState.GetCNTXCellWidth();
@@ -248,13 +243,11 @@ bool CMultiVesicleBuilder::Assemble(CInitialState &riState)
 		}
 	}
 
-	emptyCNTCells = vAllFreeCNTCells.size();
-
 	// Now copy the remaining free CNT cell indices to the vFreeCNTCells vector
 
 	zLongVector vFreeCNTCells;
 
-	for(j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
+	for(long j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
 	{
 		if(vAllFreeCNTCells.at(j) == 1)
 			vFreeCNTCells.push_back(j);

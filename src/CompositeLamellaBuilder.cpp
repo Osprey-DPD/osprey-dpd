@@ -99,8 +99,6 @@ CCompositeLamellaBuilder::~CCompositeLamellaBuilder()
 
 bool CCompositeLamellaBuilder::Assemble(CInitialState& riState)
 {
-	long iPolymer	= 0;	// counter used everywhere below
-
 	// ****************************************
 	// Position the wall beads first because they cannot move and may be 
 	// bonded to beads in the bulk whose positions can be arranged so 
@@ -121,7 +119,7 @@ bool CCompositeLamellaBuilder::Assemble(CInitialState& riState)
 	m_UpperTotal	= 0;
 	m_LowerTotal	= 0;
 
-	for(iPolymer=0; iPolymer<m_PolymerTypes.size(); iPolymer++)
+	for(long unsigned int iPolymer=0; iPolymer<m_PolymerTypes.size(); iPolymer++)
 	{
 		long polyNo = riState.GetPolymerTotalForType(m_PolymerTypes.at(iPolymer));
 		long upperNo = static_cast<long>(m_UpperFractions.at(iPolymer)*polyNo);
@@ -186,7 +184,7 @@ bool CCompositeLamellaBuilder::Assemble(CInitialState& riState)
 
 	nonBilayerPolymerTypes.clear();
 
-	for(iPolymer=0; iPolymer<riState.GetPolymerTypeTotal(); iPolymer++)
+	for(long int iPolymer=0; iPolymer<riState.GetPolymerTypeTotal(); iPolymer++)
 	{
 		if(find(m_PolymerTypes.begin(), m_PolymerTypes.end(), iPolymer) == m_PolymerTypes.end())
 		{
@@ -266,8 +264,6 @@ bool CCompositeLamellaBuilder::AssembleP(CInitialState& riState)
     bool bSuccess = true;
 	
 #if EnableParallelSimBox == SimMPSEnabled
-	long iPolymer	= 0;	// counter used everywhere below
-	
 	// Check if all polymers are in one monolayer. We just see if the sum 
 	// of all the polymers in either monolayer is zero. This is obtained from
 	// the fractions of each polymer type and the number thereof. We also store
@@ -278,7 +274,7 @@ bool CCompositeLamellaBuilder::AssembleP(CInitialState& riState)
 	m_UpperTotal	= 0;
 	m_LowerTotal	= 0;
 
-	for(iPolymer=0; iPolymer<m_PolymerTypes.size(); iPolymer++)
+	for(long unsigned int iPolymer=0; iPolymer<m_PolymerTypes.size(); iPolymer++)
 	{
 		long polyNo = riState.GetPolymerTotalForType(m_PolymerTypes.at(iPolymer));
 		long upperNo = static_cast<long>(m_UpperFractions.at(iPolymer)*polyNo);
@@ -343,7 +339,7 @@ bool CCompositeLamellaBuilder::AssembleP(CInitialState& riState)
 
 	nonBilayerPolymerTypes.clear();
 
-	for(iPolymer=0; iPolymer<riState.GetPolymerTypeTotal(); iPolymer++)
+	for(long int iPolymer=0; iPolymer<riState.GetPolymerTypeTotal(); iPolymer++)
 	{
 		if(find(m_PolymerTypes.begin(), m_PolymerTypes.end(), iPolymer) == m_PolymerTypes.end())
 		{

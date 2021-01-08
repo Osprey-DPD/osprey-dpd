@@ -62,7 +62,7 @@ private:
     const zString m_FileName;       // Full name of file containing numbers
     const long    m_SequenceSize;   // Number of random numbers to read from file
 
-    long          m_Pointer;        // Element containing next number
+    unsigned long m_Pointer;        // Element containing next number
     zDoubleVector m_Numbers;        // Random numbers read in
 
 };

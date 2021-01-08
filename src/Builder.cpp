@@ -208,20 +208,20 @@ void CBuilder::AssignWallBeadCoords(CInitialState& riState) const
             // Ensure that the coordinates are not within m_CoordErrorLimit of the 
             // SimBox boundaries
 
-            if(xp[0] < m_CoordErrorLimit)
-                xp[0] = m_CoordErrorLimit;
-            else if(xp[0] > slx)
-                xp[0] = slx;
+            if(xp[0] < m_CoordErrorLimit) {
+                xp[0] = m_CoordErrorLimit; }
+            else if(xp[0] > slx) {
+                xp[0] = slx; }
 
-            if(xp[1] < m_CoordErrorLimit)
-                xp[1] = m_CoordErrorLimit;
-            else if(xp[1] > sly)
-                xp[1] = sly;
+            if(xp[1] < m_CoordErrorLimit) {
+                xp[1] = m_CoordErrorLimit; }
+            else if(xp[1] > sly) {
+                xp[1] = sly; }
 
-            if(xp[2] < m_CoordErrorLimit)
-                xp[2] = m_CoordErrorLimit;
-            else if(xp[2] > slz)
-                xp[2] = slz;
+            if(xp[2] < m_CoordErrorLimit) {
+                xp[2] = m_CoordErrorLimit; }
+            else if(xp[2] > slz) {
+                xp[2] = slz; }
 
 	        (*iterPolymer)->GetHead()->SetXPos(xp[0]);
 	        (*iterPolymer)->GetHead()->SetYPos(xp[1]);
@@ -687,25 +687,25 @@ bool CBuilder::isRandomPolymerSlabs::Assemble(CInitialState& riState)
 // This routine does not check that the bilayer does not overlap any other structure
 // including the walls. It assumes that this has been done by the calling routine.
 
-CBuilder::isBilayer::isBilayer(const zLongVector& polymerTypes, long Xn, long Yn, long Zn,
-					 double centre, double thickness, 
-					 bool bLinear, const zDoubleVector& upperFractions,
-					 double area, double length1, double length2,
-					 double upperHead, double lowerHead) : m_PolymerTypes(polymerTypes),
-													   m_X(Xn), m_Y(Yn), m_Z(Zn),
-													   m_BilayerCentre(centre),
-													   m_Thickness(thickness),
-													   m_BilayerArea(area),
-													   m_Bilayer1Length(length1),
-													   m_Bilayer2Length(length2),
-													   m_UpperHead(upperHead),
-													   m_LowerHead(lowerHead),
-													   m_UpperTotal(0),
-													   m_LowerTotal(0),
-													   m_bMonolayer(false),
-													   m_bLinearise(bLinear),
-													   m_UpperFractions(upperFractions),
-													   m_PolymerMaxSize(0)
+CBuilder::isBilayer::isBilayer(const zLongVector& polymerTypes, const zDoubleVector& upperFractions,
+                               long Xn, long Yn, long Zn,
+		                double centre, double thickness, 
+			        double area, double length1, double length2,
+				double upperHead, double lowerHead, bool bLinear) : m_PolymerTypes(polymerTypes), 
+					                                           m_UpperFractions(upperFractions),
+										     m_X(Xn), m_Y(Yn), m_Z(Zn),
+										     m_BilayerCentre(centre),
+									             m_Thickness(thickness),
+										     m_BilayerArea(area),
+										     m_Bilayer1Length(length1),
+										     m_Bilayer2Length(length2),
+										     m_UpperHead(upperHead),
+										     m_LowerHead(lowerHead),
+										     m_UpperTotal(0),
+										     m_LowerTotal(0),
+										     m_bMonolayer(false),
+									             m_bLinearise(bLinear),
+									             m_PolymerMaxSize(0)
 {
 	m_bPatches[0] = false;
 	m_bPatches[1] = false;

@@ -179,7 +179,7 @@ bool xxBase::ErrorTrace(zString errStr) const
 
 	if(IGlobalSimBox::Instance())
 	{
-		CLogSimErrorTrace* pMsg = new CLogSimErrorTrace(IGlobalSimBox::Instance()->GetCurrentTime(), errStr);
+		new CLogSimErrorTrace(IGlobalSimBox::Instance()->GetCurrentTime(), errStr);
     }
 	else
 	{
@@ -205,7 +205,7 @@ void xxBase::Trace(zString msgStr) const
 
 	if(IGlobalSimBox::Instance())
 	{
-		CLogSimTrace* pMsg = new CLogSimTrace(IGlobalSimBox::Instance()->GetCurrentTime(), msgStr);
+		new CLogSimTrace(IGlobalSimBox::Instance()->GetCurrentTime(), msgStr);
     }
 	else
 	{

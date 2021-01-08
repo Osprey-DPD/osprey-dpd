@@ -364,6 +364,12 @@ CInitialState::~CInitialState()
 		delete *iterPolymer;
 	}
 
+// Delete the inclusive restart state object if it exists
+
+	if(m_pIRS)
+	{
+		delete m_pIRS;
+	}
 }
 
 // **********************************************************************
@@ -455,12 +461,12 @@ void CInitialState::CreatePolymers()
 
 	double nalphasum = 0.0;
 
-	for(long type=0; type<vPolymerTypes.size(); type++)
+	for(long unsigned type=0; type<vPolymerTypes.size(); type++)
 	{
 		nalphasum+= static_cast<double>(GetPolymerSizeForType(type))*GetPolymerFractionForType(type);
 	}
 
-	for(long type1=0; type1<vPolymerTypes.size(); type1++)
+	for(long unsigned type1=0; type1<vPolymerTypes.size(); type1++)
 	{
 		m_vPolymerTypeTotal.push_back(static_cast<long>(GetPolymerFractionForType(type1)*totalBeads/nalphasum));
 	}
@@ -788,8 +794,6 @@ bool CInitialState::AssembleP()
 
 void CInitialState::WriteBeadTypeData() const
 {
-	long j;
- 
 	Trace("********************");
 	for( cBeadVectorIterator iterBead=vBeadTypes.begin(); iterBead!=vBeadTypes.end(); iterBead++ )
 	{
@@ -797,7 +801,7 @@ void CInitialState::WriteBeadTypeData() const
 
 #if SimIdentifier == BD
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			TraceDoubleNoEndl(m_vvConsInt.at((*iterBead)->GetType()).at(j));
 		}
@@ -810,12 +814,12 @@ void CInitialState::WriteBeadTypeData() const
 
 #elif SimIdentifier == DPD
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			TraceDoubleNoEndl(m_vvConsInt.at((*iterBead)->GetType()).at(j));
 		}
 		TraceEndl();
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			TraceDoubleNoEndl(m_vvDissInt.at((*iterBead)->GetType()).at(j));
 		}
@@ -823,23 +827,23 @@ void CInitialState::WriteBeadTypeData() const
 
 #elif SimIdentifier == MD
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			TraceDoubleNoEndl(m_vvLJDepth.at((*iterBead)->GetType()).at(j));
 		}
 		TraceEndl();
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			TraceDoubleNoEndl(m_vvLJRange.at((*iterBead)->GetType()).at(j));
 		}
 		TraceEndl();
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			TraceDoubleNoEndl(m_vvSCDepth.at((*iterBead)->GetType()).at(j));
 		}
 		TraceEndl();
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			TraceDoubleNoEndl(m_vvSCRange.at((*iterBead)->GetType()).at(j));
 		}
@@ -968,8 +972,6 @@ void CInitialState::SerializeXMLFile()
 		m_outStream << "<WallPolymerTotal>" << GetWallPolymerTotal() << "</WallPolymerTotal>" << zEndl;
 	}
 	
-	long j;
-
 	// Bead structure data depends on whether it is a BD, DPD or MD simulation, and on
     // whether a DPD bead includes the density-dependent LG interaction.
 
@@ -985,13 +987,13 @@ void CInitialState::SerializeXMLFile()
 		m_outStream << "<TranslationalDiffusionCoefficient>"  << (*iterBead)->GetTransDiff() << "</TranslationalDiffusionCoefficient>" << zEndl;
 		m_outStream << "<RotationalDiffusionCoefficient>"     << (*iterBead)->GetRotDiff()   << "</RotationalDiffusionCoefficient>" << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "<ConsInt>"  << m_vvConsInt.at((*iterBead)->GetType()).at(j) << "</ConsInt>";
 		}
 		m_outStream << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "<DissInt>"  << m_vvDissInt.at((*iterBead)->GetType()).at(j) << "</DissInt>";
 		}
@@ -1011,13 +1013,13 @@ void CInitialState::SerializeXMLFile()
 		    m_outStream << "<Radius>"    << (*iterBead)->GetRadius() << "</Radius>" << zEndl;
         }
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "<ConsInt>"  << m_vvConsInt.at((*iterBead)->GetType()).at(j) << "</ConsInt>";
 		}
 		m_outStream << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "<DissInt>"  << m_vvDissInt.at((*iterBead)->GetType()).at(j) << "</DissInt>";
 		}
@@ -1025,7 +1027,7 @@ void CInitialState::SerializeXMLFile()
 
         if(IsDPDLG())
         {
-		    for(j=0; j<vBeadTypes.size(); j++)
+		    for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		    {
 			    m_outStream << "<LGInt>"  << m_vvLGInt.at((*iterBead)->GetType()).at(j) << "</LGInt>";
 		    }
@@ -1034,13 +1036,13 @@ void CInitialState::SerializeXMLFile()
 #elif EnableDPDLG == ExperimentDisabled
 		m_outStream << "<Radius>"  << (*iterBead)->GetRadius() << "</Radius>" << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "<ConsInt>"  << m_vvConsInt.at((*iterBead)->GetType()).at(j) << "</ConsInt>";
 		}
 		m_outStream << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "<DissInt>"  << m_vvDissInt.at((*iterBead)->GetType()).at(j) << "</DissInt>";
 		}
@@ -1048,25 +1050,25 @@ void CInitialState::SerializeXMLFile()
 #endif
 #elif SimIdentifier == MD
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "<LJDepth>"  << m_vvLJDepth.at((*iterBead)->GetType()).at(j) << "</LJDepth>";
 		}
 		m_outStream << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "<LJRange>"  << m_vvLJRange.at((*iterBead)->GetType()).at(j) << "</LJRange>";
 		}
 		m_outStream << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "<SCDepth>"  << m_vvSCDepth.at((*iterBead)->GetType()).at(j) << "</SCDepth>";
 		}
 		m_outStream << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "<SCRange>"  << m_vvSCRange.at((*iterBead)->GetType()).at(j) << "</SCRange>";
 		}
@@ -1169,8 +1171,6 @@ void CInitialState::SerializeAsciiFile()
 		m_outStream << "Number of Wall polymers created	" << GetWallPolymerTotal() << zEndl;
 	}
 	
-	long j;
-
 	// Bead structure data depending on whether it is a BD, DPD or MD simulation
 
 
@@ -1189,14 +1189,14 @@ void CInitialState::SerializeAsciiFile()
 		m_outStream << (*iterBead)->GetRotDiff() << zEndl;
 
 		m_outStream << "  Cons Int: ";
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << m_vvConsInt.at((*iterBead)->GetType()).at(j) << " ";
 		}
 		m_outStream << zEndl;
 
 		m_outStream << "  Diss Int: ";
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << m_vvDissInt.at((*iterBead)->GetType()).at(j) << " ";
 		}
@@ -1217,14 +1217,14 @@ void CInitialState::SerializeAsciiFile()
         }
 
 		m_outStream << "  Cons Int: ";
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << m_vvConsInt.at((*iterBead)->GetType()).at(j) << " ";
 		}
 		m_outStream << zEndl;
 
 		m_outStream << "  Diss Int: ";
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << m_vvDissInt.at((*iterBead)->GetType()).at(j) << " ";
 		}
@@ -1233,7 +1233,7 @@ void CInitialState::SerializeAsciiFile()
         if(IsDPDLG())
         {
 		    m_outStream << "  LG Int:   ";
-		    for(j=0; j<vBeadTypes.size(); j++)
+		    for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		    {
 			    m_outStream << m_vvLGInt.at((*iterBead)->GetType()).at(j) << " ";
 		    }
@@ -1245,14 +1245,14 @@ void CInitialState::SerializeAsciiFile()
 		m_outStream << (*iterBead)->GetRadius() << zEndl;
 
 		m_outStream << "  Cons Int: ";
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << m_vvConsInt.at((*iterBead)->GetType()).at(j) << " ";
 		}
 		m_outStream << zEndl;
 
 		m_outStream << "  Diss Int: ";
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << m_vvDissInt.at((*iterBead)->GetType()).at(j) << " ";
 		}
@@ -1260,25 +1260,25 @@ void CInitialState::SerializeAsciiFile()
 #endif
 #elif SimIdentifier == MD
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "  LJ depth: " << m_vvLJDepth.at((*iterBead)->GetType()).at(j) << " ";
 		}
 		m_outStream << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "  LJ range: " << m_vvLJRange.at((*iterBead)->GetType()).at(j) << " ";
 		}
 		m_outStream << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "  SC depth: " << m_vvSCDepth.at((*iterBead)->GetType()).at(j) << " ";
 		}
 		m_outStream << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			m_outStream << "  SC range: " << m_vvSCRange.at((*iterBead)->GetType()).at(j) << " ";
 		}
@@ -1473,20 +1473,12 @@ double CInitialState::GetLengthScale() const
 
 void CInitialState::AddPolymerisedBond(CBond *pBond)
 {
-	long mylength1 = vAllPolymerisedBonds.size();
-
 	vAllPolymerisedBonds.push_back(pBond);
-
-	long mylength2 = vAllPolymerisedBonds.size();
 }
 
 void CInitialState::AddPolymerisedBondtoAllBonds(CBond *pBond)
 {
-	long mylength1 = vAllBonds.size();
-
 	vAllBonds.push_back(pBond);
-
-	long mylength2 = vAllBonds.size();
 }
 
 // Function to dynamically add a bead type to the simulation. It is 
@@ -1527,7 +1519,7 @@ void CInitialState::AddDPDBeadType(long oldType)
 	// Add the original bead type's interactions to the end of
 	// each row and create a new row at the end of the matrix
 
-	for(short int row = 0; row < m_vvConsInt.size(); row++)
+	for(long unsigned int row = 0; row < m_vvConsInt.size(); row++)
 	{
 		double oldConsInt = m_vvConsInt.at(row).at(oldType);
 		double oldDissInt = m_vvDissInt.at(row).at(oldType);
@@ -1682,7 +1674,7 @@ zInStream& CInitialState::Read(zInStream& is)
     // Bead data first: note that the bead types and names should NOT be modified 
     // by hand, but the radius and force parameters can be.
 
-    long j, jb, type, newTypes;
+    long jb, type, newTypes;
     double radius, cons, diss;
     zString name;  // Used to hold the string labels for beads, bonds, bondpairs,
     //                polymers, and targets
@@ -1718,12 +1710,12 @@ zInStream& CInitialState::Read(zInStream& is)
 
 #if SimIdentifier == BD
 
-//		for(j=0; j<vBeadTypes.size(); j++)
+//		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 //		{
 //			is >> cons;
 //          m_vvConsInt.at(type).at(j) = cons;
 //		}
-//		for(j=0; j<vBeadTypes.size(); j++)
+//		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 //		{
 //			is >> diss;
 //          m_vvDissInt.at(type).at(j) = diss;
@@ -1732,7 +1724,7 @@ zInStream& CInitialState::Read(zInStream& is)
 #elif SimIdentifier == DPD
 
         // First, read in the conservative interactions with existing types
-		for(j=0; j<oldTypes; j++)
+		for(long j=0; j<oldTypes; j++)
 		{
 		  is >> cons;
           if(!is.good())
@@ -1745,7 +1737,7 @@ zInStream& CInitialState::Read(zInStream& is)
 		}
 
         // Now append the interactions with the new types
-		for(j=oldTypes; j<newTypes; j++)
+		for(long j=oldTypes; j<newTypes; j++)
 		{
 		  is >> cons;
           if(!is.good())
@@ -1758,7 +1750,7 @@ zInStream& CInitialState::Read(zInStream& is)
 		}
 
         // Now do the same for the dissipative interactions
-		for(j=0; j<oldTypes; j++)
+		for(long j=0; j<oldTypes; j++)
 		{
 		  is >> diss;
           if(!is.good() || diss < 0.0)
@@ -1771,7 +1763,7 @@ zInStream& CInitialState::Read(zInStream& is)
 		}
 
         // Now append the interactions with the new types
-		for(j=oldTypes; j<newTypes; j++)
+		for(long j=oldTypes; j<newTypes; j++)
 		{
 		  is >> diss;
           if(!is.good() || diss < 0.0)
@@ -1785,23 +1777,23 @@ zInStream& CInitialState::Read(zInStream& is)
 
 #elif SimIdentifier == MD
 
-//		for(j=0; j<vBeadTypes.size(); j++)
+//		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 //		{
 //			os << m_vvLJDepth.at((*iterBead)->GetType()).at(j) << " ";
 //		}
 //		os << zEndl;
-//		for(j=0; j<vBeadTypes.size(); j++)
+//		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 //		{
 //			os << m_vvLJRange.at((*iterBead)->GetType()).at(j) << " ";
 //		}
 //		os << zEndl;
 
-//		for(j=0; j<vBeadTypes.size(); j++)
+//		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 //		{
 //			os << m_vvSCDepth.at((*iterBead)->GetType()).at(j) << " ";
 //		}
 //		os << zEndl;
-//		for(j=0; j<vBeadTypes.size(); j++)
+//		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 //		{
 //			os << m_vvSCRange.at((*iterBead)->GetType()).at(j) << " ";
 //		}
@@ -1828,12 +1820,12 @@ zInStream& CInitialState::Read(zInStream& is)
 
     #if SimIdentifier == BD
 
-    //		for(j=0; j<vBeadTypes.size(); j++)
+    //		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
     //		{
     //			is >> cons;
     //          m_vvConsInt.at(type).at(j) = cons;
     //		}
-    //		for(j=0; j<vBeadTypes.size(); j++)
+    //		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
     //		{
     //			is >> diss;
     //          m_vvDissInt.at(type).at(j) = diss;
@@ -1844,7 +1836,7 @@ zInStream& CInitialState::Read(zInStream& is)
             // Conservative and dissipative interaction parameters have already
             // been added for the new types, so we just have to overwrite them.
 
-		    for(j=0; j<newTypes; j++)
+		    for(long j=0; j<newTypes; j++)
 		    {
 		      is >> cons;
               if(!is.good())
@@ -1855,7 +1847,7 @@ zInStream& CInitialState::Read(zInStream& is)
               m_vvConsInt.at(type).at(j) = cons;
 //              std::cout << "setting Bead type " << type << " cons int with type " << j << " to " << cons << zEndl;
 		    }
-		    for(j=0; j<newTypes; j++)
+		    for(long j=0; j<newTypes; j++)
 		    {
 		      is >> diss;
               if(!is.good() || diss < 0.0)
@@ -1869,23 +1861,23 @@ zInStream& CInitialState::Read(zInStream& is)
 
     #elif SimIdentifier == MD
 
-    //		for(j=0; j<vBeadTypes.size(); j++)
+    //		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
     //		{
     //			os << m_vvLJDepth.at((*iterBead)->GetType()).at(j) << " ";
     //		}
     //		os << zEndl;
-    //		for(j=0; j<vBeadTypes.size(); j++)
+    //		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
     //		{
     //			os << m_vvLJRange.at((*iterBead)->GetType()).at(j) << " ";
     //		}
     //		os << zEndl;
 
-    //		for(j=0; j<vBeadTypes.size(); j++)
+    //		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
     //		{
     //			os << m_vvSCDepth.at((*iterBead)->GetType()).at(j) << " ";
     //		}
     //		os << zEndl;
-    //		for(j=0; j<vBeadTypes.size(); j++)
+    //		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
     //		{
     //			os << m_vvSCRange.at((*iterBead)->GetType()).at(j) << " ";
     //		}
@@ -2078,7 +2070,7 @@ zInStream& CInitialState::Read(zInStream& is)
         return is;
     }
 
-    j = 0;
+    long j = 0;
     while(is.good() && j++<targetTotal)
     {
         is >> targetType >> name;
@@ -2171,8 +2163,6 @@ zInStream& CInitialState::Read(zInStream& is)
 
 zOutStream& CInitialState::Write(zOutStream& os) const
 {
-	long j;
- 
     // Bead data first: precede the data with the number of types as this can change
     // between runs
 
@@ -2184,12 +2174,12 @@ zOutStream& CInitialState::Write(zOutStream& os) const
 
 #if SimIdentifier == BD
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			os << m_vvConsInt.at((*iterBead)->GetType()).at(j) << " ";
 		}
 		os << zEndl;
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			os << m_vvDissInt.at((*iterBead)->GetType()).at(j) << " ";
 		}
@@ -2197,12 +2187,12 @@ zOutStream& CInitialState::Write(zOutStream& os) const
 
 #elif SimIdentifier == DPD
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			os << m_vvConsInt.at((*iterBead)->GetType()).at(j) << " ";
 		}
 		os << zEndl;
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			os << m_vvDissInt.at((*iterBead)->GetType()).at(j) << " ";
 		}
@@ -2210,7 +2200,7 @@ zOutStream& CInitialState::Write(zOutStream& os) const
 
 #elif SimIdentifier == MD
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			os << m_vvLJDepth.at((*iterBead)->GetType()).at(j) << " ";
 		}
@@ -2221,12 +2211,12 @@ zOutStream& CInitialState::Write(zOutStream& os) const
 		}
 		os << zEndl;
 
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			os << m_vvSCDepth.at((*iterBead)->GetType()).at(j) << " ";
 		}
 		os << zEndl;
-		for(j=0; j<vBeadTypes.size(); j++)
+		for(long unsigned int j=0; j<vBeadTypes.size(); j++)
 		{
 			os << m_vvSCRange.at((*iterBead)->GetType()).at(j) << " ";
 		}

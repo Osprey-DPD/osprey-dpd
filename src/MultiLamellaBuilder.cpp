@@ -66,8 +66,6 @@ CMultiLamellaBuilder::~CMultiLamellaBuilder()
 
 bool CMultiLamellaBuilder::Assemble(CInitialState& riState)
 {
-	long iPolymer	= 0;
-
 	// ****************************************
 	// Position the wall beads first because they cannot move and may be 
 	// bonded to beads in the bulk whose positions can be arranged so 
@@ -84,7 +82,7 @@ bool CMultiLamellaBuilder::Assemble(CInitialState& riState)
 	long sumUpperTotal = 0;
 	long sumLowerTotal = 0;
 
-	for(iPolymer=0; iPolymer<m_PolymerTypes.size(); iPolymer++)
+	for(long unsigned int iPolymer=0; iPolymer<m_PolymerTypes.size(); iPolymer++)
 	{
 		long polyNo = riState.GetPolymerTotalForType(m_PolymerTypes.at(iPolymer));
 		long upperNo = static_cast<long>(m_UpperFractions.at(iPolymer)*polyNo);
@@ -203,7 +201,7 @@ bool CMultiLamellaBuilder::Assemble(CInitialState& riState)
 	{
 		exRegions.push_back(riState.GetWallXWidth());
 
-		for(long lam=0; lam<m_BilayerCentres.size(); lam++)
+		for(long unsigned int lam=0; lam<m_BilayerCentres.size(); lam++)
 		{
 			exRegions.push_back(m_BilayerCentres.at(lam) - 0.5*m_Thickness);
 			exRegions.push_back(m_BilayerCentres.at(lam) + 0.5*m_Thickness);
@@ -216,7 +214,7 @@ bool CMultiLamellaBuilder::Assemble(CInitialState& riState)
 	{
 		exRegions.push_back(riState.GetWallYWidth());
 
-		for(long lam=0; lam<m_BilayerCentres.size(); lam++)
+		for(long unsigned int lam=0; lam<m_BilayerCentres.size(); lam++)
 		{
 			exRegions.push_back(m_BilayerCentres.at(lam) - 0.5*m_Thickness);
 			exRegions.push_back(m_BilayerCentres.at(lam) + 0.5*m_Thickness);
@@ -229,7 +227,7 @@ bool CMultiLamellaBuilder::Assemble(CInitialState& riState)
 	{
 		exRegions.push_back(riState.GetWallZWidth());
 
-		for(long lam=0; lam<m_BilayerCentres.size(); lam++)
+		for(long unsigned int lam=0; lam<m_BilayerCentres.size(); lam++)
 		{
 			exRegions.push_back(m_BilayerCentres.at(lam) - 0.5*m_Thickness);
 			exRegions.push_back(m_BilayerCentres.at(lam) + 0.5*m_Thickness);
