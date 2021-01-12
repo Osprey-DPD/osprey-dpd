@@ -205,7 +205,7 @@ bool ctChangeNamedBeadType::Pack(const tguArgumentSequence& vArguments)
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(ctApplyCommand::Pack(vArguments) && vArguments.size() == GetArgumentTotal())
+    if(ctApplyCommand::Pack(vArguments) && static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(1)->GetValue(&m_NewBeadName);
 

@@ -160,11 +160,11 @@ bool acSetActivePolymerLimit::Execute(long simTime, ISimCmd* const pISimCmd) con
 		{
 			pMACN->SetActivePolymerLimit(m_MaxPolymers);
 
-			CLogacSetActivePolymerLimit* pMsg = new CLogacSetActivePolymerLimit(GetExecutionTime(), m_ACNType, m_MaxPolymers);
+			 new CLogacSetActivePolymerLimit(GetExecutionTime(), m_ACNType, m_MaxPolymers);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

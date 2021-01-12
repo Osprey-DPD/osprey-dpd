@@ -166,7 +166,7 @@ protected:
 
 	long GetGridXCellNo() const;                // No of grid cells in each dimension
 	long GetGridYCellNo() const;
-    long GetGridZCellNo() const;
+        long GetGridZCellNo() const;
     
 	long GetCNTXCellNo() const;
 	long GetCNTYCellNo() const;                 // No of CNT cells in each dimension
@@ -255,12 +255,12 @@ protected:
 	// monitored during a simulation.
 
 	EventSequence		  m_Events;				// Events monitored by the SimBox
-	CommandSequence		  m_Commands;			// Commands used to change constraints on the SimBox
+	CommandSequence          m_Commands;			        // Commands used to change constraints on the SimBox
 
 
 	// Data relating to the simulation's evolution and monitoring
 
-	long m_SimTime;					// Current simulation time
+	long m_SimTime;				// Current simulation time
 	long m_TotalTime;				// Total time for simulation to run
 
 	long m_TotalMCTime;				// Total time for pre-MD Monte Carlo relaxation

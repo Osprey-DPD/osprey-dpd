@@ -70,10 +70,7 @@ CFibrilBuilder::~CFibrilBuilder()
 
 bool CFibrilBuilder::Assemble(CInitialState &riState)
 {
-	long j = 0;
-	long ip = 0;
 	long index = 0;	// counter used everywhere below
-	long iBead = 0;
 	cPolymerVectorIterator iterPoly;
 	cBeadVectorIterator    iterBead;
 
@@ -105,15 +102,13 @@ bool CFibrilBuilder::Assemble(CInitialState &riState)
 
 	nonFibrilPolymerTypes.clear();
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
 		if(find(m_PolymerTypes.begin(), m_PolymerTypes.end(), ip) == m_PolymerTypes.end())
 		{
 			nonFibrilPolymerTypes.push_back(ip);
 		}	
 	}
-
-	long nonFibrilTypeNo = nonFibrilPolymerTypes.size();
 
 	// Copy the polymers in the CInitialState into local vectors for ease of access.
 	// The non-fibril polymers are stored in vRandomPolymers.
@@ -128,7 +123,7 @@ bool CFibrilBuilder::Assemble(CInitialState &riState)
 	long firstPolymer = 0;
 	long lastPolymer  = 0;
 
-	for(ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
+	for(long ip=0; ip<riState.GetPolymerTypeTotal(); ip++)
 	{
 		lastPolymer += riState.GetPolymerTotalForType(ip);
 
@@ -143,8 +138,6 @@ bool CFibrilBuilder::Assemble(CInitialState &riState)
 		firstPolymer += riState.GetPolymerTotalForType(ip);
 	}
 
-	long randomPolymerTotal   = vRandomPolymers.size();		// All polymers not in fibril
-
 	// Exclude any CNT cells that contain wall beads. We just mark the cells whose
 	// indices are within the walls. We first set a flag in a vector showing that
 	// the corresponding index is for a free CNT cell, next we exclude all cells
@@ -158,7 +151,7 @@ bool CFibrilBuilder::Assemble(CInitialState &riState)
 
 	zLongVector vAllFreeCNTCells(CNTXNo*CNTYNo*CNTZNo);
 
-	for(j=0; j<vAllFreeCNTCells.size(); j++)
+	for(long unsigned int j=0; j<vAllFreeCNTCells.size(); j++)
 	{
 		vAllFreeCNTCells.at(j) = 1;
 	}
@@ -297,10 +290,10 @@ bool CFibrilBuilder::Assemble(CInitialState &riState)
 
 	zLongVector vFreeCNTCells;
 
-	for(j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
+	for(long j=0; j<CNTXNo*CNTYNo*CNTZNo; j++)
 	{
-		if(vAllFreeCNTCells.at(j) == 1)
-			vFreeCNTCells.push_back(j);
+		if(vAllFreeCNTCells.at(j) == 1) {
+			vFreeCNTCells.push_back(j); }
 	}
 
 	const long freeCells = vFreeCNTCells.size();

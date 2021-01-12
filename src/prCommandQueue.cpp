@@ -336,7 +336,7 @@ void prCommandQueue::UpdateState(CSimState& rSimState, const ISimBox* const pISi
 				}
 				else // Error trying to read commands from queue file
 				{
-					CLogCommandQueueProcessError* const pMessage = new CLogCommandQueueProcessError(pISimBox->GetCurrentTime(), "Error reading commands from queue file: " + m_FileName);
+					 new CLogCommandQueueProcessError(pISimBox->GetCurrentTime(), "Error reading commands from queue file: " + m_FileName);
 
 					// The stream may have stopped reading before the eof, so we
 					// have to position it at the end before trying to write to it
@@ -358,12 +358,12 @@ void prCommandQueue::UpdateState(CSimState& rSimState, const ISimBox* const pISi
 
 			if(ioStream.fail()) // Error closing queue file
 			{
-				CLogCommandQueueProcessError* const pMessage = new CLogCommandQueueProcessError(pISimBox->GetCurrentTime(), "Error closing command queue file: " + m_FileName);
+				 new CLogCommandQueueProcessError(pISimBox->GetCurrentTime(), "Error closing command queue file: " + m_FileName);
 			}
 		}
 		else // Error opening queue file
 		{
-			CLogCommandQueueProcessError* const pMessage = new CLogCommandQueueProcessError(pISimBox->GetCurrentTime(), "Error opening command queue file: " + m_FileName);
+			 new CLogCommandQueueProcessError(pISimBox->GetCurrentTime(), "Error opening command queue file: " + m_FileName);
 		}
 	}
 #endif
@@ -430,7 +430,7 @@ bool prCommandQueue::ReadCommands(zFileStream& ioStream)
 
 	while(ioStream.good() && bSuccess)
 	{
-		const long commentPos = token.find(m_Comment);
+		const long unsigned int commentPos = token.find(m_Comment);
 
 		if(commentPos == 0)
 		{

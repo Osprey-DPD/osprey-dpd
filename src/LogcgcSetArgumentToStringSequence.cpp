@@ -56,8 +56,7 @@ zOutStream& operator<<(zOutStream& os, const CLogcgcSetArgumentToStringSequence&
 
 CLogcgcSetArgumentToStringSequence::CLogcgcSetArgumentToStringSequence(long time, const zString groupName, const zString cmdName, 
                                      long cmdNo, const zString argName, const zString root) : CLogInfoMessage(time), 
-                                     m_GroupName(groupName), m_CommandName(cmdName), m_CommandNo(cmdNo),
-                                     m_ArgName(argName), m_Root(root)
+                                     m_GroupName(groupName), m_CommandName(cmdName), m_ArgName(argName), m_Root(root), m_CommandNo(cmdNo)
                                                    
 {
 }

@@ -64,12 +64,12 @@ void mcSavePovrayCurrentStateImpl::SavePovrayCurrentState(const xxCommand* const
 	    {
 		    if(pCmd->IsExecutionLogged())
 			{
-		        CLogSaveCurrentState* pMsg = new CLogSaveCurrentState(pMon->GetCurrentTime());
+		         new CLogSaveCurrentState(pMon->GetCurrentTime());
 			}
 	    }
 	    else
 	    {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		     new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	    }
 	}
 	else
@@ -85,11 +85,11 @@ void mcSavePovrayCurrentStateImpl::SavePovrayCurrentState(const xxCommand* const
 
     if(pMon->InternalSaveCurrentState(pFormat))
 	{
-		CLogSaveCurrentState* pMsg = new CLogSaveCurrentState(pMon->GetCurrentTime());
+		 new CLogSaveCurrentState(pMon->GetCurrentTime());
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 	
 #endif

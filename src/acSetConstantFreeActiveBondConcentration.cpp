@@ -167,11 +167,11 @@ bool acSetConstantFreeActiveBondConcentration::Execute(long simTime, ISimCmd* co
 		{
 			pMACN->SetConstantFreeBondConcentration(m_Fraction, m_PhantomsPerEvent);
 
-			CLogacSetConstantFreeActiveBondConcentration* pMsg = new CLogacSetConstantFreeActiveBondConcentration(GetExecutionTime(), m_ACNType, m_Fraction, pMACN->GetConstantFreeBondNumber(), pMACN->GetPhantomBondTotal(), m_PhantomsPerEvent);
+			 new CLogacSetConstantFreeActiveBondConcentration(GetExecutionTime(), m_ACNType, m_Fraction, pMACN->GetConstantFreeBondNumber(), pMACN->GetPhantomBondTotal(), m_PhantomsPerEvent);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

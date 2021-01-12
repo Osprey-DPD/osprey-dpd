@@ -71,8 +71,9 @@ namespace
 CInitialStateTubularVesicle::CInitialStateTubularVesicle() : m_XC(0.0), m_YC(0.0), m_ZC(0.0), 
 											   m_OuterRadius(0.0), 
 											   m_Thickness(0.0), 
-											   m_InnerRadius(0.0),
-											   m_bPolymerise(false)
+											   m_bPolymerise(false),
+											   m_InnerRadius(0.0)
+											   
 											   
 {
 	m_bPatches[0] = false;
@@ -96,21 +97,21 @@ CInitialStateTubularVesicle& CInitialStateTubularVesicle::operator=(const CIniti
 {
 	if(this != &oldISV)
 	{
-		m_Polymers				= oldISV.m_Polymers;
+		m_Polymers			= oldISV.m_Polymers;
 		m_InteriorPolymers		= oldISV.m_InteriorPolymers;
-		m_XC					= oldISV.m_XC;
-		m_YC					= oldISV.m_YC;
-		m_ZC					= oldISV.m_ZC;
+		m_XC				= oldISV.m_XC;
+		m_YC				= oldISV.m_YC;
+		m_ZC				= oldISV.m_ZC;
 		m_OuterRadius			= oldISV.m_OuterRadius;
-		m_Thickness				= oldISV.m_Thickness;
+		m_Thickness			= oldISV.m_Thickness;
 		m_OuterFractions		= oldISV.m_OuterFractions;
 		m_bPatches[0]			= oldISV.m_bPatches[0];
 		m_bPatches[1]			= oldISV.m_bPatches[1];
 		m_bPolymerise			= oldISV.m_bPolymerise;
 		m_CrossLinks			= oldISV.m_CrossLinks;
-		m_InnerRadius			= oldISV.m_InnerRadius;
 		m_PolymerTypes			= oldISV.m_PolymerTypes;
-		m_InteriorPolymerTypes	= oldISV.m_InteriorPolymerTypes;
+		m_InteriorPolymerTypes	        = oldISV.m_InteriorPolymerTypes;
+		m_InnerRadius			= oldISV.m_InnerRadius;
 	}
 
 	return *this;
@@ -150,7 +151,7 @@ zOutStream& CInitialStateTubularVesicle::put(zOutStream& os) const
 	os << "			" << "Thickness		"	<< m_Thickness		<< zEndl;
 	os << "	        " << "OuterFraction	  ";
 
-	for(short i=0; i<m_Polymers.size(); i++)
+	for(long unsigned int i=0; i<m_Polymers.size(); i++)
 	{
 		os << "	" << m_OuterFractions.at(i);
 	}
@@ -185,7 +186,7 @@ zInStream& CInitialStateTubularVesicle::get(zInStream& is)
 
 	StringSequence	polymerNames;
 	zDoubleVector	polymerFractions;
-	zLongVector		polymerPositions;
+	zLongVector	polymerPositions;
 	zDoubleVector	polymerSpringConstants;
 	zDoubleVector	polymerLengths;
 
@@ -331,7 +332,7 @@ zInStream& CInitialStateTubularVesicle::get(zInStream& is)
 	}
 	else
 	{
-		for(short i=0; i<m_Polymers.size(); i++)
+		for(long unsigned int i=0; i<m_Polymers.size(); i++)
 		{
 			is >> outerFraction;
 
@@ -407,8 +408,6 @@ zInStream& CInitialStateTubularVesicle::get(zInStream& is)
 			// SpringConstant		  128.0		16.0
 			// UnstretchedLength	  0.5		1.0
 
-			short i;	// Counter used below
-
 			is >> token;
 			if(!is.good() || token != "Polymer")
 			{
@@ -440,7 +439,7 @@ zInStream& CInitialStateTubularVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> polymerisedFraction;
 					if(!is.good() || polymerisedFraction < 0.0 || polymerisedFraction > 1.0)
@@ -464,7 +463,7 @@ zInStream& CInitialStateTubularVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> polymerisedPosition;
 					if(!is.good() || polymerisedPosition < 0)
@@ -484,7 +483,7 @@ zInStream& CInitialStateTubularVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> springConstant;
 					if(!is.good() || springConstant < 0.0)
@@ -504,7 +503,7 @@ zInStream& CInitialStateTubularVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> unstretchedLength;
 					if(!is.good() || unstretchedLength < 0.0)
@@ -521,13 +520,12 @@ zInStream& CInitialStateTubularVesicle::get(zInStream& is)
 			// yet know the types of the polymers in the bilayer we use the
 			// constructor that gives a default value to the type.
 
-			for(i=0; i<polymerNames.size(); i++)
+			for(long unsigned int i=0; i<polymerNames.size(); i++)
 			{			
-				CPolymerCrossLink* pLink = new CPolymerCrossLink(polymerNames.at(i),
-																 polymerFractions.at(i),
-																 polymerPositions.at(i),
-																 polymerSpringConstants.at(i),
-																 polymerLengths.at(i));
+				CPolymerCrossLink* pLink = new CPolymerCrossLink(polymerNames.at(i), polymerFractions.at(i),
+													polymerPositions.at(i),
+													polymerSpringConstants.at(i),
+												       polymerLengths.at(i));
 				m_CrossLinks.push_back(pLink);
 			}
 		}

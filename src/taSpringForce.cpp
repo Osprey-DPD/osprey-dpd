@@ -112,9 +112,6 @@ void taSpringForce::Execute(long simTime)
 	
 	// debug checks
 	const zString label = GetLabel();
-	long beadTotal      = GetBeadTotal();
-	CCommandTargetNode* const pInner = GetInnerDecorator();
-	CCommandTargetNode* const pOuter = GetOuterDecorator();
 
 	// We use a temporary vector to hold the target's beads because 
 	// applying begin() and end() to the GetBeads() function directly 
@@ -178,7 +175,7 @@ zInStream& taSpringForce::Read(zInStream& is)
 
     if(!is.good() || m_XOrigin < 0 || m_YOrigin < 0 || m_ZOrigin < 0 || m_keff < 0.0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing spring force decorator (invalid origin?)");
+         new CLogRestartStateBuilderError(0, "Error importing spring force decorator (invalid origin?)");
         return is;
     }
 

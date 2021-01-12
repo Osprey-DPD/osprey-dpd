@@ -118,9 +118,6 @@ void taLinearForce::Execute(long simTime)
 
 	// debug checks
 	const zString label = GetLabel();
-	long beadTotal      = GetBeadTotal();
-	CCommandTargetNode* const pInner = GetInnerDecorator();
-	CCommandTargetNode* const pOuter = GetOuterDecorator();
 
 	m_FX = m_RateX*static_cast<double>(simTime - m_StartTime);
 	m_FY = m_RateY*static_cast<double>(simTime - m_StartTime);
@@ -167,7 +164,7 @@ zInStream& taLinearForce::Read(zInStream& is)
 
     if(!is.good() || m_StartTime < 0 || (m_X == 0 && m_Y == 0 && m_Z == 0))
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing linear force decorator (invalid start time or normal vector?)");
+         new CLogRestartStateBuilderError(0, "Error importing linear force decorator (invalid start time or normal vector?)");
         return is;
     }
 
@@ -175,7 +172,7 @@ zInStream& taLinearForce::Read(zInStream& is)
 
     if(!is.good() || m_Rate < 0.0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing linear force decorator (negative rate?)");
+         new CLogRestartStateBuilderError(0, "Error importing linear force decorator (negative rate?)");
         return is;
     }
 

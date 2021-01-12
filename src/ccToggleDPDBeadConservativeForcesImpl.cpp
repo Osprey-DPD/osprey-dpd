@@ -44,7 +44,7 @@ ccToggleDPDBeadConservativeForcesImpl::~ccToggleDPDBeadConservativeForcesImpl()
 
 void ccToggleDPDBeadConservativeForcesImpl::ToggleDPDBeadConservativeForces(const xxCommand* const pCommand)
 {
-	const ccToggleDPDBeadConservativeForces* const pCmd = dynamic_cast<const ccToggleDPDBeadConservativeForces*>(pCommand);
+//	const ccToggleDPDBeadConservativeForces* const pCmd = dynamic_cast<const ccToggleDPDBeadConservativeForces*>(pCommand);
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 	
@@ -73,5 +73,5 @@ void ccToggleDPDBeadConservativeForcesImpl::ToggleDPDBeadConservativeForces(cons
 
 	// This command cannot fail
 
-	CLogToggleDPDBeadConservativeForces* pMsg = new CLogToggleDPDBeadConservativeForces(pSimBox->GetCurrentTime(), bZeroForce);
+	 new CLogToggleDPDBeadConservativeForces(pSimBox->GetCurrentTime(), bZeroForce);
 }

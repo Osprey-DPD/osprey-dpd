@@ -166,11 +166,11 @@ bool acSetHeadADPMultiplier::Execute(long simTime, ISimCmd* const pISimCmd) cons
 		{
 			pMActin->SetHeadADPMultiplier(m_Multiplier);
 
-			CLogacSetHeadADPMultiplier* pMsg = new CLogacSetHeadADPMultiplier(GetExecutionTime(), m_ACNType, m_Multiplier);
+			 new CLogacSetHeadADPMultiplier(GetExecutionTime(), m_ACNType, m_Multiplier);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

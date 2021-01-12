@@ -207,7 +207,7 @@ bool ccSetDPDBeadConsIntByType::Pack(const tguArgumentSequence& vArguments)
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(0)->GetValue(&m_FirstType);
         vArguments.at(1)->GetValue(&m_SecondType);

@@ -216,7 +216,7 @@ bool ctSetBondStrengthInTarget::IsDataValid(const CInputData& riData) const
 
 bool ctSetBondStrengthInTarget::Pack(const tguArgumentSequence& vArguments)
 {
-    if(ctApplyCommand::Pack(vArguments) && vArguments.size() == GetArgumentTotal())
+    if(ctApplyCommand::Pack(vArguments) && static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(1)->GetValue(&m_Name);
         vArguments.at(2)->GetValue(&m_SpringConstant);

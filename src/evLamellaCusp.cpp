@@ -340,7 +340,7 @@ bool evLamellaCusp::Execute(long simTime, ISimEvent* const pISimEvent)
 		{
 			pISimEvent->SaveCurrentState();
 
-			CLogLamellaCusp* pMsg = new CLogLamellaCusp(simTime, m_AggregateName, m_AggregateId, m_pIEvent->GetCurvature());
+			 new CLogLamellaCusp(simTime, m_AggregateName, m_AggregateId, m_pIEvent->GetCurvature());
 
 			InActivateEvent();		
 		}

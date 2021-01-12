@@ -52,11 +52,11 @@ void ccCreateActiveSimBoxImpl::CreateActiveSimBox(const xxCommand* const pComman
 	{
 		pSimBox->m_pShadow = aeActiveSimBox::Instance(pSimBox->GetISimBox());
 
-		CLogActiveSimBoxCreated* pMsg = new CLogActiveSimBoxCreated(pSimBox->GetCurrentTime());
+		 new CLogActiveSimBoxCreated(pSimBox->GetCurrentTime());
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 #endif
 }

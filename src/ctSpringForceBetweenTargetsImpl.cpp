@@ -74,13 +74,8 @@ void ctSpringForceBetweenTargetsImpl::SpringForceBetweenTargets(const xxCommand*
 	// is not applicable to composite targets because they may contain
 	// a multitude of bead types.
 
-	bool bSuccess = true;
-
 	if(pCmdTarget1 && pCmdTarget2)
 	{
-		const long beadTotal = pCmdTarget1->GetBeadTotal();
-
-		const long beadType            = pCmdTarget1->GetCurrentBeadType();
 		const long originalBeadType    = pCmdTarget1->GetOriginalBeadType();
 		const zString beadName         = pSimBox->GetBeadNameFromType(originalBeadType);
 
@@ -107,11 +102,11 @@ void ctSpringForceBetweenTargetsImpl::SpringForceBetweenTargets(const xxCommand*
 
 		// Log sucessful execution of the command
 
-		CLogctSpringForceBetweenTargets* pMsg = new CLogctSpringForceBetweenTargets(pSimBox->GetCurrentTime(), 
+		new CLogctSpringForceBetweenTargets(pSimBox->GetCurrentTime(), 
                                                 target1Label, target2Label, decLabel, keff, deltax, period);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

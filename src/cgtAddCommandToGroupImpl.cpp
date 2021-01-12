@@ -63,11 +63,11 @@ void cgtAddCommandToGroupImpl::AddCommandToGroup(const xxCommand* const pCommand
 	{
         pGroup->AddCommand(cmdName, argNames);
 
-		CLogcgtAddCommandToGroup* pMsg = new CLogcgtAddCommandToGroup(pSimBox->GetCurrentTime(), groupName, cmdName, argNames);
+		new CLogcgtAddCommandToGroup(pSimBox->GetCurrentTime(), groupName, cmdName, argNames);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

@@ -204,11 +204,11 @@ void taTargetCM::Execute(long simTime)
 
                 if(SaveState())
                 {
-		            CLogctTargetCM* pMsg = new CLogctTargetCM(simTime, targetLabel, decLabel);
+		             new CLogctTargetCM(simTime, targetLabel, decLabel);
                 }
                 else
                 {
-                    CLogTextWarningMessage* pMsg = new CLogTextWarningMessage(simTime, "Error serialising data from decorator " + decLabel + " around target " + targetLabel);
+                     new CLogTextWarningMessage(simTime, "Error serialising data from decorator " + decLabel + " around target " + targetLabel);
                 }
             }
             // ********************
@@ -226,14 +226,14 @@ void taTargetCM::Execute(long simTime)
             // is used to log the start of the calculation and its end, but with
             // different arguments.
 
-		    CLogctTargetCM* pMsg = new CLogctTargetCM(simTime, targetLabel, decLabel,  
+		     new CLogctTargetCM(simTime, targetLabel, decLabel,  
 									                  m_Start, m_End, static_cast<long>(m_BeadTotal));
 	    }
     }
 	else if(!m_bWrapFailure)
 	{
 		m_bWrapFailure = true;
-		CLogctNonexistentDecorator* pMsg = new CLogctNonexistentDecorator(simTime, decLabel, "");
+		 new CLogctNonexistentDecorator(simTime, decLabel, "");
 	}
 }
 

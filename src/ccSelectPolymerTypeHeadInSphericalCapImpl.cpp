@@ -67,7 +67,7 @@ void ccSelectPolymerTypeHeadInSphericalCapImpl::SelectPolymerTypeHeadInSpherical
 	// then store all polymers of the specified type.
 
 	const long polyType = pSimBox->GetPolymerTypeFromName(polyName);
-	const long beadType = pSimBox->GetPolymerHeadType(polyType);
+//	const long beadType = pSimBox->GetPolymerHeadType(polyType);
 
 	const double xc = xCentre*pSimBox->GetSimBoxXLength();
 	const double yc = yCentre*pSimBox->GetSimBoxYLength();
@@ -151,11 +151,11 @@ void ccSelectPolymerTypeHeadInSphericalCapImpl::SelectPolymerTypeHeadInSpherical
 
 	if(pSimBox->CreateCommandTargetPolymer(label, polyType, vTargetPolymers))
 	{
-		CLogSelectPolymerTypeInRegion* pMsg = new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "SphericalCap", polyName, polyType, polyTotal);
+		 new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "SphericalCap", polyName, polyType, polyTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }
 

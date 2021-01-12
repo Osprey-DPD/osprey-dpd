@@ -83,7 +83,6 @@ protected:
 
 private:
 
-    zString        m_DecLabel;                    // Decorator label
     long           m_BeadType;                    // Numeric type of the bead in the membrane lipids to use in triangulating the surface area: there must only be a single instance of this bead type in a lipid
     long           m_SampleRate;                  // Number of steps between invocations of this decorator
     double         m_TargetAN;                    // Target area per molecule in the membrane that is to be maintained

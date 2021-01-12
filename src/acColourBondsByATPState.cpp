@@ -174,11 +174,11 @@ bool acColourBondsByATPState::Execute(long simTime, ISimCmd* const pISimCmd) con
 		{
 			pMActin->ColourBondsByATPState(m_ATPDisplayId, m_ADPPiDisplayId, m_ADPDisplayId);
 
-			CLogacColourBondsByATPState* pMsg = new CLogacColourBondsByATPState(GetExecutionTime(), m_ACNType, m_ATPDisplayId, m_ADPPiDisplayId, m_ADPDisplayId);
+			 new CLogacColourBondsByATPState(GetExecutionTime(), m_ACNType, m_ATPDisplayId, m_ADPPiDisplayId, m_ADPDisplayId);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

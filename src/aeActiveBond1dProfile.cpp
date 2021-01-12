@@ -105,7 +105,7 @@ void aeActiveBond1dProfile::Sample()
 	if(sampleSize != m_FreeBonds.size())
 	{
 		const zString msg = "Incorrect total in 1d profile for ACN " + GetDataType();
-		CLogTextMessage* pTextMsg = new CLogTextMessage(m_CurrentTime, msg);
+		new CLogTextMessage(m_CurrentTime, msg);
 
 	}
 	// Normalize the binned data by the number of active bonds sampled

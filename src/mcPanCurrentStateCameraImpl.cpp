@@ -257,7 +257,7 @@ void mcPanCurrentStateCameraImpl::PanCurrentStateCamera(const xxCommand* const p
 #if EnableParallelCommands == SimMPSEnabled
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-	        CLogPanCurrentStateCamera* pMsg = new CLogPanCurrentStateCamera(pMon->GetCurrentTime(), 
+	        new CLogPanCurrentStateCamera(pMon->GetCurrentTime(), 
 														bJumpToInitial, bStayAtFinal,
 														duration, frameRate, stepsPerFrame,
 														panAngle*180.0/xxBase::m_globalPI,
@@ -269,7 +269,7 @@ void mcPanCurrentStateCameraImpl::PanCurrentStateCamera(const xxCommand* const p
             // log a CLogParallelCommandFailed message to the log file.
         }
 #else
-	        CLogPanCurrentStateCamera* pMsg = new CLogPanCurrentStateCamera(pMon->GetCurrentTime(), 
+	        new CLogPanCurrentStateCamera(pMon->GetCurrentTime(), 
 														bJumpToInitial, bStayAtFinal,
 														duration, frameRate, stepsPerFrame,
 														panAngle*180.0/xxBase::m_globalPI,

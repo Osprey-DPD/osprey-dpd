@@ -160,11 +160,11 @@ bool acToggleCumulativeEventStatistics::Execute(long simTime, ISimCmd* const pIS
 
             bool bAccumulate = pMACN->ToggleCumulativeEventStatistics();
 
-			CLogacToggleCumulativeEventStatistics* pMsg = new CLogacToggleCumulativeEventStatistics(GetExecutionTime(), m_ACNType, bAccumulate);
+			 new CLogacToggleCumulativeEventStatistics(GetExecutionTime(), m_ACNType, bAccumulate);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

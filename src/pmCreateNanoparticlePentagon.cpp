@@ -256,7 +256,7 @@ bool pmCreateNanoparticlePentagon::Validate()
 //    std::cout << m_MaxBonds << " " << m_Range << " " << m_Fraction << " " << m_SpringConstant << " " << m_UnstretchedLength << " " ;
 //    std::cout << m_NumberTypes << zEndl;
     
-    if(m_NumberTypes != m_vBeadTypes.size() || m_NumberTypes != m_vConsInt.size())
+    if(m_NumberTypes != static_cast<long>(m_vBeadTypes.size()) || m_NumberTypes != static_cast<long>(m_vConsInt.size()))
     {
         std::cout << "Invalid number of beadtypes: " << m_NumberTypes << " " << m_vBeadTypes.size() << " " << m_vConsInt.size() << zEndl;
     }
@@ -270,7 +270,7 @@ bool pmCreateNanoparticlePentagon::Validate()
          m_MaxBonds < 1 || m_Range < 0.0 || m_Fraction < 0.0 || m_Fraction > 1.0 ||
          m_SpringConstant < 0.0 || m_UnstretchedLength < 0.0 || m_NumberTypes < 1 ||
          m_vBeadTypes.empty() || m_vConsInt.empty() || 
-         m_vBeadTypes.size() != m_NumberTypes || m_vConsInt.size() != m_NumberTypes)
+         static_cast<long>(m_vBeadTypes.size()) != m_NumberTypes || static_cast<long>(m_vConsInt.size()) != m_NumberTypes)
     {
         std::cout << "pmCreateNanoparticlePentagon validation failed" << zEndl;
         bSuccess = false;

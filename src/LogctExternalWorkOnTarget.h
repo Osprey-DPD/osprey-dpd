@@ -66,17 +66,17 @@ private:
 	// Data members
 private:
 
-	const bool		m_bStart;		// Flag showing if calculation is beginning or ending
+	const bool	m_bStart;	// Flag showing if calculation is beginning or ending
 	const zString	m_TargetLabel;	// Command target label
 	const zString	m_ForceLabel;	// Force decorator label
-	const zString	m_DecLabel;		// Command wrapper label 
-	const long		m_StartTime;	// Start of measuring interval
-	const long		m_EndTime;		// End of measuring intervaL
+	const zString	m_DecLabel;	// Command wrapper label 
+	const long	m_StartTime;	// Start of measuring interval
+	const long	m_EndTime;	// End of measuring intervaL
 
-	const zString	m_BeadName;		// Name of bead type in target
-	const long		m_BeadType;		// Integer identifier for bead type
-	const long		m_BeadTotal;	// Number of beads of specified type in target
-	const double	m_Work;			// Work done on target beads
+	const zString	m_BeadName;	// Name of bead type in target
+	const long	m_BeadType;	// Integer identifier for bead type
+	const long	m_BeadTotal;	// Number of beads of specified type in target
+	const double	m_Work;	// Work done on target beads
 
 };
 #endif // !defined(AFX_LOGCTEXTERNALWORKONTARGET_H__3A06CFA4_2503_4830_96BA_1E2B9E74312D__INCLUDED_)

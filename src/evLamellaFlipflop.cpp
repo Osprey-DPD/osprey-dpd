@@ -494,20 +494,13 @@ bool evLamellaFlipflop::Execute(long simTime, ISimEvent* const pISimEvent)
 			m_LtoUCounter.assign(pISimEvent->GetSimBoxBeadTypeTotal(), 0);
 			m_DiffCounter.assign(pISimEvent->GetSimBoxBeadTypeTotal(), 0);
 
-			long uppertotal = m_mUpper.size();
-			long lowertotal = m_mLower.size();
-
 			for(long i=m_RowTotal-1; i>=0; i--)
 			{
 				CCellProfileSet* pBilayer1d = m_vBilayerProfiles.at(i);
 
-				long osize = pBilayer1d->GetOrthogonalSize();
-
 				for(long j=0; j<pBilayer1d->GetOrthogonalSize(); j++)
 				{
 					CCellProfile* pOCP = pBilayer1d->GetOrthogonalProfile(j);
-
-					long cellTotal = pOCP->Size();
 
 					BeadList lOCPBeads;		// All lipid head beads in OCP
 
@@ -527,12 +520,8 @@ bool evLamellaFlipflop::Execute(long simTime, ISimEvent* const pISimEvent)
 
 						BeadList beads = pCell->GetBeads();
 
-						long cellBeadTotal = pOCP->GetRegion(k)->GetBeadTotal();
-
 						for(cBeadListIterator iterBead=beads.begin(); iterBead!=beads.end(); iterBead++)
 						{
-							const CAbstractBead* pBead= *iterBead;
-
 							if(find(m_HeadBeadTypes.begin(), m_HeadBeadTypes.end(), (*iterBead)->GetType())!=m_HeadBeadTypes.end())
 							{						
 								beadTotal++;
@@ -611,10 +600,6 @@ bool evLamellaFlipflop::Execute(long simTime, ISimEvent* const pISimEvent)
 					{
 						for(BeadListIterator iterBead=lOCPBeads.begin(); iterBead!=lOCPBeads.end(); iterBead++)
 						{
-							CAbstractBead* pBead = *iterBead;
-
-							double zpos = (*iterBead)->GetZPos();
-
 							// If bead was in upper monolayer and now has a position 
 							// more than m_MinDistance below the OCP head bead CM, 
 							// move it to the lower monolayer.
@@ -639,10 +624,7 @@ bool evLamellaFlipflop::Execute(long simTime, ISimEvent* const pISimEvent)
 			// Count the net number of flips: a positive value means more
 			// polymers left the upper monolayer than entered it
 
-			long uppertotal1 = m_mUpper.size();
-			long lowertotal2 = m_mLower.size();
-
-			for(long type=0; type<m_UtoLCounter.size(); type++)
+			for(long unsigned int type=0; type<m_UtoLCounter.size(); type++)
 			{
 				m_DiffCounter.at(type) = m_UtoLCounter.at(type) - m_LtoUCounter.at(type);
 

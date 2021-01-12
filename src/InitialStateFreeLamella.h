@@ -41,10 +41,10 @@ private:
 	double	m_Width;						// Bilayer width in units of bead diameters
 	bool	m_bLinearise;					// Flag showing whether polymer is initially straightened
 	zDoubleVector	m_UpperFractions;		// Fractions of polymers in upper monolayer
-	bool			m_bPatches[2];			// Arrange polymers in patches: 0/1
+	bool		m_bPatches[2];			// Arrange polymers in patches: 0/1
 
 	// Data relating to a polymerised initial state
-	bool					m_bPolymerise;	// Flag showing if initial state is polymerised
+	bool	m_bPolymerise;	// Flag showing if initial state is polymerised
 	PolymerCrossLinkVector	m_CrossLinks;	// Vector of cross-linker pointers holding data
 
 	// Local data

@@ -79,8 +79,8 @@ CLogctExternalWorkOnTarget::CLogctExternalWorkOnTarget(long time, const zString 
 									const zString forceLabel, const zString decLabel,
 									long startTime, long endTime, const zString name, 
 									long type, long total) : CLogAnalysisMessage(time),
-									m_TargetLabel(targetlabel), m_ForceLabel(forceLabel), 
-									m_DecLabel(decLabel), m_bStart(true), 
+									m_bStart(true), m_TargetLabel(targetlabel), m_ForceLabel(forceLabel), 
+									m_DecLabel(decLabel), 
 									m_StartTime(startTime), m_EndTime(endTime),
 									m_BeadName(name), m_BeadType(type), m_BeadTotal(total),
 									m_Work(0.0)
@@ -90,8 +90,8 @@ CLogctExternalWorkOnTarget::CLogctExternalWorkOnTarget(long time, const zString 
 
 CLogctExternalWorkOnTarget::CLogctExternalWorkOnTarget(long time, const zString targetlabel, 
 									const zString forceLabel, const zString decLabel, double work) : CLogAnalysisMessage(time),
-									m_TargetLabel(targetlabel), m_ForceLabel(forceLabel), 
-									m_DecLabel(decLabel), m_bStart(false), 
+									m_bStart(false), m_TargetLabel(targetlabel), m_ForceLabel(forceLabel), 
+									m_DecLabel(decLabel), 
 									m_StartTime(0), m_EndTime(0),
 									m_BeadName(""), m_BeadType(-1), m_BeadTotal(0),
 									m_Work(work)

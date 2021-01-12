@@ -67,10 +67,10 @@ void ctListCommandTargetsImpl::ListCommandTargets(const xxCommand* const pComman
             targetList.push_back(label);
         }
 
-	    CLogctListCommandTargets* pMsg = new CLogctListCommandTargets(pSimBox->GetCurrentTime(), targetTotal, targetList);
+	    new CLogctListCommandTargets(pSimBox->GetCurrentTime(), targetTotal, targetList);
     }
     else
     {
-        CLogTextMessage* pWarning = new CLogTextMessage(pSimBox->GetCurrentTime(), "No command targets exist");
+        new CLogTextMessage(pSimBox->GetCurrentTime(), "No command targets exist");
     }
 }

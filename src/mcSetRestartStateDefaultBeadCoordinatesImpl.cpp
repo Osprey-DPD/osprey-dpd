@@ -40,12 +40,12 @@ mcSetRestartStateDefaultBeadCoordinatesImpl::~mcSetRestartStateDefaultBeadCoordi
 
 void mcSetRestartStateDefaultBeadCoordinatesImpl::SetRestartStateDefaultBeadCoordinates(const xxCommand* const pCommand)
 {
-	const mcSetRestartStateDefaultBeadCoordinates* const pCmd = dynamic_cast<const mcSetRestartStateDefaultBeadCoordinates*>(pCommand);
+//	const mcSetRestartStateDefaultBeadCoordinates* const pCmd = dynamic_cast<const mcSetRestartStateDefaultBeadCoordinates*>(pCommand);
 
 	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 
-    pMon->m_bInclusiveRestartStates = false;
+        pMon->m_bInclusiveRestartStates = false;
 
-	CLogSetRestartStateDefaultType* pMsg = new CLogSetRestartStateDefaultType(pMon->GetCurrentTime(), "bead coordinates only");
+	new CLogSetRestartStateDefaultType(pMon->GetCurrentTime(), "bead coordinates only");
 }
 

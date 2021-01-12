@@ -103,16 +103,16 @@ void ctChangeNamedBeadTypeImpl::ChangeNamedBeadType(const xxCommand* const pComm
 
 		    pSimBox->UpdateBeadTypes();
 
-		    CLogctChangeNamedBeadType* pMsg = new CLogctChangeNamedBeadType(pSimBox->GetCurrentTime(), label, oldName, newName, oldType, newType);
+		    new CLogctChangeNamedBeadType(pSimBox->GetCurrentTime(), label, oldName, newName, oldType, newType);
         }
 	    else
 	    {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		     new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	    }
     }
     else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 }

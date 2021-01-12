@@ -41,9 +41,9 @@ mcGetBuildDateImpl::~mcGetBuildDateImpl()
 
 void mcGetBuildDateImpl::GetBuildDate(const xxCommand* const pCommand)
 {
-	const mcGetBuildDate* const pCmd = dynamic_cast<const mcGetBuildDate*>(pCommand);
+//	const mcGetBuildDate* const pCmd = dynamic_cast<const mcGetBuildDate*>(pCommand);
 
 	CMonitor* pMon = dynamic_cast<CMonitor*>(this);
 
-    CLogTextMessage* pMsg = new CLogTextMessage(pMon->GetCurrentTime(), "01/12/2008");
+     new CLogTextMessage(pMon->GetCurrentTime(), "01/12/2008");
 }

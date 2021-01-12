@@ -3056,7 +3056,7 @@ const DensityStateSequence& CMonitor::GetDensityStates() const
 
 bool CMonitor::IsBeadTypeVisible(long type) const
 {
-    if(type >= 0 && type < m_ExcludedBeadTypes.size() && m_ExcludedBeadTypes.at(type) == 0)
+    if(type >= 0 && type < static_cast<long>(m_ExcludedBeadTypes.size()) && m_ExcludedBeadTypes.at(type) == 0)
     {
         return true;
     }

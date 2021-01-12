@@ -441,12 +441,10 @@ void mpsLinearZSimBox::UpdateBorderPos()
 		m_rvCNTCells[GetCellIndexFromCoords(ix,iy,iz)]->AddBeadtoCell(*iterBead);
 	}
 
-
 	++localBeadTotalTimer;
 	if(localBeadTotalTimer == 100)
 	{
 	    localBeadTotalTimer = 0;
-		m_CMVCounter++;
 				
 		// Calculate the total CM velocity and angular momentum for all PN including P0. The results are stored in the base class.
 		
@@ -832,7 +830,7 @@ void mpsLinearZSimBox::TranslateBeadCoordsInNegativeZ()
 
         const long ix = static_cast<long>(x/GetCNTXCellWidth());
         const long iy = static_cast<long>(y/GetCNTYCellWidth());
-        const long iz = GetCNTZCellNo()-1;
+//        const long iz = GetCNTZCellNo()-1;
 
         m_pU->AddBeadToFECZCell(index, ix, iy, rBeadIds.at(i), rBeadTypes.at(i), 
                               rBeadX.at(i),   rBeadY.at(i), rBeadZ.at(i),
@@ -850,7 +848,7 @@ void mpsLinearZSimBox::TranslateBeadCoordsInNegativeZ()
 
 void mpsLinearZSimBox::TranslateBeadForcesInPositiveZ()
 {
-    const long total = m_Msg2.GetRecForceTotal();
+//    const long total = m_Msg2.GetRecForceTotal();
 //    std::cout << "Proc " << GetRank() << " is accumulating " << total << " forces" << zEndl;
 
     BeadList       lBeads = GetFaceEdgeCornerBeads(*m_pD);

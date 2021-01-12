@@ -54,11 +54,11 @@ void cgtCreateCommandGroupImpl::InternalCreateCommandGroup(const xxCommand* cons
 
 	if(pSimBox->CreateCommandGroup(groupName))
 	{
-		CLogcgtCreateCommandGroup* pMsg = new CLogcgtCreateCommandGroup(pSimBox->GetCurrentTime(), groupName);
+		new CLogcgtCreateCommandGroup(pSimBox->GetCurrentTime(), groupName);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

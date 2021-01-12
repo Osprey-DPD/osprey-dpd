@@ -42,7 +42,7 @@ bool operator==(const ccSelection& a, const ccSelection& b)
 
 		bool bSameNames = true;
 
-		for(long i=0; i<a.m_Names.size(); i++)
+		for(long unsigned int i=0; i<a.m_Names.size(); i++)
 		{
 			zString name = a.m_Names.at(i);
 

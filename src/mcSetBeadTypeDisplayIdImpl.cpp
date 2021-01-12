@@ -81,10 +81,10 @@ void mcSetBeadTypeDisplayIdImpl::SetBeadTypeDisplayId(const xxCommand* const pCo
 			}
 		}
 
-		CLogBeadDisplayId* pMsg = new CLogBeadDisplayId(pMon->GetCurrentTime(), beadName, beadType, displayId);
+		new CLogBeadDisplayId(pMon->GetCurrentTime(), beadName, beadType, displayId);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 }

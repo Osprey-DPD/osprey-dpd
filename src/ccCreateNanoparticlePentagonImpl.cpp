@@ -96,7 +96,7 @@ void ccCreateNanoparticlePentagonImpl::CreateNanoparticlePentagon(const xxComman
 	const double fraction			= pCmd->GetBondFraction();
 	const double springConstant		= pCmd->GetSpringConstant();
 	const double unStretchedLength  = pCmd->GetUnstretchedLength();
-	const double numberType         = pCmd->GetNumberTypes();
+//	const double numberType         = pCmd->GetNumberTypes();
 	const zLongVector vBeadTypes    = pCmd->GetBeadTypes();
 	const zDoubleVector vConsInt    = pCmd->GetConsInt();
     
@@ -287,7 +287,7 @@ void ccCreateNanoparticlePentagonImpl::CreateNanoparticlePentagon(const xxComman
         
         if(procId == 0)
         {
-            CLogctChangeNamedBeadType* pMsg = new CLogctChangeNamedBeadType(pSimBox->GetCurrentTime(), "Nanoparticle", oldName, newName, oldType, newType);
+             new CLogctChangeNamedBeadType(pSimBox->GetCurrentTime(), "Nanoparticle", oldName, newName, oldType, newType);
         }
     }
     
@@ -344,7 +344,7 @@ void ccCreateNanoparticlePentagonImpl::CreateNanoparticlePentagon(const xxComman
 	    if(polymerTotal > 1 && fraction > 0.0)
 	    {
 		    const long polymerSize = vPolymers.at(0)->GetSize();
-		    const long maxBonds = polymerTotal*(polymerTotal - 1)/2;
+//		    const long maxBonds = polymerTotal*(polymerTotal - 1)/2;
         
 		    // Calculate the maximum number of pairwise bonds possible, remove all
 		    // those that violate the maximum separation or the max number of bonds
@@ -363,10 +363,10 @@ void ccCreateNanoparticlePentagonImpl::CreateNanoparticlePentagon(const xxComman
 		    // polymer's id.
         
 		    LongPolymerMap  mPolymers;
-		    LongLongMap		mNeighbours;	// (polymer id, neighbours)
+		    LongLongMap     mNeighbours;	// (polymer id, neighbours)
         
-		    zLongVector		vFirstPolymerInPair;	
-		    zLongVector		vSecondPolymerInPair;	
+		    zLongVector     vFirstPolymerInPair;	
+		    zLongVector     vSecondPolymerInPair;	
 		    zDoubleVector   vHeadSeparation;
 		    zDoubleVector   vTailSeparation;
         
@@ -453,7 +453,7 @@ void ccCreateNanoparticlePentagonImpl::CreateNanoparticlePentagon(const xxComman
             // Parallel log messages not implemented yet
         
 		    zString logText = "Nanoparticle contains " + pSimBox->ToString(polymerTotal) + " polymers";
-		    CLogTextMessage* pText1  = new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
+		    new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
             std::cout << logText << zEndl;
         
 //		    logText = "polymers map contains  " + pSimBox->ToString(static_cast<long>(mPolymers.size())) + " elements";
@@ -528,7 +528,7 @@ void ccCreateNanoparticlePentagonImpl::CreateNanoparticlePentagon(const xxComman
         
 		    double actualSep = 0.0;
         
-		    for(long pairIndex=0; pairIndex<vFirstPolymerInPair.size(); pairIndex++)
+		    for(long unsigned int pairIndex=0; pairIndex<vFirstPolymerInPair.size(); pairIndex++)
 		    {
 			    const long firstId  = vFirstPolymerInPair.at(pairIndex);
 			    const long secondId = vSecondPolymerInPair.at(pairIndex);
@@ -537,7 +537,7 @@ void ccCreateNanoparticlePentagonImpl::CreateNanoparticlePentagon(const xxComman
 			    CPolymer* const pPoly2 = mPolymers.find(secondId)->second;
             
 			    CAbstractBead* pHead1 = pPoly1->GetHead();
-                CAbstractBead* pTail1 = pPoly1->GetTail();
+                           CAbstractBead* pTail1 = pPoly1->GetTail();
 			    CAbstractBead* pHead2 = pPoly2->GetHead();
 			    CAbstractBead* pTail2 = pPoly2->GetTail();
             

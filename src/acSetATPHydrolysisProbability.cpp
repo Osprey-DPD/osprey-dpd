@@ -166,11 +166,11 @@ bool acSetATPHydrolysisProbability::Execute(long simTime, ISimCmd* const pISimCm
 		{
 			pMActin->SetATPHydrolysisProbability(m_Rate);
 
-			CLogacSetATPHydrolysisProbability* pMsg = new CLogacSetATPHydrolysisProbability(GetExecutionTime(), m_ACNType, m_Rate);
+			 new CLogacSetATPHydrolysisProbability(GetExecutionTime(), m_ACNType, m_Rate);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

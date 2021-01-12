@@ -84,7 +84,7 @@ void ctExtractBeadTypesIntoCompositeTargetImpl::ExtractBeadTypesIntoCompositeTar
 			// are dealing with the final bead type in the target, we create one
 			// last target outside of the loop.
 
-            CCommandTargetNode* pTarget;
+                       CCommandTargetNode* pTarget;
 			LongTargetMap mTargets;
 			mTargets.clear();
 
@@ -126,8 +126,8 @@ void ctExtractBeadTypesIntoCompositeTargetImpl::ExtractBeadTypesIntoCompositeTar
 					}
 					else
 					{
-						CLogTextMessage* pText  = new CLogTextMessage(pSimBox->GetCurrentTime(), "Unable to create destination target");
-						CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+						new CLogTextMessage(pSimBox->GetCurrentTime(), "Unable to create destination target");
+						 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 					}
 				}
 			}
@@ -160,31 +160,31 @@ void ctExtractBeadTypesIntoCompositeTargetImpl::ExtractBeadTypesIntoCompositeTar
 				{
 					// A target with the same name as the composite target exists
 
-					CLogTextMessage* pText  = new CLogTextMessage(pSimBox->GetCurrentTime(), "Unable to create composite target");
-					CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+					new CLogTextMessage(pSimBox->GetCurrentTime(), "Unable to create composite target");
+					 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 				}
 			}
 			else
 			{
 				// A target with the same name as one of the destination targets exists
 
-				CLogTextMessage* pText  = new CLogTextMessage(pSimBox->GetCurrentTime(), "Unable to create destination target to add to composite target");
-				CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+				new CLogTextMessage(pSimBox->GetCurrentTime(), "Unable to create destination target to add to composite target");
+				new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 			}
 
 			// Log execution of the command passing the target map so that we can 
 			// access the target names, bead types and sizes
 
-			CLogctExtractBeadTypesIntoCompositeTarget* pMsg = new CLogctExtractBeadTypesIntoCompositeTarget(pSimBox->GetCurrentTime(), sourceLabel, destLabel, 
-				destCompositeLabel, pSimBox->GetCommandTarget(destCompositeLabel)->GetBeadTotal(), mTargets);
+			new CLogctExtractBeadTypesIntoCompositeTarget(pSimBox->GetCurrentTime(), sourceLabel, destLabel, 
+			destCompositeLabel, pSimBox->GetCommandTarget(destCompositeLabel)->GetBeadTotal(), mTargets);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), sourceLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), sourceLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

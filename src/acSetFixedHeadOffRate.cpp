@@ -161,11 +161,11 @@ bool acSetFixedHeadOffRate::Execute(long simTime, ISimCmd* const pISimCmd) const
 		{
 			pMACN->SetFixedHeadOffRate(m_Rate);
 
-			CLogacSetFixedHeadOffRate* pMsg = new CLogacSetFixedHeadOffRate(GetExecutionTime(), m_ACNType, m_Rate);
+			 new CLogacSetFixedHeadOffRate(GetExecutionTime(), m_ACNType, m_Rate);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

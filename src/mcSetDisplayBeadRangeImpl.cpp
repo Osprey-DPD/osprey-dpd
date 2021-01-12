@@ -49,8 +49,8 @@ void mcSetDisplayBeadRangeImpl::SetDisplayBeadRange(const xxCommand* const pComm
 	CMonitor* pMon = dynamic_cast<CMonitor*>(this);
 
 	const zString axis  = pCmd->GetAxis();
-	const double  min	= pCmd->GetMinFraction();
-	const double  max	= pCmd->GetMaxFraction();
+	const double  min   = pCmd->GetMinFraction();
+	const double  max   = pCmd->GetMaxFraction();
 
     if( (axis == "x" || axis == "y" || axis == "z") && !(min < 0.0) && !(max > 1.0) )
 	{
@@ -84,14 +84,14 @@ void mcSetDisplayBeadRangeImpl::SetDisplayBeadRange(const xxCommand* const pComm
 #if EnableParallelCommands == SimMPSEnabled
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-	        CLogSetDisplayBeadRange* pMsg = new CLogSetDisplayBeadRange(pMon->GetCurrentTime(), axis, min, max);
+	        new CLogSetDisplayBeadRange(pMon->GetCurrentTime(), axis, min, max);
         }
 	}
 	else
 	{
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
         }
         else
         {
@@ -101,11 +101,11 @@ void mcSetDisplayBeadRangeImpl::SetDisplayBeadRange(const xxCommand* const pComm
 		
     }
 #else
-		CLogSetDisplayBeadRange* pMsg = new CLogSetDisplayBeadRange(pMon->GetCurrentTime(), axis, min, max);
+		new CLogSetDisplayBeadRange(pMon->GetCurrentTime(), axis, min, max);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 #endif
 }

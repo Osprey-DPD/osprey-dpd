@@ -75,17 +75,17 @@ CLamellaBuilder::CLamellaBuilder(long polymer, long x, long y, long z, double ce
 
 	for(short i=0; i<2; i++)
 	{
-		m_MonolayerTotal[i]			= 0;
+		m_MonolayerTotal[i]		= 0;
 		m_MonolayerFirstPolymer[i]	= 0;
-		m_LatticeSize[i]			= 0;		// No of vertices in monolayer lattices	
-		m_MonolayerSign[i]			= 0.0;
-		m_MonolayerHead[i]			= 0.0;
-		m_HexSpace[i]				= 0.0;		// Hexagonal lattice spacings
-		m_HexCAxisSpace[i]			= 0.0;		// Bead spacing in lattice normal direction
-		m_Hexe1X[i]					= 0.0;
-		m_Hexe1Y[i]					= 0.0;		// Components of hexagonal lattice vectors
-		m_Hexe2X[i]					= 0.0;
-		m_Hexe2Y[i]					= 0.0;
+		m_LatticeSize[i]		= 0;		// No of vertices in monolayer lattices	
+		m_MonolayerSign[i]		= 0.0;
+		m_MonolayerHead[i]		= 0.0;
+		m_HexSpace[i]			= 0.0;		// Hexagonal lattice spacings
+		m_HexCAxisSpace[i]		= 0.0;		// Bead spacing in lattice normal direction
+		m_Hexe1X[i]			= 0.0;
+		m_Hexe1Y[i]			= 0.0;		// Components of hexagonal lattice vectors
+		m_Hexe2X[i]			= 0.0;
+		m_Hexe2Y[i]			= 0.0;
 	}
 	
 
@@ -125,8 +125,6 @@ CLamellaBuilder::~CLamellaBuilder()
 
 bool CLamellaBuilder::Assemble(CInitialState& riState)
 {
-	long iBead = 0;	// counter used everywhere below
-
 	// ****************************************
 	// Position the wall beads first because they cannot move and may be 
 	// bonded to beads in the bulk whose positions can be arranged so 
@@ -635,7 +633,7 @@ bool CLamellaBuilder::Assemble(CInitialState& riState)
 
 				if(hexp[1] >= m_Bilayer2Length)
 				{
-					CLogBuilderError* pMsg = new CLogBuilderError(0, "lamella lattice outside SimBox");
+					new CLogBuilderError(0, "lamella lattice outside SimBox");
 					return false;
 				}
 			}
@@ -906,7 +904,8 @@ bool CLamellaBuilder::Assemble(CInitialState& riState)
 				// increment the iterator to the end of the sequence we want to
 				// erase before we call the erase function.
 
-				BondVectorIterator lastOne = m_vPolymerisedBonds.erase(m_vPolymerisedBonds.begin(), ++lastBondRemoved);
+//				BondVectorIterator lastOne = m_vPolymerisedBonds.erase(m_vPolymerisedBonds.begin(), ++lastBondRemoved);
+				m_vPolymerisedBonds.erase(m_vPolymerisedBonds.begin(), ++lastBondRemoved);
 			}
 
 			// Copy the polymerised bonds for this monolayer to the CInitialState 
@@ -1025,8 +1024,6 @@ bool CLamellaBuilder::AssembleP(CInitialState& riState)
     bool bSuccess = true;
 	
 #if EnableParallelSimBox == SimMPSEnabled
-
-    long iBead = 0;	// counter used everywhere below
 
 	// ****************************************
 	// Copy the polymers in the CInitialState into local vectors for ease of access.
@@ -1548,7 +1545,7 @@ bool CLamellaBuilder::AssembleP(CInitialState& riState)
 
 				if(hexp[1] >= m_Bilayer2Length)
 				{
-					CLogBuilderError* pMsg = new CLogBuilderError(0, "lamella lattice outside SimBox");
+					new CLogBuilderError(0, "lamella lattice outside SimBox");
 					return false;
 				}
 			}

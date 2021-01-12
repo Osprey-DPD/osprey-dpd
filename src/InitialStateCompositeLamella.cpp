@@ -69,16 +69,17 @@ namespace
 // Note that there is no way to set default data for a lamella as we 
 // don't have access to the polymers that are defined in the control data file.
 
-CInitialStateCompositeLamella::CInitialStateCompositeLamella() : m_X(0), m_Y(0), m_Z(0), 
-																m_Centre(0.0),
-																m_Thickness(0.0),
-																m_BilayerArea(0.0),
-																m_Bilayer1Length(0.0),
-																m_Bilayer2Length(0.0),
-																m_BilayerCentre(0.0),
-																m_UpperHead(0.0),
-																m_LowerHead(0.0),
-																m_bLinearise(false)
+CInitialStateCompositeLamella::CInitialStateCompositeLamella() : m_X(0), m_Y(0), m_Z(0), m_Centre(0.0), 
+                                                                 m_Thickness(0.0),
+                                                                 m_bLinearise(false), 
+                                                                 m_bPolymerise(false), 
+							           m_BilayerArea(0.0),
+				                                  m_Bilayer1Length(0.0),
+								   m_Bilayer2Length(0.0),
+								   m_BilayerCentre(0.0),
+							           m_UpperHead(0.0),
+				                                  m_LowerHead(0.0)
+				                                  
 {
 	m_Polymers.clear();
 	m_PolymerTypes.clear();
@@ -113,12 +114,12 @@ CInitialStateCompositeLamella& CInitialStateCompositeLamella::operator=(const CI
 		m_CrossLinks		= oldISL.m_CrossLinks;
 
 		m_PolymerTypes		= oldISL.m_PolymerTypes;
-	    m_BilayerArea		= oldISL.m_BilayerArea;
-	    m_Bilayer1Length	= oldISL.m_Bilayer1Length;
-	    m_Bilayer2Length	= oldISL.m_Bilayer2Length;
-	    m_BilayerCentre		= oldISL.m_BilayerCentre;
-	    m_UpperHead			= oldISL.m_UpperHead;
-	    m_LowerHead			= oldISL.m_LowerHead;
+	        m_BilayerArea		= oldISL.m_BilayerArea;
+	        m_Bilayer1Length	= oldISL.m_Bilayer1Length;
+	        m_Bilayer2Length	= oldISL.m_Bilayer2Length;
+	        m_BilayerCentre		= oldISL.m_BilayerCentre;
+	        m_UpperHead			= oldISL.m_UpperHead;
+	        m_LowerHead			= oldISL.m_LowerHead;
 	}
 
 	return *this;
@@ -151,7 +152,7 @@ zOutStream& CInitialStateCompositeLamella::put(zOutStream& os) const
 
 	os << "	        " << "UpperFraction	  ";
 
-	for(short i=0; i<m_Polymers.size(); i++)
+	for(long unsigned int i=0; i<m_Polymers.size(); i++)
 	{
 		os << "	" << m_UpperFractions.at(i);
 	}
@@ -315,7 +316,7 @@ zInStream& CInitialStateCompositeLamella::get(zInStream& is)
 	}
 	else
 	{
-		for(short i=0; i<m_Polymers.size(); i++)
+		for(long unsigned int i=0; i<m_Polymers.size(); i++)
 		{
 			is >> upperFraction;
 
@@ -391,8 +392,6 @@ zInStream& CInitialStateCompositeLamella::get(zInStream& is)
 			// SpringConstant		  128.0		16.0
 			// UnstretchedLength	  0.5		1.0
 
-			short i;	// Counter used below
-
 			is >> token;
 			if(!is.good() || token != "Polymer")
 			{
@@ -424,7 +423,7 @@ zInStream& CInitialStateCompositeLamella::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> polymerisedFraction;
 					if(!is.good() || polymerisedFraction < 0.0 || polymerisedFraction > 1.0)
@@ -448,7 +447,7 @@ zInStream& CInitialStateCompositeLamella::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> polymerisedPosition;
 					if(!is.good() || polymerisedPosition < 0)
@@ -468,7 +467,7 @@ zInStream& CInitialStateCompositeLamella::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> springConstant;
 					if(!is.good() || springConstant < 0.0)
@@ -488,7 +487,7 @@ zInStream& CInitialStateCompositeLamella::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> unstretchedLength;
 					if(!is.good() || unstretchedLength < 0.0)
@@ -505,7 +504,7 @@ zInStream& CInitialStateCompositeLamella::get(zInStream& is)
 			// yet know the types of the polymers in the bilayer we use the
 			// constructor that gives a default value to the type.
 
-			for(i=0; i<polymerNames.size(); i++)
+			for(long unsigned int i=0; i<polymerNames.size(); i++)
 			{			
 				CPolymerCrossLink* pLink = new CPolymerCrossLink(polymerNames.at(i),
 																 polymerFractions.at(i),
@@ -578,15 +577,15 @@ void CInitialStateCompositeLamella::SetData(const mpmInitialState *const pMsg)
 	{
         m_Polymers        = pLamellaMsg->GetPolymers();
 		m_UpperFractions  = pLamellaMsg->GetUpperFractions();
-	    m_X				  = pLamellaMsg->GetXNormal();
-	    m_Y				  = pLamellaMsg->GetYNormal();
-	    m_Z				  = pLamellaMsg->GetZNormal();
-	    m_Centre		  = pLamellaMsg->GetCentre();
-	    m_Thickness		  = pLamellaMsg->GetThickness();
-	    m_bLinearise	  = pLamellaMsg->GetLinearise();
-		m_bPatches[0]     = pLamellaMsg->GetUpperPatchesFlag();
-		m_bPatches[1]     = pLamellaMsg->GetLowerPatchesFlag();
-	    m_bPolymerise	  = false;
+	    m_X		= pLamellaMsg->GetXNormal();
+	    m_Y		= pLamellaMsg->GetYNormal();
+	    m_Z		= pLamellaMsg->GetZNormal();
+	    m_Centre		= pLamellaMsg->GetCentre();
+	    m_Thickness	= pLamellaMsg->GetThickness();
+	    m_bLinearise	= pLamellaMsg->GetLinearise();
+	    m_bPatches[0]      = pLamellaMsg->GetUpperPatchesFlag();
+	    m_bPatches[1]      = pLamellaMsg->GetLowerPatchesFlag();
+	    m_bPolymerise	= false;
 	}
 	else
 	{
@@ -613,7 +612,7 @@ void CInitialStateCompositeLamella::CalculatePolymerFractionsP(double lx, double
     // Define the fraction of the processor's SimBox volume occupied by the bilayer and solvent.
 	
 	double bilayerFraction = 0.0;
-	double solventFraction = 0.0;
+//	double solventFraction = 0.0;
 	
 	if(m_X == 1)
 	{		
@@ -625,29 +624,29 @@ void CInitialStateCompositeLamella::CalculatePolymerFractionsP(double lx, double
 			// and the solvent polymer fraction to the ratio of the SimBox to the total solvent volume
 			
 			bilayerFraction = 0.0;
-			solventFraction = 1.0;
+//			solventFraction = 1.0;
 		}
 		else if(m_LowerHead < xorigin && m_UpperHead > (xorigin+lx))  // Bilayer occupies the whole SimBox, ie no solvent
 		{
 	        bilayerFraction = 1;
-			solventFraction = 0.0;
+//			solventFraction = 0.0;
 		}
 		else if(m_LowerHead > xorigin || m_UpperHead < xorigin+lx)  // Whole bilayer is in SimBox
 		{
 	        bilayerFraction = 1;
-			solventFraction = 1;
+//			solventFraction = 1;
 		}
 		else if(m_LowerHead < xorigin && m_UpperHead < (xorigin+lx)) // Bilayer straddles bottom of SimBox
 		{
 		    std::cout << "ERROR in InitialStateCompositeLamella - bilayer straddles SimBox boundaries this should not be seen" << zEndl;
 	        bilayerFraction = lz*ly/(zspace*yspace);
-			solventFraction = (lx - m_Thickness)*lz*ly/(zspace*yspace*(xspace - m_Thickness));
+//			solventFraction = (lx - m_Thickness)*lz*ly/(zspace*yspace*(xspace - m_Thickness));
 		}
 		else if(m_LowerHead < (xorigin+lx) && m_UpperHead > (xorigin+lx)) // Bilayer straddles top of SimBox
 		{
 		    std::cout << "ERROR in InitialStateCompositeLamella - bilayer straddles SimBox boundaries this should not be seen" << zEndl;
 	        bilayerFraction = lz*ly/(zspace*yspace);
-			solventFraction = (lx - m_Thickness)*lz*ly/(zspace*yspace*(xspace - m_Thickness));
+//			solventFraction = (lx - m_Thickness)*lz*ly/(zspace*yspace*(xspace - m_Thickness));
 		}
 		else
 		{
@@ -664,29 +663,29 @@ void CInitialStateCompositeLamella::CalculatePolymerFractionsP(double lx, double
 			// and the solvent polymer fraction to the ratio of the SimBox to the total solvent volume
 			
 			bilayerFraction = 0.0;
-			solventFraction = lx*ly*lz/(xspace*zspace*(yspace-m_Thickness));
+//			solventFraction = lx*ly*lz/(xspace*zspace*(yspace-m_Thickness));
 		}
 		else if(m_LowerHead < yorigin && m_UpperHead > (yorigin+ly))  // Bilayer occupies the whole SimBox, ie no solvent
 		{
 	        bilayerFraction = lx*lz/(xspace*zspace);
-			solventFraction = 0.0;
+//			solventFraction = 0.0;
 		}
 		else if(m_LowerHead > yorigin || m_UpperHead < yorigin+ly)  // Whole bilayer is in SimBox
 		{
 	        bilayerFraction = lx*lz/(xspace*zspace);
-			solventFraction = lx*lz*(ly - m_Thickness)/(xspace*zspace*(yspace - m_Thickness));
+//			solventFraction = lx*lz*(ly - m_Thickness)/(xspace*zspace*(yspace - m_Thickness));
 		}
 		else if(m_LowerHead < yorigin && m_UpperHead < (yorigin+ly)) // Bilayer straddles bottom of SimBox
 		{
 		    std::cout << "ERROR in InitialStateCompositeLamella -bilayer straddles SimBox boundaries this should not be seen" << zEndl;
 	        bilayerFraction = lx*lz/(xspace*zspace);
-			solventFraction = (ly - m_Thickness)*lx*lz/(xspace*zspace*(yspace - m_Thickness));
+//			solventFraction = (ly - m_Thickness)*lx*lz/(xspace*zspace*(yspace - m_Thickness));
 		}
 		else if(m_LowerHead < (yorigin+ly) && m_UpperHead > (yorigin+ly)) // Bilayer straddles top of SimBox
 		{
 		    std::cout << "ERROR in InitialStateCompositeLamella -bilayer straddles SimBox boundaries this should not be seen" << zEndl;
 	        bilayerFraction = lx*lz/(xspace*zspace);
-			solventFraction = (ly - m_Thickness)*lx*lz/(xspace*zspace*(yspace - m_Thickness));
+//			solventFraction = (ly - m_Thickness)*lx*lz/(xspace*zspace*(yspace - m_Thickness));
 		}
 		else
 		{
@@ -709,29 +708,29 @@ void CInitialStateCompositeLamella::CalculatePolymerFractionsP(double lx, double
 			// and the solvent polymer fraction to the ratio of the SimBox to the total solvent volume
 			
 			bilayerFraction = 0.0;
-			solventFraction = 1.0;
+//			solventFraction = 1.0;
 		}
 		else if(m_LowerHead < zorigin && m_UpperHead > (zorigin+lz))  // Bilayer occupies the whole SimBox, ie no solvent
 		{
 	        bilayerFraction = 1.0;
-			solventFraction = 0.0;
+//			solventFraction = 0.0;
 		}
 		else if(m_LowerHead > zorigin || m_UpperHead < zorigin+lz)  // Whole bilayer is in SimBox
 		{
 	        bilayerFraction = 1.0;
-			solventFraction = 1.0;
+//			solventFraction = 1.0;
 		}
 		else if(m_LowerHead < zorigin && m_UpperHead < (zorigin+lz)) // Bilayer straddles bottom of SimBox
 		{
 		    std::cout << "ERROR in InitialStateCompositeLamella -bilayer straddles SimBox boundaries this should not be seen" << zEndl;
 	        bilayerFraction = lx*ly/(xspace*yspace);
-			solventFraction = (lz - m_Thickness)*lx*ly/(xspace*yspace*zspace);
+//			solventFraction = (lz - m_Thickness)*lx*ly/(xspace*yspace*zspace);
 		}
 		else if(m_LowerHead < (zorigin+lz) && m_UpperHead > (zorigin+lz)) // Bilayer straddles top of SimBox
 		{
 		    std::cout << "ERROR in InitialStateCompositeLamella -bilayer straddles SimBox boundaries this should not be seen" << zEndl;
 	        bilayerFraction = lx*ly/(xspace*yspace);
-			solventFraction = (lz - m_Thickness)*lx*ly/(xspace*yspace*(zspace - m_Thickness));
+//			solventFraction = (lz - m_Thickness)*lx*ly/(xspace*yspace*(zspace - m_Thickness));
 		}
 		else
 		{
@@ -744,30 +743,29 @@ void CInitialStateCompositeLamella::CalculatePolymerFractionsP(double lx, double
 	
 	if(bilayerFraction == 0.0)
 	{		
-	    long iPolymer     = 0;
-		double bilayerSum = 0.0;
+	    double bilayerSum = 0.0;
 		
-		// Iterate over the polymer types composing the bulayer and sum their number fractions
+	    // Iterate over the polymer types composing the bulayer and sum their number fractions
 		
-	    for(iPolymer=0; iPolymer<m_PolymerTypes.size(); iPolymer++)
+	    for(long unsigned int iPolymer=0; iPolymer<m_PolymerTypes.size(); iPolymer++)
 	    {
 			bilayerSum += rvPolymerFractions.at(m_PolymerTypes.at(iPolymer));
 	    }
 		
 	    const double scale = 1.0/(1.0 - bilayerSum);
 		
-		// Now iterate over all polymers and rescale those NOT in the bilayer
+	    // Now iterate over all polymers and rescale those NOT in the bilayer
 		
-	    for(iPolymer=0; iPolymer<rvPolymerFractions.size(); iPolymer++)
+	    for(long unsigned int iPolymer=0; iPolymer<rvPolymerFractions.size(); iPolymer++)
 	    {
-		    if(find(m_PolymerTypes.begin(), m_PolymerTypes.end(), iPolymer) != m_PolymerTypes.end())
-		    {
-			    rvPolymerFractions.at(iPolymer) = 0.0;
-		    }
+		if(find(m_PolymerTypes.begin(), m_PolymerTypes.end(), iPolymer) != m_PolymerTypes.end())
+		{
+			rvPolymerFractions.at(iPolymer) = 0.0;
+		}
 	        else
-		    {
-			    rvPolymerFractions.at(iPolymer) *= scale;
-		    }			
+		{
+			rvPolymerFractions.at(iPolymer) *= scale;
+		}			
 	    }
 	}  
 }   

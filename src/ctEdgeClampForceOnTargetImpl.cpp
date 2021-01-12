@@ -84,13 +84,8 @@ void ctEdgeClampForceOnTargetImpl::EdgeClampForceOnTarget(const xxCommand* const
 	// is not applicable to composite targets because they may contain
 	// a multitude of bead types.
 
-	bool bSuccess = true;
-
 	if(pCmdTarget)
 	{
-		const long beadTotal = pCmdTarget->GetBeadTotal();
-
-		const long beadType            = pCmdTarget->GetCurrentBeadType();
 		const long originalBeadType    = pCmdTarget->GetOriginalBeadType();
 		const zString beadName         = pSimBox->GetBeadNameFromType(originalBeadType);
 
@@ -111,18 +106,16 @@ void ctEdgeClampForceOnTargetImpl::EdgeClampForceOnTarget(const xxCommand* const
 		// Wrap the active target in a new force decorator instance
 		// and add it to the active command targets container.
 
-		taEdgeClampForce* const pDec = new taEdgeClampForce(decLabel, pActiveTarget, 
-										xn, yn, zn, fxc, fyc, fzc, keff);
+		taEdgeClampForce* const pDec = new taEdgeClampForce(decLabel, pActiveTarget, xn, yn, zn, fxc, fyc, fzc, keff);
 
 		pSimBox->m_ActiveCommandTargets.push_back(pDec);
 
 		// Log sucessful execution of the command
 
-		CLogctEdgeClampForceOnTarget* pMsg = new CLogctEdgeClampForceOnTarget(pSimBox->GetCurrentTime(), targetLabel, decLabel, 
-												xn, yn, zn, xc, yc, zc, keff);
+		new CLogctEdgeClampForceOnTarget(pSimBox->GetCurrentTime(), targetLabel, decLabel, xn, yn, zn, xc, yc, zc, keff);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

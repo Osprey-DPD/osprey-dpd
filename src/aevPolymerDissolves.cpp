@@ -314,7 +314,7 @@ bool aevPolymerDissolves::Execute(IActiveSimBox* const pShadow)
 
 			if(m_pPolymer->RemoveHeadBond())
 			{
-				CLogActiveEventError* pMsg = new CLogActiveEventError(pShadow->GetCurrentTime(), "PolymerDissolves event error");
+				new CLogActiveEventError(pShadow->GetCurrentTime(), "PolymerDissolves event error");
 			}
 			else
 			{

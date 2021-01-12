@@ -74,15 +74,15 @@ void ctSetTargetVisibleImpl::SetTargetVisible(const xxCommand* const pCommand)
 				(*iterBead)->SetVisible();
 			}
 
-			CLogctTargetVisible* pMsg = new CLogctTargetVisible(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctTargetVisible(pSimBox->GetCurrentTime(), targetLabel);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

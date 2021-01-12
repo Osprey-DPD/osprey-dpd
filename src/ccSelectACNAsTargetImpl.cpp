@@ -65,16 +65,16 @@ void ccSelectACNAsTargetImpl::SelectACNAsTarget(const xxCommand* const pCommand)
 
 		if(pSimBox->CreateCommandTargetACNFreePolymers(targetLabel, acnType))
 		{
-			CLogSelectACNAsTarget* pMsg = new CLogSelectACNAsTarget(pSimBox->GetCurrentTime(), targetLabel, acnType);
+			 new CLogSelectACNAsTarget(pSimBox->GetCurrentTime(), targetLabel, acnType);
 		}
 		else
 		{
-			CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+			 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 #endif
 

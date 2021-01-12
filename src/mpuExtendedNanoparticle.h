@@ -102,13 +102,11 @@ private:
 	// Data members
 private:
 
-	const bool m_bIsLeaving;   // Flag showing if the wrapped nanoparticle instance is losing beads to other processors, or is made up of beads arriving
-							 // from other processors.
-                             
-	CNanoparticle*  m_pNanoparticle;   // Pointer to wrapped nanoparticle instance
+    const bool m_bIsLeaving;           // Flag showing if the wrapped nanoparticle instance is losing beads to other processors, or is made up of beads arriving
+				        // from other processors.                           
+    CNanoparticle*  m_pNanoparticle;   // Pointer to wrapped nanoparticle instance
 
-
-	LongGhostBeadMap      m_mGhostBeads;
+    LongGhostBeadMap      m_mGhostBeads;
     ExtendedNPBondList    m_lConcreteNPBonds;    // Extended bonds with both concrete beads in owning proc space
     ExtendedNPBondList    m_lExtNPBonds;         // Extended bonds missing one or both beads
 };

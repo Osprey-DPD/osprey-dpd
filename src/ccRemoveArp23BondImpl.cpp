@@ -61,12 +61,12 @@ void ccRemoveArp23BondImpl::RemoveArp23Bond(const xxCommand* const pCommand)
 
 	if(true)
 	{
-		CLogActiveBondRemoved* pMsg = new CLogActiveBondRemoved(pSimBox->GetCurrentTime(), "Arp23", headMonomerName, tailMonomerName,
+		 new CLogActiveBondRemoved(pSimBox->GetCurrentTime(), "Arp23", headMonomerName, tailMonomerName,
 																						headMonomerType, tailMonomerType);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 #endif
 }

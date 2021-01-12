@@ -210,7 +210,7 @@ bool mcSaveBeadDensityFluctuationsByType::IsDataValid(const CInputData& riData) 
     long totalTime      = riData.GetTotalTime();
     long densityPeriod  = riData.GetDensityPeriod();
     long duration       = m_TotalDataPoints*m_TotalDensityPeriods*densityPeriod;
-    long samples        = duration/riData.GetSamplePeriod();
+//    long samples        = duration/riData.GetSamplePeriod();
 
     // The analysis starts at the beginning of the next full density grid analysis period 
     // and continues for an integer number of periods.

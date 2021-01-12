@@ -220,17 +220,17 @@ protected:
 private:
 
     const long      m_id;           // Target's unique numeric id
-	const zString	m_Label;		// Target's unique identifying label
+    const zString   m_Label;	     // Target's unique identifying label
 
     zString m_InnerDecoratorName;   // Proxy name for the inner decorator
     zString m_OuterDecoratorName;   // Proxy name for the outer decorator
 
-	// Pointers to the previous and next decorators around a command target.
-	// For the wrapped command target itself, the inner pointer is always null,
-	// and the outer pointer points to the first decorator applied.
+    // Pointers to the previous and next decorators around a command target.
+    // For the wrapped command target itself, the inner pointer is always null,
+    // and the outer pointer points to the first decorator applied.
 
-	CCommandTargetNode* m_pInnerDecorator;
-	CCommandTargetNode* m_pOuterDecorator;
+    CCommandTargetNode* m_pInnerDecorator;
+    CCommandTargetNode* m_pOuterDecorator;
 
 };
 

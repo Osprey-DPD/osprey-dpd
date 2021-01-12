@@ -167,12 +167,12 @@ bool acSetEventExecutionPeriod::Execute(long simTime, ISimCmd* const pISimCmd) c
 		{
             pMACN->SetEventExecutionPeriod(m_EventType, m_Period);
 
-			CLogacSetEventExecutionPeriod* pMsg = new CLogacSetEventExecutionPeriod(GetExecutionTime(), m_ACNType, 
+			 new CLogacSetEventExecutionPeriod(GetExecutionTime(), m_ACNType, 
 																			  m_EventType, m_Period);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

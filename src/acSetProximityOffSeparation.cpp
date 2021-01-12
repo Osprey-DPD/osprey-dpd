@@ -161,11 +161,11 @@ bool acSetProximityOffSeparation::Execute(long simTime, ISimCmd* const pISimCmd)
 		{
 			pMACN->SetProximityOffSeparation(m_MaxSeparation);
 
-			CLogacSetProximityOffSeparation* pMsg = new CLogacSetProximityOffSeparation(GetExecutionTime(), m_ACNType, m_MaxSeparation);
+			 new CLogacSetProximityOffSeparation(GetExecutionTime(), m_ACNType, m_MaxSeparation);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

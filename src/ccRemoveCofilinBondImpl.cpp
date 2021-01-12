@@ -61,12 +61,12 @@ void ccRemoveCofilinBondImpl::RemoveCofilinBond(const xxCommand* const pCommand)
 
 	if(true)
 	{
-		CLogActiveBondRemoved* pMsg = new CLogActiveBondRemoved(pSimBox->GetCurrentTime(), "Cofilin", headMonomerName, tailMonomerName,
+		 new CLogActiveBondRemoved(pSimBox->GetCurrentTime(), "Cofilin", headMonomerName, tailMonomerName,
 																						headMonomerType, tailMonomerType);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 #endif
 }

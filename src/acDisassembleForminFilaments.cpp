@@ -134,7 +134,7 @@ bool acDisassembleForminFilaments::Execute(long simTime, ISimCmd* const pISimCmd
 			{
 				pForminNetwork->DisassembleForminFilaments();
 											
-				CLogacDisassembleForminFilaments* pMsg = new CLogacDisassembleForminFilaments(GetExecutionTime(), m_ACNType);
+				 new CLogacDisassembleForminFilaments(GetExecutionTime(), m_ACNType);
 			}
 			else
 			{
@@ -143,7 +143,7 @@ bool acDisassembleForminFilaments::Execute(long simTime, ISimCmd* const pISimCmd
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

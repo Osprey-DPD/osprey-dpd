@@ -105,13 +105,13 @@ CInterface::CInterface(const zString runId, long sample,
 														  m_SumMinDensity(0.0),
 														  m_SumMaxId(0),
 														  m_SumMinId(0),
-														  m_StressGridTotal(0),
-														  m_SurfaceTension(0.0),
 													  	  m_pStress1d(0),
 														  m_pTotalStress(0),
 														  m_pMajorHHStress(0),
 														  m_pMajorMinorHHStress(0),
-														  m_pMinorHHStress(0)
+														  m_pMinorHHStress(0),
+ 														  m_StressGridTotal(0),
+														  m_SurfaceTension(0.0)
 {
 	m_vBeadStressIndex.clear();		// We don't yet know how many bead types exist
 }
@@ -666,8 +666,6 @@ void CInterface::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox
 	aaScalarSingle  midPointDens2(static_cast<double>(m_MinorMidPoint));
 
 	// Write out the overall mean densities for checking
-
-	long noset = m_vObservables.size();
 
 	     meanDens1.AddData(m_vObservables.at(0));
 	 highMeanDens1.AddData(m_vObservables.at(1));

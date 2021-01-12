@@ -63,16 +63,16 @@ void cgtDeleteExecuteCommandGroupSequenceImpl::DeleteExecuteCommandGroupSequence
 	{
         if(pSimBox->RemoveActiveCommandGroup(groupName))
         {
-		    CLogcgtDeleteExecuteCommandGroupSequence* pMsg1 = new CLogcgtDeleteExecuteCommandGroupSequence(pSimBox->GetCurrentTime(), groupName);
+		    new CLogcgtDeleteExecuteCommandGroupSequence(pSimBox->GetCurrentTime(), groupName);
         }
         else
         {
-		    CLogcgtInactiveCommandGroup* pMsg2 = new CLogcgtInactiveCommandGroup(pSimBox->GetCurrentTime(), groupName);
+		    new CLogcgtInactiveCommandGroup(pSimBox->GetCurrentTime(), groupName);
         }
 	}
 	else
 	{
-		CLogCommandFailed* pMsg3 = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
   
 #endif

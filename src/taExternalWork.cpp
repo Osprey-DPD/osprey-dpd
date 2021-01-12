@@ -144,7 +144,7 @@ void taExternalWork::Execute(long simTime)
 		else if(!m_bWrapFailure)
 		{
 			m_bWrapFailure = true;
-			CLogctNonexistentDecorator* pMsg = new CLogctNonexistentDecorator(simTime, decLabel, m_WrappedLabel);
+			 new CLogctNonexistentDecorator(simTime, decLabel, m_WrappedLabel);
 		}
 	}
 	else if(simTime == m_End)
@@ -153,7 +153,7 @@ void taExternalWork::Execute(long simTime)
 		// when details about the bead type in the target are recorded, and the
 		// end of the calculation, when only the work done is written out.
 
-		CLogctExternalWorkOnTarget* pMsg = new CLogctExternalWorkOnTarget(simTime, targetLabel, m_WrappedLabel, decLabel, m_Work);
+		 new CLogctExternalWorkOnTarget(simTime, targetLabel, m_WrappedLabel, decLabel, m_Work);
 	}
 }
 

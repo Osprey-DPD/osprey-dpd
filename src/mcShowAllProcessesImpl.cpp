@@ -44,7 +44,7 @@ mcShowAllProcessesImpl::~mcShowAllProcessesImpl()
 void mcShowAllProcessesImpl::ShowAllProcesses(const xxCommand* const pCommand)
 {
 #if EnableMonitorCommand == SimCommandEnabled
-	const mcShowAllProcesses* const pCmd = dynamic_cast<const mcShowAllProcesses*>(pCommand);
+//	const mcShowAllProcesses* const pCmd = dynamic_cast<const mcShowAllProcesses*>(pCommand);
 
 	CMonitor* pMon = dynamic_cast<CMonitor*>(this);
 
@@ -54,6 +54,6 @@ void mcShowAllProcessesImpl::ShowAllProcesses(const xxCommand* const pCommand)
 
 	// This command cannot fail
 
-	CLogShowAllProcesses* pMsg = new CLogShowAllProcesses(pMon->GetCurrentTime(), vProcesses);
+	new CLogShowAllProcesses(pMon->GetCurrentTime(), vProcesses);
 #endif
 }

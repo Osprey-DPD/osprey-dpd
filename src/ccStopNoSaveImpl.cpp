@@ -39,7 +39,7 @@ ccStopNoSaveImpl::~ccStopNoSaveImpl()
 
 void ccStopNoSaveImpl::StopNoSave(const xxCommand* const pCommand)
 {
-	const ccStopNoSave* const pCmd = dynamic_cast<const ccStopNoSave*>(pCommand);
+//	const ccStopNoSave* const pCmd = dynamic_cast<const ccStopNoSave*>(pCommand);
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
@@ -47,5 +47,5 @@ void ccStopNoSaveImpl::StopNoSave(const xxCommand* const pCommand)
 
 	// This command cannot fail
 	
-	CLogStopNoSaveSimulation* pMsg = new CLogStopNoSaveSimulation(pSimBox->GetCurrentTime(), pSimBox->m_TotalTime);
+	 new CLogStopNoSaveSimulation(pSimBox->GetCurrentTime(), pSimBox->m_TotalTime);
 }

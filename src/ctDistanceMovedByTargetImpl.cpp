@@ -75,7 +75,7 @@ void ctDistanceMovedByTargetImpl::DistanceMovedByTarget(const xxCommand* const p
 		const long beadType         = pForceTarget->GetCurrentBeadType();
 		const long originalBeadType = pForceTarget->GetOriginalBeadType();
 		const zString beadName      = pSimBox->GetBeadNameFromType(originalBeadType);
-		const long beadTotal		= pForceTarget->GetBeadTotal();
+		const long beadTotal	     = pForceTarget->GetBeadTotal();
 
 		// If the target is already active, remove it before adding it back
 		// using the new decorator: we just check if the label of the
@@ -101,7 +101,7 @@ void ctDistanceMovedByTargetImpl::DistanceMovedByTarget(const xxCommand* const p
 		// in the constructor), and the end of the calculation (last two parameters = accumulated distance
 		// moved and average distance moved)
 
-		CLogctDistanceMovedByTarget* pMsg = new CLogctDistanceMovedByTarget(pSimBox->GetCurrentTime(), targetLabel, forceLabel, decLabel, start, end, 
+		new CLogctDistanceMovedByTarget(pSimBox->GetCurrentTime(), targetLabel, forceLabel, decLabel, start, end, 
 												beadName, beadType, beadTotal);
 
 		// Now the command has been created to execute during the specified interval,
@@ -112,6 +112,6 @@ void ctDistanceMovedByTargetImpl::DistanceMovedByTarget(const xxCommand* const p
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

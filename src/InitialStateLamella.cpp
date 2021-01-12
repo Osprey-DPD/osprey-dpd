@@ -479,19 +479,19 @@ void CInitialStateLamella::SetData(const mpmInitialState *const pMsg)
 	if(pLamellaMsg)
 	{
 	    m_Polymer		= pLamellaMsg->GetPolymer();
-	    m_X				= pLamellaMsg->GetXNormal();
-	    m_Y				= pLamellaMsg->GetYNormal();
-	    m_Z				= pLamellaMsg->GetZNormal();
+	    m_X		= pLamellaMsg->GetXNormal();
+	    m_Y		= pLamellaMsg->GetYNormal();
+	    m_Z		= pLamellaMsg->GetZNormal();
 	    m_Centre		= pLamellaMsg->GetCentre();
-	    m_Thickness		= pLamellaMsg->GetThickness();
+	    m_Thickness	= pLamellaMsg->GetThickness();
 	    m_bLinearise	= pLamellaMsg->GetLinearise();
 	    m_UpperFraction	= pLamellaMsg->GetUpperFraction();
 	    m_bPolymerise	= false;
-		}
-		else
-		{
-		    // Wrong IS message, so we leave all parameters invalid.
-		}
+	}
+	else
+	{
+           // Wrong IS message, so we leave all parameters invalid.
+	}
 #endif
 }
 
@@ -509,10 +509,11 @@ void CInitialStateLamella::SetData(const mpmInitialState *const pMsg)
 void CInitialStateLamella::CalculatePolymerFractionsP(double lx, double ly, double lz, double xorigin, double yorigin, double zorigin, double xspace, double yspace, double zspace, 
                                                    zDoubleVector& rvPolymerFractions) const
 {
-    // Define the fraction of the processor's SimBox volume occupied by the bilayer and solvent.
+    // Define the fraction of the processor's SimBox volume occupied by the bilayer and solvent. But as the solventFraction is not used 
+    // currently, it is commented out.
 	
 	double bilayerFraction = 0.0;
-	double solventFraction = 0.0;
+//	double solventFraction = 0.0;
 	
 	if(m_X == 1)
 	{		
@@ -524,29 +525,29 @@ void CInitialStateLamella::CalculatePolymerFractionsP(double lx, double ly, doub
 			// and the solvent polymer fraction to the ratio of the SimBox to the total solvent volume
 			
 			bilayerFraction = 0.0;
-			solventFraction = 1.0;
+//			solventFraction = 1.0;
 		}
 		else if(m_LowerHead < xorigin && m_UpperHead > (xorigin+lx))  // Bilayer occupies the whole SimBox, ie no solvent
 		{
-	        bilayerFraction = 1;
-			solventFraction = 0.0;
+	        	bilayerFraction = 1;
+//			solventFraction = 0.0;
 		}
 		else if(m_LowerHead > xorigin || m_UpperHead < xorigin+lx)  // Whole bilayer is in SimBox
 		{
-	        bilayerFraction = 1;
-			solventFraction = 1;
+	        	bilayerFraction = 1;
+//			solventFraction = 1;
 		}
 		else if(m_LowerHead < xorigin && m_UpperHead < (xorigin+lx)) // Bilayer straddles bottom of SimBox
 		{
 		    std::cout << "ERROR in InitialStateLamella -bilayer straddles SimBox boundaries this should not be seen" << zEndl;
-	        bilayerFraction = lz*ly/(zspace*yspace);
-			solventFraction = (lx - m_Thickness)*lz*ly/(zspace*yspace*(xspace - m_Thickness));
+	        	bilayerFraction = lz*ly/(zspace*yspace);
+//			solventFraction = (lx - m_Thickness)*lz*ly/(zspace*yspace*(xspace - m_Thickness));
 		}
 		else if(m_LowerHead < (xorigin+lx) && m_UpperHead > (xorigin+lx)) // Bilayer straddles top of SimBox
 		{
 		    std::cout << "ERROR in InitialStateLamella -bilayer straddles SimBox boundaries this should not be seen" << zEndl;
-	        bilayerFraction = lz*ly/(zspace*yspace);
-			solventFraction = (lx - m_Thickness)*lz*ly/(zspace*yspace*(xspace - m_Thickness));
+	        	bilayerFraction = lz*ly/(zspace*yspace);
+//			solventFraction = (lx - m_Thickness)*lz*ly/(zspace*yspace*(xspace - m_Thickness));
 		}
 		else
 		{
@@ -563,29 +564,29 @@ void CInitialStateLamella::CalculatePolymerFractionsP(double lx, double ly, doub
 			// and the solvent polymer fraction to the ratio of the SimBox to the total solvent volume
 			
 			bilayerFraction = 0.0;
-			solventFraction = lx*ly*lz/(xspace*zspace*(yspace-m_Thickness));
+//			solventFraction = lx*ly*lz/(xspace*zspace*(yspace-m_Thickness));
 		}
 		else if(m_LowerHead < yorigin && m_UpperHead > (yorigin+ly))  // Bilayer occupies the whole SimBox, ie no solvent
 		{
-	        bilayerFraction = lx*lz/(xspace*zspace);
-			solventFraction = 0.0;
+	       	bilayerFraction = lx*lz/(xspace*zspace);
+//			solventFraction = 0.0;
 		}
 		else if(m_LowerHead > yorigin || m_UpperHead < yorigin+ly)  // Whole bilayer is in SimBox
 		{
-	        bilayerFraction = lx*lz/(xspace*zspace);
-			solventFraction = lx*lz*(ly - m_Thickness)/(xspace*zspace*(yspace - m_Thickness));
+	        	bilayerFraction = lx*lz/(xspace*zspace);
+//			solventFraction = lx*lz*(ly - m_Thickness)/(xspace*zspace*(yspace - m_Thickness));
 		}
 		else if(m_LowerHead < yorigin && m_UpperHead < (yorigin+ly)) // Bilayer straddles bottom of SimBox
 		{
 		    std::cout << "ERROR in InitialStateLamella -bilayer straddles SimBox boundaries this should not be seen" << zEndl;
-	        bilayerFraction = lx*lz/(xspace*zspace);
-			solventFraction = (ly - m_Thickness)*lx*lz/(xspace*zspace*(yspace - m_Thickness));
+	        	bilayerFraction = lx*lz/(xspace*zspace);
+//			solventFraction = (ly - m_Thickness)*lx*lz/(xspace*zspace*(yspace - m_Thickness));
 		}
 		else if(m_LowerHead < (yorigin+ly) && m_UpperHead > (yorigin+ly)) // Bilayer straddles top of SimBox
 		{
 		    std::cout << "ERROR in InitialStateLamella -bilayer straddles SimBox boundaries this should not be seen" << zEndl;
-	        bilayerFraction = lx*lz/(xspace*zspace);
-			solventFraction = (ly - m_Thickness)*lx*lz/(xspace*zspace*(yspace - m_Thickness));
+	        	bilayerFraction = lx*lz/(xspace*zspace);
+//			solventFraction = (ly - m_Thickness)*lx*lz/(xspace*zspace*(yspace - m_Thickness));
 		}
 		else
 		{
@@ -608,29 +609,29 @@ void CInitialStateLamella::CalculatePolymerFractionsP(double lx, double ly, doub
 			// and the solvent polymer fraction to the ratio of the SimBox to the total solvent volume
 			
 			bilayerFraction = 0.0;
-			solventFraction = 1.0;
+//			solventFraction = 1.0;
 		}
 		else if(m_LowerHead < zorigin && m_UpperHead > (zorigin+lz))  // Bilayer occupies the whole SimBox, ie no solvent
 		{
-	        bilayerFraction = 1.0;
-			solventFraction = 0.0;
+	        	bilayerFraction = 1.0;
+//			solventFraction = 0.0;
 		}
 		else if(m_LowerHead > zorigin || m_UpperHead < zorigin+lz)  // Whole bilayer is in SimBox
 		{
-	        bilayerFraction = 1.0;
-			solventFraction = 1.0;
+	        	bilayerFraction = 1.0;
+//			solventFraction = 1.0;
 		}
 		else if(m_LowerHead < zorigin && m_UpperHead < (zorigin+lz)) // Bilayer straddles bottom of SimBox
 		{
 		    std::cout << "ERROR in InitialStateLamella -bilayer straddles SimBox boundaries this should not be seen" << zEndl;
-	        bilayerFraction = lx*ly/(xspace*yspace);
-			solventFraction = (lz - m_Thickness)*lx*ly/(xspace*yspace*zspace);
+	        	bilayerFraction = lx*ly/(xspace*yspace);
+//			solventFraction = (lz - m_Thickness)*lx*ly/(xspace*yspace*zspace);
 		}
 		else if(m_LowerHead < (zorigin+lz) && m_UpperHead > (zorigin+lz)) // Bilayer straddles top of SimBox
 		{
 		    std::cout << "ERROR in InitialStateLamella -bilayer straddles SimBox boundaries this should not be seen" << zEndl;
-	        bilayerFraction = lx*ly/(xspace*yspace);
-			solventFraction = (lz - m_Thickness)*lx*ly/(xspace*yspace*(zspace - m_Thickness));
+	        	bilayerFraction = lx*ly/(xspace*yspace);
+//			solventFraction = (lz - m_Thickness)*lx*ly/(xspace*yspace*(zspace - m_Thickness));
 		}
 		else
 		{
@@ -645,13 +646,13 @@ void CInitialStateLamella::CalculatePolymerFractionsP(double lx, double ly, doub
 	{
 	    const double scale = 1.0/(1.0 - rvPolymerFractions.at(m_PolymerType));
 		
-	    for(long type=0; type<rvPolymerFractions.size(); type++)
+	    for(long unsigned int type=0; type<rvPolymerFractions.size(); type++)
 	    {
-		    if(type == m_PolymerType)
+		    if(type == static_cast<long unsigned int>(m_PolymerType))
 		    {
 			    rvPolymerFractions.at(type) = 0.0;
 		    }
-	        else
+	            else
 		    {
 			    rvPolymerFractions.at(type) *= scale;
 		    }			
@@ -679,8 +680,10 @@ bool CInitialStateLamella::ValidateData(const CInputData& riData)
 	{
 		m_PolymerType = (*riData.GetPolymerNamesMap().find(m_Polymer)).second;
 	}
-	else
+	else 
+	{
 		return false;
+	}
 
 	// If the initial state is polymerised, check that the polymer name 
 	// matches that of the lamella polymer and store its type. This is not

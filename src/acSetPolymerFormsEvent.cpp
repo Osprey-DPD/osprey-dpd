@@ -188,19 +188,19 @@ bool acSetPolymerFormsEvent::Execute(long simTime, ISimCmd* const pISimCmd) cons
 				pPolymerForms->SetSpringConstant(GetSpringConstant());
 				pPolymerForms->SetLength(GetLength());
 
-				CLogacSetPolymerFormsEvent* pMsg = new CLogacSetPolymerFormsEvent(GetExecutionTime(), m_ACNType, 
+				 new CLogacSetPolymerFormsEvent(GetExecutionTime(), m_ACNType, 
 																				  m_Duration, m_Range, m_SpringConstant, m_Length);
 			}
 			else
 			{
-				CLogacInvalidEventCommandTarget* pMsg = new CLogacInvalidEventCommandTarget(GetExecutionTime(), m_ACNType, 
+				 new CLogacInvalidEventCommandTarget(GetExecutionTime(), m_ACNType, 
 					                                              pMACN->GetPolymerFormsEventType(),
 					                                              aevPolymerForms::GetType());
 			}
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

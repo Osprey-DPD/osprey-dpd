@@ -130,8 +130,8 @@ void ctExtractBeadTypesIntoTargetsImpl::ExtractBeadTypesIntoTargets(const xxComm
 					}
 					else
 					{
-						CLogTextMessage* pText  = new CLogTextMessage(pSimBox->GetCurrentTime(), "Unable to create destination target");
-						CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+						new CLogTextMessage(pSimBox->GetCurrentTime(), "Unable to create destination target");
+						new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 					}
 				}
 			}
@@ -150,22 +150,22 @@ void ctExtractBeadTypesIntoTargetsImpl::ExtractBeadTypesIntoTargets(const xxComm
 			}
 			else
 			{
-				CLogTextMessage* pText  = new CLogTextMessage(pSimBox->GetCurrentTime(), "Unable to create destination target");
-				CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+				new CLogTextMessage(pSimBox->GetCurrentTime(), "Unable to create destination target");
+				new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 			}
 
 			// Log execution of the command passing the target map so that we can 
 			// access the target names, bead types and sizes
 
-			CLogctExtractBeadTypesIntoTargets* pMsg = new CLogctExtractBeadTypesIntoTargets(pSimBox->GetCurrentTime(), sourceLabel, destLabel, mTargets);
+			new CLogctExtractBeadTypesIntoTargets(pSimBox->GetCurrentTime(), sourceLabel, destLabel, mTargets);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), sourceLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), sourceLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

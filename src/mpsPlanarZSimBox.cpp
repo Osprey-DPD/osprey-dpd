@@ -2797,7 +2797,7 @@ void mpsPlanarZSimBox::TranslateBeadCoordsInNegativeY()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPositiveX()
 {
-    const long total = m_Msg2R.GetRecForceTotal();
+//    const long total = m_Msg2R.GetRecForceTotal();
 
     BeadList       lBeads = GetFaceEdgeCornerBeads(*m_pL);
     zLongVector&   rIds   = m_Msg2R.GetBeadIds();
@@ -2817,7 +2817,7 @@ void mpsPlanarZSimBox::TranslateBeadForcesInPositiveX()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPositiveY()
 {
-    const long total = m_Msg2T.GetRecForceTotal();
+//    const long total = m_Msg2T.GetRecForceTotal();
 
     BeadList       lBeads = GetFaceEdgeCornerBeads(*m_pB);
     zLongVector&   rIds   = m_Msg2T.GetBeadIds();
@@ -3283,7 +3283,7 @@ void mpsPlanarZSimBox::TranslateBeadCoordsInNegXPosYNegZ()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPosXNegY()
 {
-    const long total = m_Msg2BR.GetRecForceTotal();
+//    const long total = m_Msg2BR.GetRecForceTotal();
 
     BeadList       lBeads = GetEdgeCornerBeads(*m_pTL);
     zLongVector&   rIds   = m_Msg2BR.GetBeadIds();
@@ -3304,7 +3304,7 @@ void mpsPlanarZSimBox::TranslateBeadForcesInPosXNegY()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPosXPosY()
 {
-    const long total = m_Msg2TR.GetRecForceTotal();
+//    const long total = m_Msg2TR.GetRecForceTotal();
 
     BeadList       lBeads = GetEdgeCornerBeads(*m_pBL);
     zLongVector&   rIds   = m_Msg2TR.GetBeadIds();
@@ -3319,7 +3319,7 @@ void mpsPlanarZSimBox::TranslateBeadForcesInPosXPosY()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPosYPosZ()
 {
-    const long total = m_Msg2UT.GetRecForceTotal();
+//    const long total = m_Msg2UT.GetRecForceTotal();
 
     BeadList       lBeads = GetEdgeCornerBeads(*m_pDB);
     zLongVector&   rIds   = m_Msg2UT.GetBeadIds();
@@ -3334,7 +3334,7 @@ void mpsPlanarZSimBox::TranslateBeadForcesInPosYPosZ()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPosXNegZ()
 {
-    const long total = m_Msg2DR.GetRecForceTotal();
+//    const long total = m_Msg2DR.GetRecForceTotal();
 
     BeadList       lBeads = GetEdgeCornerBeads(*m_pUL);
     zLongVector&   rIds   = m_Msg2DR.GetBeadIds();
@@ -3349,7 +3349,7 @@ void mpsPlanarZSimBox::TranslateBeadForcesInPosXNegZ()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPosYNegZ()
 {
-    const long total = m_Msg2DT.GetRecForceTotal();
+//    const long total = m_Msg2DT.GetRecForceTotal();
 
     BeadList       lBeads = GetEdgeCornerBeads(*m_pUB);
     zLongVector&   rIds   = m_Msg2DT.GetBeadIds();
@@ -3364,7 +3364,7 @@ void mpsPlanarZSimBox::TranslateBeadForcesInPosYNegZ()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPosXPosZ()
 {
-    const long total = m_Msg2UR.GetRecForceTotal();
+//    const long total = m_Msg2UR.GetRecForceTotal();
 
     BeadList       lBeads = GetEdgeCornerBeads(*m_pDL);
     zLongVector&   rIds   = m_Msg2UR.GetBeadIds();
@@ -3379,7 +3379,7 @@ void mpsPlanarZSimBox::TranslateBeadForcesInPosXPosZ()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPosXPosYPosZ()
 {
-    const long total = m_Msg2UTR.GetRecForceTotal();
+//    const long total = m_Msg2UTR.GetRecForceTotal();
 
     BeadList       lBeads = GetCornerBeads(*m_pDBL);
     zLongVector&   rIds   = m_Msg2UTR.GetBeadIds();
@@ -3394,7 +3394,7 @@ void mpsPlanarZSimBox::TranslateBeadForcesInPosXPosYPosZ()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPosXNegYNegZ()
 {
-    const long total = m_Msg2DBR.GetRecForceTotal();
+//    const long total = m_Msg2DBR.GetRecForceTotal();
 	
     BeadList       lBeads = GetCornerBeads(*m_pUTL);
     zLongVector&   rIds   = m_Msg2DBR.GetBeadIds();
@@ -3409,7 +3409,7 @@ void mpsPlanarZSimBox::TranslateBeadForcesInPosXNegYNegZ()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPosXPosYNegZ()
 {
-    const long total = m_Msg2DTR.GetRecForceTotal();
+//    const long total = m_Msg2DTR.GetRecForceTotal();
 	
     BeadList       lBeads = GetCornerBeads(*m_pUBL);
     zLongVector&   rIds   = m_Msg2DTR.GetBeadIds();
@@ -3424,7 +3424,7 @@ void mpsPlanarZSimBox::TranslateBeadForcesInPosXPosYNegZ()
 
 void mpsPlanarZSimBox::TranslateBeadForcesInPosXNegYPosZ()
 {
-    const long total = m_Msg2UBR.GetRecForceTotal();
+//    const long total = m_Msg2UBR.GetRecForceTotal();
 
     BeadList       lBeads = GetCornerBeads(*m_pDTL);
     zLongVector&   rIds   = m_Msg2UBR.GetBeadIds();

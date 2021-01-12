@@ -171,7 +171,7 @@ void ccSelectPolymerTypeHeadInEllipsoidImpl::SelectPolymerTypeHeadInEllipsoid(co
 		}
 
 		const long polyTotal = vTargetPolymers.size();
-		const long beadTotal = vTargetBeads.size();
+//		const long beadTotal = vTargetBeads.size();
 
 		// Create and store a CCommandTargetPolymer that can receive commands.
 		// We pass in the polymer type in case the vTargetPolymers container 
@@ -179,16 +179,16 @@ void ccSelectPolymerTypeHeadInEllipsoidImpl::SelectPolymerTypeHeadInEllipsoid(co
 
 		if(pSimBox->CreateCommandTargetPolymer(label, polyType, vTargetPolymers))
 		{
-			CLogSelectPolymerTypeInRegion* pMsg = new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "Ellipsoid", polyName, polyType, polyTotal);
+			 new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "Ellipsoid", polyName, polyType, polyTotal);
 		}
 		else
 		{
-			CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+			 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 		}
 	}
 	else
 	{
-			CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+			 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }
 

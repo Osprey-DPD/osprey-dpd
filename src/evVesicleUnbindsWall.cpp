@@ -391,7 +391,7 @@ bool evVesicleUnbindsWall::Execute(long simTime, ISimEvent* const pISimEvent)
 		{
 			pISimEvent->SaveCurrentState();
 
-			CLogVesicleUnbindsWall* pMsg = new CLogVesicleUnbindsWall(simTime, m_AggregateId, m_CMDistance, m_EdgeDistance);
+			 new CLogVesicleUnbindsWall(simTime, m_AggregateId, m_CMDistance, m_EdgeDistance);
 
 			InActivateEvent();		
 		}

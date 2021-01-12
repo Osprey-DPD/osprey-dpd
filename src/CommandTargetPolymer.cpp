@@ -139,7 +139,7 @@ void CCommandTargetPolymer::RemovePolymer(CPolymer* pPolymer)
 {
     if(pPolymer && find(m_Polymers.begin(), m_Polymers.end(), pPolymer) != m_Polymers.end())
 	{
-		m_Polymers.erase(find(m_Polymers.begin(), m_Polymers.end(), pPolymer));
+	m_Polymers.erase(find(m_Polymers.begin(), m_Polymers.end(), pPolymer));
     }
 }
 
@@ -249,7 +249,7 @@ zInStream& CCommandTargetPolymer::Read(zInStream& is)
     is >> m_OriginalType;
     if(!is.good() || m_OriginalType < 0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing polymer command target: polymer type invalid");
+        new CLogRestartStateBuilderError(0, "Error importing polymer command target: polymer type invalid");
         return is;
     }
 
@@ -258,7 +258,7 @@ zInStream& CCommandTargetPolymer::Read(zInStream& is)
     is >> targetSize;
     if(!is.good() || targetSize < 0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing polymer command target: number of polymers invalid");
+        new CLogRestartStateBuilderError(0, "Error importing polymer command target: number of polymers invalid");
         return is;
     }
 //    std::cout << "Reading " << targetSize << " polymers into target" << zEndl;
@@ -268,7 +268,7 @@ zInStream& CCommandTargetPolymer::Read(zInStream& is)
         is >> proxyId;
         if(!is.good() || proxyId < 0)
         {
-            CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing polymer command target: invalid proxy id");
+            new CLogRestartStateBuilderError(0, "Error importing polymer command target: invalid proxy id");
             return is;
         }
 
@@ -295,10 +295,10 @@ zOutStream& CCommandTargetPolymer::Write(zOutStream& os) const
         os << (*citerPoly)->GetId() << zEndl;
     }
 
-    if(GetOuterDecorator())
-        return GetOuterDecorator()->Write(os);
-    else
-        return os;
+    if(GetOuterDecorator()) {
+        return GetOuterDecorator()->Write(os); }
+    else {
+        return os; }
 }
 
 // Virtual function to replace a target's integer proxies with actual pointers.
@@ -320,7 +320,7 @@ bool CCommandTargetPolymer::ReplaceProxyIds(CInitialState* const pIS)
         }
         else
         {
-            CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error reading restart state: unable to replace polymer proxy (invalid id?)");
+            new CLogRestartStateBuilderError(0, "Error reading restart state: unable to replace polymer proxy (invalid id?)");
             return false;
         }
     }

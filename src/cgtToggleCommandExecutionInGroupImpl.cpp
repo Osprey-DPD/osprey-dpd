@@ -60,11 +60,11 @@ void cgtToggleCommandExecutionInGroupImpl::ToggleCommandExecutionInGroup(const x
         const zString cmdName = pGroup->GetCommandName(cmdIndex);
         const bool bActive = pGroup->ToggleCommandExecution(cmdIndex);
         
-		CLogcgtToggleCommandExecutionInGroup* pMsg = new CLogcgtToggleCommandExecutionInGroup(pSimBox->GetCurrentTime(), groupName, cmdName, cmdIndex, bActive);
+		new CLogcgtToggleCommandExecutionInGroup(pSimBox->GetCurrentTime(), groupName, cmdName, cmdIndex, bActive);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
   
 #endif

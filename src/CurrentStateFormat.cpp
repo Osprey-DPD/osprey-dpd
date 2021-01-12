@@ -78,7 +78,7 @@ CCurrentStateFormat::CCurrentStateFormat(double lx, double ly, double lz, bool b
 	m_BeadColours.push_back("Gray90");
 	m_BeadColours.push_back("Gray95");
 
-	if(m_BeadTypeTotal > m_BeadColours.size())
+	if(m_BeadTypeTotal > static_cast<long>(m_BeadColours.size()))
 	{
 		for(long beadNo=m_BeadColours.size(); beadNo<m_BeadTypeTotal; beadNo++)
 		{
@@ -98,7 +98,7 @@ CCurrentStateFormat::~CCurrentStateFormat()
 
 const zString CCurrentStateFormat::GetBeadColourFromType(long beadType) const
 {
-    if(beadType < m_BeadColours.size())
+    if(beadType < static_cast<long>(m_BeadColours.size()))
     {
         return m_BeadColours.at(beadType);
     }

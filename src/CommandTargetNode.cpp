@@ -103,13 +103,13 @@ zInStream& operator>>(zInStream& is, CCommandTargetNode& target)
 // to create an instance of the appropriate target type when serialising one
 // from file.
 
-CCommandTargetNode::CCommandTargetNode(const zString label) : m_id(++CCommandTargetNode::m_CommandTargetTotal), 
-										                      m_Label(label),
+CCommandTargetNode::CCommandTargetNode(const zString label) : m_pState(0),
+                                                              m_id(++CCommandTargetNode::m_CommandTargetTotal), 
+							        m_Label(label),
                                                               m_InnerDecoratorName(""),
                                                               m_OuterDecoratorName(""),
-															  m_pInnerDecorator(0),
-															  m_pOuterDecorator(0),
-                                                              m_pState(0)
+                                                              m_pInnerDecorator(0),
+							        m_pOuterDecorator(0)
 
 {
     m_ProxyIds.clear();
@@ -122,13 +122,13 @@ CCommandTargetNode::CCommandTargetNode(const zString label) : m_id(++CCommandTar
 // The outer decorator pointer is set by a call to the inner object's
 // SetOuterDecorator() in the newly-created outer decorator's constructor.
 
-CCommandTargetNode::CCommandTargetNode(const zString label, CCommandTargetNode* const pDec) : m_id(++CCommandTargetNode::m_CommandTargetTotal),
+CCommandTargetNode::CCommandTargetNode(const zString label, CCommandTargetNode* const pDec) : m_pState(0),
+                                                                m_id(++CCommandTargetNode::m_CommandTargetTotal),
                                                                 m_Label(label),
                                                                 m_InnerDecoratorName(""),
                                                                 m_OuterDecoratorName(""),
-																m_pInnerDecorator(pDec),
-																m_pOuterDecorator(0),
-                                                                m_pState(0)
+                                                                m_pInnerDecorator(pDec),
+                                                                m_pOuterDecorator(0)
 {
     m_ProxyIds.clear();
 }

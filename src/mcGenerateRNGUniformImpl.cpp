@@ -58,5 +58,5 @@ void mcGenerateRNGUniformImpl::GenerateRNGUniform(const xxCommand* const pComman
         sequence.push_back(x);
     }
 
-    CLogGenerateRNGSequence* pMsg = new CLogGenerateRNGSequence(pMon->GetCurrentTime(), "Uniform", sequence);
+     new CLogGenerateRNGSequence(pMon->GetCurrentTime(), "Uniform", sequence);
 }

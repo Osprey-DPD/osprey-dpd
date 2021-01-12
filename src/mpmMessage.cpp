@@ -71,17 +71,17 @@ void mpmMessage::ZeroMessageTotal()
 //
 // 
 
-mpmMessage::mpmMessage() : m_id(++mpmMessage::m_MessageTotal), m_Tag(0), m_SenderPid(0), m_ErrorCode(0)
+mpmMessage::mpmMessage() : m_Tag(0), m_SenderPid(0), m_ErrorCode(0), m_id(++mpmMessage::m_MessageTotal)
 {
 }
 
 // Copying a message does not change its id.
 
 mpmMessage::mpmMessage(const mpmMessage& oldMessage) : IGlobalSimBox(oldMessage), 
-                                                       m_id(oldMessage.m_id),
                                                        m_Tag(oldMessage.m_Tag),
                                                        m_SenderPid(oldMessage.m_SenderPid),
-                                                       m_ErrorCode(oldMessage.m_ErrorCode)
+                                                       m_ErrorCode(oldMessage.m_ErrorCode),
+                                                       m_id(oldMessage.m_id)
 {
 }
 

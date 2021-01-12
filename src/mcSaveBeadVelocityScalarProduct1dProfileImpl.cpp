@@ -42,15 +42,15 @@ mcSaveBeadVelocityScalarProduct1dProfileImpl::~mcSaveBeadVelocityScalarProduct1d
 
 void mcSaveBeadVelocityScalarProduct1dProfileImpl::SaveBeadVelocityScalarProduct1dProfile(const xxCommand* const pCommand)
 {
-	const mcSaveBeadVelocityScalarProduct1dProfile* const pCmd = dynamic_cast<const mcSaveBeadVelocityScalarProduct1dProfile*>(pCommand);
+    const mcSaveBeadVelocityScalarProduct1dProfile* const pCmd = dynamic_cast<const mcSaveBeadVelocityScalarProduct1dProfile*>(pCommand);
 
     const long analysisPeriods = pCmd->GetAnalysisPeriods();
     const long dataPoints      = pCmd->GetTotalDataPoints();
 
-	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
+    CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 
-	const zString runId       = pMon->GetISimBox()->GetRunId();
-	const long currentTime    = pMon->GetISimBox()->GetCurrentTime();
+    const zString runId       = pMon->GetISimBox()->GetRunId();
+    const long currentTime    = pMon->GetISimBox()->GetCurrentTime();
     const long analysisPeriod = pMon->GetISimBox()->GetAnalysisPeriod();
     const long samplePeriod   = pMon->GetISimBox()->GetSamplePeriod();
     const long totalTime      = pMon->GetISimBox()->GetTotalTime();
@@ -93,12 +93,12 @@ void mcSaveBeadVelocityScalarProduct1dProfileImpl::SaveBeadVelocityScalarProduct
 		pProcess->InternalValidateData(pMon->GetISimBox()->IISimState());
 		pMon->GetISimBox()->AddProcess(pProcess);
 
-		CLogSaveBeadVelocityScalarProduct1dProfile* pMsg = new CLogSaveBeadVelocityScalarProduct1dProfile(pMon->GetCurrentTime(), analysisPeriods, dataPoints, 
+		new CLogSaveBeadVelocityScalarProduct1dProfile(pMon->GetCurrentTime(), analysisPeriods, dataPoints, 
                                                 start, end, samplePeriod, samplesPerPoint);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 
 }

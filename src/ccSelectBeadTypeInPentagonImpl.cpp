@@ -175,16 +175,16 @@ void ccSelectBeadTypeInPentagonImpl::SelectBeadTypeInPentagon(const xxCommand* c
 
 		if(pSimBox->CreateCommandTarget(label, beadType, vTargetBeads))
 		{
-			CLogSelectBeadTypeInRegion* pMsg = new CLogSelectBeadTypeInRegion(pSimBox->GetCurrentTime(), label, "Pentagon", beadName, beadType, beadTotal);
+			 new CLogSelectBeadTypeInRegion(pSimBox->GetCurrentTime(), label, "Pentagon", beadName, beadType, beadTotal);
 		}
 		else
 		{
-			CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+			 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 		}
 	}
 	else
 	{
-			CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+			 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }
 

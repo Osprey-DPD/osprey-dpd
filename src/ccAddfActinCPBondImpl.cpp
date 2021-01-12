@@ -56,7 +56,7 @@ ccAddfActinCPBondImpl::~ccAddfActinCPBondImpl()
 void ccAddfActinCPBondImpl::AddfActinCPBond(const xxCommand* const pCommand)
 {
 #if EnableACNCommand == SimCommandEnabled
-
+/*
 	const ccAddfActinCPBond* const pCmd = dynamic_cast<const ccAddfActinCPBond*>(pCommand);
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
@@ -122,7 +122,7 @@ void ccAddfActinCPBondImpl::AddfActinCPBond(const xxCommand* const pCommand)
 	// Then check that there actually are some polymers of the required type.
 	// If this is not the case, the command fails.
 
-/*	aeActiveSimBox* const pShadowSimBox = pSimBox->GetActiveSimBox();
+	aeActiveSimBox* const pShadowSimBox = pSimBox->GetActiveSimBox();
 
 
 	if(pShadowSimBox && !pShadowSimBox->IsfActinNetworkPresent() && bFound && monomerTotal > 0)
@@ -170,12 +170,12 @@ void ccAddfActinCPBondImpl::AddfActinCPBond(const xxCommand* const pCommand)
 
 		pSimBox->SetActiveBondsOn(true);
 
-		CLogActiveBondAdded* pMsg = new CLogActiveBondAdded(pSimBox->GetCurrentTime(), "Cofilin", headMonomerName, tailMonomerName,
+		 new CLogActiveBondAdded(pSimBox->GetCurrentTime(), "Cofilin", headMonomerName, tailMonomerName,
 																						headMonomerType, tailMonomerType);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 
 	}
 	*/

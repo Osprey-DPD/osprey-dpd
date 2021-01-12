@@ -384,7 +384,7 @@ bool evLamellaPoreClosed::Execute(long simTime, ISimEvent* const pISimEvent)
 		{
 			pISimEvent->SaveCurrentState();
 
-			CLogLamellaPoreClosed* pMsg = new CLogLamellaPoreClosed(simTime, m_AggregateName, m_AggregateId);
+			 new CLogLamellaPoreClosed(simTime, m_AggregateName, m_AggregateId);
 
 			InActivateEvent();		
 		}

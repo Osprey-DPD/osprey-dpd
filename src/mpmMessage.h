@@ -153,7 +153,6 @@ protected:
 
 	long  m_Tag;         // Identifying tag for each use of a message instance
 	long  m_SenderPid;   // Pid of the sending processor
-	
 	long  m_ErrorCode;   // Error code used by derived classes to check message passing
 
     // ****************************************

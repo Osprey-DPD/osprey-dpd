@@ -134,9 +134,6 @@ void taPlanarAnchorForce::Execute(long simTime)
 
 	// debug checks
 	const zString label = GetLabel();
-	long beadTotal      = GetBeadTotal();
-	CCommandTargetNode* const pInner = GetInnerDecorator();
-	CCommandTargetNode* const pOuter = GetOuterDecorator();
 
 	// We use a temporary vector to hold the target's beads because 
 	// applying begin() and end() to the GetBeads() function directly 
@@ -208,7 +205,7 @@ zInStream& taPlanarAnchorForce::Read(zInStream& is)
 
     if(!is.good() || (m_X == 0 && m_Y == 0 && m_Z == 0))
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing anchor force decorator (invalid normal vector?)");
+         new CLogRestartStateBuilderError(0, "Error importing anchor force decorator (invalid normal vector?)");
         return is;
     }
 
@@ -216,7 +213,7 @@ zInStream& taPlanarAnchorForce::Read(zInStream& is)
 
     if(!is.good() || m_XOrigin < 0 || m_YOrigin < 0 || m_ZOrigin < 0 || m_keff < 0.0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing anchor force decorator (invalid origin?)");
+         new CLogRestartStateBuilderError(0, "Error importing anchor force decorator (invalid origin?)");
         return is;
     }
 

@@ -212,7 +212,6 @@ void prBeadVelocityScalarProduct1dProfile::UpdateState(CSimState& rSimState, con
     AbstractBeadVector vBeads = pISimBox->GetBeads();
 
     bool bIllegalBeadType = false;
-    long illegalType = -1;
 
     for(cAbstractBeadVectorIterator iterBead = vBeads.begin(); iterBead!=vBeads.end(); iterBead++)
     {
@@ -226,7 +225,6 @@ void prBeadVelocityScalarProduct1dProfile::UpdateState(CSimState& rSimState, con
         else
         {
             bIllegalBeadType = true;
-            illegalType = type;
         }
     }
 
@@ -305,7 +303,8 @@ bool prBeadVelocityScalarProduct1dProfile::InternalValidateData(const ISimState*
 
 	SetState(new xxProcessState(xxBase::GetPSPrefix() + GetProcessType() + ToString(GetId()) + "." + pISimState->GetRunId(), GetStartTime(), GetEndTime(), pISimState->GetRunId(), GetProcessType()));
 
-	zOutStream& os = m_pState->putASCIIStartTags();
+	m_pState->putASCIIStartTags();
+//	zOutStream& os = m_pState->putASCIIStartTags();
 //	os << "    MonomerTotal		" << m_MonomerTotal	 << zEndl;
 
 #endif

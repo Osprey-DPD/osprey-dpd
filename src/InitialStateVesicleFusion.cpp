@@ -157,16 +157,14 @@ zOutStream& CInitialStateVesicleFusion::put(zOutStream& os) const
 	os << "			" << "Thickness		"	<< m_Thickness[0]	<< m_Thickness[1]	<< zEndl;
 	os << "	        " << "OuterFraction	  ";
 
-	short int i;	// counter used below
-
-	for(i=0; i<m_Polymers1.size(); i++)
+	for(long unsigned int i=0; i<m_Polymers1.size(); i++)
 	{
 		os << "	" << m_OuterFractions1.at(i);
 	}
 	os << zEndl;
 
 	os << "	        " << "OuterFraction	  ";
-	for(i=0; i<m_Polymers2.size(); i++)
+	for(long unsigned int i=0; i<m_Polymers2.size(); i++)
 	{
 		os << "	" << m_OuterFractions2.at(i);
 	}
@@ -332,7 +330,7 @@ zInStream& CInitialStateVesicleFusion::get(zInStream& is)
 	}
 	else
 	{
-		for(short i=0; i<m_Polymers1.size(); i++)
+		for(long unsigned int i=0; i<m_Polymers1.size(); i++)
 		{
 			is >> outerFraction;
 
@@ -356,7 +354,7 @@ zInStream& CInitialStateVesicleFusion::get(zInStream& is)
 	}
 	else
 	{
-		for(short i=0; i<m_Polymers2.size(); i++)
+		for(long unsigned int i=0; i<m_Polymers2.size(); i++)
 		{
 			is >> outerFraction;
 

@@ -44,7 +44,7 @@ ccToggleDPDBeadThermostatImpl::~ccToggleDPDBeadThermostatImpl()
 
 void ccToggleDPDBeadThermostatImpl::ToggleDPDBeadThermostat(const xxCommand* const pCommand)
 {
-	const ccToggleDPDBeadThermostat* const pCmd = dynamic_cast<const ccToggleDPDBeadThermostat*>(pCommand);
+//	const ccToggleDPDBeadThermostat* const pCmd = dynamic_cast<const ccToggleDPDBeadThermostat*>(pCommand);
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
@@ -52,5 +52,5 @@ void ccToggleDPDBeadThermostatImpl::ToggleDPDBeadThermostat(const xxCommand* con
 
 	// This command cannot fail
 
-	CLogToggleDPDBeadThermostat* pMsg = new CLogToggleDPDBeadThermostat(pSimBox->GetCurrentTime(), bZeroForce);
+	 new CLogToggleDPDBeadThermostat(pSimBox->GetCurrentTime(), bZeroForce);
 }

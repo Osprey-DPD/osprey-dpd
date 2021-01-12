@@ -164,16 +164,16 @@ bool acCancelFreeActivePolymersVisibleByMinLength::Execute(long simTime, ISimCmd
 
 			pMACN->SetFreeActivePolymersVisibleByMinLength(m_MinSize);
 
-			CLogacSetFreeActivePolymersVisibleByMinLength* pMsg1 = new CLogacSetFreeActivePolymersVisibleByMinLength(GetExecutionTime(), m_ACNType, m_MinSize);
+			 new CLogacSetFreeActivePolymersVisibleByMinLength(GetExecutionTime(), m_ACNType, m_MinSize);
 
 			if(pMACN->GetFreePolymerTotal() == 0)
 			{
-				CLogacEmptyPolymerACN* pMsg2 = new CLogacEmptyPolymerACN(GetExecutionTime(), m_ACNType);
+				 new CLogacEmptyPolymerACN(GetExecutionTime(), m_ACNType);
 			}
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg3 = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

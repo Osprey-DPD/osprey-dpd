@@ -136,7 +136,7 @@ void aeReceptorNetwork::Evolve()
 	if(filamentTotal > 0)
 	{
 		CalculateFilamentProperties();
-
+/*
 		long freeMonoTotal   = GetFreeBondTotal();
 		long boundMonoTotal  = GetBoundBondTotal();
 		long monoTotal		 = GetMonomerTotal();
@@ -154,6 +154,7 @@ void aeReceptorNetwork::Evolve()
 		std::cout << "Receptor monos = " << freeMonoTotal << "  " << boundMonoTotal << "  " << monoTotal << "  ";
 		std::cout << freeFraction << "  " << boundFraction << zEndl;
 		std::cout << "filaments = " << filamentTotal << "  " << GetMeanFilamentSize()  << "  " << GetMeanFilamentLength() << zEndl;
+		*/
 	}
 }
 

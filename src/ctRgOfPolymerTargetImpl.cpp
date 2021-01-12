@@ -102,6 +102,6 @@ void ctRgOfPolymerTargetImpl::RgPolymerTarget(const xxCommand* const pCommand)
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

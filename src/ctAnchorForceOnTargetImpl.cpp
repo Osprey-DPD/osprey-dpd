@@ -81,13 +81,8 @@ void ctAnchorForceOnTargetImpl::AnchorForceOnTarget(const xxCommand* const pComm
 	// is not applicable to composite targets because they may contain
 	// a multitude of bead types.
 
-	bool bSuccess = true;
-
 	if(pCmdTarget)
 	{
-		const long beadTotal = pCmdTarget->GetBeadTotal();
-
-		const long beadType            = pCmdTarget->GetCurrentBeadType();
 		const long originalBeadType    = pCmdTarget->GetOriginalBeadType();
 		const zString beadName         = pSimBox->GetBeadNameFromType(originalBeadType);
 
@@ -108,18 +103,16 @@ void ctAnchorForceOnTargetImpl::AnchorForceOnTarget(const xxCommand* const pComm
 		// Wrap the active target in a new force decorator instance
 		// and add it to the active command targets container.
 
-		taAnchorForce* const pDec = new taAnchorForce(decLabel, pActiveTarget, 
-										xn, yn, zn, fxc, fyc, fzc, keff);
+		taAnchorForce* const pDec = new taAnchorForce(decLabel, pActiveTarget, xn, yn, zn, fxc, fyc, fzc, keff);
 
 		pSimBox->m_ActiveCommandTargets.push_back(pDec);
 
 		// Log sucessful execution of the command
 
-		CLogctAnchorForceOnTarget* pMsg = new CLogctAnchorForceOnTarget(pSimBox->GetCurrentTime(), targetLabel, decLabel, 
-												xn, yn, zn, xc, yc, zc, keff);
+		new CLogctAnchorForceOnTarget(pSimBox->GetCurrentTime(), targetLabel, decLabel, xn, yn, zn, xc, yc, zc, keff);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

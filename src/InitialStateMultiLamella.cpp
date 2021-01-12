@@ -140,7 +140,7 @@ zOutStream& CInitialStateMultiLamella::put(zOutStream& os) const
 
 	os << "	        " << "UpperFraction	  ";
 
-	for(short i=0; i<m_Polymers.size(); i++)
+	for(long unsigned int i=0; i<m_Polymers.size(); i++)
 	{
 		os << "	" << m_UpperFractions.at(i);
 	}
@@ -303,7 +303,7 @@ zInStream& CInitialStateMultiLamella::get(zInStream& is)
 	}
 	else
 	{
-		for(short i=0; i<m_Polymers.size(); i++)
+		for(long unsigned int i=0; i<m_Polymers.size(); i++)
 		{
 			is >> upperFraction;
 
@@ -393,7 +393,7 @@ bool CInitialStateMultiLamella::ValidateData(const CInputData& riData)
 
 	double upperFracSum = 0.0;
 
-	for(long ip=0; ip<m_UpperFractions.size(); ip++)
+	for(long unsigned int ip=0; ip<m_UpperFractions.size(); ip++)
 	{
 		upperFracSum += m_UpperFractions.at(ip);
 	}

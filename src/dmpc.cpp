@@ -63,8 +63,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 int main(int argc, char* argv[])
 {
-	zString runId;
-    char stringRunId[1000];  // Maximum size of runId is 1000 chars including terminating space
+    zString runId;
     long errCode = 0;
 
     // Initialise MPI if running parallel code and abort run if any errors.
@@ -72,8 +71,12 @@ int main(int argc, char* argv[])
     // we can distinguish a parallel run from a serial one.
 
     int my_rank  = 0;
-    int my_world = 1;
+    
 #if SimMPS == SimulationEnabled
+
+    int my_world = 1;
+
+    char stringRunId[1000];  // Maximum size of runId is 1000 chars including terminating space
     if(MPI_Init(&argc, &argv) != MPI_SUCCESS)
     {
         errCode = 3;

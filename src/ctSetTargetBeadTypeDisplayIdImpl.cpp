@@ -52,9 +52,9 @@ void ctSetTargetBeadTypeDisplayIdImpl::SetTargetBeadTypeDisplayId(const xxComman
 {
 	const ctSetTargetBeadTypeDisplayId* const pCmd = dynamic_cast<const ctSetTargetBeadTypeDisplayId*>(pCommand);
 
-	const zString	targetLabel	= pCmd->GetTargetLabel();
-    const long      beadType    = pCmd->GetBeadType();
-	const long      displayId   = pCmd->GetDisplayId();
+	const zString	targetLabel = pCmd->GetTargetLabel();
+        const long     beadType    = pCmd->GetBeadType();
+	const long     displayId    = pCmd->GetDisplayId();
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
@@ -97,15 +97,15 @@ void ctSetTargetBeadTypeDisplayIdImpl::SetTargetBeadTypeDisplayId(const xxComman
 				}
 			}
 
-			CLogctTargetBeadTypeDisplayId* pMsg = new CLogctTargetBeadTypeDisplayId(pSimBox->GetCurrentTime(), targetLabel, beadType, displayId);
+			new CLogctTargetBeadTypeDisplayId(pSimBox->GetCurrentTime(), targetLabel, beadType, displayId);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

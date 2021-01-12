@@ -129,7 +129,7 @@ void taDistanceMoved::Execute(long simTime)
 		else if(!m_bWrapFailure)
 		{
 			m_bWrapFailure = true;
-			CLogctNonexistentDecorator* pMsg = new CLogctNonexistentDecorator(simTime, decLabel, m_WrappedLabel);
+			 new CLogctNonexistentDecorator(simTime, decLabel, m_WrappedLabel);
 		}
 	}
 	else if(simTime == m_End)
@@ -138,7 +138,7 @@ void taDistanceMoved::Execute(long simTime)
 		// and the end of the calculation (last two parameters = accumulated distance
 		// moved and average distance moved)
 
-		CLogctDistanceMovedByTarget* pMsg = new CLogctDistanceMovedByTarget(simTime, targetLabel, m_WrappedLabel, decLabel,  
+		 new CLogctDistanceMovedByTarget(simTime, targetLabel, m_WrappedLabel, decLabel,  
 												m_Distance, m_DistancePerBead);
 	}
 }

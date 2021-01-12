@@ -83,23 +83,23 @@ void ccSelectPolymerTypeInSimBoxImpl::SelectPolymerTypeInSimBox(const xxCommand*
 #if EnableParallelCommands == SimMPSEnabled
         if(xxParallelBase::GlobalGetRank() == 0)
 		{
-		    CLogSelectPolymerTypeInRegion* pMsg = new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "SimBox", polyName, polyType, polyTotal);
+		     new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "SimBox", polyName, polyType, polyTotal);
 		}
 	}
 	else
 	{
         if(xxParallelBase::GlobalGetRank() == 0)
 		{
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		     new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 		}
 	}
 #else
 
-		CLogSelectPolymerTypeInRegion* pMsg = new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "SimBox", polyName, polyType, polyTotal);
+		 new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "SimBox", polyName, polyType, polyTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

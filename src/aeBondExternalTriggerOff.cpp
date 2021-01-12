@@ -46,7 +46,7 @@ aeBondExternalTriggerOff::~aeBondExternalTriggerOff()
 
 bool aeBondExternalTriggerOff::ActivateHead(const aeActiveBond* const pEnd) const
 {
-	if(aeActiveSimBox::GetIActiveSimBox())
+/*	if(aeActiveSimBox::GetIActiveSimBox())
 	{
 		const CAbstractBead* const pHeadBead = pEnd->GetHeadTailBead();
 		const CAbstractBead* const pTailBead = pEnd->GetTailHeadBead();
@@ -78,7 +78,7 @@ bool aeBondExternalTriggerOff::ActivateHead(const aeActiveBond* const pEnd) cons
 
 		std::cout << pEnd->CountHeadAdjacentBonds() << " " << pEnd->CountTailAdjacentBonds() << " bonds to head/tail" << zEndl;
 	}
-
+*/
 	return false;
 }
 
@@ -92,7 +92,7 @@ bool aeBondExternalTriggerOff::ActivateHead(const aeActiveBond* const pEnd) cons
 
 bool aeBondExternalTriggerOff::ActivateTail(const aeActiveBond* const pEnd) const
 {
-	if(aeActiveSimBox::GetIActiveSimBox())
+/*	if(aeActiveSimBox::GetIActiveSimBox())
 	{
 		const CAbstractBead* const pHeadBead = pEnd->GetTailTailBead();
 		const CAbstractBead* const pTailBead = pEnd->GetTailAdjacentBond()->GetTailHeadBead();
@@ -124,6 +124,6 @@ bool aeBondExternalTriggerOff::ActivateTail(const aeActiveBond* const pEnd) cons
 
 		std::cout << pEnd->CountHeadAdjacentBonds() << " " << pEnd->CountTailAdjacentBonds() << " bonds to head/tail" << zEndl;
 	}
-
+*/
 	return false;
 }

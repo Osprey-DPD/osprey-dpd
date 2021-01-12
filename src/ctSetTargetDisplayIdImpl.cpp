@@ -84,7 +84,7 @@ void ctSetTargetDisplayIdImpl::SetTargetDisplayId(const xxCommand* const pComman
 			{
 				for(BeadVectorIterator iterBead=vTargetBeads.begin(); iterBead!=vTargetBeads.end(); iterBead++)
 				{
-                    (*iterBead)->SetVisible(pSimBox->GetISimBox()->GetMonitor()->IsBeadTypeVisible((*iterBead)->GetType()));
+                                      (*iterBead)->SetVisible(pSimBox->GetISimBox()->GetMonitor()->IsBeadTypeVisible((*iterBead)->GetType()));
 					CCurrentState::SetBeadDisplayId((*iterBead)->GetId(), (*iterBead)->GetType());
 				}
 			}
@@ -92,20 +92,20 @@ void ctSetTargetDisplayIdImpl::SetTargetDisplayId(const xxCommand* const pComman
 			{
 				for(BeadVectorIterator iterBead=vTargetBeads.begin(); iterBead!=vTargetBeads.end(); iterBead++)
 				{
-                    (*iterBead)->SetVisible();
+                                      (*iterBead)->SetVisible();
 					CCurrentState::SetBeadDisplayId((*iterBead)->GetId(), displayId);
 				}
 			}
 
-			CLogctTargetDisplayId* pMsg = new CLogctTargetDisplayId(pSimBox->GetCurrentTime(), targetLabel, displayId);
+			new CLogctTargetDisplayId(pSimBox->GetCurrentTime(), targetLabel, displayId);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

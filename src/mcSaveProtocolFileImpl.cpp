@@ -79,11 +79,11 @@ void mcSaveProtocolFileImpl::SaveProtocolFile(const xxCommand* const pCommand)
 
 	if(protocol.Serialize())
 	{
-		CLogSaveProtocolFile* pMsg = new CLogSaveProtocolFile(pMon->GetCurrentTime(), protocolId, runId);
+		new CLogSaveProtocolFile(pMon->GetCurrentTime(), protocolId, runId);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 #endif
 }

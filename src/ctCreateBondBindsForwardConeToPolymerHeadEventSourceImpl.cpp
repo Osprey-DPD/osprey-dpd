@@ -70,8 +70,6 @@ void ctCreateBondBindsForwardConeToPolymerHeadEventSourceImpl::CreateBondBindsFo
     // the decorator in the ACN so that it can forward event broadcast information
     // to the event source.
 
-	bool bSuccess = true;
-
 	if(pCmdTarget)
 	{
 		CCommandTargetNode* pActiveTarget = pSimBox->GetActiveCommandTargetOutermost(targetLabel);
@@ -117,15 +115,15 @@ void ctCreateBondBindsForwardConeToPolymerHeadEventSourceImpl::CreateBondBindsFo
 
 		    // Log sucessful execution of the command
 
-		    CLogacACNCreateEventSource* pMsg = new CLogacACNCreateEventSource(pSimBox->GetCurrentTime(), acnType, eventType, decLabel);
+		    new CLogacACNCreateEventSource(pSimBox->GetCurrentTime(), acnType, eventType, decLabel);
         }
         else
 	    {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		     new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	    }
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

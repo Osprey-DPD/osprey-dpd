@@ -157,11 +157,11 @@ bool acCancelFreeActiveBondDisplayUpdate::Execute(long simTime, ISimCmd* const p
 		{
 			pMACN->CancelFreeActiveBondDisplayUpdate();
 
-			CLogacCancelFreeActiveBondDisplayUpdate* pMsg = new CLogacCancelFreeActiveBondDisplayUpdate(GetExecutionTime(), m_ACNType);
+			 new CLogacCancelFreeActiveBondDisplayUpdate(GetExecutionTime(), m_ACNType);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

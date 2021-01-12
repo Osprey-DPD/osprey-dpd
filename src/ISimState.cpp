@@ -41,19 +41,19 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-ISimState::ISimState(CSimState& simState, const ISimBox* const pISimBox) : ISimEvent(pISimBox),
-																		m_rSimState(simState),
-																		m_pIBeadTypes(new IModifySimStateBeadTypes(simState)),
-																		m_pIBondTypes(new IModifySimStateBondTypes(simState)),
-																		m_pIIntegration(new IModifySimStateIntegration(simState)),
-																		m_pIPolymers(new IModifySimStatePolymers(simState)),
-																		m_Events(simState.GetEvents()),
-																		m_Commands(simState.GetCommands()),
-																		m_SimTime(0),
-																		m_TotalTime(simState.GetTotalTime()),
-																		m_TotalMCTime(simState.GetTotalMCTime()),
-																		m_MaxMCStep(simState.GetMCStepSize()),
-																		m_RenormalisationPeriod(1)
+ISimState::ISimState(CSimState& simState, const ISimBox* const pISimBox) : ISimEvent(pISimBox), 
+                                                                     m_pIBeadTypes(new IModifySimStateBeadTypes(simState)),
+									m_pIBondTypes(new IModifySimStateBondTypes(simState)),
+									m_pIIntegration(new IModifySimStateIntegration(simState)),
+									m_pIPolymers(new IModifySimStatePolymers(simState)),
+									m_Events(simState.GetEvents()),
+									m_Commands(simState.GetCommands()),
+									m_SimTime(0),
+									m_TotalTime(simState.GetTotalTime()),
+				    				        m_TotalMCTime(simState.GetTotalMCTime()),
+									m_MaxMCStep(simState.GetMCStepSize()),
+									m_RenormalisationPeriod(1),
+									m_rSimState(simState)
 {
 
 }
@@ -273,11 +273,7 @@ void ISimState::ExecuteCommands()
 
 void ISimState::RefreshEvents()
 {
-	long preSize = m_Events.size();
-
 	m_Events = m_rSimState.GetEvents();
-
-	long postSize = m_Events.size();
 }
 
 // Function to add a new process to the CAnalysisState's process sequence.

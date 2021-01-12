@@ -43,7 +43,7 @@ mcSetAllBeadsVisibleImpl::~mcSetAllBeadsVisibleImpl()
 
 void mcSetAllBeadsVisibleImpl::SetAllBeadsVisible(const xxCommand* const pCommand)
 {
-	const mcSetAllBeadsVisible* const pCmd = dynamic_cast<const mcSetAllBeadsVisible*>(pCommand);
+//	const mcSetAllBeadsVisible* const pCmd = dynamic_cast<const mcSetAllBeadsVisible*>(pCommand);
 
 	CMonitor* pMon = dynamic_cast<CMonitor*>(this);
 
@@ -56,5 +56,5 @@ void mcSetAllBeadsVisibleImpl::SetAllBeadsVisible(const xxCommand* const pComman
 
 	// This command cannot fail.
 
-	CLogAllBeadsVisible* pMsg = new CLogAllBeadsVisible(pMon->GetCurrentTime(), true);
+	new CLogAllBeadsVisible(pMon->GetCurrentTime(), true);
 }

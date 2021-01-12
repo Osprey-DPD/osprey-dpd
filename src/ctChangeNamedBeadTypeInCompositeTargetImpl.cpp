@@ -81,15 +81,14 @@ void ctChangeNamedBeadTypeInCompositeTargetImpl::ChangeNamedBeadTypeInCompositeT
     // is sent to a polymer target (or a composite target containing only 
     // non-simple bead targets) it is safely rejected.
 
-	if(pCmdTarget && pCmdTarget->IsComposite() && pCmdTarget->GetTargetTotal() > 0 &&
-       pCmdTarget->IsSimpleBeadTargetInComposite()  &&
+	if(pCmdTarget && pCmdTarget->IsComposite() && pCmdTarget->GetTargetTotal() > 0 && pCmdTarget->IsSimpleBeadTargetInComposite()  &&
        !pSimBox->IModifyBeadTypes()->IsBeadNameInMap(newName))
 	{
-		// Change the type of the beads and propagate the changes to the 
-		// rest of the simulation. The new type is just one greater than
-		// the highest type in use. We use the IModifySimStateBeadTypes
-		// interface class to safely alter the CSimState and pass the changes 
-		// to the rest of the simulation. The beads' display ids are set to their
+	// Change the type of the beads and propagate the changes to the 
+	// rest of the simulation. The new type is just one greater than
+	// the highest type in use. We use the IModifySimStateBeadTypes
+	// interface class to safely alter the CSimState and pass the changes 
+	// to the rest of the simulation. The beads' display ids are set to their
         // new type using the current state's static member functions.
         // Because the target may contain beads of different types, we use the
         // type of the first simple bead target found to define the old type.
@@ -100,7 +99,7 @@ void ctChangeNamedBeadTypeInCompositeTargetImpl::ChangeNamedBeadTypeInCompositeT
         // all the types, but this has only cosmetic effects.
 
         const long oldType = pCmdTarget->GetFirstBeadType();
-		const long newType = pSimBox->GetBeadTypeTotal();
+	const long newType = pSimBox->GetBeadTypeTotal();
 
         // If the composite target contains a target that is not a simple bead
         // target nor a composite target, we issue a warning log message, but 
@@ -109,7 +108,7 @@ void ctChangeNamedBeadTypeInCompositeTargetImpl::ChangeNamedBeadTypeInCompositeT
         if(!pCmdTarget->ChangeNamedBeadType(newType))
         {
             const zString warningMsg = "Warning: composite target ignoring attempt to change the type of a contained non-simple bead target's beads";
-            CLogWarningTextMessage* pMsg1 = new CLogWarningTextMessage(pSimBox->GetCurrentTime(), warningMsg);
+            new CLogWarningTextMessage(pSimBox->GetCurrentTime(), warningMsg);
         }
 
         // Note that we pass the oldType parameter to the IModifyBeadTypes()
@@ -126,11 +125,11 @@ void ctChangeNamedBeadTypeInCompositeTargetImpl::ChangeNamedBeadTypeInCompositeT
         // Note that because there may be more than one type of bead in the targets
         // we cannot pass values for the old name and type, so we use placeholders.
 
-		CLogctChangeNamedBeadTypeInCompositeTarget* pMsg2 = new CLogctChangeNamedBeadTypeInCompositeTarget(pSimBox->GetCurrentTime(), label, "various", newName, oldType, newType);
+		new CLogctChangeNamedBeadTypeInCompositeTarget(pSimBox->GetCurrentTime(), label, "various", newName, oldType, newType);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg3 = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 }

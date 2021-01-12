@@ -95,11 +95,10 @@ void mcToggleSliceEnergyOutputImpl::ToggleSliceEnergyOutput(const xxCommand* con
 		// is inactive. We check to see if the region with the specified id 
 		// is in the m_ActiveRegions container or not.
 
-		for(cRegionIterator cIterRegion = pMon->m_Regions.begin(); cIterRegion!= pMon->m_Regions.end(); cIterRegion++)
-		{
-			const IRegionAnalysis* pRegion = *cIterRegion;
-
-		}
+//		for(cRegionIterator cIterRegion = pMon->m_Regions.begin(); cIterRegion!= pMon->m_Regions.end(); cIterRegion++)
+//		{
+//			const IRegionAnalysis* pRegion = *cIterRegion;
+//		}
 	}
 #endif
 }

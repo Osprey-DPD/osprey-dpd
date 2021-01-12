@@ -103,6 +103,6 @@ void ctRotationalMSDOfPolymerTargetImpl::RotationalMSDPolymerTarget(const xxComm
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

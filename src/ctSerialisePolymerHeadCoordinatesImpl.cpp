@@ -66,7 +66,7 @@ void ctSerialisePolymerHeadCoordinatesImpl::SerialisePolymerHeadCoordinates(cons
 	const zString sourceLabel = pCmd->GetEventSourceId();
 	const zString decLabel    = pCmd->GetEventAnalysisId();
 	const zString key         = pCmd->GetKey();
-    const long    period      = pCmd->GetPeriod();
+        const long    period      = pCmd->GetPeriod();
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
@@ -85,8 +85,6 @@ void ctSerialisePolymerHeadCoordinatesImpl::SerialisePolymerHeadCoordinates(cons
     // and create a taBinEventSuccessIntervalsEventAnalysis instance and wrap the 
     // target with it, and also store a pointer to the decorator in the ACN so that it 
     // can forward event broadcast information to the event source.
-
-	bool bSuccess = true;
 
 	if(pCmdTarget && pESD)
 	{
@@ -120,10 +118,10 @@ void ctSerialisePolymerHeadCoordinatesImpl::SerialisePolymerHeadCoordinates(cons
 
 		// Log sucessful execution of the command
 
-//		CLogacACNCreateEventAnalysis* pMsg = new CLogacACNCreateEventAnalysis(pSimBox->GetCurrentTime(), sourceLabel, decLabel, binTotal, binWidth, sampleTotal);
+//		new CLogacACNCreateEventAnalysis(pSimBox->GetCurrentTime(), sourceLabel, decLabel, binTotal, binWidth, sampleTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

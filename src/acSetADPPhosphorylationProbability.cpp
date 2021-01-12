@@ -166,11 +166,11 @@ bool acSetADPPhosphorylationProbability::Execute(long simTime, ISimCmd* const pI
 		{
 			pMActin->SetADPPhosphorylationProbability(m_Rate);
 
-			CLogacSetADPPhosphorylationProbability* pMsg = new CLogacSetADPPhosphorylationProbability(GetExecutionTime(), m_ACNType, m_Rate);
+			 new CLogacSetADPPhosphorylationProbability(GetExecutionTime(), m_ACNType, m_Rate);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

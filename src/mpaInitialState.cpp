@@ -43,20 +43,20 @@ mpaInitialState::mpaInitialState(CInitialState* const pSIS) : m_pSerialIS(pSIS),
                                                               m_BondTotal(0),
                                                               m_BondPairTotal(0),
                                                               m_PolymerTotal(0),
-															  m_SimBoxXLength(pSIS->GetSimBoxXLength()),
-															  m_SimBoxYLength(pSIS->GetSimBoxYLength()),
-															  m_SimBoxZLength(pSIS->GetSimBoxZLength()),
+								m_SimBoxXLength(pSIS->GetSimBoxXLength()),
+								m_SimBoxYLength(pSIS->GetSimBoxYLength()),
+								m_SimBoxZLength(pSIS->GetSimBoxZLength()),
                                                               m_SimBoxXOrigin(0.0),
                                                               m_SimBoxYOrigin(0.0),
                                                               m_SimBoxZOrigin(0.0),
-															  m_SimSpaceXLength(0.0),
-															  m_SimSpaceYLength(0.0),
-															  m_SimSpaceZLength(0.0)
+								m_SimSpaceXLength(0.0),
+								m_SimSpaceYLength(0.0),
+							        m_SimSpaceZLength(0.0)
 {
     m_vPolymerTypeTotal.clear();
-	m_vPolymerFractions.clear();
+    m_vPolymerFractions.clear();
 	
-	// Initialise the polymer fractions container to contain zeroes if using the parallel codebase
+    // Initialise the polymer fractions container to contain zeroes if using the parallel codebase
 	
 #if EnableParallelSimBox == SimMPSEnabled
      m_vPolymerFractions.resize(m_pSerialIS->GetPolymerTypeTotal(), 0);
@@ -74,9 +74,9 @@ mpaInitialState::mpaInitialState(CInitialState* const pSIS) : m_pSerialIS(pSIS),
     m_SimBoxYOrigin = static_cast<double>(pj)*m_SimBoxYLength;
     m_SimBoxZOrigin = static_cast<double>(pk)*m_SimBoxZLength;
 	
-	m_SimSpaceXLength = static_cast<double>(pSIS->GetProcessorsXNo())*m_SimBoxXLength;
-	m_SimSpaceYLength = static_cast<double>(pSIS->GetProcessorsYNo())*m_SimBoxYLength;
-	m_SimSpaceZLength = static_cast<double>(pSIS->GetProcessorsZNo())*m_SimBoxZLength;
+    m_SimSpaceXLength = static_cast<double>(pSIS->GetProcessorsXNo())*m_SimBoxXLength;
+    m_SimSpaceYLength = static_cast<double>(pSIS->GetProcessorsYNo())*m_SimBoxYLength;
+    m_SimSpaceZLength = static_cast<double>(pSIS->GetProcessorsZNo())*m_SimBoxZLength;
 	
 }
 
@@ -85,16 +85,18 @@ mpaInitialState::mpaInitialState(const mpaInitialState& oldIS) : m_pSerialIS(old
                                                                  m_BondTotal(oldIS.m_BondTotal),
                                                                  m_BondPairTotal(oldIS.m_BondPairTotal),
                                                                  m_PolymerTotal(oldIS.m_PolymerTotal),
-                                                                 m_vPolymerTypeTotal(oldIS.m_vPolymerTypeTotal),
                                                                  m_SimBoxXLength(oldIS.m_SimBoxXLength),
                                                                  m_SimBoxYLength(oldIS.m_SimBoxYLength),
                                                                  m_SimBoxZLength(oldIS.m_SimBoxZLength),
                                                                  m_SimBoxXOrigin(oldIS.m_SimBoxXOrigin),
-                                                                 m_SimBoxYOrigin(oldIS.m_SimBoxYOrigin),
+                                                                 m_SimBoxYOrigin(oldIS.m_SimBoxYOrigin), 
                                                                  m_SimBoxZOrigin(oldIS.m_SimBoxZOrigin),
-																 m_SimSpaceXLength(oldIS.m_SimSpaceXLength),
-																 m_SimSpaceYLength(oldIS.m_SimSpaceYLength),
-																 m_SimSpaceZLength(oldIS.m_SimSpaceZLength)
+                                                                 m_SimSpaceXLength(oldIS.m_SimSpaceXLength),
+								   m_SimSpaceYLength(oldIS.m_SimSpaceYLength),
+								   m_SimSpaceZLength(oldIS.m_SimSpaceZLength),
+								   m_vPolymerTypeTotal(oldIS.m_vPolymerTypeTotal),
+								   m_vPolymerFractions(oldIS.m_vPolymerFractions)
+
 {
 
 }

@@ -44,32 +44,30 @@ void cgcSetArgumentToIntegerConstantImpl::SetArgumentToIntegerConstant(const xxC
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-	const cgcSetArgumentToIntegerConstant* const pCmd = dynamic_cast<const cgcSetArgumentToIntegerConstant*>(pCommand);
+    const cgcSetArgumentToIntegerConstant* const pCmd = dynamic_cast<const cgcSetArgumentToIntegerConstant*>(pCommand);
 
-	const zString groupName	= pCmd->GetCommandGroupName();	// Name of command group
-	const long    cmdIndex  = pCmd->GetCommandIndex();	    // Index of command to add
-	const zString argName	= pCmd->GetArgumentName();	    // Placeholder name of argument
+    const zString groupName	= pCmd->GetCommandGroupName();	// Name of command group
+    const long    cmdIndex  = pCmd->GetCommandIndex();	    // Index of command to add
+    const zString argName	= pCmd->GetArgumentName();	    // Placeholder name of argument
     const long    argValue  = pCmd->GetArgumentValue();     // New value of argument 
 
-    
     CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
-
-	// Retrieve the group and the command name (for the log message), noting that
+    // Retrieve the group and the command name (for the log message), noting that
     // the container is zero-indexed, and modify the command's argument
 
     tguCommandGroup* const pGroup = pSimBox->GetCommandGroup(groupName);
 
 	if(pGroup)
 	{
-        pGroup->SetArgumentToInteger(cmdIndex, argName, argValue);
+               pGroup->SetArgumentToInteger(cmdIndex, argName, argValue);
 
-        const zString cmdName = pGroup->GetCommandName(cmdIndex);
-		CLogcgcSetArgumentToIntegerConstant* pMsg = new CLogcgcSetArgumentToIntegerConstant(pSimBox->GetCurrentTime(), groupName, cmdName, cmdIndex, argName, argValue);
+               const zString cmdName = pGroup->GetCommandName(cmdIndex);
+		new CLogcgcSetArgumentToIntegerConstant(pSimBox->GetCurrentTime(), groupName, cmdName, cmdIndex, argName, argValue);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
  
 #endif

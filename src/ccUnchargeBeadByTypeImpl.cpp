@@ -101,7 +101,7 @@ void ccUnchargeBeadByTypeImpl::UnchargeBeadByType(const xxCommand* const pComman
 		// Note the zero values for the strength and range. These are not contained
 		// in the ccUnchargeBeadType command.
 
-		CLogChargeBeadType* pMsg = new CLogChargeBeadType(pSimBox->GetCurrentTime(), name, type, 0.0, 0.0, false);
+		 new CLogChargeBeadType(pSimBox->GetCurrentTime(), name, type, 0.0, 0.0, false);
 	}	
 #endif
 }

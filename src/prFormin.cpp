@@ -94,11 +94,10 @@ namespace
 // according to its string identifier read from the control data file.
 
 prFormin::prFormin() : IModifyForminProcess(),
-                        m_pACN(0),
+                        m_pACN(0), m_bIsModifiable(false), m_bNeverModifiable(false), 
 						m_MonomerTotal(0),
-						m_FreeMonomerTotal(0), m_BoundMonomerTotal(0),
+						m_FreeMonomerTotal(0), m_BoundMonomerTotal(0), m_FilamentTotal(0),
 						m_FreeMonomerFraction(0.0), m_BoundMonomerFraction(0.0),
-						m_FilamentTotal(0),
 						m_MeanFilamentSize(0.0),
 						m_SDevFilamentSize(0.0),
 						m_MeanFilamentLength(0.0),
@@ -111,11 +110,10 @@ prFormin::prFormin() : IModifyForminProcess(),
 // by the acfProcessFactory class and should only be used internally.
 
 prFormin::prFormin(const aeForminNetwork* pACN, long start, long end) : m_pACN(pACN),
-											m_bIsModifiable(true), 
+											m_bIsModifiable(true), m_bNeverModifiable(false), 
 											m_MonomerTotal(0),
-											m_FreeMonomerTotal(0), m_BoundMonomerTotal(0),
+											m_FreeMonomerTotal(0), m_BoundMonomerTotal(0), m_FilamentTotal(0),
 											m_FreeMonomerFraction(0.0), m_BoundMonomerFraction(0.0),
-											m_FilamentTotal(0),
 											m_MeanFilamentSize(0.0),
 											m_SDevFilamentSize(0.0),
 											m_MeanFilamentLength(0.0),
@@ -253,7 +251,7 @@ bool prFormin::InternalValidateData(const ISimState* const pISimState)
 
 	SetState(new xxProcessState(xxBase::GetPSPrefix() + GetProcessType() + ToString(GetId()) + "." + pISimState->GetRunId(), GetStartTime(), GetEndTime(), pISimState->GetRunId(), GetProcessType()));
 
-	zOutStream& os = m_pState->putASCIIStartTags();
+//	zOutStream& os = m_pState->putASCIIStartTags();
 //	os << "    MonomerTotal		" << m_MonomerTotal	 << zEndl;
 
 #endif
@@ -312,12 +310,12 @@ void prFormin::SetCondenseDelay(const xxCommand* const pCommand)
 
 		std::cout << "setting condense delay to " << delay << zEndl;
 
-		CLogpcBLMVesicleFusionSetCondenseDelay* pMsg = new CLogpcBLMVesicleFusionSetCondenseDelay(pCmd->GetExecutionTime(), pid, delay);
+		new CLogpcBLMVesicleFusionSetCondenseDelay(pCmd->GetExecutionTime(), pid, delay);
 
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 

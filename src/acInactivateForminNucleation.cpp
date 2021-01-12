@@ -134,7 +134,7 @@ bool acInactivateForminNucleation::Execute(long simTime, ISimCmd* const pISimCmd
 			{
 				pForminNetwork->InactivateForminNucleation();
 							
-				CLogacInactivateForminNucleation* pMsg = new CLogacInactivateForminNucleation(GetExecutionTime(), m_ACNType);
+				 new CLogacInactivateForminNucleation(GetExecutionTime(), m_ACNType);
 			}
 			else
 			{
@@ -143,7 +143,7 @@ bool acInactivateForminNucleation::Execute(long simTime, ISimCmd* const pISimCmd
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

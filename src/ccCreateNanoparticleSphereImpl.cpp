@@ -86,7 +86,7 @@ void ccCreateNanoparticleSphereImpl::CreateNanoparticleSphere(const xxCommand* c
 	const double fraction			= pCmd->GetBondFraction();
 	const double springConstant		= pCmd->GetSpringConstant();
 	const double unStretchedLength  = pCmd->GetUnstretchedLength();
-	const double numberType         = pCmd->GetNumberTypes();
+//	const double numberType         = pCmd->GetNumberTypes();
 	const zLongVector vBeadTypes    = pCmd->GetBeadTypes();
 	const zDoubleVector vConsInt    = pCmd->GetConsInt();
             
@@ -243,7 +243,7 @@ void ccCreateNanoparticleSphereImpl::CreateNanoparticleSphere(const xxCommand* c
         
         if(procId == 0)
         {
-            CLogctChangeNamedBeadType* pMsg = new CLogctChangeNamedBeadType(pSimBox->GetCurrentTime(), "Nanoparticle", oldName, newName, oldType, newType);
+             new CLogctChangeNamedBeadType(pSimBox->GetCurrentTime(), "Nanoparticle", oldName, newName, oldType, newType);
         }
     }
     
@@ -300,8 +300,7 @@ void ccCreateNanoparticleSphereImpl::CreateNanoparticleSphere(const xxCommand* c
 	if(polymerTotal > 1 && fraction > 0.0)
 	{
 		const long polymerSize = vPolymers.at(0)->GetSize();
-		const long maxBonds = polymerTotal*(polymerTotal - 1)/2;
-        
+       
 		// Calculate the maximum number of pairwise bonds possible, remove all
 		// those that violate the maximum separation or the max number of bonds
 		// per polymer, and reduce the remainder
@@ -319,10 +318,10 @@ void ccCreateNanoparticleSphereImpl::CreateNanoparticleSphere(const xxCommand* c
 		// polymer's id.
         
 		LongPolymerMap  mPolymers;
-		LongLongMap		mNeighbours;	// (polymer id, neighbours)
+		LongLongMap	mNeighbours;	// (polymer id, neighbours)
         
-		zLongVector		vFirstPolymerInPair;	
-		zLongVector		vSecondPolymerInPair;	
+		zLongVector	vFirstPolymerInPair;	
+		zLongVector	vSecondPolymerInPair;	
 		zDoubleVector   vHeadSeparation;
 		zDoubleVector   vTailSeparation;
         
@@ -480,7 +479,7 @@ void ccCreateNanoparticleSphereImpl::CreateNanoparticleSphere(const xxCommand* c
         
 		double actualSep = 0.0;
         
-		for(long pairIndex=0; pairIndex<vFirstPolymerInPair.size(); pairIndex++)
+		for(long unsigned int pairIndex=0; pairIndex<vFirstPolymerInPair.size(); pairIndex++)
 		{
 			const long firstId  = vFirstPolymerInPair.at(pairIndex);
 			const long secondId = vSecondPolymerInPair.at(pairIndex);

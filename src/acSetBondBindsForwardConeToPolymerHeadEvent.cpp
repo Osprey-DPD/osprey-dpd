@@ -199,19 +199,19 @@ bool acSetBondBindsForwardConeToPolymerHeadEvent::Execute(long simTime, ISimCmd*
 				pEvent->SetSpringConstant(GetSpringConstant());
 				pEvent->SetLength(GetLength());
 
-				CLogacSetBondBindsForwardConeToPolymerHeadEvent* pMsg = new CLogacSetBondBindsForwardConeToPolymerHeadEvent(GetExecutionTime(), m_ACNType, 
+				 new CLogacSetBondBindsForwardConeToPolymerHeadEvent(GetExecutionTime(), m_ACNType, 
 																				  m_Duration, m_Range, m_ConeAngle, m_SpringConstant, m_Length);
 			}
 			else
 			{
-				CLogacInvalidEventCommandTarget* pMsg = new CLogacInvalidEventCommandTarget(GetExecutionTime(), m_ACNType, 
+				 new CLogacInvalidEventCommandTarget(GetExecutionTime(), m_ACNType, 
 					                                              pMACN->GetBondBindsToPolymerHeadEventType(),
 					                                              aevBondBindsForwardConeToPolymerHead::GetType());
 			}
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

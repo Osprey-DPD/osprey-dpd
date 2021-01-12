@@ -73,21 +73,21 @@ void cgtExecuteCommandGroupSequenceImpl::ExecuteCommandGroupSequence(const xxCom
         {
             if(pSimBox->AddActiveCommandGroup(groupName))
             {
-		        CLogcgtExecuteCommandGroupSequence* pMsg = new CLogcgtExecuteCommandGroupSequence(pSimBox->GetCurrentTime(), groupName, total, period);
+		        new CLogcgtExecuteCommandGroupSequence(pSimBox->GetCurrentTime(), groupName, total, period);
             }
             else
             {
-		        CLogcgtInactiveCommandGroup* pMsg = new CLogcgtInactiveCommandGroup(pSimBox->GetCurrentTime(), groupName);
+		        new CLogcgtInactiveCommandGroup(pSimBox->GetCurrentTime(), groupName);
             }
         }
         else
         {
-		    CLogcgtExecuteCommandGroupFailed* pMsg = new CLogcgtExecuteCommandGroupFailed(pSimBox->GetCurrentTime(), groupName);
+		    new CLogcgtExecuteCommandGroupFailed(pSimBox->GetCurrentTime(), groupName);
         }
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

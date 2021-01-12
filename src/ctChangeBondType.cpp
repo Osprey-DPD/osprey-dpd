@@ -183,7 +183,7 @@ bool ctChangeBondType::IsDataValid(const CInputData& riData) const
 
 bool ctChangeBondType::Pack(const tguArgumentSequence& vArguments)
 {
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         ctApplyCommand::Pack(vArguments);
 

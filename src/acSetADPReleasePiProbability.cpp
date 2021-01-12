@@ -166,11 +166,11 @@ bool acSetADPReleasePiProbability::Execute(long simTime, ISimCmd* const pISimCmd
 		{
 			pMActin->SetADPReleasePiProbability(m_Rate);
 
-			CLogacSetADPReleasePiProbability* pMsg = new CLogacSetADPReleasePiProbability(GetExecutionTime(), m_ACNType, m_Rate);
+			 new CLogacSetADPReleasePiProbability(GetExecutionTime(), m_ACNType, m_Rate);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

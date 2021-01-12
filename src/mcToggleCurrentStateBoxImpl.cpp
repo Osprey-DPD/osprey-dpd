@@ -44,7 +44,7 @@ mcToggleCurrentStateBoxImpl::~mcToggleCurrentStateBoxImpl()
 
 void mcToggleCurrentStateBoxImpl::ToggleCurrentStateBox(const xxCommand* const pCommand)
 {
-	const mcToggleCurrentStateBox* const pCmd = dynamic_cast<const mcToggleCurrentStateBox*>(pCommand);
+//	const mcToggleCurrentStateBox* const pCmd = dynamic_cast<const mcToggleCurrentStateBox*>(pCommand);
 
 	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 
@@ -52,5 +52,5 @@ void mcToggleCurrentStateBoxImpl::ToggleCurrentStateBox(const xxCommand* const p
 
 	// This command cannot fail
 
-	CLogCurrentStateBox* pMsg = new CLogCurrentStateBox(pMon->GetCurrentTime(), pMon->m_bDisplayBox);
+	new CLogCurrentStateBox(pMon->GetCurrentTime(), pMon->m_bDisplayBox);
 }

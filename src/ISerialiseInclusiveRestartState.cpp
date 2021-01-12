@@ -42,7 +42,7 @@ ISerialiseInclusiveRestartState::~ISerialiseInclusiveRestartState()
 void ISerialiseInclusiveRestartState::SetRestartStateInvalid(const zString msg)
 {
     m_bValidRestartData = false;
-    CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, msg);
+    new CLogRestartStateBuilderError(0, msg);
 }
 
 // Function to log a warning message if the restart state is inconsistent but not
@@ -52,5 +52,6 @@ void ISerialiseInclusiveRestartState::SetRestartStateInvalid(const zString msg)
 void ISerialiseInclusiveRestartState::IssueRestartStateWarningMessage(const zString msg)
 {
     m_bNoRestartWarnings = false;
-    CLogRestartStateBuilderWarning* pMsg = new CLogRestartStateBuilderWarning(0, msg);
+    new CLogRestartStateBuilderWarning(0, msg);
 }
+

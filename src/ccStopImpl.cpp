@@ -52,7 +52,7 @@ ccStopImpl::~ccStopImpl()
 
 void ccStopImpl::Stop(const xxCommand* const pCommand)
 {
-	const ccStop* const pCmd = dynamic_cast<const ccStop*>(pCommand);
+//	const ccStop* const pCmd = dynamic_cast<const ccStop*>(pCommand);
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
@@ -63,5 +63,5 @@ void ccStopImpl::Stop(const xxCommand* const pCommand)
 
 	// This command cannot fail
 	
-	CLogStopSimulation* pMsg = new CLogStopSimulation(pSimBox->GetCurrentTime(), pSimBox->m_TotalTime);
+	 new CLogStopSimulation(pSimBox->GetCurrentTime(), pSimBox->m_TotalTime);
 }

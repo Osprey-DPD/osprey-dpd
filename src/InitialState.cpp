@@ -1574,7 +1574,7 @@ void CInitialState::AddPolymerType(CPolymer * const pPolymer)
 
 long CInitialState::GetBeadTotalForType(long type) const
 {
-	if(type >= 0 && type < m_vBeadTypeTotal.size())
+	if(type >= 0 && type < static_cast<long>(m_vBeadTypeTotal.size()))
 	{
 		return m_vBeadTypeTotal.at(type);
 	}
@@ -1584,7 +1584,7 @@ long CInitialState::GetBeadTotalForType(long type) const
 
 long CInitialState::GetBondTotalForType(long type) const
 {
-	if(type >= 0 && type < m_vBondTypeTotal.size())
+	if(type >= 0 && type < static_cast<long>(m_vBondTypeTotal.size()))
 	{
 		return m_vBondTypeTotal.at(type);
 	}
@@ -1594,7 +1594,7 @@ long CInitialState::GetBondTotalForType(long type) const
 
 long CInitialState::GetBondPairTotalForType(long type) const
 {
-	if(type >= 0 && type < m_vBondPairTypeTotal.size())
+	if(type >= 0 && type < static_cast<long>(m_vBondPairTypeTotal.size()))
 	{
 		return m_vBondPairTypeTotal.at(type);
 	}
@@ -1604,7 +1604,7 @@ long CInitialState::GetBondPairTotalForType(long type) const
 
 long CInitialState::GetPolymerTotalForType(long type) const
 {
-	if(type >= 0 && type < m_vPolymerTypeTotal.size())
+	if(type >= 0 && type < static_cast<long>(m_vPolymerTypeTotal.size()))
 	{
 		return m_vPolymerTypeTotal.at(type);	
 	}
@@ -1617,7 +1617,7 @@ long CInitialState::GetPolymerTotalForType(long type) const
 
 long CInitialState::GetPolymerSizeForType(long type) const
 {
-	if(type >= 0 && type < m_mPolymerSizes.size())
+	if(type >= 0 && type < static_cast<long>(m_mPolymerSizes.size()))
 	{
 		cLongLongIterator iterPoly = m_mPolymerSizes.find(type);
 
@@ -1633,7 +1633,7 @@ long CInitialState::GetPolymerSizeForType(long type) const
 
 double CInitialState::GetPolymerFractionForType(long type) const
 {
-	if(type >= 0 && type < m_mPolymerFractions.size())
+	if(type >= 0 && type < static_cast<long>(m_mPolymerFractions.size()))
 	{
 		cLongDoubleIterator iterPoly = m_mPolymerFractions.find(type);
 		return (*iterPoly).second;

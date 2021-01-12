@@ -52,8 +52,8 @@ void ctSetTargetPolymerTypeDisplayIdImpl::SetTargetPolymerTypeDisplayId(const xx
 {
 	const ctSetTargetPolymerTypeDisplayId* const pCmd = dynamic_cast<const ctSetTargetPolymerTypeDisplayId*>(pCommand);
 
-	const zString	targetLabel	= pCmd->GetTargetLabel();
-    const long      polymerType = pCmd->GetPolymerType();
+	const zString	targetLabel  = pCmd->GetTargetLabel();
+        const long      polymerType = pCmd->GetPolymerType();
 	const long      displayId   = pCmd->GetDisplayId();
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
@@ -96,15 +96,15 @@ void ctSetTargetPolymerTypeDisplayIdImpl::SetTargetPolymerTypeDisplayId(const xx
 				}
 			}
 
-			CLogctTargetPolymerTypeDisplayId* pMsg = new CLogctTargetPolymerTypeDisplayId(pSimBox->GetCurrentTime(), targetLabel, polymerType, displayId);
+			new CLogctTargetPolymerTypeDisplayId(pSimBox->GetCurrentTime(), targetLabel, polymerType, displayId);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

@@ -235,17 +235,17 @@ void ctSelectBeadsInSphericalTargetRegionImpl::SelectBeadsInSphericalTargetRegio
 
 		if(pSimBox->CreateCommandTarget(beadLabel, beadType, vNewTargetBeads))
 		{
-            CLogctSelectBeadsInSphericalTargetRegion* pMsg = new CLogctSelectBeadsInSphericalTargetRegion(pSimBox->GetCurrentTime(), sourceLabel, beadLabel, beadName,
-													beadType, beadTotal, radius1, radius2, theta1, theta2, phi1, phi2);
+                    new CLogctSelectBeadsInSphericalTargetRegion(pSimBox->GetCurrentTime(), sourceLabel, beadLabel, beadName,
+		beadType, beadTotal, radius1, radius2, theta1, theta2, phi1, phi2);
         }
 		else
 		{
-			CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+			 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 		}
 
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

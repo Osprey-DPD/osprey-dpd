@@ -252,10 +252,7 @@ void prBeadDensityFluctuations::UpdateState(CSimState& rSimState, const ISimBox*
        // the bead grid analysis has not been enabled.
 
        bool   bNotFound   = true;
-       long   time        = 0;
-       double density     = 0.0;
-       double sum         = 0.0;
-	   CDensityState* pDS = 0;
+       CDensityState* pDS = 0;
 
        const DensityStateSequence& rDensityStates = pISimBox->GetMonitor()->GetDensityStates();
 
@@ -263,7 +260,7 @@ void prBeadDensityFluctuations::UpdateState(CSimState& rSimState, const ISimBox*
 
        while(bNotFound && iterDS!=rDensityStates.rend())
        {
-		    pDS = *iterDS;
+	    pDS = *iterDS;
 
             if(pDS->GetFieldId() == m_BeadType)
             {
@@ -277,21 +274,18 @@ void prBeadDensityFluctuations::UpdateState(CSimState& rSimState, const ISimBox*
 
        if(!bNotFound && pDS)
        {
-           sum     = pDS->GetSum(m_XCellNo, m_YCellNo, m_ZCellNo);
-
-           time    = pDS->GetCurrentTime();
-           density = pDS->GetDensity(m_XCellNo, m_YCellNo, m_ZCellNo);
-//           std::cout << "sampling density state for bead type " << pDS->GetFieldName() << " " << pDS->GetFieldId() << " at time = " << time << "  " << density << "  " << sum << zEndl;
- 
+           const double sum     = pDS->GetSum(m_XCellNo, m_YCellNo, m_ZCellNo);
            m_RunningMeanInCell += sum;
            m_RunningSDevInCell += sum*sum;
+           
+           //           std::cout << "sampling density state for bead type " << pDS->GetFieldName() << " " << pDS->GetFieldId() << " at time = " << pDS->GetCurrentTime() << "  " << pDS->GetDensity(m_XCellNo, m_YCellNo, m_ZCellNo) << "  " << sum << zEndl;
+
 
            if(m_bConjugate)
            {
                m_RunningMeanOutsideCell += (m_BeadTotal - sum);
                m_RunningSDevOutsideCell += (m_BeadTotal - sum)*(m_BeadTotal - sum);
            }
-
 
            // When m_TotalDensityPeriods samples have been taken, normalise
            // the observables and write them to the process state file.

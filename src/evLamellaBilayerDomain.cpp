@@ -337,7 +337,7 @@ bool evLamellaBilayerDomain::Execute(long simTime, ISimEvent* const pISimEvent)
 //		{
 //			pISimEvent->SaveCurrentState();
 
-//			CLogLamellaPore* pMsg = new CLogLamellaPore(simTime, m_AggregateName, m_AggregateId);
+//			 new CLogLamellaPore(simTime, m_AggregateName, m_AggregateId);
 
 //			InActivateEvent();		
 //		}

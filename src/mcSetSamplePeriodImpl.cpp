@@ -54,14 +54,14 @@ void mcSetSamplePeriodImpl::SetSamplePeriod(const xxCommand* const pCommand)
     {
         if(xxParallelBase::GlobalGetRank() == 0 && pCmd->IsExecutionLogged())
         {
-			CLogSetSamplePeriod* pMsg = new CLogSetSamplePeriod(pMon->GetCurrentTime(), newPeriod);
+		new CLogSetSamplePeriod(pMon->GetCurrentTime(), newPeriod);
         }
     }
     else
     {
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
         }
         else
         {
@@ -74,12 +74,12 @@ void mcSetSamplePeriodImpl::SetSamplePeriod(const xxCommand* const pCommand)
     {
 	    if(pCmd->IsExecutionLogged())
 	    {
-			CLogSetSamplePeriod* pMsg = new CLogSetSamplePeriod(pMon->GetCurrentTime(), newPeriod);
+		new CLogSetSamplePeriod(pMon->GetCurrentTime(), newPeriod);
 	    }	
     }
     else
     {
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+	        new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
     }
 #endif
 }

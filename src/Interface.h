@@ -136,7 +136,7 @@ private:
 	long m_StressGridTotal;
 	double m_SurfaceTension;
 
-	zLongVector		  m_vBeadStressIndex;		// Bead-Bead indexes for stress tensor
+	zLongVector       m_vBeadStressIndex;		// Bead-Bead indexes for stress tensor
 
 
 };

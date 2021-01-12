@@ -235,7 +235,7 @@ zInStream& CCommandTarget::Read(zInStream& is)
     is >> m_CurrentType >> m_OriginalType;
     if(!is.good() || m_CurrentType < 0 || m_OriginalType < 0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing bead command target: bead types invalid");
+        new CLogRestartStateBuilderError(0, "Error importing bead command target: bead types invalid");
         return is;
     }
 
@@ -244,7 +244,7 @@ zInStream& CCommandTarget::Read(zInStream& is)
     is >> mapSize;
     if(!is.good() || mapSize < 0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing bead command target: bead type map size invalid");
+        new CLogRestartStateBuilderError(0, "Error importing bead command target: bead type map size invalid");
         return is;
     }
 
@@ -253,7 +253,7 @@ zInStream& CCommandTarget::Read(zInStream& is)
         is >> newType >> oldType;
         if(!is.good() || mapSize < 0)
         {
-            CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing bead command target: unable to insert bead type pair into map");
+            new CLogRestartStateBuilderError(0, "Error importing bead command target: unable to insert bead type pair into map");
             return is;
         }
         AddBeadTypePair(newType, oldType);
@@ -264,7 +264,7 @@ zInStream& CCommandTarget::Read(zInStream& is)
     is >> targetSize;
     if(!is.good() || targetSize < 0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing bead command target: invalid bead total");
+        new CLogRestartStateBuilderError(0, "Error importing bead command target: invalid bead total");
         return is;
     }
 
@@ -273,7 +273,7 @@ zInStream& CCommandTarget::Read(zInStream& is)
         is >> proxyId;
         if(!is.good() || proxyId < 0)
         {
-            CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing bead command target: invalid proxy id");
+            new CLogRestartStateBuilderError(0, "Error importing bead command target: invalid proxy id");
             return is;
         }
 
@@ -332,7 +332,7 @@ bool CCommandTarget::ReplaceProxyIds(CInitialState* const pIS)
         }
         else
         {
-            CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error reading restart state: unable to replace bead proxy (invalid id?)");
+            new CLogRestartStateBuilderError(0, "Error reading restart state: unable to replace bead proxy (invalid id?)");
             return false;
         }
     }

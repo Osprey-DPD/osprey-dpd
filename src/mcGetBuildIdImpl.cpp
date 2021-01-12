@@ -41,9 +41,9 @@ mcGetBuildIdImpl::~mcGetBuildIdImpl()
 
 void mcGetBuildIdImpl::GetBuildId(const xxCommand* const pCommand)
 {
-	const mcGetBuildId* const pCmd = dynamic_cast<const mcGetBuildId*>(pCommand);
+//	const mcGetBuildId* const pCmd = dynamic_cast<const mcGetBuildId*>(pCommand);
 
 	CMonitor* pMon = dynamic_cast<CMonitor*>(this);
 
-    CLogTextMessage* pMsg = new CLogTextMessage(pMon->GetCurrentTime(), "90975603-10AF-4ae1-9444-457140EDA4FE");
+     new CLogTextMessage(pMon->GetCurrentTime(), "90975603-10AF-4ae1-9444-457140EDA4FE");
 }

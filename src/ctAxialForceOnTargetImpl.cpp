@@ -80,13 +80,8 @@ void ctAxialForceOnTargetImpl::AxialForceOnTarget(const xxCommand* const pComman
 	// is not applicable to composite targets because they may contain
 	// a multitude of bead types.
 
-	bool bSuccess = true;
-
 	if(pCmdTarget)
 	{
-		const long beadTotal = pCmdTarget->GetBeadTotal();
-
-		const long beadType            = pCmdTarget->GetCurrentBeadType();
 		const long originalBeadType    = pCmdTarget->GetOriginalBeadType();
 		const zString beadName         = pSimBox->GetBeadNameFromType(originalBeadType);
 
@@ -107,18 +102,16 @@ void ctAxialForceOnTargetImpl::AxialForceOnTarget(const xxCommand* const pComman
 		// Wrap the active target in a new force decorator instance
 		// and add it to the active command targets container.
 
-		taAxialForce* const pDec = new taAxialForce(decLabel, pActiveTarget, 
-										xn, yn, zn, fxc, fyc, fzc, mag);
+		taAxialForce* const pDec = new taAxialForce(decLabel, pActiveTarget, xn, yn, zn, fxc, fyc, fzc, mag);
 
 		pSimBox->m_ActiveCommandTargets.push_back(pDec);
 
 		// Log sucessful execution of the command
 
-		CLogctAxialForceOnTarget* pMsg = new CLogctAxialForceOnTarget(pSimBox->GetCurrentTime(), targetLabel, decLabel, 
-												xn, yn, zn, xc, yc, zc, mag);
+		new CLogctAxialForceOnTarget(pSimBox->GetCurrentTime(), targetLabel, decLabel, xn, yn, zn, xc, yc, zc, mag);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

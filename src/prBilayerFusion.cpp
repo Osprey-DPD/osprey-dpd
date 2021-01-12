@@ -342,7 +342,7 @@ void prBilayerFusion::UpdateState(CSimState& rSimState, const ISimBox* const pIS
 
 		pISimBox->SaveCurrentState();
 
-		CLogVesicleApproach* pMsg = new CLogVesicleApproach(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
+		 new CLogVesicleApproach(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
 															m_AggregateName2, m_AggregateId2, vcmDistance);
 
 		// ****************************************

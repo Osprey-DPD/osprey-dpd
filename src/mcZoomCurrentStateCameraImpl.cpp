@@ -192,13 +192,11 @@ void mcZoomCurrentStateCameraImpl::ZoomCurrentStateCamera(const xxCommand* const
 
 		// ****************************************
 
-		CLogZoomCurrentStateCamera* pMsg = new CLogZoomCurrentStateCamera(pMon->GetCurrentTime(),
-															duration, frameRate, stepsPerFrame,
-															scaleFactor, m_OriginalCamera, m_OriginalTarget);
+		new CLogZoomCurrentStateCamera(pMon->GetCurrentTime(), duration, frameRate, stepsPerFrame, scaleFactor, m_OriginalCamera, m_OriginalTarget);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 #endif
 }

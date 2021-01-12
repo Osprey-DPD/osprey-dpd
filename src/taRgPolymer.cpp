@@ -206,7 +206,7 @@ void taRgPolymer::Execute(long simTime)
                 }
                 else
                 {
-                    CLogTextWarningMessage* pMsg = new CLogTextWarningMessage(simTime, "Error serialising data from decorator " + decLabel + " around target " + targetLabel);
+                     new CLogTextWarningMessage(simTime, "Error serialising data from decorator " + decLabel + " around target " + targetLabel);
                 }
             }
             // ********************
@@ -227,7 +227,7 @@ void taRgPolymer::Execute(long simTime)
 	else if(!m_bWrapFailure)
 	{
 		m_bWrapFailure = true;
-		CLogctNonexistentDecorator* pMsg = new CLogctNonexistentDecorator(simTime, decLabel, "");
+		 new CLogctNonexistentDecorator(simTime, decLabel, "");
 	}
 }
 

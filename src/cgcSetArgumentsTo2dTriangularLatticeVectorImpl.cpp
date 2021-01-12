@@ -44,13 +44,13 @@ void cgcSetArgumentsTo2dTriangularLatticeVectorImpl::SetArgumentsTo2dTriangularL
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-	const cgcSetArgumentsTo2dTriangularLatticeVector* const pCmd = dynamic_cast<const cgcSetArgumentsTo2dTriangularLatticeVector*>(pCommand);
+    const cgcSetArgumentsTo2dTriangularLatticeVector* const pCmd = dynamic_cast<const cgcSetArgumentsTo2dTriangularLatticeVector*>(pCommand);
 
-	const zString groupName	  = pCmd->GetCommandGroupName();
-	const long    xCmdIndex   = pCmd->GetXCommandIndex();	    
-	const long    yCmdIndex   = pCmd->GetXCommandIndex();	    
-	const zString xArgName	  = pCmd->GetXArgName();	    
-	const zString yArgName	  = pCmd->GetYArgName();	 
+    const zString groupName   = pCmd->GetCommandGroupName();
+    const long    xCmdIndex   = pCmd->GetXCommandIndex();	    
+    const long    yCmdIndex   = pCmd->GetXCommandIndex();	    
+    const zString xArgName    = pCmd->GetXArgName();	    
+    const zString yArgName    = pCmd->GetYArgName();	 
     const long    xmax        = pCmd->GetXMax();      
     const long    ymax        = pCmd->GetYMax();      
     const double  ox          = pCmd->GetXOrigin();
@@ -73,12 +73,12 @@ void cgcSetArgumentsTo2dTriangularLatticeVectorImpl::SetArgumentsTo2dTriangularL
         const zString xCmdName = pGroup->GetCommandName(xCmdIndex);
         const zString yCmdName = pGroup->GetCommandName(yCmdIndex);
 
-        CLogcgcSetArgumentsTo2dTriangularLatticeVector* pMsg = new CLogcgcSetArgumentsTo2dTriangularLatticeVector(pSimBox->GetCurrentTime(), groupName, xCmdName, yCmdName, 
+        new CLogcgcSetArgumentsTo2dTriangularLatticeVector(pSimBox->GetCurrentTime(), groupName, xCmdName, yCmdName, 
                                                                     xArgName, yArgName, xCmdIndex, yCmdIndex, xmax, ymax, ox, oy, lx, ly);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

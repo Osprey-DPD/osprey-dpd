@@ -78,11 +78,11 @@ void ctChangeBondPairTypeImpl::ChangeBondPairType(const xxCommand* const pComman
 		const long oldType    = -1;
 		const long newType    = -1;
 
-		CLogctChangeBondPairType* pMsg = new CLogctChangeBondPairType(pSimBox->GetCurrentTime(), label, oldName, oldType, newType);
+		new CLogctChangeBondPairType(pSimBox->GetCurrentTime(), label, oldName, oldType, newType);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

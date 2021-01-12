@@ -108,7 +108,6 @@ void ctPolymerisePolymersInTargetImpl::PolymerisePolymersInTarget(const xxComman
 		PolymerVector vPolymers = pCmdTarget->GetPolymers();
 
 		const long polymerSize = vPolymers.at(0)->GetSize();
-		const long maxBonds = polymerTotal*(polymerTotal - 1)/2;
 
 		// Calculate the maximum number of pairwise bonds possible, remove all
 		// those that violate the maximum separation or the max number of bonds
@@ -127,10 +126,10 @@ void ctPolymerisePolymersInTargetImpl::PolymerisePolymersInTarget(const xxComman
 		// polymer's id.
 
 		LongPolymerMap  mPolymers;
-		LongLongMap		mNeighbours;	// (polymer id, neighbours)
+		LongLongMap	mNeighbours;	// (polymer id, neighbours)
 
-		zLongVector		vFirstPolymerInPair;	
-		zLongVector		vSecondPolymerInPair;	
+		zLongVector	vFirstPolymerInPair;	
+		zLongVector	vSecondPolymerInPair;	
 		zDoubleVector   vHeadSeparation;
 		zDoubleVector   vTailSeparation;
 		
@@ -218,25 +217,25 @@ void ctPolymerisePolymersInTargetImpl::PolymerisePolymersInTarget(const xxComman
 		// Write some log messages for debug purposes
 
 		zString logText = targetLabel + " target contains " + pSimBox->ToString(polymerTotal) + " polymers";
-		CLogTextMessage* pText1  = new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
+		new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
 			
 		logText = "polymers map contains  " + pSimBox->ToString(static_cast<long>(mPolymers.size())) + " elements";
-		CLogTextMessage* pText2  = new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
+		new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
 
 		logText = "neighbour map contains "         + pSimBox->ToString(static_cast<long>(mNeighbours.size())) + " elements";
-		CLogTextMessage* pText3  = new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
+		new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
 
 		logText = "first polymer vector contains "  + pSimBox->ToString(static_cast<long>(vFirstPolymerInPair.size())) + " pairs";
-		CLogTextMessage* pText4  = new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
+		new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
 
 		logText = "second polymer vector contains " + pSimBox->ToString(static_cast<long>(vSecondPolymerInPair.size())) + " pairs";
-		CLogTextMessage* pText5  = new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
+		new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
 
 		logText = "head sepn vector contains "      + pSimBox->ToString(static_cast<long>(vHeadSeparation.size())) + " pairs";
-		CLogTextMessage* pText6  = new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
+		new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
 
 		logText = "tail sepn vector contains "      + pSimBox->ToString(static_cast<long>(vTailSeparation.size())) + " pairs";
-		CLogTextMessage* pText7  = new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
+		new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
 
 		// Create a template bond for use in creating all polymerised bonds.
 		// We get the current number of bond types from the CInitialState
@@ -282,7 +281,7 @@ void ctPolymerisePolymersInTargetImpl::PolymerisePolymersInTarget(const xxComman
 
 		double actualSep = 0.0;
 
-		for(long pairIndex=0; pairIndex<vFirstPolymerInPair.size(); pairIndex++)
+		for(long unsigned int pairIndex=0; pairIndex<vFirstPolymerInPair.size(); pairIndex++)
 		{
 			const long firstId  = vFirstPolymerInPair.at(pairIndex);
 			const long secondId = vSecondPolymerInPair.at(pairIndex);
@@ -380,14 +379,14 @@ void ctPolymerisePolymersInTargetImpl::PolymerisePolymersInTarget(const xxComman
 		pSimBox->UpdateBondTypes();
 
 		logText = pSimBox->ToString(static_cast<long>(vPolyBonds.size())) + " polymerised bonds created";
-		CLogTextMessage* pText8  = new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
+		new CLogTextMessage(pSimBox->GetCurrentTime(), logText);
 
 
-		CLogctPolymerisePolymersInTarget* pMsg = new CLogctPolymerisePolymersInTarget(pSimBox->GetCurrentTime(), targetLabel, polyBondName, polyBondType,
-													 polymerTotal, vPolyBonds.size(), maxBondsPerPolymer, range, fraction, springConstant, unStretchedLength);
+		new CLogctPolymerisePolymersInTarget(pSimBox->GetCurrentTime(), targetLabel, polyBondName, 
+		polyBondType, polymerTotal, vPolyBonds.size(), maxBondsPerPolymer, range, fraction, springConstant, unStretchedLength);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

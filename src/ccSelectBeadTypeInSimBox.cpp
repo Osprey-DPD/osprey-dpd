@@ -179,7 +179,7 @@ bool ccSelectBeadTypeInSimBox::Pack(const tguArgumentSequence& vArguments)
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(ccSelectBeadTypeInRegion::Pack(vArguments) && vArguments.size() == GetArgumentTotal())
+    if(ccSelectBeadTypeInRegion::Pack(vArguments) && static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         return true;
     }

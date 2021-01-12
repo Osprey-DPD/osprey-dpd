@@ -134,7 +134,7 @@ bool acSeverForminFilaments::Execute(long simTime, ISimCmd* const pISimCmd) cons
 			{
 				pForminNetwork->SeverForminFilaments();
 							
-				CLogacSeverForminFilaments* pMsg = new CLogacSeverForminFilaments(GetExecutionTime(), m_ACNType);
+				 new CLogacSeverForminFilaments(GetExecutionTime(), m_ACNType);
 			}
 			else
 			{
@@ -143,7 +143,7 @@ bool acSeverForminFilaments::Execute(long simTime, ISimCmd* const pISimCmd) cons
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

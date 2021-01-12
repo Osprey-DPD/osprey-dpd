@@ -260,7 +260,7 @@ bool ccAddBeadsInCell::IsDataValid(const CInputData &riData) const
 
 				bool bDistinctNames = true;
 
-				for(long i=0; i<GetNames().size(); i++)
+				for(long unsigned int i=0; i<GetNames().size(); i++)
 				{
 					zString name = GetNames().at(i);
 

@@ -47,18 +47,18 @@ void ccSelectPolymerTypeHeadInSliceImpl::SelectPolymerTypeHeadInSlice(const xxCo
 {
 	const ccSelectPolymerTypeHeadInSlice* const pCmd = dynamic_cast<const ccSelectPolymerTypeHeadInSlice*>(pCommand);
 
-	const zString label			= pCmd->GetTargetLabel();	 // Label of command target
+	const zString label		= pCmd->GetTargetLabel();	 // Label of command target
 	const zString polyName		= pCmd->GetPolymerName();	 // Name of polymer type
 
-	const long xNormal			= pCmd->GetXNormal();
-	const long yNormal			= pCmd->GetYNormal();		//	Slice normal
-	const long zNormal			= pCmd->GetZNormal();
+//	const long xNormal		= pCmd->GetXNormal();
+//	const long yNormal		= pCmd->GetYNormal();		//	Slice normal
+//	const long zNormal		= pCmd->GetZNormal();
 	const double xCentre		= pCmd->GetXCentre();
 	const double yCentre		= pCmd->GetYCentre();		//	Slice centre (fraction)
 	const double zCentre		= pCmd->GetZCentre();
 	const double xHalfWidth 	= pCmd->GetXHalfWidth();
-	const double yHalfWidth		= pCmd->GetYHalfWidth();	// Slice half widths (fraction)	
-	const double zHalfWidth		= pCmd->GetZHalfWidth();
+	const double yHalfWidth	= pCmd->GetYHalfWidth();	// Slice half widths (fraction)	
+	const double zHalfWidth	= pCmd->GetZHalfWidth();
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
@@ -66,7 +66,7 @@ void ccSelectPolymerTypeHeadInSliceImpl::SelectPolymerTypeHeadInSlice(const xxCo
 	// then store all polymers of the specified type.
 
 	const long polyType = pSimBox->GetPolymerTypeFromName(polyName);
-	const long beadType = pSimBox->GetPolymerHeadType(polyType);
+//	const long beadType = pSimBox->GetPolymerHeadType(polyType);
 
 	// Store the minimum and maximum coordinates of the planar region
 
@@ -122,7 +122,7 @@ void ccSelectPolymerTypeHeadInSliceImpl::SelectPolymerTypeHeadInSlice(const xxCo
 	}
 
 	const long polyTotal = vTargetPolymers.size();
-	const long beadTotal = vTargetBeads.size();
+//	const long beadTotal = vTargetBeads.size();
 
 	// Create and store a CCommandTargetPolymer that can receive commands.
 	// We pass in the polymer type in case the vTargetPolymers container 
@@ -130,11 +130,11 @@ void ccSelectPolymerTypeHeadInSliceImpl::SelectPolymerTypeHeadInSlice(const xxCo
 
 	if(pSimBox->CreateCommandTargetPolymer(label, polyType, vTargetPolymers))
 	{
-		CLogSelectPolymerTypeInRegion* pMsg = new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "Slice", polyName, polyType, polyTotal);
+		 new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "Slice", polyName, polyType, polyTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }
 

@@ -339,8 +339,7 @@ bool CInitialStateSlice::ValidateData(const CInputData& riData)
         {
             do 
             {
-                long slab = imm->first;
-                const zString polymerName = imm->second;
+                 const zString polymerName = imm->second;
 
                 if(find(slabPolymerNames.begin(), slabPolymerNames.end(), polymerName) == slabPolymerNames.end())
                 {

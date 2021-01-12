@@ -109,12 +109,11 @@ void ctTranslateTargetToC2PointImpl::TranslateTargetToC2Point(const xxCommand* c
     // to position each bead in each polymer at the same relative location to its head. If we only have a bead target, we can only 
     // translate all beads to the same point.
     
-	bool bSuccess = true;
 	long oldIndex = 0;
 	long newIndex = 0;
-    long orientation = 1;    // Flag showing which direction along the C2 axis a polymer is to be oriented
+        long orientation = 1;    // Flag showing which direction along the C2 axis a polymer is to be oriented
 	long ix, iy, iz;
-    bool bFirstBead = true;  // Flag used to indicate whether we are placing the first bead or subsequent beads
+        bool bFirstBead = true;  // Flag used to indicate whether we are placing the first bead or subsequent beads
     
     if(pPolymerTarget)  // We have a polymer target
     {
@@ -199,11 +198,11 @@ void ctTranslateTargetToC2PointImpl::TranslateTargetToC2Point(const xxCommand* c
 			    }
 			}
             
-	        CLogctTranslateTargetToC2Point* pMsg = new CLogctTranslateTargetToC2Point(pSimBox->GetCurrentTime(), targetLabel, xn, yn, zn, xc, yc, zc, separation);
+	            new CLogctTranslateTargetToC2Point(pSimBox->GetCurrentTime(), targetLabel, xn, yn, zn, xc, yc, zc, separation);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
     }
 	else if(pCmdTarget) // we have a bead target
@@ -239,16 +238,16 @@ void ctTranslateTargetToC2PointImpl::TranslateTargetToC2Point(const xxCommand* c
                 }
 			}
 			
-	        CLogctTranslateTargetToC2Point* pMsg = new CLogctTranslateTargetToC2Point(pSimBox->GetCurrentTime(), targetLabel, xn, yn, zn, xc, yc, zc, separation);
+	        new CLogctTranslateTargetToC2Point(pSimBox->GetCurrentTime(), targetLabel, xn, yn, zn, xc, yc, zc, separation);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 

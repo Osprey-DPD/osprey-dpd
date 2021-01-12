@@ -34,8 +34,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 taEventAnalysisDecorator::taEventAnalysisDecorator(const zString label, CCommandTargetNode* const pDec, 
                                                    long samples) : CCommandTargetNode(label, pDec),
-                                                   m_SamplesPerAnalysis(samples), m_Counter(0),
-                                                   m_pIEAD(0)
+                                                   m_pIEAD(0), m_SamplesPerAnalysis(samples), m_Counter(0)
+                                                   
 {
     pDec->SetOuterDecorator(this);
 

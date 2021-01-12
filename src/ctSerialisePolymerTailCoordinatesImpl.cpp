@@ -86,8 +86,6 @@ void ctSerialisePolymerTailCoordinatesImpl::SerialisePolymerTailCoordinates(cons
     // target with it, and also store a pointer to the decorator in the ACN so that it 
     // can forward event broadcast information to the event source.
 
-	bool bSuccess = true;
-
 	if(pCmdTarget && pESD)
 	{
 		// If the target is already active, remove it before adding it back
@@ -120,10 +118,10 @@ void ctSerialisePolymerTailCoordinatesImpl::SerialisePolymerTailCoordinates(cons
 
 		// Log sucessful execution of the command
 
-//		CLogacACNCreateEventAnalysis* pMsg = new CLogacACNCreateEventAnalysis(pSimBox->GetCurrentTime(), sourceLabel, decLabel, binTotal, binWidth, sampleTotal);
+//		new CLogacACNCreateEventAnalysis(pSimBox->GetCurrentTime(), sourceLabel, decLabel, binTotal, binWidth, sampleTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

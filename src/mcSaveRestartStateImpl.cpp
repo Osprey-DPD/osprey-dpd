@@ -42,7 +42,7 @@ mcSaveRestartStateImpl::~mcSaveRestartStateImpl()
 
 void mcSaveRestartStateImpl::SaveRestartStateCmd(const xxCommand* const pCommand)
 {
-	const mcSaveRestartState* const pCmd = dynamic_cast<const mcSaveRestartState*>(pCommand);
+//	const mcSaveRestartState* const pCmd = dynamic_cast<const mcSaveRestartState*>(pCommand);
 
 	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 	
@@ -50,6 +50,6 @@ void mcSaveRestartStateImpl::SaveRestartStateCmd(const xxCommand* const pCommand
 
 	// This command cannot fail
 
-	CLogSaveRestartState* pMsg = new CLogSaveRestartState(pMon->GetCurrentTime());
+	new CLogSaveRestartState(pMon->GetCurrentTime());
 }
 

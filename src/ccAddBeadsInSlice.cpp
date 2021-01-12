@@ -227,9 +227,6 @@ bool ccAddBeadsInSlice::IsDataValid(const CInputData &riData) const
 
 	while((*iCmd)->GetId() < GetId())
 	{
-		long myId1 = (*iCmd)->GetId();
-		long myId2 = GetId();
-
 		// Find the Select command corresponding to the current Add command
 
 		const ccSelectBeadsInSlice* const pTarget = dynamic_cast<const ccSelectBeadsInSlice*>(*iCmd);
@@ -260,7 +257,7 @@ bool ccAddBeadsInSlice::IsDataValid(const CInputData &riData) const
 
 				bool bDistinctNames = true;
 
-				for(long i=0; i<GetNames().size(); i++)
+				for(long unsigned int i=0; i<GetNames().size(); i++)
 				{
 					zString name = GetNames().at(i);
 

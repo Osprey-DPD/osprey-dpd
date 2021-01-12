@@ -59,7 +59,7 @@ void mcSaveCurrentStateImpl::SaveCurrentStateCmd(const xxCommand* const pCommand
 
 	if(xxParallelBase::GlobalGetRank() == 0 && pCmd->IsExecutionLogged())
 	{
-		CLogSaveCurrentState* pMsg = new CLogSaveCurrentState(pMon->GetCurrentTime());
+		 new CLogSaveCurrentState(pMon->GetCurrentTime());
 	}
 	
 #else
@@ -67,7 +67,7 @@ void mcSaveCurrentStateImpl::SaveCurrentStateCmd(const xxCommand* const pCommand
 
 	if(pCmd->IsExecutionLogged())
 	{
-		CLogSaveCurrentState* pMsg = new CLogSaveCurrentState(pMon->GetCurrentTime());
+		 new CLogSaveCurrentState(pMon->GetCurrentTime());
 	}
 #endif
 }

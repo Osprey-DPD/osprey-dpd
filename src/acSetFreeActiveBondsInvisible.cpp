@@ -163,17 +163,17 @@ bool acSetFreeActiveBondsInvisible::Execute(long simTime, ISimCmd* const pISimCm
 
 			pMACN->SetFreeActiveBondsInvisible();
 
-			CLogacSetFreeActiveBondsInvisible* pMsg1 = new CLogacSetFreeActiveBondsInvisible(GetExecutionTime(), m_ACNType);
+			 new CLogacSetFreeActiveBondsInvisible(GetExecutionTime(), m_ACNType);
 
 			if(pMACN->GetFreeBondTotal() == 0)
 			{
-				CLogacEmptyBondACN* pMsg2 = new CLogacEmptyBondACN(GetExecutionTime(), m_ACNType);
+				 new CLogacEmptyBondACN(GetExecutionTime(), m_ACNType);
 			}
 
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg3 = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

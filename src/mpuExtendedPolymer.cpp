@@ -572,15 +572,14 @@ void mpuExtendedPolymer::SetDisplayId(long id)
 
 aaVector mpuExtendedPolymer::GetCM() const
 {
-    const double beadTotal  = static_cast<double>(GetSize());
-
     double xcm = 0.0;
     double ycm = 0.0;
     double zcm = 0.0;
 
-/*
+/*  const double beadTotal  = static_cast<double>(GetSize());
+
     if(beadTotal > 0)
-	{
+    {
 		for(cBeadVectorIterator citerBead = m_vBeads.begin(); citerBead != m_vBeads.end(); citerBead++)
 		{
 			const double x = (*citerBead)->GetXPos();
@@ -595,7 +594,7 @@ aaVector mpuExtendedPolymer::GetCM() const
 		xcm /= beadTotal;
 		ycm /= beadTotal;
 		zcm /= beadTotal;
-	}
+    }
 */
 
     aaVector cm(xcm, ycm, zcm);

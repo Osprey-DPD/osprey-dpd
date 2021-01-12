@@ -70,8 +70,8 @@ namespace
 //////////////////////////////////////////////////////////////////////
 
 cgcSetArgumentToRealSequence::cgcSetArgumentToRealSequence(long executionTime) : xxCommand(executionTime), 
-                                            m_GroupName(""), m_CommandIndex(0),
-                                            m_ArgName(""), m_InitialValue(0.0), m_Increment(0.0)
+                                            m_GroupName(""), m_ArgName(""), 
+                                            m_CommandIndex(0), m_InitialValue(0.0), m_Increment(0.0)
 {
 }
 
@@ -80,16 +80,16 @@ cgcSetArgumentToRealSequence::cgcSetArgumentToRealSequence(long executionTime) :
 cgcSetArgumentToRealSequence::cgcSetArgumentToRealSequence(long executionTime, 
                          const zString groupName, long cmdIndex, const zString argName, 
                          double initialValue, double increment) : xxCommand(executionTime),
-						 m_GroupName(groupName), m_CommandIndex(cmdIndex),
-						 m_ArgName(argName), m_InitialValue(initialValue), m_Increment(increment)
+						 m_GroupName(groupName), m_ArgName(argName), 
+						 m_CommandIndex(cmdIndex), m_InitialValue(initialValue), m_Increment(increment)
 {
 }
 
 // Copy constructor
 cgcSetArgumentToRealSequence::cgcSetArgumentToRealSequence(const cgcSetArgumentToRealSequence& oldCommand) : xxCommand(oldCommand),
 										   m_GroupName(oldCommand.m_GroupName),
-										   m_CommandIndex(oldCommand.m_CommandIndex),
 										   m_ArgName(oldCommand.m_ArgName),
+										   m_CommandIndex(oldCommand.m_CommandIndex),
 										   m_InitialValue(oldCommand.m_InitialValue), 
 										   m_Increment(oldCommand.m_Increment)
 {
@@ -221,7 +221,7 @@ bool cgcSetArgumentToRealSequence::Pack(const tguArgumentSequence& vArguments)
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(0)->GetValue(&m_GroupName);
         vArguments.at(1)->GetValue(&m_CommandIndex);

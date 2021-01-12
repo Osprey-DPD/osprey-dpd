@@ -79,13 +79,13 @@ void cgcSetArgumentsTo3dRectangularLatticeVectorImpl::SetArgumentsTo3dRectangula
         const zString yCmdName = pGroup->GetCommandName(yCmdIndex);
         const zString zCmdName = pGroup->GetCommandName(zCmdIndex);
 
-        CLogcgcSetArgumentsTo3dRectangularLatticeVector* pMsg = new CLogcgcSetArgumentsTo3dRectangularLatticeVector(pSimBox->GetCurrentTime(), groupName, 
+        new CLogcgcSetArgumentsTo3dRectangularLatticeVector(pSimBox->GetCurrentTime(), groupName, 
                                                                     xCmdName, yCmdName, zCmdName, xArgName, yArgName, zArgName, 
                                                                     xCmdIndex, yCmdIndex, zCmdIndex, xmax, ymax, zmax, ox, oy, oz, lx, ly, lz);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

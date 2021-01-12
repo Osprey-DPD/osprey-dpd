@@ -97,12 +97,12 @@ void ctPolymerisePolymerTripleInTargetImpl::PolymerisePolymerTripleInTarget(cons
 		// Check we don't get 1 from the RNG. This should be rare enough that
 		// can apply a deterministic adjustment.
 
-		if(firstIndex == vTargetPolymers.size())
-			firstIndex--;
-		if(secondIndex == vTargetPolymers.size())
-			secondIndex--;
-		if(thirdIndex == vTargetPolymers.size())
-			thirdIndex--;
+		if(firstIndex == static_cast<long>(vTargetPolymers.size())) {
+			firstIndex--; }
+		if(secondIndex == static_cast<long>(vTargetPolymers.size())) {
+			secondIndex--; }
+		if(thirdIndex == static_cast<long>(vTargetPolymers.size())) {
+			thirdIndex--; }
 
 		CPolymer* const firstPoly  = vTargetPolymers.at(firstIndex);
 		CPolymer* const secondPoly = vTargetPolymers.at(secondIndex);
@@ -145,7 +145,7 @@ void ctPolymerisePolymerTripleInTargetImpl::PolymerisePolymerTripleInTarget(cons
 		BondVector vPolyBonds;
 		vPolyBonds.clear();
 
-		for(long bp=0; bp<vHeadPos.size(); bp++)
+		for(long unsigned int bp=0; bp<vHeadPos.size(); bp++)
 		{
 			CBead* pHead1 = firstPoly->GetBeads().at(vHeadPos.at(bp));
 			CBead* pTail1 = secondPoly->GetBeads().at(vTailPos.at(bp));
@@ -202,10 +202,10 @@ void ctPolymerisePolymerTripleInTargetImpl::PolymerisePolymerTripleInTarget(cons
 
 		// Create a message indicating that the bond parameters have changed
 
-		CLogctPolymerisePolymerTripleInTarget* pMsg = new CLogctPolymerisePolymerTripleInTarget(pSimBox->GetCurrentTime(), label, polyName, polyType, vHeadPos.size(), springConstant, unStretchedLength);
+		new CLogctPolymerisePolymerTripleInTarget(pSimBox->GetCurrentTime(), label, polyName, polyType, vHeadPos.size(), springConstant, unStretchedLength);
 	}
 	else	// Log a command failed message
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

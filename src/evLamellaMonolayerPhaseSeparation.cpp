@@ -90,10 +90,10 @@ evLamellaMonolayerPhaseSeparation::evLamellaMonolayerPhaseSeparation(const evLam
 															  m_bOuterMonolayer(oldEvent.m_bOuterMonolayer),
 															  m_MaxMissing(oldEvent.m_MaxMissing),
 															  m_DomainPolymers(oldEvent.m_DomainPolymers),
-															  m_DomainPolymerTypes(oldEvent.m_DomainPolymerTypes),
-															  m_DomainHeadBeadTypes(oldEvent.m_DomainHeadBeadTypes),
 															  m_SeaPolymers(oldEvent.m_SeaPolymers),
+															  m_DomainPolymerTypes(oldEvent.m_DomainPolymerTypes),
 															  m_SeaPolymerTypes(oldEvent.m_SeaPolymerTypes),
+															  m_DomainHeadBeadTypes(oldEvent.m_DomainHeadBeadTypes),
 															  m_SeaHeadBeadTypes(oldEvent.m_SeaHeadBeadTypes)
 {
 }

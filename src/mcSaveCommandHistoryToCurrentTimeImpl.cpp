@@ -106,11 +106,11 @@ void mcSaveCommandHistoryToCurrentTimeImpl::SaveCommandHistoryToCurrentTime(cons
 
 	if(commandFile.Serialize())
 	{
-		CLogSaveCommandHistoryToCurrentTime* pMsg = new CLogSaveCommandHistoryToCurrentTime(pMon->GetCurrentTime(), commandFile.GetFileName());
+		new CLogSaveCommandHistoryToCurrentTime(pMon->GetCurrentTime(), commandFile.GetFileName());
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 
 }

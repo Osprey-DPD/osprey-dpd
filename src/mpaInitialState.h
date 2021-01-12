@@ -114,7 +114,7 @@ private:
     double  m_SimSpaceZLength;
 
     zLongVector    m_vPolymerTypeTotal;  // Total number of each polymer type that must be created in whole simulation Space
-	zDoubleVector  m_vPolymerFractions;  // Fraction of each polymer type's total that is owned by current processor
+    zDoubleVector  m_vPolymerFractions;  // Fraction of each polymer type's total that is owned by current processor
 };
 
 #endif // !defined(AFX_MPAINITIALSTATE_H__F8DB2DCE_F3BF_49E4_8E92_E3DF152A5E17__INCLUDED_)

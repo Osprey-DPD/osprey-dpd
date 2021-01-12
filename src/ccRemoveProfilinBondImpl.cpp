@@ -61,12 +61,12 @@ void ccRemoveProfilinBondImpl::RemoveProfilinBond(const xxCommand* const pComman
 
 	if(true)
 	{
-		CLogActiveBondRemoved* pMsg = new CLogActiveBondRemoved(pSimBox->GetCurrentTime(), "Profilin", headMonomerName, tailMonomerName,
+		 new CLogActiveBondRemoved(pSimBox->GetCurrentTime(), "Profilin", headMonomerName, tailMonomerName,
 																						headMonomerType, tailMonomerType);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 #endif
 }

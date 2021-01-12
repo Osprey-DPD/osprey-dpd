@@ -169,12 +169,12 @@ void ccAddfActinBondImpl::AddfActinBond(const xxCommand* const pCommand)
 
 		pSimBox->SetActiveBondsOn(true);
 
-		CLogActiveBondAdded* pMsg = new CLogActiveBondAdded(pSimBox->GetCurrentTime(), pShadowSimBox->GetfActinNetwork()->GetType(), headMonomerName, tailMonomerName,
+		 new CLogActiveBondAdded(pSimBox->GetCurrentTime(), pShadowSimBox->GetfActinNetwork()->GetType(), headMonomerName, tailMonomerName,
 																						headMonomerType, tailMonomerType);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 
 	}
 #endif

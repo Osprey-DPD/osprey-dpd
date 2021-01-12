@@ -39,8 +39,8 @@ public:
     inline double        GetOuterRadius()           const {return m_OuterRadius;}
     inline double        GetThickness()             const {return m_Thickness;}
     inline double        GetOuterFraction()         const {return m_OuterFractions.at(0);}
-	inline  bool         GetOuterPatches()          const {return m_bPatches[0];}
-	inline  bool         GetInnerPatches()          const {return m_bPatches[1];}
+    inline  bool         GetOuterPatches()          const {return m_bPatches[0];}
+    inline  bool         GetInnerPatches()          const {return m_bPatches[1];}
 
 
 
@@ -50,26 +50,26 @@ protected:
 private:
 	static const zString m_Type;		// Keyword used to identify initial state type
 
-	StringSequence	m_Polymers;			// Polymers composing vesicle
+	StringSequence	m_Polymers;		// Polymers composing vesicle
 	StringSequence	m_InteriorPolymers;	// Polymers in interior of vesicle
-	double			m_XC;				// Vesicle centre as fraction of SimBox thickness
-	double			m_YC;
-	double			m_ZC;
-	double			m_OuterRadius;		// Vesicle outer monolayer head radius in units of bead diameter
-	double			m_Thickness;		// Vesicle bilayer thickness in units of bead diameter
+	double		m_XC;			// Vesicle centre as fraction of SimBox thickness
+	double		m_YC;
+	double		m_ZC;
+	double		m_OuterRadius;		// Vesicle outer monolayer head radius in units of bead diameter
+	double		m_Thickness;		// Vesicle bilayer thickness in units of bead diameter
 	zDoubleVector	m_OuterFractions;	// Fractions of polymers in outer monolayer
-	bool			m_bPatches[2];		// Arrange polymers in patches: 0/1
+	bool		m_bPatches[2];		// Arrange polymers in patches: 0/1
 
 	// Data relating to a polymerised initial state
-	bool					m_bPolymerise;	// Flag showing if initial state is polymerised
+	bool		m_bPolymerise;	// Flag showing if initial state is polymerised
 	PolymerCrossLinkVector	m_CrossLinks;	// Vector of cross-linker pointers holding data
 
 	// Local data
 
-	zLongVector   m_PolymerTypes;			// Types of polymer composing vesicle
+	zLongVector   m_PolymerTypes;		// Types of polymer composing vesicle
 	zLongVector   m_InteriorPolymerTypes;	// Types of polymer inside vesicle
 
-	double	m_InnerRadius;					// Vesicle inner monolayer head radius in units of bead diameter
+	double	m_InnerRadius;			// Vesicle inner monolayer head radius in units of bead diameter
 
 
 };

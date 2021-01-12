@@ -58,7 +58,7 @@ void mcSetCurrentStateDefaultFormatImpl::SetCurrentStateDefaultFormat(const xxCo
 
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogSetCurrentStateDefaultFormat* pMsg = new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
+		    new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
         }
 	}
 	else if(format == "Amira")
@@ -67,7 +67,7 @@ void mcSetCurrentStateDefaultFormatImpl::SetCurrentStateDefaultFormat(const xxCo
 
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogSetCurrentStateDefaultFormat* pMsg = new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
+		    new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
         }
 	}
 	else if(format == "Paraview")
@@ -76,14 +76,14 @@ void mcSetCurrentStateDefaultFormatImpl::SetCurrentStateDefaultFormat(const xxCo
 
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogSetCurrentStateDefaultFormat* pMsg = new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
+		    new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
         }
 	}
 	else
 	{
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		     new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
         }
 	}
 	
@@ -95,35 +95,35 @@ void mcSetCurrentStateDefaultFormatImpl::SetCurrentStateDefaultFormat(const xxCo
 	{
 		pMon->m_DefaultCurrentStateFormat = "Povray";
 
-		CLogSetCurrentStateDefaultFormat* pMsg = new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
+		new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
 	}
 	else if(format == "Amira")
 	{
 		pMon->m_DefaultCurrentStateFormat = "Amira";
 
-		CLogSetCurrentStateDefaultFormat* pMsg = new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
+		new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
 	}
 	else if(format == "Paraview")
 	{
 		pMon->m_DefaultCurrentStateFormat = "Paraview";
 
-		CLogSetCurrentStateDefaultFormat* pMsg = new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
+		new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
 	}
     else if(format == "SolventFree")
     {
         pMon->m_DefaultCurrentStateFormat = "SolventFree";
         
-            CLogSetCurrentStateDefaultFormat* pMsg = new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
+            new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
     }
     else if(format == "SolventFreeAndPovray")
     {
         pMon->m_DefaultCurrentStateFormat = "SolventFreeAndPovray";
             
-            CLogSetCurrentStateDefaultFormat* pMsg = new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
+            new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
     }
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 
 #endif

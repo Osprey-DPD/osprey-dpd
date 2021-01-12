@@ -42,15 +42,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-aeActiveCellNetwork::aeActiveCellNetwork(IActiveSimBox* const pShadow, 
-										 long xn, long yn, long zn,
-										 double xw, double yw, double zw) : m_PolymerFormsTotal(0),
-                                                          m_PolymerDissolvesTotal(0),
-                                                          m_pShadow(pShadow),
-														  m_pIACNAccess(0),
-														  m_pPolymerFormsEvent(0),
-														  m_pPolymerDissolvesEvent(0),
-														  m_pBondBindsToPolymerHeadEvent(0),
+aeActiveCellNetwork::aeActiveCellNetwork(IActiveSimBox* const pShadow, long xn, long yn, long zn,
+					double xw, double yw, double zw) : m_pIACNAccess(0),
+							m_PolymerFormsTotal(0), m_PolymerDissolvesTotal(0), 
+							m_pShadow(pShadow),
+							m_pPolymerFormsEvent(0),
+						        m_pPolymerDissolvesEvent(0),
+							m_pBondBindsToPolymerHeadEvent(0),
 														  m_pBondBindsToPolymerTailEvent(0),
 														  m_pBondUnbindsFromPolymerHeadEvent(0),
 														  m_pBondUnbindsFromPolymerTailEvent(0),
@@ -109,11 +107,11 @@ aeActiveCellNetwork::aeActiveCellNetwork(IActiveSimBox* const pShadow,
 
 	m_Events.clear();
 	m_FreeActiveBonds.clear();
-    m_FreePhantomBonds.clear();
+        m_FreePhantomBonds.clear();
 	m_FreeActivePolymers.clear();
 	m_DensityFields.clear();
-    m_EventSuccessCounters.clear();
-    m_EventFailureCounters.clear();
+        m_EventSuccessCounters.clear();
+        m_EventFailureCounters.clear();
 
     // Make sure the event (name, period) and event source maps are empty
 
@@ -488,8 +486,6 @@ void aeActiveCellNetwork::UpdateActiveBondsInCells()
 
 	for(ActivePolymerListIterator iterPoly=m_FreeActivePolymers.begin(); iterPoly!=m_FreeActivePolymers.end(); iterPoly++)
 	{
-		aeActivePolymer* const pPolymer = *iterPoly;
-
 		(*iterPoly)->AddForce();
 	}
 }
@@ -558,8 +554,6 @@ long aeActiveCellNetwork::GetBoundBondTotal() const
 	}
 	else
 	{
-		const aeActivePolymer& rfirstPolymer = *m_FreeActivePolymers.front();
-
 		long sum = 0;
 
 		for(cActivePolymerListIterator citerPoly=m_FreeActivePolymers.begin(); citerPoly!=m_FreeActivePolymers.end(); citerPoly++)
@@ -1075,8 +1069,6 @@ void aeActiveCellNetwork::CalculateDensityFields()
 		{
 			if(GetCurrentTime() >= (*iterDens)->GetStartTime())
 			{
-				CDensityFieldState* pProfile = *iterDens;
-
 				(*iterDens)->Sample();
 
 				(*iterDens)->Serialize();
@@ -1512,7 +1504,7 @@ void aeActiveCellNetwork::CalculateEventCounters()
         // This is necessary because new filaments forming, or old ones
         // disintegrating, changes the number of events being sampled.
 
-        if(GetEventTotal() != m_EventSuccessCounters.size())
+        if(GetEventTotal() != static_cast<long>(m_EventSuccessCounters.size()))
         {
            ResetACNEventCounters();
 
@@ -1557,7 +1549,7 @@ void aeActiveCellNetwork::CalculateEventCounters()
 
 long aeActiveCellNetwork::GetEventSuccessCounter(long i) const
 {
-    if(i >= 0 && i < m_EventSuccessCounters.size())
+    if(i >= 0 && i < static_cast<long>(m_EventSuccessCounters.size()))
     {
         return m_EventSuccessCounters.at(i);
     }
@@ -1571,7 +1563,7 @@ long aeActiveCellNetwork::GetEventSuccessCounter(long i) const
 
 long aeActiveCellNetwork::GetEventFailureCounter(long i) const
 {
-    if(i >= 0 && i < m_EventFailureCounters.size())
+    if(i >= 0 && i < static_cast<long>(m_EventFailureCounters.size()))
     {
         return m_EventFailureCounters.at(i);
     }
@@ -1659,21 +1651,17 @@ void aeActiveCellNetwork::ResetACNEventCounters()
 bool aeActiveCellNetwork::CheckMonomers()
 {
     // Check free monomers first
-
+/*
     zString message;
 
 	for(ActiveBondListIterator iterBond=m_FreeActiveBonds.begin(); iterBond!=m_FreeActiveBonds.end(); iterBond++)
 	{
-		long id = (*iterBond)->GetId();
-
-        long headNo = (*iterBond)->CountHeadAdjacentBonds();
-        long tailNo = (*iterBond)->CountTailAdjacentBonds();
 
         aeActiveBond* pHeadAdj = (*iterBond)->GetHeadAdjacentBond();
         aeActiveBond* pTailAdj = (*iterBond)->GetTailAdjacentBond();
 
-		CPolymer* pHead = (*iterBond)->GetHeadMonomer();
-		CPolymer* pTail = (*iterBond)->GetTailMonomer();
+	CPolymer* pHead = (*iterBond)->GetHeadMonomer();
+	CPolymer* pTail = (*iterBond)->GetTailMonomer();
 
         CAbstractBead* pHHBead = (*iterBond)->GetHeadHeadBead();
         CAbstractBead* pHTBead = (*iterBond)->GetHeadTailBead();
@@ -1683,8 +1671,10 @@ bool aeActiveCellNetwork::CheckMonomers()
 
 //        if(pHead && pTail)
 //        {
+//        long headNo = (*iterBond)->CountHeadAdjacentBonds();
+//        long tailNo = (*iterBond)->CountTailAdjacentBonds();
 //            message = "Bond " + ToString(id) + " " + ToString(headNo) + " " + ToString(tailNo);
-//          CLogTextMessage* pMsg = new CLogTextMessage(GetCurrentTime(), message);
+//          new CLogTextMessage(GetCurrentTime(), message);
 //        }  
 //       std::cout << "Bond: " << id << " " + headNo + " " + tailNo + " " + pHead + "  " + pTail;
 
@@ -1699,13 +1689,9 @@ bool aeActiveCellNetwork::CheckMonomers()
 		{
 			const CAbstractBead* const pFirstBead = (*citerPoly)->GetTailBond()->GetTailTailBead();
 			const CAbstractBead* const pLastBead  = (*citerPoly)->GetHeadBond()->GetTailTailBead();
- 
-        
-        
-        
-        }
+        	}
 	}
-
+*/
     return true;
 }
 
@@ -2011,7 +1997,7 @@ void aeActiveCellNetwork::ConvertPhantomBondsToFree()
     {
             // Find a random phantom bond
 
-            long index = static_cast<long>(CCNTCell::GetRandomNo()*m_FreePhantomBonds.size());
+            long unsigned int index = static_cast<long>(CCNTCell::GetRandomNo()*m_FreePhantomBonds.size());
             if(index == m_FreePhantomBonds.size())
                 index--;
 

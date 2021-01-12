@@ -92,10 +92,10 @@ evLamellaMonolayerDomain::evLamellaMonolayerDomain(const evLamellaMonolayerDomai
 											  m_bOuterMonolayer(oldEvent.m_bOuterMonolayer),
 											  m_MinSize(oldEvent.m_MinSize),
 											  m_DomainPolymers(oldEvent.m_DomainPolymers),
-											  m_DomainPolymerTypes(oldEvent.m_DomainPolymerTypes),
-											  m_DomainHeadBeadTypes(oldEvent.m_DomainHeadBeadTypes),
 											  m_SeaPolymers(oldEvent.m_SeaPolymers),
+											  m_DomainPolymerTypes(oldEvent.m_DomainPolymerTypes),
 											  m_SeaPolymerTypes(oldEvent.m_SeaPolymerTypes),
+											  m_DomainHeadBeadTypes(oldEvent.m_DomainHeadBeadTypes),
 											  m_SeaHeadBeadTypes(oldEvent.m_SeaHeadBeadTypes)
 {
 }
@@ -453,7 +453,7 @@ bool evLamellaMonolayerDomain::Execute(long simTime, ISimEvent* const pISimEvent
 		{
 			pISimEvent->SaveCurrentState();
 
-			CLogLamellaDomain* pMsg = new CLogLamellaDomain(simTime, m_AggregateName, m_AggregateId, 
+			 new CLogLamellaDomain(simTime, m_AggregateName, m_AggregateId, 
 															m_bOuterMonolayer, m_pIEvent->GetRaftTotal());
 
 			InActivateEvent();		

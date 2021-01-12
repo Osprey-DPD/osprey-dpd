@@ -187,8 +187,6 @@ zString CInitialStatePEP::GetInitialStateType() const
 
 zOutStream& CInitialStatePEP::put(zOutStream& os) const
 {
-	short int i;	// Counter used several times below
-
 	os << "State	" << "pep"	<< zEndl;
 
 	// Polymerised particle data first
@@ -211,7 +209,7 @@ zOutStream& CInitialStatePEP::put(zOutStream& os) const
 	{
 		os << "         " << "PatchNo           " << m_PatchNo           << zEndl;
 
-		for(i=0; i<m_PatchZC.size(); i++)
+		for(long unsigned int i=0; i<m_PatchZC.size(); i++)
 		{
 			os << "	" << m_PatchZC.at(i) << "  " << m_PatchRadius.at(i) << "  " << m_PatchPsi.at(i) << zEndl;
 		}
@@ -375,8 +373,6 @@ zInStream& CInitialStatePEP::get(zInStream& is)
 			zDoubleVector	polymerSpringConstants;
 			zDoubleVector	polymerLengths;
 
-			short i;	// Counter used below
-
 			is >> token;
 			if(!is.good() || token != "Polymer")
 			{
@@ -408,7 +404,7 @@ zInStream& CInitialStatePEP::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> polymerisedFraction;
 					if(!is.good() || polymerisedFraction < 0.0 || polymerisedFraction > 1.0)
@@ -432,7 +428,7 @@ zInStream& CInitialStatePEP::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> polymerisedPosition;
 					if(!is.good() || polymerisedPosition < 0)
@@ -452,7 +448,7 @@ zInStream& CInitialStatePEP::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> springConstant;
 					if(!is.good() || springConstant < 0.0)
@@ -472,7 +468,7 @@ zInStream& CInitialStatePEP::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> unstretchedLength;
 					if(!is.good() || unstretchedLength < 0.0)
@@ -489,7 +485,7 @@ zInStream& CInitialStatePEP::get(zInStream& is)
 			// yet know the types of the polymers in the bilayer we use the
 			// constructor that gives a default value to the type.
 
-			for(i=0; i<polymerNames.size(); i++)
+			for(long unsigned int i=0; i<polymerNames.size(); i++)
 			{			
 				CPolymerCrossLink* pLink = new CPolymerCrossLink(polymerNames.at(i),
 																 polymerFractions.at(i),

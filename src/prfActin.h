@@ -103,29 +103,29 @@ protected:
 	// ****************************************
 	// Data members
 
-private:								// Data specific to the process
+private:					// Data specific to the process
 
-	const aefActinNetwork* m_pACN;		// ACN that supplies data to this process
+	const aefActinNetwork* m_pACN;	// ACN that supplies data to this process
 
 	// Local data for the process
 
-	long	m_MonomerTotal;			// Number of free and bound monomers
+	long	m_MonomerTotal;		// Number of free and bound monomers
 	long	m_FreeMonomerTotal;		// Number of free monomers
-	long	m_BoundMonomerTotal;	// Number of bound monomers
+	long	m_BoundMonomerTotal;	        // Number of bound monomers
 	long	m_FilamentTotal;		// Number of filaments
 
 	double  m_FreeMonomerFraction;	// Fraction of monomers free in solution
 	double  m_BoundMonomerFraction;	// Fraction of monomers in filaments
 	double  m_MeanFilamentSize;		// Mean number of monomers/filament (not the end-to-end length)
 	double  m_SDevFilamentSize;		// Std. Dev. of monomers/filament 
-	double  m_MeanFilamentLength;	// Mean filament end-to-end length
-	double  m_SDevFilamentLength;	// Std. Dev. of filament end-to-end length
+	double  m_MeanFilamentLength;	       // Mean filament end-to-end length
+	double  m_SDevFilamentLength;	       // Std. Dev. of filament end-to-end length
 
 	double  m_MeanFilamentLatSqDisp;  // Mean square lateral displacement of monomers
 	double  m_VarFilamentLatSqDisp;   // Variance of the lateral displacement of monomers
  
 	double  m_MeanFilamentSqDisp[3];  // Mean square displacement of monomers in all filaments
-    double  m_VarFilamentSqDisp[3];   // Variance of the displacement of monomers in all filaments
+        double  m_VarFilamentSqDisp[3];   // Variance of the displacement of monomers in all filaments
 
 	double  m_MeanFilamentCM[3];	  // Mean CM coordinates of all filaments
 	double  m_MeanFilamentHead[3];    // Mean coordinates of filament head monomers

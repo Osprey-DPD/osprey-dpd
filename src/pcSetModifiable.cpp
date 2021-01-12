@@ -152,7 +152,7 @@ bool pcSetModifiable::Execute(long simTime, ISimCmd* const pISimCmd) const
 		}
 		else
 		{
-			CLogpcProcessNotModifiable* pMsg = new CLogpcProcessNotModifiable(GetExecutionTime(), m_pid);
+			 new CLogpcProcessNotModifiable(GetExecutionTime(), m_pid);
 		}
 #endif
 		return true;

@@ -98,16 +98,16 @@ void ccSelectACNCurrentBondsAsTargetImpl::SelectACNCurrentBondsAsTarget(const xx
 
 		if(pSimBox->CreateCommandTargetPolymer(targetLabel, polymerType, vTargetPolymers))
 		{
-			CLogSelectACNCurrentBondsAsTarget* pMsg = new CLogSelectACNCurrentBondsAsTarget(pSimBox->GetCurrentTime(), targetLabel, acnType, polymerName, polymerType, freeBondTotal, polymerTotal);
+			 new CLogSelectACNCurrentBondsAsTarget(pSimBox->GetCurrentTime(), targetLabel, acnType, polymerName, polymerType, freeBondTotal, polymerTotal);
 		}
 		else
 		{
-			CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+			 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 #endif
 }

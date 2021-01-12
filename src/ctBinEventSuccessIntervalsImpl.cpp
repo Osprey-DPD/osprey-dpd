@@ -66,29 +66,27 @@ void ctBinEventSuccessIntervalsImpl::BinEventSuccessIntervals(const xxCommand* c
 	const zString sourceLabel = pCmd->GetEventSourceId();
 	const zString decLabel    = pCmd->GetEventAnalysisId();
 	const zString key         = pCmd->GetKey();
-    const long    binTotal    = pCmd->GetBinTotal();
-    const double  binWidth    = pCmd->GetBinWidth();
-    const long    sampleTotal = pCmd->GetSampleTotal();
+        const long    binTotal    = pCmd->GetBinTotal();
+        const double  binWidth    = pCmd->GetBinWidth();
+        const long    sampleTotal = pCmd->GetSampleTotal();
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
-	// Get the ESD command target from the target list: note that we don't know
+    // Get the ESD command target from the target list: note that we don't know
     // the name of the target that wraps the ACN, only the ESD decorator so we have
     // to use the SimBox's GetCommandTargetActivity() function. As we do know its
     // type, we can cast it to the appropriate decorator type. Once we have the
     // decorator instance, we can obtain the target it wraps from the function
     // CCommandTargetNode::GetActiveCommandTarget().
 
-	CCommandTargetNode* pSourceDec = pSimBox->GetCommandTargetActivity(sourceLabel);
+    CCommandTargetNode* pSourceDec = pSimBox->GetCommandTargetActivity(sourceLabel);
     taEventSourceDecorator* const pESD = dynamic_cast<taEventSourceDecorator*>(pSourceDec);
     CCommandTargetNode* pCmdTarget = pSourceDec->GetActiveCommandTarget();
 
-	// Check that the ESD has the correct type, i.e., that the cast above worked, 
+    // Check that the ESD has the correct type, i.e., that the cast above worked, 
     // and create a taBinEventSuccessIntervalsEventAnalysis instance and wrap the 
     // target with it, and also store a pointer to the decorator in the ACN so that it 
     // can forward event broadcast information to the event source.
-
-	bool bSuccess = true;
 
 	if(pCmdTarget && pESD)
 	{
@@ -101,7 +99,7 @@ void ctBinEventSuccessIntervalsImpl::BinEventSuccessIntervals(const xxCommand* c
 
 		CCommandTargetNode* pActiveTarget = pCmdTarget->GetOutermostDecorator();
 
-        if(pActiveTarget->GetLabel() != pCmdTarget->GetLabel())
+               if(pActiveTarget->GetLabel() != pCmdTarget->GetLabel())
 		{
 			pSimBox->m_ActiveCommandTargets.remove(pActiveTarget);
 		}
@@ -122,10 +120,10 @@ void ctBinEventSuccessIntervalsImpl::BinEventSuccessIntervals(const xxCommand* c
 
 		// Log sucessful execution of the command
 
-		CLogacACNCreateEventAnalysis* pMsg = new CLogacACNCreateEventAnalysis(pSimBox->GetCurrentTime(), sourceLabel, decLabel, binTotal, binWidth, sampleTotal);
+		new CLogacACNCreateEventAnalysis(pSimBox->GetCurrentTime(), sourceLabel, decLabel, binTotal, binWidth, sampleTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

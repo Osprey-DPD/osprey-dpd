@@ -186,7 +186,7 @@ bool ctSetTargetVisible::IsDataValid(const CInputData &riData) const
 
 bool ctSetTargetVisible::Pack(const tguArgumentSequence& vArguments)
 {
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         ctApplyCommand::Pack(vArguments);
         return true;

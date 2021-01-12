@@ -176,7 +176,7 @@ bool acCreateBondBindsForwardConeToPolymerTailEventSource::Execute(long simTime,
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), acnType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), acnType);
 		}
 
 		return true;

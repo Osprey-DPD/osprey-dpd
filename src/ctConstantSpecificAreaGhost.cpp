@@ -193,7 +193,7 @@ bool ctConstantSpecificAreaGhost::Execute(long simTime, ISimCmd* const pISimCmd)
 
 bool ctConstantSpecificAreaGhost::IsDataValid(const CInputData& riData) const
 {
-	CInputData& rincData = const_cast<CInputData&>(riData);
+//	CInputData& rincData = const_cast<CInputData&>(riData);
 
 	if(!riData.IsExternalNameValid(m_MembraneTargetName))
 		return ErrorTrace("Invalid membrane command target name");
@@ -234,7 +234,7 @@ bool ctConstantSpecificAreaGhost::IsDataValid(const CInputData& riData) const
 bool ctConstantSpecificAreaGhost::Pack(const tguArgumentSequence& vArguments)
 {
 #if EnableCommandGroups == SimCommandEnabled
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(0)->GetValue(&m_MembraneTargetName);
         vArguments.at(1)->GetValue(&m_ReservoirTargetName);

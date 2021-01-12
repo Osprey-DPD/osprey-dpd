@@ -175,14 +175,12 @@ bool ctRemoveTargetFromComposite::Execute(long simTime, ISimCmd* const pISimCmd)
 
 bool ctRemoveTargetFromComposite::IsDataValid(const CInputData& riData) const
 {
-	CInputData& rincData = const_cast<CInputData&>(riData);
-
-	if(!riData.IsExternalNameValid(m_Destination))
-		return ErrorTrace("Invalid destination command target name");
-	else if(!riData.IsExternalNameValid(m_Source))
-		return ErrorTrace("Invalid source command target name");
-	else if(m_Destination == m_Source)
-		return ErrorTrace("Source and destination targets are identical");
+	if(!riData.IsExternalNameValid(m_Destination)) {
+		return ErrorTrace("Invalid destination command target name"); }
+	else if(!riData.IsExternalNameValid(m_Source)) {
+		return ErrorTrace("Invalid source command target name"); }
+	else if(m_Destination == m_Source) {
+		return ErrorTrace("Source and destination targets are identical"); }
 
 	return true;
 }
@@ -203,7 +201,7 @@ bool ctRemoveTargetFromComposite::IsDataValid(const CInputData& riData) const
 
 bool ctRemoveTargetFromComposite::Pack(const tguArgumentSequence& vArguments)
 {
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(0)->GetValue(&m_Destination);
         vArguments.at(1)->GetValue(&m_Source);

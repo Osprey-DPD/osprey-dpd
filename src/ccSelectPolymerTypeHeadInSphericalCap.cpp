@@ -271,7 +271,7 @@ bool ccSelectPolymerTypeHeadInSphericalCap::Pack(const tguArgumentSequence& vArg
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(ccSelectPolymerTypeInRegion::Pack(vArguments) && vArguments.size() == GetArgumentTotal())
+    if(ccSelectPolymerTypeInRegion::Pack(vArguments) && static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(2)->GetValue(&m_XC);
         vArguments.at(3)->GetValue(&m_YC);

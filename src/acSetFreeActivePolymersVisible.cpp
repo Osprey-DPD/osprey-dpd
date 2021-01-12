@@ -163,17 +163,17 @@ bool acSetFreeActivePolymersVisible::Execute(long simTime, ISimCmd* const pISimC
 
 			pMACN->SetFreeActivePolymersVisible();
 
-			CLogacSetFreeActivePolymersVisible* pMsg1 = new CLogacSetFreeActivePolymersVisible(GetExecutionTime(), m_ACNType);
+			 new CLogacSetFreeActivePolymersVisible(GetExecutionTime(), m_ACNType);
 
 			if(pMACN->GetFreePolymerTotal() == 0)
 			{
-				CLogacEmptyPolymerACN* pMsg2 = new CLogacEmptyPolymerACN(GetExecutionTime(), m_ACNType);
+				 new CLogacEmptyPolymerACN(GetExecutionTime(), m_ACNType);
 			}
 
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg3 = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

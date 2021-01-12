@@ -161,11 +161,11 @@ bool acSetProximityTailOffSeparation::Execute(long simTime, ISimCmd* const pISim
 		{
 			pMACN->SetProximityTailOffSeparation(m_MaxSeparation);
 
-			CLogacSetProximityTailOffSeparation* pMsg = new CLogacSetProximityTailOffSeparation(GetExecutionTime(), m_ACNType, m_MaxSeparation);
+			 new CLogacSetProximityTailOffSeparation(GetExecutionTime(), m_ACNType, m_MaxSeparation);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

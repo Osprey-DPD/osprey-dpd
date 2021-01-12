@@ -59,9 +59,8 @@ namespace
 // Note that the pointers to the MPI_Request objects are NOT owned by this 
 // message class, but are created/destroyed by the calling object.
 
-pmSendPlanarCornerBeadForces::pmSendPlanarCornerBeadForces() : mpmMessage(), m_pSendRequest(0),
-                                                   m_pRecRequest(0), m_RecTotal(0),
-                                                   m_SentForceTotal(0)
+pmSendPlanarCornerBeadForces::pmSendPlanarCornerBeadForces() : mpmMessage(), m_pSendRequest(0), m_pRecRequest(0), m_SentForceTotal(0), m_RecTotal(0)
+                                                   
 {
     for(long i=0; i<m_MaxMsgBeads; i++)
     {
@@ -73,17 +72,16 @@ pmSendPlanarCornerBeadForces::pmSendPlanarCornerBeadForces() : mpmMessage(), m_p
     }
 
     m_vIds.clear();
-	m_vForceCounter.clear();
+    m_vForceCounter.clear();
     m_vFX.clear();
     m_vFY.clear();
     m_vFZ.clear();
 }
 
 pmSendPlanarCornerBeadForces::pmSendPlanarCornerBeadForces(const pmSendPlanarCornerBeadForces& oldMessage) : mpmMessage(oldMessage),
-                                               m_pSendRequest(oldMessage.m_pSendRequest),
-                                               m_pRecRequest(oldMessage.m_pRecRequest),
-                                               m_RecTotal(oldMessage.m_RecTotal),
-                                               m_SentForceTotal(oldMessage.m_SentForceTotal)
+                                               m_pSendRequest(oldMessage.m_pSendRequest), m_pRecRequest(oldMessage.m_pRecRequest),
+                                               m_SentForceTotal(oldMessage.m_SentForceTotal), m_RecTotal(oldMessage.m_RecTotal)
+                                               
 {
     for(long i=0; i<m_MaxMsgBeads; i++)
     {
@@ -199,10 +197,10 @@ bool pmSendPlanarCornerBeadForces::Validate()
 {
     bool bSuccess = true;
 
-    if(m_SentForceTotal > m_MaxMsgBeads || m_SentForceTotal != m_vFX.size() ||
+    if(m_SentForceTotal > m_MaxMsgBeads || m_SentForceTotal != static_cast<long>(m_vFX.size()) ||
        m_vFX.size() != m_vFY.size() || m_vFX.size() != m_vFZ.size() || m_vFY.size() != m_vFZ.size())
     {
-	    std::cout << "Proc " << GetRank() << " pmSendPlanarCornerBeadForces failed validation with " << m_SentForceTotal << " force terms" << zEndl;
+	std::cout << "Proc " << GetRank() << " pmSendPlanarCornerBeadForces failed validation with " << m_SentForceTotal << " force terms" << zEndl;
         bSuccess = false;
     }
 

@@ -53,14 +53,14 @@ void mcSetDisplayPeriodImpl::SetDisplayPeriod(const xxCommand* const pCommand)
     {
         if(xxParallelBase::GlobalGetRank() == 0 && pCmd->IsExecutionLogged())
         {
-			CLogSetDisplayPeriod* pMsg = new CLogSetDisplayPeriod(pMon->GetCurrentTime(), newPeriod);
+		new CLogSetDisplayPeriod(pMon->GetCurrentTime(), newPeriod);
         }
     }
     else
     {
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+	        new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
         }
         else
         {
@@ -73,12 +73,12 @@ void mcSetDisplayPeriodImpl::SetDisplayPeriod(const xxCommand* const pCommand)
     {
 	    if(pCmd->IsExecutionLogged())
 	    {
-			CLogSetDisplayPeriod* pMsg = new CLogSetDisplayPeriod(pMon->GetCurrentTime(), newPeriod);
+		new CLogSetDisplayPeriod(pMon->GetCurrentTime(), newPeriod);
 	    }	
     }
     else
     {
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
     }
 #endif
 

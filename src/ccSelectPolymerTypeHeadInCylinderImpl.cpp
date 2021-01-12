@@ -72,7 +72,7 @@ void ccSelectPolymerTypeHeadInCylinderImpl::SelectPolymerTypeHeadInCylinder(cons
 
 	const long xNormal			= pCmd->GetXNormal();
 	const long yNormal			= pCmd->GetYNormal();		//	Cylinder normal
-	const long zNormal			= pCmd->GetZNormal();
+//	const long zNormal			= pCmd->GetZNormal();
 	const double xCentre		= pCmd->GetXCentre();
 	const double yCentre		= pCmd->GetYCentre();		//	Cylinder centre (fraction)
 	const double zCentre		= pCmd->GetZCentre();
@@ -85,7 +85,7 @@ void ccSelectPolymerTypeHeadInCylinderImpl::SelectPolymerTypeHeadInCylinder(cons
 	// Find the integer type of the specified polymers and their head bead type
 
 	const long polyType = pSimBox->GetPolymerTypeFromName(polyName);
-	const long beadType = pSimBox->GetPolymerHeadType(polyType);
+//	const long beadType = pSimBox->GetPolymerHeadType(polyType);
 
 	// Store the inner and outer radii squared to save time when 
 	// comparing bead distances from the centre
@@ -268,11 +268,11 @@ void ccSelectPolymerTypeHeadInCylinderImpl::SelectPolymerTypeHeadInCylinder(cons
 
 	if(pSimBox->CreateCommandTargetPolymer(label, polyType, vTargetPolymers))
 	{
-		CLogSelectPolymerTypeInRegion* pMsg = new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "Cylinder", polyName, polyType, polyTotal);
+		 new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "Cylinder", polyName, polyType, polyTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

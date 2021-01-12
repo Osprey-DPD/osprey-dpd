@@ -95,12 +95,12 @@ void mcSaveBeadKineticTemperaturesImpl::SaveBeadKineticTemperatures(const xxComm
 		pProcess->InternalValidateData(pMon->GetISimBox()->IISimState());
 		pMon->GetISimBox()->AddProcess(pProcess);
 
-		CLogSaveBeadKineticTemperatures* pMsg = new CLogSaveBeadKineticTemperatures(pMon->GetCurrentTime(), analysisPeriods, dataPoints, 
+		new CLogSaveBeadKineticTemperatures(pMon->GetCurrentTime(), analysisPeriods, dataPoints, 
                                                 start, end, samplePeriod, samplesPerPoint, beadTypeTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 
 }

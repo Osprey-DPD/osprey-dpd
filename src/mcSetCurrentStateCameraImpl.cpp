@@ -65,7 +65,7 @@ void mcSetCurrentStateCameraImpl::SetCurrentStateCamera(const xxCommand* const p
 
         if(xxParallelBase::GlobalGetRank() == 0 && pCmd->IsExecutionLogged())
         {
-		    CLogCurrentStateCamera* pMsg = new CLogCurrentStateCamera(pMon->GetCurrentTime(), 
+		    new CLogCurrentStateCamera(pMon->GetCurrentTime(), 
 											    pMon->m_Camera[0], pMon->m_Camera[1], pMon->m_Camera[2],
 											    pMon->m_Target[0], pMon->m_Target[1], pMon->m_Target[2]);
         }
@@ -74,7 +74,7 @@ void mcSetCurrentStateCameraImpl::SetCurrentStateCamera(const xxCommand* const p
     {
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		     new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
         }
         else
         {
@@ -97,14 +97,14 @@ void mcSetCurrentStateCameraImpl::SetCurrentStateCamera(const xxCommand* const p
 
 	    if(pCmd->IsExecutionLogged())
 	    {
-		    CLogCurrentStateCamera* pMsg = new CLogCurrentStateCamera(pMon->GetCurrentTime(), 
+		    new CLogCurrentStateCamera(pMon->GetCurrentTime(), 
 											    pMon->m_Camera[0], pMon->m_Camera[1], pMon->m_Camera[2],
 											    pMon->m_Target[0], pMon->m_Target[1], pMon->m_Target[2]);
 	    }	
     }
     else
     {
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
     }
 #endif
 }

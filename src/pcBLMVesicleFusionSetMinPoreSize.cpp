@@ -164,12 +164,12 @@ bool pcBLMVesicleFusionSetMinPoreSize::Execute(long simTime, ISimCmd* const pISi
 			}
 			else
 			{
-				CLogpcProcessNotAccessible* pMsg = new CLogpcProcessNotAccessible(GetExecutionTime(), m_pid, GetCommandType());
+				 new CLogpcProcessNotAccessible(GetExecutionTime(), m_pid, GetCommandType());
 			}
 		}
 		else
 		{
-				CLogpcProcessNotModifiable* pMsg = new CLogpcProcessNotModifiable(GetExecutionTime(), m_pid);
+				 new CLogpcProcessNotModifiable(GetExecutionTime(), m_pid);
 		}
 #endif
 		return true;

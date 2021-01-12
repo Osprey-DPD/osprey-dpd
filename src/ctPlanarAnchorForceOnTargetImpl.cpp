@@ -80,13 +80,8 @@ void ctPlanarAnchorForceOnTargetImpl::PlanarAnchorForceOnTarget(const xxCommand*
 	// is not applicable to composite targets because they may contain
 	// a multitude of bead types.
 
-	bool bSuccess = true;
-
 	if(pCmdTarget)
 	{
-		const long beadTotal = pCmdTarget->GetBeadTotal();
-
-		const long beadType            = pCmdTarget->GetCurrentBeadType();
 		const long originalBeadType    = pCmdTarget->GetOriginalBeadType();
 		const zString beadName         = pSimBox->GetBeadNameFromType(originalBeadType);
 
@@ -114,11 +109,11 @@ void ctPlanarAnchorForceOnTargetImpl::PlanarAnchorForceOnTarget(const xxCommand*
 
 		// Log sucessful execution of the command
 
-		CLogctPlanarAnchorForceOnTarget* pMsg = new CLogctPlanarAnchorForceOnTarget(pSimBox->GetCurrentTime(), targetLabel, decLabel, 
+		new CLogctPlanarAnchorForceOnTarget(pSimBox->GetCurrentTime(), targetLabel, decLabel, 
 												xn, yn, zn, xc, yc, zc, keff);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

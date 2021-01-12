@@ -203,7 +203,7 @@ bool pmISCompositeLamella::Validate()
     }
     else 
     {
-	    for(long ip=0; ip<m_UpperFractions.size(); ip++)
+	    for(long unsigned int ip=0; ip<m_UpperFractions.size(); ip++)
 		{
 		    if(m_UpperFractions.at(ip) < 0.0 || m_UpperFractions.at(ip) > 1.0)
 			{

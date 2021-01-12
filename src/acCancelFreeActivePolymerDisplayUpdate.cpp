@@ -157,11 +157,11 @@ bool acCancelFreeActivePolymerDisplayUpdate::Execute(long simTime, ISimCmd* cons
 		{
 			pMACN->CancelFreeActivePolymerDisplayUpdate();
 
-			CLogacCancelFreeActivePolymerDisplayUpdate* pMsg = new CLogacCancelFreeActivePolymerDisplayUpdate(GetExecutionTime(), m_ACNType);
+			 new CLogacCancelFreeActivePolymerDisplayUpdate(GetExecutionTime(), m_ACNType);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

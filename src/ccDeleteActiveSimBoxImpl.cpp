@@ -53,11 +53,11 @@ void ccDeleteActiveSimBoxImpl::DeleteActiveSimBox(const xxCommand* const pComman
 		delete pSimBox->m_pShadow;
 		pSimBox->m_pShadow = 0;
 
-		CLogActiveSimBoxDeleted* pMsg = new CLogActiveSimBoxDeleted(pSimBox->GetCurrentTime());
+		 new CLogActiveSimBoxDeleted(pSimBox->GetCurrentTime());
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 #endif
 }

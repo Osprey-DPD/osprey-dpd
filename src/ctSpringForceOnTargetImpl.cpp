@@ -77,13 +77,8 @@ void ctSpringForceOnTargetImpl::SpringForceOnTarget(const xxCommand* const pComm
 	// is not applicable to composite targets because they may contain
 	// a multitude of bead types.
 
-	bool bSuccess = true;
-
 	if(pCmdTarget)
 	{
-		const long beadTotal = pCmdTarget->GetBeadTotal();
-
-		const long beadType            = pCmdTarget->GetCurrentBeadType();
 		const long originalBeadType    = pCmdTarget->GetOriginalBeadType();
 		const zString beadName         = pSimBox->GetBeadNameFromType(originalBeadType);
 
@@ -110,11 +105,11 @@ void ctSpringForceOnTargetImpl::SpringForceOnTarget(const xxCommand* const pComm
 
 		// Log sucessful execution of the command
 
-		CLogctSpringForceOnTarget* pMsg = new CLogctSpringForceOnTarget(pSimBox->GetCurrentTime(), targetLabel, decLabel, 
+		new CLogctSpringForceOnTarget(pSimBox->GetCurrentTime(), targetLabel, decLabel, 
 												xc, yc, zc, keff);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

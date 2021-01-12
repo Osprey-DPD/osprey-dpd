@@ -51,10 +51,10 @@ void mcCommentImpl::Comment(const xxCommand* const pCommand)
 
 	if(msg != "")
 	{
-        CLogTextMessage* pMsg = new CLogTextMessage(pMon->GetCurrentTime(), msg);
+         new CLogTextMessage(pMon->GetCurrentTime(), msg);
 	}
 	else
 	{
-        CLogTextMessage* pMsg = new CLogTextMessage(pMon->GetCurrentTime(), "**********");
+         new CLogTextMessage(pMon->GetCurrentTime(), "**********");
 	}
 }

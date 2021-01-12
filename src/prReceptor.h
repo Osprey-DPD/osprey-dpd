@@ -104,9 +104,9 @@ protected:
 	// ****************************************
 	// Data members
 
-private:								// Data specific to the process
+private:					// Data specific to the process
 
-	const aeReceptorNetwork* m_pACN;		// ACN that supplies data to this process
+	const aeReceptorNetwork* m_pACN;	// ACN that supplies data to this process
 
 	// Data required to implement the IModifyProcess interface 
 
@@ -115,17 +115,17 @@ private:								// Data specific to the process
 
 	// Local data for the process
 
-	long	m_MonomerTotal;			// Number of free and bound monomers
+	long	m_MonomerTotal;		// Number of free and bound monomers
 	long	m_FreeMonomerTotal;		// Number of free monomers
-	long	m_BoundMonomerTotal;	// Number of bound monomers
+	long	m_BoundMonomerTotal;	       // Number of bound monomers
 	long	m_FilamentTotal;		// Number of filaments
 
 	double  m_FreeMonomerFraction;	// Fraction of monomers free in solution
 	double  m_BoundMonomerFraction;	// Fraction of monomers in filaments
 	double  m_MeanFilamentSize;		// Mean number of monomers/filament (not the end-to-end length)
 	double  m_SDevFilamentSize;		// Std. Dev. of monomers/filament 
-	double  m_MeanFilamentLength;	// Mean filament end-to-end length
-	double  m_SDevFilamentLength;	// Std. Dev. of filament end-to-end length
+	double  m_MeanFilamentLength;	       // Mean filament end-to-end length
+	double  m_SDevFilamentLength;	       // Std. Dev. of filament end-to-end length
 
 	long m_CondenseDelay;			// Sample modifiable property
 

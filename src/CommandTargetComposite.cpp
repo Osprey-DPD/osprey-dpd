@@ -356,7 +356,7 @@ zInStream& CCommandTargetComposite::Read(zInStream& is)
     is >> targetSize;
     if(!is.good() || targetSize < 0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing composite command target: contained target number invalid");
+        new CLogRestartStateBuilderError(0, "Error importing composite command target: contained target number invalid");
         return is;
     }
 //    std::cout << "Reading " << targetSize << " targets into composite target" << zEndl;
@@ -366,7 +366,7 @@ zInStream& CCommandTargetComposite::Read(zInStream& is)
         is >> proxyId >> label;
         if(!is.good() || proxyId < 0 || label.empty())
         {
-            CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing composite command target: invalid proxy id or label");
+            new CLogRestartStateBuilderError(0, "Error importing composite command target: invalid proxy id or label");
             return is;
         }
 
@@ -434,7 +434,7 @@ bool CCommandTargetComposite::ReplaceProxyIds(CInitialState* const pIS)
         }
         else
         {
-            CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error reading restart state: unable to replace target proxy (invalid id?)");
+            new CLogRestartStateBuilderError(0, "Error reading restart state: unable to replace target proxy (invalid id?)");
             return false;
         }
     }

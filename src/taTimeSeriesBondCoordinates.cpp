@@ -82,7 +82,7 @@ void taTimeSeriesBondCoordinates::AddDataPoint(double x, double y, double z)
 
 double taTimeSeriesBondCoordinates::GetXPos(long i) const
 {
-    if(i >= 0 && i < m_XData.size())
+    if(i >= 0 && i < static_cast<long>(m_XData.size()))
     {
         return m_XData.at(i);
     }
@@ -94,7 +94,7 @@ double taTimeSeriesBondCoordinates::GetXPos(long i) const
 
 double taTimeSeriesBondCoordinates::GetYPos(long i) const
 {
-    if(i >= 0 && i < m_YData.size())
+    if(i >= 0 && i < static_cast<long>(m_YData.size()))
     {
         return m_YData.at(i);
     }
@@ -106,7 +106,7 @@ double taTimeSeriesBondCoordinates::GetYPos(long i) const
 
 double taTimeSeriesBondCoordinates::GetZPos(long i) const
 {
-    if(i >= 0 && i < m_ZData.size())
+    if(i >= 0 && i < static_cast<long>(m_ZData.size()))
     {
         return m_ZData.at(i);
     }

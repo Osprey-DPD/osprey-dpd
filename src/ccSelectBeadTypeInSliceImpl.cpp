@@ -65,9 +65,9 @@ void ccSelectBeadTypeInSliceImpl::SelectBeadTypeInSlice(const xxCommand* const p
 	const zString label			= pCmd->GetTargetLabel();	// Label of command target
 	const zString beadName		= pCmd->GetBeadName();		// Name of bead type
     
-	const long xNormal			= pCmd->GetXNormal();
-	const long yNormal			= pCmd->GetYNormal();		//	Slice normal
-	const long zNormal			= pCmd->GetZNormal();
+//	const long xNormal			= pCmd->GetXNormal();
+//	const long yNormal			= pCmd->GetYNormal();		//	Slice normal
+//	const long zNormal			= pCmd->GetZNormal();
 	const double xCentre		= pCmd->GetXCentre();
 	const double yCentre		= pCmd->GetYCentre();		//	Slice centre (fraction)
 	const double zCentre		= pCmd->GetZCentre();
@@ -155,11 +155,11 @@ void ccSelectBeadTypeInSliceImpl::SelectBeadTypeInSlice(const xxCommand* const p
     
 	if(pSimBox->CreateCommandTarget(label, beadType, vTargetBeads))
 	{
-		CLogSelectBeadTypeInRegion* pMsg = new CLogSelectBeadTypeInRegion(pSimBox->GetCurrentTime(), label, "Slice", beadName, beadType, beadTotal);
+		 new CLogSelectBeadTypeInRegion(pSimBox->GetCurrentTime(), label, "Slice", beadName, beadType, beadTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
     
 #endif

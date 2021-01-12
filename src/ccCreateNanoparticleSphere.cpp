@@ -147,8 +147,8 @@ ccCreateNanoparticleSphere::ccCreateNanoparticleSphere(long executionTime,
     
     // Validate the interaction parameters
     if(m_NumberTypes < 0
-       || m_vBeadTypes.size() != m_NumberTypes
-       || m_vConsInt.size() != m_NumberTypes)
+       || static_cast<long>(m_vBeadTypes.size()) != m_NumberTypes
+       || static_cast<long>(m_vConsInt.size()) != m_NumberTypes)
     {
         SetCommandValid(false);
     }

@@ -42,7 +42,7 @@ mcSaveNonBeadInclusiveRestartStateImpl::~mcSaveNonBeadInclusiveRestartStateImpl(
 
 void mcSaveNonBeadInclusiveRestartStateImpl::SaveNonBeadInclusiveRestartStateCmd(const xxCommand* const pCommand)
 {
-	const mcSaveNonBeadInclusiveRestartState* const pCmd = dynamic_cast<const mcSaveNonBeadInclusiveRestartState*>(pCommand);
+//	const mcSaveNonBeadInclusiveRestartState* const pCmd = dynamic_cast<const mcSaveNonBeadInclusiveRestartState*>(pCommand);
 
 	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 	
@@ -50,6 +50,6 @@ void mcSaveNonBeadInclusiveRestartStateImpl::SaveNonBeadInclusiveRestartStateCmd
 
 	// This command cannot fail
 
-	CLogSaveNonBeadInclusiveRestartState* pMsg = new CLogSaveNonBeadInclusiveRestartState(pMon->GetCurrentTime());
+	new CLogSaveNonBeadInclusiveRestartState(pMon->GetCurrentTime());
 }
 

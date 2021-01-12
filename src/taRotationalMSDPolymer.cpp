@@ -224,11 +224,11 @@ void taRotationalMSDPolymer::Execute(long simTime)
 
                 if(SaveState())
                 {
-		            CLogctRotationalMSDPolymerTarget* pMsg = new CLogctRotationalMSDPolymerTarget(simTime, targetLabel, decLabel, m_vMSD.back());
+		             new CLogctRotationalMSDPolymerTarget(simTime, targetLabel, decLabel, m_vMSD.back());
                 }
                 else
                 {
-                    CLogTextWarningMessage* pMsg = new CLogTextWarningMessage(simTime, "Error serialising data from decorator " + decLabel + " around target " + targetLabel);
+                     new CLogTextWarningMessage(simTime, "Error serialising data from decorator " + decLabel + " around target " + targetLabel);
                 }
             }
             // ********************
@@ -262,14 +262,14 @@ void taRotationalMSDPolymer::Execute(long simTime)
             // is used to log the start of the calculation and its end, but with
             // different arguments.
 
-		    CLogctRotationalMSDPolymerTarget* pMsg = new CLogctRotationalMSDPolymerTarget(simTime, targetLabel, decLabel,  
+		     new CLogctRotationalMSDPolymerTarget(simTime, targetLabel, decLabel,  
 												    m_Start, m_End, m_PolymerTotal);
 	    }
     }
 	else if(!m_bWrapFailure)
 	{
 		m_bWrapFailure = true;
-		CLogctNonexistentDecorator* pMsg = new CLogctNonexistentDecorator(simTime, decLabel, "");
+		 new CLogctNonexistentDecorator(simTime, decLabel, "");
 	}
 }
 

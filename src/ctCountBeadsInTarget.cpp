@@ -184,7 +184,7 @@ bool ctCountBeadsInTarget::IsDataValid(const CInputData& riData) const
 
 bool ctCountBeadsInTarget::Pack(const tguArgumentSequence& vArguments)
 {
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         ctApplyCommand::Pack(vArguments);
 

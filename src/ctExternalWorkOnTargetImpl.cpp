@@ -98,7 +98,7 @@ void ctExternalWorkOnTargetImpl::ExternalWorkOnTarget(const xxCommand* const pCo
 		// Note that the same message is used to log the start of the calculation (4th argument = true),
 		// and the end of the calculation (4th argument = false, last parameter = work done)
 
-		CLogctExternalWorkOnTarget* pMsg = new CLogctExternalWorkOnTarget(pSimBox->GetCurrentTime(), targetLabel, forceLabel, decLabel, 
+		new CLogctExternalWorkOnTarget(pSimBox->GetCurrentTime(), targetLabel, forceLabel, decLabel, 
 												start, end, beadName, beadType, beadTotal);
 
 		// Now the command has been created to execute during the specified interval,
@@ -109,6 +109,6 @@ void ctExternalWorkOnTargetImpl::ExternalWorkOnTarget(const xxCommand* const pCo
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

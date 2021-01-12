@@ -60,7 +60,7 @@ long mpuExtendedNanoparticle::GetTotal()
 //////////////////////////////////////////////////////////////////////
 // Default constructor: this wraps a nanoparticle that is leaving the owning processor's space.
 
-mpuExtendedNanoparticle::mpuExtendedNanoparticle() : m_pNanoparticle(0), m_bIsLeaving(true)
+mpuExtendedNanoparticle::mpuExtendedNanoparticle() : m_bIsLeaving(true), m_pNanoparticle(0)
 {
     ++m_CreatedExtNanoparticleTotal;
     std::cout << "********** Default constructor for mpuExtendedNanoparticle called...********** " << zEndl;
@@ -76,7 +76,7 @@ mpuExtendedNanoparticle::mpuExtendedNanoparticle() : m_pNanoparticle(0), m_bIsLe
 // beads have their forces calculated separately.
 //
 
-mpuExtendedNanoparticle::mpuExtendedNanoparticle(CNanoparticle* pNP) : m_pNanoparticle(pNP), m_bIsLeaving(true)
+mpuExtendedNanoparticle::mpuExtendedNanoparticle(CNanoparticle* pNP) : m_bIsLeaving(true), m_pNanoparticle(pNP)
 {
 #if EnableParallelSimBox == SimMPSEnabled
     ++m_CreatedExtNanoparticleTotal;
@@ -102,7 +102,7 @@ mpuExtendedNanoparticle::mpuExtendedNanoparticle(CNanoparticle* pNP) : m_pNanopa
 // is still an ordering to the beads, and the first one that appears in the list is used to create this extended NP.
 // Subsequent beads are then added to the NP as they arrive.
 
-mpuExtendedNanoparticle::mpuExtendedNanoparticle(CAbstractBead* pBead) : m_pNanoparticle(0), m_bIsLeaving(false)
+mpuExtendedNanoparticle::mpuExtendedNanoparticle(CAbstractBead* pBead) : m_bIsLeaving(false), m_pNanoparticle(0)
 {
     ++m_CreatedExtNanoparticleTotal;
     std::cout << "********** Overloaded constructor for arriving mpuExtendedNanoparticle called...********** " << zEndl;
@@ -113,7 +113,7 @@ mpuExtendedNanoparticle::mpuExtendedNanoparticle(CAbstractBead* pBead) : m_pNano
 // Copy constructor for mpuExtendedNanoparticle objects. We don't copy construct the wrapped CNanoparticle instance but just copy 
 // it into the new extended nanoparticle.
 
-mpuExtendedNanoparticle::mpuExtendedNanoparticle(const mpuExtendedNanoparticle &oldNP) : m_pNanoparticle(oldNP.m_pNanoparticle), m_bIsLeaving(oldNP.m_bIsLeaving)
+mpuExtendedNanoparticle::mpuExtendedNanoparticle(const mpuExtendedNanoparticle &oldNP) : m_bIsLeaving(oldNP.m_bIsLeaving), m_pNanoparticle(oldNP.m_pNanoparticle)
 {
 	std::cout << "Copy constructing the " << mpuExtendedNanoparticle::GetTotal() << "  polymer that wraps polymer with id " << GetId() << " " << m_pNanoparticle->GetId() << zEndl;
 

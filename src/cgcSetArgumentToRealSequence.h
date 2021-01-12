@@ -84,9 +84,9 @@ private:
 	// Data members
 private:
 
-	zString  m_GroupName;	 // Command group name
-    long     m_CommandIndex; // Index of the command whose argument is being modified
+    zString  m_GroupName;    // Command group name
     zString  m_ArgName;      // Placeholder name for command's argument
+    long     m_CommandIndex; // Index of the command whose argument is being modified
     double   m_InitialValue; // Initial value of argument
     double   m_Increment;    // Increment
 

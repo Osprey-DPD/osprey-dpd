@@ -155,12 +155,12 @@ bool pcCommandDocumentGetPendingDocs::Execute(long simTime, ISimCmd* const pISim
 			}
 			else
 			{
-				CLogpcProcessNotAccessible* pMsg = new CLogpcProcessNotAccessible(GetExecutionTime(), pid, GetCommandType());
+				 new CLogpcProcessNotAccessible(GetExecutionTime(), pid, GetCommandType());
 			}
 		}
 		else
 		{
-			CLogpcNonExistentProcess* pMsg = new CLogpcNonExistentProcess(GetExecutionTime());
+			 new CLogpcNonExistentProcess(GetExecutionTime());
 		}
 #endif
 		return true;

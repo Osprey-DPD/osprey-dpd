@@ -86,11 +86,11 @@ void mcSaveCommandHistoryImpl::SaveCommandHistory(const xxCommand* const pComman
 
 	if(commandFile.Serialize())
 	{
-		CLogSaveCommandHistory* pMsg = new CLogSaveCommandHistory(pMon->GetCurrentTime(), commandFile.GetFileName());
+		new CLogSaveCommandHistory(pMon->GetCurrentTime(), commandFile.GetFileName());
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 
 }

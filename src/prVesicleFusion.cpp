@@ -319,8 +319,7 @@ void prVesicleFusion::UpdateState(CSimState& rSimState, const ISimBox* const pIS
 
 		pISimBox->SaveCurrentState();
 
-		CLogVesicleApproach* pMsg = new CLogVesicleApproach(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
-															m_AggregateName2, m_AggregateId2, vcmDistance);
+		new CLogVesicleApproach(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, m_AggregateName2, m_AggregateId2, vcmDistance);
 
 		// ****************************************
 		// Fusion stage 2: do the outer leaflets touch?

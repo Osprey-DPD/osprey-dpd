@@ -266,7 +266,7 @@ void prBilayerRuptureTension::UpdateState(CSimState& rSimState, const ISimBox* c
 			}
 			else
 			{
-				CLogCreateEventFailed* pMessage = new CLogCreateEventFailed(pISimBox->GetCurrentTime(), m_pLamellaPoreClosed);
+				 new CLogCreateEventFailed(pISimBox->GetCurrentTime(), m_pLamellaPoreClosed);
 
 				delete m_pLamellaPoreClosed;
 			}

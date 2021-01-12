@@ -144,7 +144,7 @@ void aeForminNetwork::Evolve()
 	if(GetFilamentTotal() > 0)
 	{
 		CalculateFilamentProperties();
-
+/*
 		long freeMonoTotal   = GetFreeBondTotal();
 		long boundMonoTotal  = GetBoundBondTotal();
 		long monoTotal		 = GetMonomerTotal();
@@ -159,9 +159,10 @@ void aeForminNetwork::Evolve()
 		double sdevLength	 = GetSDevFilamentLength();
 
 
-//		std::cout << "Formin monos = " << freeMonoTotal << "  " << boundMonoTotal << "  " << monoTotal << "  ";
-//		std::cout << freeFraction << "  " << boundFraction << zEndl;
-//		std::cout << "Formin filaments = " << GetFilamentTotal() << "  " << GetMeanFilamentSize()  << "  " << GetMeanFilamentLength() << zEndl;
+		std::cout << "Formin monos = " << freeMonoTotal << "  " << boundMonoTotal << "  " << monoTotal << "  ";
+		std::cout << freeFraction << "  " << boundFraction << zEndl;
+		std::cout << "Formin filaments = " << GetFilamentTotal() << "  " << GetMeanFilamentSize()  << "  " << GetMeanFilamentLength() << zEndl;
+*/
 	}
 
 }
@@ -291,25 +292,21 @@ void aeForminNetwork::Transfer()
 
 			ActivePolymerListIterator iterAP=m_FreeActivePolymers.begin();
 
-			long newPolymerTotal = m_FreeActivePolymers.size();
-
 			while(iterAP != m_FreeActivePolymers.end())
 			{
-				const long initialMTotal = GetMonomerTotal();
-
 				aeActivePolymer*  pPolymer = *iterAP;
 
 				// An actin filament grows from the formin active polymer's
 				// head, and a new mActin, if found, is initially attached 
 				// to its tail and transferred to its head.
 
-				aeActiveBond*  pHeadBond = pPolymer->GetHeadBond();
+//				aeActiveBond*  pHeadBond = pPolymer->GetHeadBond();
 				aeActiveBond*  pTailBond = pPolymer->GetTailBond();
 
-				aeActiveBond*  pHeadHeadAdjacentBond = pHeadBond->GetHeadAdjacentBond();
-				aeActiveBond*  pHeadTailAdjacentBond = pHeadBond->GetTailAdjacentBond();
-				aeActiveBond*  pTailHeadAdjacentBond = pTailBond->GetHeadAdjacentBond();
-				aeActiveBond*  pTailTailAdjacentBond = pTailBond->GetTailAdjacentBond();
+//				aeActiveBond*  pHeadHeadAdjacentBond = pHeadBond->GetHeadAdjacentBond();
+//				aeActiveBond*  pHeadTailAdjacentBond = pHeadBond->GetTailAdjacentBond();
+//				aeActiveBond*  pTailHeadAdjacentBond = pTailBond->GetHeadAdjacentBond();
+//				aeActiveBond*  pTailTailAdjacentBond = pTailBond->GetTailAdjacentBond();
 
 
 				double x = pTailBond->GetTailHeadBead()->GetXPos();
@@ -355,20 +352,20 @@ void aeForminNetwork::Transfer()
 					
 					// Store a pointer to the last mActin in the filament
 
-					aeActiveBond* const pActinTail = pPolymer->GetTailBond()->GetHeadAdjacentBond();
+//					aeActiveBond* const pActinTail = pPolymer->GetTailBond()->GetHeadAdjacentBond();
 						
 					// Insert the new mActin monomer at the tail of the growing actin 
 					// filament
 
 					pPolymer->InsertBond(pTailBond, pTargetBond);
 
-					pHeadBond = pPolymer->GetHeadBond();
-					pTailBond = pPolymer->GetTailBond();
+//					pHeadBond = pPolymer->GetHeadBond();
+//					pTailBond = pPolymer->GetTailBond();
 
-					pHeadHeadAdjacentBond = pHeadBond->GetHeadAdjacentBond();
-					pHeadTailAdjacentBond = pHeadBond->GetTailAdjacentBond();
-					pTailHeadAdjacentBond = pTailBond->GetHeadAdjacentBond();
-					pTailTailAdjacentBond = pTailBond->GetTailAdjacentBond();
+//					pHeadHeadAdjacentBond = pHeadBond->GetHeadAdjacentBond();
+//					pHeadTailAdjacentBond = pHeadBond->GetTailAdjacentBond();
+//					pTailHeadAdjacentBond = pTailBond->GetHeadAdjacentBond();
+//					pTailTailAdjacentBond = pTailBond->GetTailAdjacentBond();
 
 				}
 					

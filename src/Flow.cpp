@@ -301,10 +301,8 @@ void CFlow::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 
 	// Write out the overall mean densities for checking
 
-	long noset = m_vObservables.size();
-
-	     meanDens1.AddData(m_vObservables.at(0));
-	      meanVel1.AddData(m_vObservables.at(1));
+	meanDens1.AddData(m_vObservables.at(0));
+	meanVel1.AddData(m_vObservables.at(1));
 
 	// Write out the variation of the major bead density across the SimBox.
 	// We pass a pointer to the vector of data so that it can be accessed
@@ -320,8 +318,8 @@ void CFlow::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 	m_pTSD = new CTimeSeriesData(dataTotal);
 
 	m_pTSD->SetValue(0,  pISimBox->GetCurrentTime(), "Time");
-	m_pTSD->SetValue(1,  m_MajorMaxVelocity,		 "Max Vel");
-	m_pTSD->SetValue(2,  m_MajorMinVelocity,		 "Min Vel");
+	m_pTSD->SetValue(1,  m_MajorMaxVelocity,         "Max Vel");
+	m_pTSD->SetValue(2,  m_MajorMinVelocity,	   "Min Vel");
 
 	m_pState->AddTimeSeriesData(m_pTSD);
 

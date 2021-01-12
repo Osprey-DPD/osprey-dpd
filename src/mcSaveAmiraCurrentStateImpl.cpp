@@ -55,10 +55,10 @@ void mcSaveAmiraCurrentStateImpl::SaveAmiraCurrentState(const xxCommand* const p
 
 	if(pMon->InternalSaveCurrentState(pFormat))
 	{
-		CLogSaveCurrentState* pMsg = new CLogSaveCurrentState(pMon->GetCurrentTime());
+		 new CLogSaveCurrentState(pMon->GetCurrentTime());
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 }

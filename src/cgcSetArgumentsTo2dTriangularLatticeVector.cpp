@@ -199,7 +199,7 @@ bool cgcSetArgumentsTo2dTriangularLatticeVector::Pack(const tguArgumentSequence&
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         return cgcSetArgumentsTo2dRealLatticeVector::Pack(vArguments);
     }

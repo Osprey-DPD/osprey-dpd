@@ -126,7 +126,7 @@ void ccChargeBeadByTypeImpl::ChargeBeadByType(const xxCommand* const pCommand)
 
 		// Log a message indicating that the bead type has been charged.
 
-		CLogChargeBeadType* pMsg = new CLogChargeBeadType(pSimBox->GetCurrentTime(), name, type, strength, range, true);
+		 new CLogChargeBeadType(pSimBox->GetCurrentTime(), name, type, strength, range, true);
 	}
 #endif
 }

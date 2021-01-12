@@ -99,18 +99,12 @@ namespace
 // Constructor for use when the acfProcessFactory class creates a process
 // according to its string identifier read from the control data file.
 
-prfActin::prfActin() : IModifyfActinProcess(), 
-                        m_pACN(0),
-						m_MonomerTotal(0),
-						m_FreeMonomerTotal(0), m_BoundMonomerTotal(0),
+prfActin::prfActin() : IModifyfActinProcess(), m_pACN(0),
+						m_MonomerTotal(0), m_FreeMonomerTotal(0), m_BoundMonomerTotal(0), m_FilamentTotal(0),
 						m_FreeMonomerFraction(0.0), m_BoundMonomerFraction(0.0),
-						m_FilamentTotal(0),
-						m_MeanFilamentSize(0.0),
-						m_SDevFilamentSize(0.0),
-						m_MeanFilamentLength(0.0),
-						m_SDevFilamentLength(0.0),
-                        m_MeanFilamentLatSqDisp(0.0),
-                        m_VarFilamentLatSqDisp(0.0)
+						m_MeanFilamentSize(0.0), m_SDevFilamentSize(0.0),
+						m_MeanFilamentLength(0.0), m_SDevFilamentLength(0.0),
+                                              m_MeanFilamentLatSqDisp(0.0), m_VarFilamentLatSqDisp(0.0)
 {
 	for(short int i=0; i<3; i++)
 	{
@@ -131,16 +125,12 @@ prfActin::prfActin() : IModifyfActinProcess(),
 
 prfActin::prfActin(const aefActinNetwork* pACN, long start, long end) : IModifyfActinProcess(), 
                                             m_pACN(pACN),
-											m_MonomerTotal(0),
-											m_FreeMonomerTotal(0), m_BoundMonomerTotal(0),
-											m_FreeMonomerFraction(0.0), m_BoundMonomerFraction(0.0),
+											m_MonomerTotal(0), m_FreeMonomerTotal(0), m_BoundMonomerTotal(0),
 											m_FilamentTotal(0),
-											m_MeanFilamentSize(0.0),
-											m_SDevFilamentSize(0.0),
-											m_MeanFilamentLength(0.0),
-											m_SDevFilamentLength(0.0),
-											m_MeanFilamentLatSqDisp(0.0),
-											m_VarFilamentLatSqDisp(0.0)
+											m_FreeMonomerFraction(0.0), m_BoundMonomerFraction(0.0),
+											m_MeanFilamentSize(0.0), m_SDevFilamentSize(0.0),
+											m_MeanFilamentLength(0.0), m_SDevFilamentLength(0.0),
+											m_MeanFilamentLatSqDisp(0.0), m_VarFilamentLatSqDisp(0.0)
 {
 	// Now that the base class part of this class has been constructed, set the
 	// time interval for process analysis. This is for informational purposes
@@ -333,7 +323,8 @@ bool prfActin::InternalValidateData(const ISimState* const pISimState)
 
 	SetState(new xxProcessState(xxBase::GetPSPrefix() + GetProcessType() + ToString(GetId()) + "." + pISimState->GetRunId(), GetStartTime(), GetEndTime(), pISimState->GetRunId(), GetProcessType()));
 
-	zOutStream& os = m_pState->putASCIIStartTags();
+	m_pState->putASCIIStartTags();
+//	zOutStream& os = m_pState->putASCIIStartTags();
 //	os << "    MonomerTotal		" << m_MonomerTotal	 << zEndl;
 
 #endif
@@ -392,12 +383,12 @@ void prfActin::SetCondenseDelay(const xxCommand* const pCommand)
 
 		std::cout << "setting condense delay to " << delay << zEndl;
 
-		CLogpcBLMVesicleFusionSetCondenseDelay* pMsg = new CLogpcBLMVesicleFusionSetCondenseDelay(pCmd->GetExecutionTime(), pid, delay);
+		 new CLogpcBLMVesicleFusionSetCondenseDelay(pCmd->GetExecutionTime(), pid, delay);
 
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 

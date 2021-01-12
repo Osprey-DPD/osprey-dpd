@@ -158,11 +158,11 @@ bool acCancelConstantFreeActiveBondConcentration::Execute(long simTime, ISimCmd*
 		{
 			pMACN->CancelConstantFreeBondConcentration();
 
-			CLogacCancelConstantFreeActiveBondConcentration* pMsg = new CLogacCancelConstantFreeActiveBondConcentration(GetExecutionTime(), m_ACNType);
+			 new CLogacCancelConstantFreeActiveBondConcentration(GetExecutionTime(), m_ACNType);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

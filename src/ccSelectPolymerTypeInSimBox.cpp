@@ -187,7 +187,7 @@ bool ccSelectPolymerTypeInSimBox::Pack(const tguArgumentSequence& vArguments)
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(ccSelectPolymerTypeInRegion::Pack(vArguments) && vArguments.size() == GetArgumentTotal())
+    if(ccSelectPolymerTypeInRegion::Pack(vArguments) && static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         return true;
     }

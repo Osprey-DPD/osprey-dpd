@@ -73,21 +73,13 @@ long mpsSimBox::GlobalCellCounter = 0;
 
 mpsSimBox::mpsSimBox(long geometry, long normal, long px, long py, long pz, 
                      long lx, long ly, long lz, double dx, double dy, double dz,
-                     CNTCellVector&  rvCNTCells,  PolymerVector&  rvBulkPolymers) : m_Geometry(geometry), m_Normal(normal),
-					                              m_BCTotal(((pow(3,geometry)-1)/2)*GetWorld()),
-                                                  m_PX(px), m_PY(py), m_PZ(pz),
-                                                  m_pi(0), m_pj(0), m_pk(0),
-												  m_bFailed(false),
-												  m_bExternal(false),
-                                                  m_LX(lx), m_LY(ly), m_LZ(lz),
+                     CNTCellVector&  rvCNTCells,  PolymerVector&  rvBulkPolymers) : m_LX(lx), m_LY(ly), m_LZ(lz),
                                                   m_DX(dx), m_DY(dy), m_DZ(dz),
                                                   m_SimBoxXLength(static_cast<double>(lx)*dx),
                                                   m_SimBoxYLength(static_cast<double>(ly)*dy),
                                                   m_SimBoxZLength(static_cast<double>(lz)*dz),
                                                   m_rvCNTCells(rvCNTCells),
-												  m_BeadTotal(0),
-												  m_ExtendedBondCounter(0),
-												  m_ExtendedBondForceCounter(0),
+						    m_BeadTotal(0), m_ExtendedBondCounter(0), m_ExtendedBondForceCounter(0),
                                                   m_pR(0),         
                                                   m_pL(0),      
                                                   m_pT(0),      
@@ -114,9 +106,9 @@ mpsSimBox::mpsSimBox(long geometry, long normal, long px, long py, long pz,
                                                   m_pDTL(0),     
                                                   m_pUBL(0),     
                                                   m_pDBL(0),
-												  UFacePid(-1),
+						       UFacePid(-1),
 	                                              DFacePid(-1),
-												  RFacePid(-1),
+						        RFacePid(-1),
 	                                              LFacePid(-1),
 	                                              TFacePid(-1),
 	                                              BFacePid(-1),
@@ -129,7 +121,7 @@ mpsSimBox::mpsSimBox(long geometry, long normal, long px, long py, long pz,
 	                                              UTEdgePid(-1),
 	                                              UBEdgePid(-1),
 	                                              DREdgePid(-1),
-												  DLEdgePid(-1),
+							DLEdgePid(-1),
 	                                              DTEdgePid(-1),
 	                                              DBEdgePid(-1),
 	                                              UTRCornerPid(-1),
@@ -137,9 +129,16 @@ mpsSimBox::mpsSimBox(long geometry, long normal, long px, long py, long pz,
 	                                              UBRCornerPid(-1),
 	                                              UBLCornerPid(-1),
 	                                              DTRCornerPid(-1),
-												  DTLCornerPid(-1),
+							DTLCornerPid(-1),
                                                   DBRCornerPid(-1),
-                                                  DBLCornerPid(-1)
+                                                  DBLCornerPid(-1),
+                                                  localBeadTotalTimer(0),
+                                                  m_Geometry(geometry), m_Normal(normal),
+					           m_BCTotal(((pow(3,geometry)-1)/2)*GetWorld()),
+                                                  m_PX(px), m_PY(py), m_PZ(pz),
+                                                  m_pi(0), m_pj(0), m_pk(0),
+						   m_bFailed(false), m_bExternal(false),
+						   velCounter(0), m_IntPerBeadCounter(0)
                      
 {
     // We store an invalid value in the neighbour pid array, so that we can check that it is correctly filled in later.
@@ -229,7 +228,6 @@ mpsSimBox::mpsSimBox(long geometry, long normal, long px, long py, long pz,
 	// Zero the counter and storage for the processors' CM velocities; then initialise the counter vectors.
 	// Note that some of these are only used by P0, but we initialise them here anyway for all processors.
 	
-	m_CMVCounter = 0;
 	m_vXCMVel.clear();
 	m_vYCMVel.clear();
 	m_vZCMVel.clear();
@@ -323,18 +321,7 @@ mpsSimBox::mpsSimBox(long geometry, long normal, long px, long py, long pz,
 
 // Copy constructor
 
-mpsSimBox::mpsSimBox(const mpsSimBox& oldSimBox) : m_Geometry(oldSimBox.m_Geometry),
-                                                   m_Normal(oldSimBox.m_Normal),
-                                                   m_BCTotal(oldSimBox.m_BCTotal),
-                                                   m_PX(oldSimBox.m_PX),
-                                                   m_PY(oldSimBox.m_PY),
-                                                   m_PZ(oldSimBox.m_PZ),
-                                                   m_pi(oldSimBox.m_pi),
-                                                   m_pj(oldSimBox.m_pj),
-                                                   m_pk(oldSimBox.m_pk),
-												   m_bFailed(oldSimBox.m_bFailed),
-                      						       m_bExternal(oldSimBox.m_bExternal),
-                                                   m_LX(oldSimBox.m_LX),
+mpsSimBox::mpsSimBox(const mpsSimBox& oldSimBox) : m_LX(oldSimBox.m_LX),
                                                    m_LY(oldSimBox.m_LY),
                                                    m_LZ(oldSimBox.m_LZ),
                                                    m_DX(oldSimBox.m_DX),
@@ -344,9 +331,9 @@ mpsSimBox::mpsSimBox(const mpsSimBox& oldSimBox) : m_Geometry(oldSimBox.m_Geomet
                                                    m_SimBoxYLength(oldSimBox.m_SimBoxYLength),
                                                    m_SimBoxZLength(oldSimBox.m_SimBoxZLength),
                                                    m_rvCNTCells(oldSimBox.m_rvCNTCells),
-												   m_BeadTotal(oldSimBox.m_BeadTotal),
-												   m_ExtendedBondCounter(oldSimBox.m_ExtendedBondCounter),
-												   m_ExtendedBondForceCounter(oldSimBox.m_ExtendedBondForceCounter),
+						     m_BeadTotal(oldSimBox.m_BeadTotal),
+					             m_ExtendedBondCounter(oldSimBox.m_ExtendedBondCounter),
+						     m_ExtendedBondForceCounter(oldSimBox.m_ExtendedBondForceCounter),
                                                    m_pR(oldSimBox.m_pR),         
                                                    m_pL(oldSimBox.m_pL),      
                                                    m_pT(oldSimBox.m_pT),      
@@ -372,7 +359,20 @@ mpsSimBox::mpsSimBox(const mpsSimBox& oldSimBox) : m_Geometry(oldSimBox.m_Geomet
                                                    m_pUTL(oldSimBox.m_pUTL),     
                                                    m_pDTL(oldSimBox.m_pDTL),     
                                                    m_pUBL(oldSimBox.m_pUBL),     
-                                                   m_pDBL(oldSimBox.m_pDBL)
+                                                   m_pDBL(oldSimBox.m_pDBL),
+                                                   m_Geometry(oldSimBox.m_Geometry),
+                                                   m_Normal(oldSimBox.m_Normal),
+                                                   m_BCTotal(oldSimBox.m_BCTotal),
+                                                   m_PX(oldSimBox.m_PX),
+                                                   m_PY(oldSimBox.m_PY),
+                                                   m_PZ(oldSimBox.m_PZ),
+                                                   m_pi(oldSimBox.m_pi),
+                                                   m_pj(oldSimBox.m_pj),
+                                                   m_pk(oldSimBox.m_pk),
+                      				     m_bFailed(oldSimBox.m_bFailed), 
+                      				     m_bExternal(oldSimBox.m_bExternal), 
+                      				     velCounter(0), m_IntPerBeadCounter(0)
+
 {
     for(long i=0; i<27; i++)
     {
@@ -381,16 +381,16 @@ mpsSimBox::mpsSimBox(const mpsSimBox& oldSimBox) : m_Geometry(oldSimBox.m_Geomet
 
     m_vBulkCNTCells             = oldSimBox.m_vBulkCNTCells;
     m_lEmptyPolymers            = oldSimBox.m_lEmptyPolymers;
-	m_lEmptyExtendedPolymers    = oldSimBox.m_lEmptyExtendedPolymers;
-	m_mBulkPolymers             = oldSimBox.m_mBulkPolymers;
-	m_mExtendedPolymers         = oldSimBox.m_mExtendedPolymers;
-	m_mmExtendedBonds           = oldSimBox.m_mmExtendedBonds;
-	m_mBulkNanoparticles        = oldSimBox.m_mBulkNanoparticles;
+    m_lEmptyExtendedPolymers    = oldSimBox.m_lEmptyExtendedPolymers;
+    m_mBulkPolymers             = oldSimBox.m_mBulkPolymers;
+    m_mExtendedPolymers         = oldSimBox.m_mExtendedPolymers;
+    m_mmExtendedBonds           = oldSimBox.m_mmExtendedBonds;
+    m_mBulkNanoparticles        = oldSimBox.m_mBulkNanoparticles;
 	
 	for(long iv=0; iv<3; iv++)
 	{
 	    m_CMVel[iv]  = oldSimBox.m_CMVel[iv];
-		m_AngMom[iv] = oldSimBox.m_AngMom[iv];
+	    m_AngMom[iv] = oldSimBox.m_AngMom[iv];
 	}
 
 }
@@ -509,7 +509,7 @@ mpsSimBox::~mpsSimBox()
 	long deadPolymerCount = 0;
 	long deadExtendedPolymerCount = 0;
 	
-	CPolymer* pPolymer;
+//	CPolymer* pPolymer;
 	mpuExtendedPolymer* pExtPoly;
 	
 	if(m_mBulkPolymers.size() > 0)
@@ -518,10 +518,10 @@ mpsSimBox::~mpsSimBox()
 	    std::cout << "Proc " << GetRank() << " destroying its " << m_mBulkPolymers.size() << " bulk polymers" << zEndl;
 	    for(LongPolymerIterator iterMapPoly=m_mBulkPolymers.begin(); iterMapPoly!=m_mBulkPolymers.end(); iterMapPoly++)
 	    {
-	        pPolymer = iterMapPoly->second;
+//	        pPolymer = iterMapPoly->second;
 //		    delete pPolymer;
 	    }
-		std::cout << zEndl;
+	    std::cout << zEndl;
 	    m_mBulkPolymers.clear();
 	}
 	else
@@ -884,17 +884,13 @@ void mpsSimBox::UpdateForce()
 		
 	    // Now do the same for the Border regions
 	
-	    double fx = 0.0;
-	    double fy = 0.0;
-	    double fz = 0.0;
-	
-	    double vx = 0.0;
-	    double vy = 0.0;
-	    double vz = 0.0;
-	
+//	    double fx = 0.0;
+//	    double fy = 0.0;
+//	    double fz = 0.0;
+		
 	    double fcounter = 0.0;
-	    long fn = 0;
-	    long vn = 0;
+//	    long fn = 0;
+//	    long vn = 0;
 		
     // First the Faces
 
@@ -905,8 +901,8 @@ void mpsSimBox::UpdateForce()
 	m_MeanSqFaceBeadsPerCell[0] += beadsPerCell*beadsPerCell;	
 	m_MeanFaceIntPerBead[0] += fcounter;
 	m_MeanSqFaceIntPerBead[0] += fcounter*fcounter;
-	fn = m_pU->CalculateForceOnBeads();
-	vn = m_pU->CalculateVelocityOfBeads();
+//	fn = m_pU->CalculateForceOnBeads();
+//	vn = m_pU->CalculateVelocityOfBeads();
 	
 //	std::cout << "P " << GetRank() << " U Face has " << beadsPerCell << " " << fcounter << " beads/cell and interactions/bead,  total/force/velocity = " << fn << " " << vn << " " << m_pU->GetBeadXForce() << " " <<  m_pU->GetBeadYForce() << " "  << m_pU->GetBeadZForce() << " " <<  m_pU->GetBeadXVel() << " " <<  m_pU->GetBeadYVel() << " " <<  m_pU->GetBeadZVel() << zEndl;
 	
@@ -917,8 +913,8 @@ void mpsSimBox::UpdateForce()
 	m_MeanSqFaceBeadsPerCell[1] += beadsPerCell*beadsPerCell;	
 	m_MeanFaceIntPerBead[1] += fcounter;
 	m_MeanSqFaceIntPerBead[1] += fcounter*fcounter;
-	fn = m_pD->CalculateForceOnBeads();
-	vn = m_pD->CalculateVelocityOfBeads();
+//	fn = m_pD->CalculateForceOnBeads();
+//	vn = m_pD->CalculateVelocityOfBeads();
 	
 //	std::cout << "P " << GetRank() << " D Face has " << beadsPerCell << " " << fcounter << " beads/cell and interactions/bead,  total/force/velocity = " << fn << " " << vn << " " << m_pD->GetBeadXForce() << " " <<  m_pD->GetBeadYForce() << " "  << m_pD->GetBeadZForce() << " " <<  m_pD->GetBeadXVel() << " " <<  m_pD->GetBeadYVel() << " " <<  m_pD->GetBeadZVel() << zEndl;
 	
@@ -929,8 +925,8 @@ void mpsSimBox::UpdateForce()
 	m_MeanSqFaceBeadsPerCell[2] += beadsPerCell*beadsPerCell;	
 	m_MeanFaceIntPerBead[2] += fcounter;
 	m_MeanSqFaceIntPerBead[2] += fcounter*fcounter;
-	fn = m_pT->CalculateForceOnBeads();
-	vn = m_pT->CalculateVelocityOfBeads();
+//	fn = m_pT->CalculateForceOnBeads();
+//	vn = m_pT->CalculateVelocityOfBeads();
 	
 //	std::cout << "P " << GetRank() << " T Face has " << beadsPerCell << " " << fcounter << " beads/cell and interactions/bead,  total/force/velocity = " << fn << " " << vn << " " << m_pT->GetBeadXForce() << " " <<  m_pT->GetBeadYForce() << " "  << m_pT->GetBeadZForce() << " " <<  m_pT->GetBeadXVel() << " " <<  m_pT->GetBeadYVel() << " " <<  m_pT->GetBeadZVel() << zEndl;
 	
@@ -941,8 +937,8 @@ void mpsSimBox::UpdateForce()
 	m_MeanSqFaceBeadsPerCell[3] += beadsPerCell*beadsPerCell;	
 	m_MeanFaceIntPerBead[3] += fcounter;
 	m_MeanSqFaceIntPerBead[3] += fcounter*fcounter;
-	fn = m_pB->CalculateForceOnBeads();
-	vn = m_pB->CalculateVelocityOfBeads();
+//	fn = m_pB->CalculateForceOnBeads();
+//	vn = m_pB->CalculateVelocityOfBeads();
 	
 //	std::cout << "P " << GetRank() << " B Face has " << beadsPerCell << " " << fcounter << " beads/cell and interactions/bead,  total/force/velocity = " << fn << " " << vn << " " << m_pB->GetBeadXForce() << " " <<  m_pB->GetBeadYForce() << " "  << m_pB->GetBeadZForce() << " " <<  m_pB->GetBeadXVel() << " " <<  m_pB->GetBeadYVel() << " " <<  m_pB->GetBeadZVel() << zEndl;
 	
@@ -953,8 +949,8 @@ void mpsSimBox::UpdateForce()
 	m_MeanSqFaceBeadsPerCell[4] += beadsPerCell*beadsPerCell;	
 	m_MeanFaceIntPerBead[4] += fcounter;
 	m_MeanSqFaceIntPerBead[4] += fcounter*fcounter;
-	fn = m_pR->CalculateForceOnBeads();
-	vn = m_pR->CalculateVelocityOfBeads();
+//	fn = m_pR->CalculateForceOnBeads();
+//	vn = m_pR->CalculateVelocityOfBeads();
 	
 //	std::cout << "P " << GetRank() << " R Face has " << beadsPerCell << " " << fcounter << " beads/cell and interactions/bead,  total/force/velocity = " << fn << " " << vn << " " << m_pR->GetBeadXForce() << " " <<  m_pR->GetBeadYForce() << " "  << m_pR->GetBeadZForce() << " " <<  m_pR->GetBeadXVel() << " " <<  m_pR->GetBeadYVel() << " " <<  m_pR->GetBeadZVel() << zEndl;
 	
@@ -965,8 +961,8 @@ void mpsSimBox::UpdateForce()
 	m_MeanSqFaceBeadsPerCell[5] += beadsPerCell*beadsPerCell;	
 	m_MeanFaceIntPerBead[5] += fcounter;
 	m_MeanSqFaceIntPerBead[5] += fcounter*fcounter;
-	fn = m_pL->CalculateForceOnBeads();
-	vn = m_pL->CalculateVelocityOfBeads();
+//	fn = m_pL->CalculateForceOnBeads();
+//	vn = m_pL->CalculateVelocityOfBeads();
 	
 //	std::cout << "P " << GetRank() << " L Face has " << beadsPerCell << " " << fcounter << " beads/cell and interactions/bead,  total/force/velocity = " << fn << " " << vn << " " << m_pL->GetBeadXForce() << " " <<  m_pL->GetBeadYForce() << " "  << m_pL->GetBeadZForce() << " " <<  m_pL->GetBeadXVel() << " " <<  m_pL->GetBeadYVel() << " " <<  m_pL->GetBeadZVel() << zEndl;
 	
@@ -1084,8 +1080,8 @@ void mpsSimBox::UpdateForce()
 	
 	beadsPerCell = m_pUTR->CalculateBeadsPerCell();
 	fcounter = m_pUTR->CalculateInteractionsPerBead();	
-	fn = m_pUTR->CalculateForceOnBeads();
-	vn = m_pUTR->CalculateVelocityOfBeads();
+//	fn = m_pUTR->CalculateForceOnBeads();
+//	vn = m_pUTR->CalculateVelocityOfBeads();
 	
 	m_MeanCornerBeadsPerCell[0] += beadsPerCell;
 	m_MeanSqCornerBeadsPerCell[0] += beadsPerCell*beadsPerCell;
@@ -1095,8 +1091,8 @@ void mpsSimBox::UpdateForce()
 	
 	beadsPerCell = m_pUTL->CalculateBeadsPerCell();
 	fcounter = m_pUTL->CalculateInteractionsPerBead();	
-	fn = m_pUTL->CalculateForceOnBeads();
-	vn = m_pUTL->CalculateVelocityOfBeads();
+//	fn = m_pUTL->CalculateForceOnBeads();
+//	vn = m_pUTL->CalculateVelocityOfBeads();
 	
 	m_MeanCornerBeadsPerCell[1] += beadsPerCell;
 	m_MeanSqCornerBeadsPerCell[1] += beadsPerCell*beadsPerCell;
@@ -1106,8 +1102,8 @@ void mpsSimBox::UpdateForce()
 	
 	beadsPerCell = m_pUBR->CalculateBeadsPerCell();
 	fcounter = m_pUBR->CalculateInteractionsPerBead();	
-	fn = m_pUBR->CalculateForceOnBeads();
-	vn = m_pUBR->CalculateVelocityOfBeads();
+//	fn = m_pUBR->CalculateForceOnBeads();
+//	vn = m_pUBR->CalculateVelocityOfBeads();
 	
 	m_MeanCornerBeadsPerCell[2] += beadsPerCell;
 	m_MeanSqCornerBeadsPerCell[2] += beadsPerCell*beadsPerCell;
@@ -1117,8 +1113,8 @@ void mpsSimBox::UpdateForce()
 	
 	beadsPerCell = m_pUBL->CalculateBeadsPerCell();
 	fcounter = m_pUBL->CalculateInteractionsPerBead();	
-	fn = m_pUBL->CalculateForceOnBeads();
-	vn = m_pUBL->CalculateVelocityOfBeads();
+//	fn = m_pUBL->CalculateForceOnBeads();
+//	vn = m_pUBL->CalculateVelocityOfBeads();
 	
 	m_MeanCornerBeadsPerCell[3] += beadsPerCell;
 	m_MeanSqCornerBeadsPerCell[3] += beadsPerCell*beadsPerCell;
@@ -1128,8 +1124,8 @@ void mpsSimBox::UpdateForce()
 	
 	beadsPerCell = m_pDTR->CalculateBeadsPerCell();
 	fcounter = m_pDTR->CalculateInteractionsPerBead();	
-	fn = m_pDTR->CalculateForceOnBeads();
-	vn = m_pDTR->CalculateVelocityOfBeads();
+//	fn = m_pDTR->CalculateForceOnBeads();
+//	vn = m_pDTR->CalculateVelocityOfBeads();
 	
 	m_MeanCornerBeadsPerCell[4] += beadsPerCell;
 	m_MeanSqCornerBeadsPerCell[4] += beadsPerCell*beadsPerCell;
@@ -1139,8 +1135,8 @@ void mpsSimBox::UpdateForce()
 	
 	beadsPerCell = m_pDTL->CalculateBeadsPerCell();
 	fcounter = m_pDTL->CalculateInteractionsPerBead();	
-	fn = m_pDTL->CalculateForceOnBeads();
-	vn = m_pDTL->CalculateVelocityOfBeads();
+//	fn = m_pDTL->CalculateForceOnBeads();
+//	vn = m_pDTL->CalculateVelocityOfBeads();
 	
 	m_MeanCornerBeadsPerCell[5] += beadsPerCell;
 	m_MeanSqCornerBeadsPerCell[5] += beadsPerCell*beadsPerCell;
@@ -1150,8 +1146,8 @@ void mpsSimBox::UpdateForce()
 	
 	beadsPerCell = m_pDBR->CalculateBeadsPerCell();
 	fcounter = m_pDBR->CalculateInteractionsPerBead();	
-	fn = m_pDBR->CalculateForceOnBeads();
-	vn = m_pDBR->CalculateVelocityOfBeads();
+//	fn = m_pDBR->CalculateForceOnBeads();
+//	vn = m_pDBR->CalculateVelocityOfBeads();
 	
 	m_MeanCornerBeadsPerCell[6] += beadsPerCell;
 	m_MeanSqCornerBeadsPerCell[6] += beadsPerCell*beadsPerCell;
@@ -1161,8 +1157,8 @@ void mpsSimBox::UpdateForce()
 	
 	beadsPerCell = m_pDBL->CalculateBeadsPerCell();
 	fcounter = m_pDBL->CalculateInteractionsPerBead();	
-	fn = m_pDBL->CalculateForceOnBeads();
-	vn = m_pDBL->CalculateVelocityOfBeads();
+//	fn = m_pDBL->CalculateForceOnBeads();
+//	vn = m_pDBL->CalculateVelocityOfBeads();
 	
 	m_MeanCornerBeadsPerCell[7] += beadsPerCell;
 	m_MeanSqCornerBeadsPerCell[7] += beadsPerCell*beadsPerCell;
@@ -1210,7 +1206,7 @@ void mpsSimBox::UpdateMom()
 
 long mpsSimBox::UpdateFaceProcessor(long alpha, long beta, long gamma)
 {
-    const long newPid = GetNeighbourPidFromCoordinateDifferences(alpha, beta, gamma);
+//    const long newPid = GetNeighbourPidFromCoordinateDifferences(alpha, beta, gamma);
 
     return 0;
 }
@@ -1221,7 +1217,7 @@ long mpsSimBox::UpdateFaceProcessor(long alpha, long beta, long gamma)
 
 long mpsSimBox::UpdateEdgeProcessor(long alpha, long beta, long gamma)
 {
-    const long newPid = GetNeighbourPidFromCoordinateDifferences(alpha, beta, gamma);
+//    const long newPid = GetNeighbourPidFromCoordinateDifferences(alpha, beta, gamma);
 
     return 0;
 }
@@ -1401,8 +1397,6 @@ bool mpsSimBox::CheckAllSingleBeadPolymerIds() const
 bool mpsSimBox::ConnectNeighbours()
 {
     bool bValid = true;
-
-    long newIndex = 0;
 
 		for( long gamma=-1; gamma<2; gamma++ )
 		{

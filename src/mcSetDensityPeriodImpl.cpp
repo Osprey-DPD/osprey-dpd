@@ -53,14 +53,14 @@ void mcSetDensityPeriodImpl::SetDensityPeriod(const xxCommand* const pCommand)
     {
         if(xxParallelBase::GlobalGetRank() == 0 && pCmd->IsExecutionLogged())
         {
-			CLogSetDensityPeriod* pMsg = new CLogSetDensityPeriod(pMon->GetCurrentTime(), newPeriod);
+			new CLogSetDensityPeriod(pMon->GetCurrentTime(), newPeriod);
         }
     }
     else
     {
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		     new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
         }
         else
         {
@@ -73,12 +73,12 @@ void mcSetDensityPeriodImpl::SetDensityPeriod(const xxCommand* const pCommand)
     {
 	    if(pCmd->IsExecutionLogged())
 	    {
-			CLogSetDensityPeriod* pMsg = new CLogSetDensityPeriod(pMon->GetCurrentTime(), newPeriod);
+		new CLogSetDensityPeriod(pMon->GetCurrentTime(), newPeriod);
 	    }	
     }
     else
     {
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
     }
 #endif
 

@@ -157,7 +157,7 @@ zInStream& taSineForce::Read(zInStream& is)
 
     if(!is.good() || m_StartTime < 0 || (m_X == 0 && m_Y == 0 && m_Z == 0))
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing sinusoidal force decorator (invalid start time or normal vector?)");
+         new CLogRestartStateBuilderError(0, "Error importing sinusoidal force decorator (invalid start time or normal vector?)");
         return is;
     }
 
@@ -165,7 +165,7 @@ zInStream& taSineForce::Read(zInStream& is)
 
     if(!is.good() || m_Amplitude < 0.0 || m_Period < 1.0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing sinusoidal force decorator (invalid amplitude or period?)");
+         new CLogRestartStateBuilderError(0, "Error importing sinusoidal force decorator (invalid amplitude or period?)");
         return is;
     }
 

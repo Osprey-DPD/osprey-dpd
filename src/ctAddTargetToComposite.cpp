@@ -61,7 +61,7 @@ namespace
 	xxCommand* Create(long executionTime) {return new ctAddTargetToComposite(executionTime);}
 
 	const zString id = ctAddTargetToComposite::GetType();
-    const long  argTotal = ctAddTargetToComposite::GetArgumentTotal();
+       const long  argTotal = ctAddTargetToComposite::GetArgumentTotal();
 
 	const bool bRegistered = acfCommandFactory::Instance()->Register(id, argTotal, Create);
 }
@@ -176,7 +176,7 @@ bool ctAddTargetToComposite::Execute(long simTime, ISimCmd* const pISimCmd) cons
 
 bool ctAddTargetToComposite::IsDataValid(const CInputData& riData) const
 {
-	CInputData& rincData = const_cast<CInputData&>(riData);
+//	CInputData& rincData = const_cast<CInputData&>(riData);
 
 	if(!riData.IsExternalNameValid(m_Destination))
 		return ErrorTrace("Invalid destination command target name");
@@ -204,7 +204,7 @@ bool ctAddTargetToComposite::IsDataValid(const CInputData& riData) const
 
 bool ctAddTargetToComposite::Pack(const tguArgumentSequence& vArguments)
 {
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(0)->GetValue(&m_Destination);
         vArguments.at(1)->GetValue(&m_Source);

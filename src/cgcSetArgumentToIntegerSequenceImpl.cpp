@@ -44,11 +44,11 @@ void cgcSetArgumentToIntegerSequenceImpl::SetArgumentToIntegerSequence(const xxC
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-	const cgcSetArgumentToIntegerSequence* const pCmd = dynamic_cast<const cgcSetArgumentToIntegerSequence*>(pCommand);
+    const cgcSetArgumentToIntegerSequence* const pCmd = dynamic_cast<const cgcSetArgumentToIntegerSequence*>(pCommand);
 
-	const zString groupName	    = pCmd->GetCommandGroupName();	// Name of command group
-	const long    cmdIndex      = pCmd->GetCommandIndex();	    // Index of command to add
-	const zString argName	    = pCmd->GetArgumentName();	    // Placeholder name of argument
+    const zString groupName	 = pCmd->GetCommandGroupName();	// Name of command group
+    const long    cmdIndex      = pCmd->GetCommandIndex();	    // Index of command to add
+    const zString argName	 = pCmd->GetArgumentName();	    // Placeholder name of argument
     const long    initialValue  = pCmd->GetInitialValue();      // Initial value of the sequence
     const long    increment     = pCmd->GetIncrement();         // Increment for the sequence
 
@@ -65,12 +65,12 @@ void cgcSetArgumentToIntegerSequenceImpl::SetArgumentToIntegerSequence(const xxC
 	{
         pGroup->SetArgumentToIntegerSequence(cmdIndex, argName, initialValue, increment);
 
-        const zString cmdName = pGroup->GetCommandName(cmdIndex);
-		CLogcgcSetArgumentToIntegerSequence* pMsg = new CLogcgcSetArgumentToIntegerSequence(pSimBox->GetCurrentTime(), groupName, cmdName, cmdIndex, argName, initialValue, increment);
+                const zString cmdName = pGroup->GetCommandName(cmdIndex);
+		new CLogcgcSetArgumentToIntegerSequence(pSimBox->GetCurrentTime(), groupName, cmdName, cmdIndex, argName, initialValue, increment);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
  
 #endif

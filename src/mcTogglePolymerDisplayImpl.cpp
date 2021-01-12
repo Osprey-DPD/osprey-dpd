@@ -98,10 +98,10 @@ void mcTogglePolymerDisplayImpl::TogglePolymerDisplay(const xxCommand* const pCo
             }
         }
 
-		CLogPolymerDisplay* pMsg = new CLogPolymerDisplay(pMon->GetCurrentTime(), polymerName, polymerType, bNewDisplay, !bNotFound);
+		new CLogPolymerDisplay(pMon->GetCurrentTime(), polymerName, polymerType, bNewDisplay, !bNotFound);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 }

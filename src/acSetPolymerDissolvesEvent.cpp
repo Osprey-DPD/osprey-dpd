@@ -183,19 +183,19 @@ bool acSetPolymerDissolvesEvent::Execute(long simTime, ISimCmd* const pISimCmd) 
 				pPolymerDissolves->SetSpringConstant(GetSpringConstant());
 				pPolymerDissolves->SetLength(GetLength());
 
-				CLogacSetPolymerDissolvesEvent* pMsg = new CLogacSetPolymerDissolvesEvent(GetExecutionTime(), m_ACNType, 
+				 new CLogacSetPolymerDissolvesEvent(GetExecutionTime(), m_ACNType, 
 																				  m_Duration, m_SpringConstant, m_Length);
 			}
 			else
 			{
-				CLogacInvalidEventCommandTarget* pMsg = new CLogacInvalidEventCommandTarget(GetExecutionTime(), m_ACNType, 
+				 new CLogacInvalidEventCommandTarget(GetExecutionTime(), m_ACNType, 
 					                                              pMACN->GetPolymerDissolvesEventType(),
 					                                              aevPolymerDissolves::GetType());
 			}
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

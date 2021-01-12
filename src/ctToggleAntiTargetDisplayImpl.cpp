@@ -72,7 +72,7 @@ void ctToggleAntiTargetDisplayImpl::ToggleAntiTargetDisplay(const xxCommand* con
 			BeadVector vTargetBeads = pCmdTarget->GetBeads();
 			const bool bTargetVisible = vTargetBeads.front()->GetVisible();
 
-		    AbstractBeadVector vAllBeads = pSimBox->GetAllBeadsInCNTCells();
+		        AbstractBeadVector vAllBeads = pSimBox->GetAllBeadsInCNTCells();
 			for(AbstractBeadVectorIterator iterBead=vAllBeads.begin(); iterBead!=vAllBeads.end(); iterBead++)
 			{
 				(*iterBead)->SetVisible(!bTargetVisible);
@@ -83,15 +83,15 @@ void ctToggleAntiTargetDisplayImpl::ToggleAntiTargetDisplay(const xxCommand* con
 				(*iterBead2)->SetVisible(bTargetVisible);
 			}
 
-			CLogctAntiTargetDisplay* pMsg = new CLogctAntiTargetDisplay(pSimBox->GetCurrentTime(), targetLabel, !bTargetVisible);
+			new CLogctAntiTargetDisplay(pSimBox->GetCurrentTime(), targetLabel, !bTargetVisible);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

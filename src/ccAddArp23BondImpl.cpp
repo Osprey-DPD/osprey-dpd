@@ -51,33 +51,35 @@ void ccAddArp23BondImpl::AddArp23Bond(const xxCommand* const pCommand)
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
 	// Base class data on the active cell network
+	
+	const zString headMonomerName	= pCmd->GetHeadMonomerName();
+	const zString tailMonomerName	= pCmd->GetTailMonomerName();
+	const long headMonomerType	= pSimBox->GetPolymerTypeFromName(headMonomerName);
+	const long tailMonomerType	= pSimBox->GetPolymerTypeFromName(tailMonomerName);
 
+/*
 	const long xCellNo				= pCmd->GetXCellNo();
 	const long yCellNo				= pCmd->GetYCellNo();
 	const long zCellNo				= pCmd->GetZCellNo();
 
 	// now the data on the arp23 bonds
 
-	const zString headMonomerName	= pCmd->GetHeadMonomerName();
-	const zString tailMonomerName	= pCmd->GetTailMonomerName();
-	const double k2					= pCmd->GetSpringConstant();
-	const double l0					= pCmd->GetUnstretchedLength();
-	const double k3					= pCmd->GetBendingModulus();
+	const double k2				= pCmd->GetSpringConstant();
+	const double l0				= pCmd->GetUnstretchedLength();
+	const double k3				= pCmd->GetBendingModulus();
 	const double phi0				= pCmd->GetPhi0();
 
-	const long headMonomerType		= pSimBox->GetPolymerTypeFromName(headMonomerName);
-	const long tailMonomerType		= pSimBox->GetPolymerTypeFromName(tailMonomerName);
-
+*/
 
 	// Not implemented yet
 
 	if(true)
 	{
-		CLogActiveBondAdded* pMsg = new CLogActiveBondAdded(pSimBox->GetCurrentTime(), "Arp23", headMonomerName, tailMonomerName,																						headMonomerType, tailMonomerType);
+		 new CLogActiveBondAdded(pSimBox->GetCurrentTime(), "Arp23", headMonomerName, tailMonomerName, headMonomerType, tailMonomerType);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 
 	}
 #endif

@@ -40,11 +40,11 @@ mcSetRestartStateDefaultInclusiveImpl::~mcSetRestartStateDefaultInclusiveImpl()
 
 void mcSetRestartStateDefaultInclusiveImpl::SetRestartStateDefaultInclusive(const xxCommand* const pCommand)
 {
-	const mcSetRestartStateDefaultInclusive* const pCmd = dynamic_cast<const mcSetRestartStateDefaultInclusive*>(pCommand);
+//	const mcSetRestartStateDefaultInclusive* const pCmd = dynamic_cast<const mcSetRestartStateDefaultInclusive*>(pCommand);
 
 	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 
-    pMon->m_bInclusiveRestartStates = true;
-	CLogSetRestartStateDefaultType* pMsg = new CLogSetRestartStateDefaultType(pMon->GetCurrentTime(), "inclusive");
+        pMon->m_bInclusiveRestartStates = true;
+	new CLogSetRestartStateDefaultType(pMon->GetCurrentTime(), "inclusive");
 }
 

@@ -119,12 +119,12 @@ void mcSaveBead1dDensityProfileImpl::SaveBead1dDensityProfile(const xxCommand* c
 
 		pMon->m_DensityFields.push_back(pProfile);
 
-		CLogSaveBead1dDensityProfile* pMsg = new CLogSaveBead1dDensityProfile(pMon->GetCurrentTime(), beadName, beadType, start, end, sample, 
+		new CLogSaveBead1dDensityProfile(pMon->GetCurrentTime(), beadName, beadType, start, end, sample, 
                                                  nx, ny, nz, sliceTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 
 }

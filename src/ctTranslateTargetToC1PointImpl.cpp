@@ -97,7 +97,6 @@ void ctTranslateTargetToC1PointImpl::TranslateTargetToC1Point(const xxCommand* c
 	// is not applicable to composite targets because they may contain
 	// a multitude of bead types.
 
-	bool bSuccess = true;
 	long oldIndex = 0;
 	long newIndex = 0;
 	long ix, iy, iz;
@@ -190,11 +189,11 @@ void ctTranslateTargetToC1PointImpl::TranslateTargetToC1Point(const xxCommand* c
             
 			}
 			
-	        CLogctTranslateTargetToC1Point* pMsg = new CLogctTranslateTargetToC1Point(pSimBox->GetCurrentTime(), targetLabel, xc, yc, zc);
+	            new CLogctTranslateTargetToC1Point(pSimBox->GetCurrentTime(), targetLabel, xc, yc, zc);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
     }
 	else if(pCmdTarget) // we have a bead target
@@ -230,16 +229,16 @@ void ctTranslateTargetToC1PointImpl::TranslateTargetToC1Point(const xxCommand* c
                  }
 			}
 			
-	        CLogctTranslateTargetToC1Point* pMsg = new CLogctTranslateTargetToC1Point(pSimBox->GetCurrentTime(), targetLabel, xc, yc, zc);
+	            new CLogctTranslateTargetToC1Point(pSimBox->GetCurrentTime(), targetLabel, xc, yc, zc);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 	
 #endif

@@ -369,7 +369,7 @@ bool evVesicleBindsWall::Execute(long simTime, ISimEvent* const pISimEvent)
 		{
 			pISimEvent->SaveCurrentState();
 
-			CLogVesicleBindsWall* pMsg = new CLogVesicleBindsWall(simTime, m_AggregateId, m_CMDistance, m_EdgeDistance);
+			 new CLogVesicleBindsWall(simTime, m_AggregateId, m_CMDistance, m_EdgeDistance);
 
 			InActivateEvent();		
 		}

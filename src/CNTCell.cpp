@@ -436,8 +436,8 @@ void CCNTCell::SetDPDBeadConsInt(long firstType, long secondType, double newValu
 	// Check that the types are within the container range: note that the 
 	// container is symmetric by construction so we only need to check one dimension.
 
-	if(0 <= firstType  && firstType  < m_vvConsInt.size() &&
-	   0 <= secondType && secondType < m_vvConsInt.size())
+	if(0 <= firstType  && firstType  < static_cast<long>(m_vvConsInt.size()) &&
+	   0 <= secondType && secondType < static_cast<long>(m_vvConsInt.size()))
 	{
 		m_vvConsInt.at(firstType).at(secondType) = newValue;	
 		m_vvConsInt.at(secondType).at(firstType) = newValue;	
@@ -447,8 +447,8 @@ void CCNTCell::SetDPDBeadConsInt(long firstType, long secondType, double newValu
 
 void CCNTCell::SetDPDBeadDissInt(long firstType, long secondType, double newValue)
 {
-	if(0 <= firstType  && firstType  < m_vvDissInt.size() &&
-	   0 <= secondType && secondType < m_vvDissInt.size())
+	if(0 <= firstType  && firstType  < static_cast<long>(m_vvDissInt.size()) &&
+	   0 <= secondType && secondType < static_cast<long>(m_vvDissInt.size()))
 	{
 		m_vvDissInt.at(firstType).at(secondType) = newValue;
 		m_vvDissInt.at(secondType).at(firstType) = newValue;	
@@ -502,7 +502,7 @@ void CCNTCell::AddDPDBeadType(long oldType)
 	// Add the original bead type's interactions to the end of
 	// each row and create a new row at the end of the matrix
 
-	for(row = 0; row < m_vvConsInt.size(); row++)
+	for(row = 0; row < static_cast<long>(m_vvConsInt.size()); row++)
 	{
 		double oldConsInt = m_vvConsInt.at(row).at(oldType);
 		double oldDissInt = m_vvDissInt.at(row).at(oldType);
@@ -2435,7 +2435,7 @@ double CCNTCell::GetExternalRandomNumber()
 
     double x = 0.0;
 
-    if(m_NextRNIndex == m_RandomNumbers.size())
+    if(m_NextRNIndex == static_cast<long>(m_RandomNumbers.size()))
     {
         m_NextRNIndex = 0;  // If we run out of numbers re-use the set.
     }
@@ -2903,7 +2903,7 @@ void CCNTCell::UpdateTotalEnergy(double* const pKinetic, double* const pPotentia
 #if SimIdentifier != BD
 	// Common local data
 
-	double dx[3], dv[3];
+	double dx[3];
 	double dr, dr2;
 	double v2;
     double pe;
@@ -2962,17 +2962,12 @@ void CCNTCell::UpdateTotalEnergy(double* const pKinetic, double* const pPotentia
 			const long beadType2 = pBead2->GetType();
 
 			dx[0] = (pBead1->m_Pos[0] - pBead2->m_Pos[0]);
-			dv[0] = (pBead1->m_Mom[0] - pBead2->m_Mom[0]);
-
 			dx[1] = (pBead1->m_Pos[1] - pBead2->m_Pos[1]);
-			dv[1] = (pBead1->m_Mom[1] - pBead2->m_Mom[1]);
 
 #if SimDimension == 2
 			dx[2] = 0.0;
-			dv[2] = 0.0;
 #elif SimDimension == 3
 			dx[2] = (pBead1->m_Pos[2] - pBead2->m_Pos[2]);
-			dv[2] = (pBead1->m_Mom[2] - pBead2->m_Mom[2]);
 #endif
 
 			dr2 = dx[0]*dx[0] + dx[1]*dx[1] + dx[2]*dx[2];
@@ -3082,17 +3077,12 @@ void CCNTCell::UpdateTotalEnergy(double* const pKinetic, double* const pPotentia
 					const long beadType2 = pBead2->GetType();
 
 					dx[0] = (pBead1->m_Pos[0] - pBead2->m_Pos[0]);
-					dv[0] = (pBead1->m_Mom[0] - pBead2->m_Mom[0]);
-
 					dx[1] = (pBead1->m_Pos[1] - pBead2->m_Pos[1]);
-					dv[1] = (pBead1->m_Mom[1] - pBead2->m_Mom[1]);
 
 	#if SimDimension == 2
 					dx[2] = 0.0;
-					dv[2] = 0.0;
 	#elif SimDimension == 3
 					dx[2] = (pBead1->m_Pos[2] - pBead2->m_Pos[2]);
-					dv[2] = (pBead1->m_Mom[2] - pBead2->m_Mom[2]);
 	#endif
 
 					if( m_bExternal && m_aIntNNCells[i]->IsExternal() )

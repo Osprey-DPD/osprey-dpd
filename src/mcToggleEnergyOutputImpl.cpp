@@ -52,10 +52,10 @@ void mcToggleEnergyOutputImpl::ToggleEnergyOutput(const xxCommand* const pComman
 
 	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 
-    pMon->InternalToggleEnergyOutput(pCmd->NormalizePerBead());
+        pMon->InternalToggleEnergyOutput(pCmd->NormalizePerBead());
 
 	// This command cannot fail so no error message needs to be logged
 
-	CLogToggleEnergyOutput* pMsg = new CLogToggleEnergyOutput(pMon->GetCurrentTime(), pMon->m_bEnergyOutput);
+	new CLogToggleEnergyOutput(pMon->GetCurrentTime(), pMon->m_bEnergyOutput);
 #endif
 }

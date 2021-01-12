@@ -77,15 +77,15 @@ void ccStartCommandDocumentProcessImpl::StartCommandDocumentProcess(const xxComm
 
 			pISimState->AddProcess(pProcess);
 
-			CLogStartCommandDocumentProcess* pMsg = new CLogStartCommandDocumentProcess(pSimBox->GetCurrentTime());
+			 new CLogStartCommandDocumentProcess(pSimBox->GetCurrentTime());
 		}
 		else
 		{
-			CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+			 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 		}
 	}
 	else
 	{
-		CLogExperimentNotAccessible* pMsg = new CLogExperimentNotAccessible(pSimBox->GetCurrentTime());
+		 new CLogExperimentNotAccessible(pSimBox->GetCurrentTime());
 	}
 }

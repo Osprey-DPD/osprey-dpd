@@ -50,6 +50,6 @@ void mcToggleDensityFieldOutputImpl::ToggleDensityFieldOutput(const xxCommand* c
 
 	// This command cannot fail so no error message needs to be logged
 
-	CLogToggleDensityFieldOutput* pMsg = new CLogToggleDensityFieldOutput(pMon->GetCurrentTime(), pMon->m_bDensityGridOutput);
+	new CLogToggleDensityFieldOutput(pMon->GetCurrentTime(), pMon->m_bDensityGridOutput);
 }
 

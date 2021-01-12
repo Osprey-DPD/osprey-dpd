@@ -275,7 +275,7 @@ bool ccSelectPolymerTypeHeadInSlice::Pack(const tguArgumentSequence& vArguments)
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(ccSelectPolymerTypeInRegion::Pack(vArguments) && vArguments.size() == GetArgumentTotal())
+    if(ccSelectPolymerTypeInRegion::Pack(vArguments) && static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(2)->GetValue(&m_X);
         vArguments.at(3)->GetValue(&m_Y);

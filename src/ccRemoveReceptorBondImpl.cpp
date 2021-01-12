@@ -46,7 +46,7 @@ ccRemoveReceptorBondImpl::~ccRemoveReceptorBondImpl()
 void ccRemoveReceptorBondImpl::RemoveReceptorBond(const xxCommand* const pCommand)
 {
 #if EnableACNCommand == SimCommandEnabled
-
+/*
 	const ccRemoveReceptorBond* const pCmd = dynamic_cast<const ccRemoveReceptorBond*>(pCommand);
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
@@ -59,7 +59,7 @@ void ccRemoveReceptorBondImpl::RemoveReceptorBond(const xxCommand* const pComman
 
 	// not implemented yet...
 
-
+*/
 
 #endif
 }

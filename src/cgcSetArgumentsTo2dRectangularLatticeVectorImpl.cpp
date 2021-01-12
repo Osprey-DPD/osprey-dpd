@@ -44,13 +44,13 @@ void cgcSetArgumentsTo2dRectangularLatticeVectorImpl::SetArgumentsTo2dRectangula
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-	const cgcSetArgumentsTo2dRectangularLatticeVector* const pCmd = dynamic_cast<const cgcSetArgumentsTo2dRectangularLatticeVector*>(pCommand);
+    const cgcSetArgumentsTo2dRectangularLatticeVector* const pCmd = dynamic_cast<const cgcSetArgumentsTo2dRectangularLatticeVector*>(pCommand);
 
-	const zString groupName	  = pCmd->GetCommandGroupName();
-	const long    xCmdIndex   = pCmd->GetXCommandIndex();	    
-	const long    yCmdIndex   = pCmd->GetXCommandIndex();	    
-	const zString xArgName	  = pCmd->GetXArgName();	    
-	const zString yArgName	  = pCmd->GetYArgName();	 
+    const zString groupName   = pCmd->GetCommandGroupName();
+    const long    xCmdIndex   = pCmd->GetXCommandIndex();	    
+    const long    yCmdIndex   = pCmd->GetXCommandIndex();	    
+    const zString xArgName    = pCmd->GetXArgName();	    
+    const zString yArgName    = pCmd->GetYArgName();	 
     const long    xmax        = pCmd->GetXMax();      
     const long    ymax        = pCmd->GetYMax();      
     const double  ox          = pCmd->GetXOrigin();
@@ -73,12 +73,12 @@ void cgcSetArgumentsTo2dRectangularLatticeVectorImpl::SetArgumentsTo2dRectangula
         const zString xCmdName = pGroup->GetCommandName(xCmdIndex);
         const zString yCmdName = pGroup->GetCommandName(yCmdIndex);
 
-        CLogcgcSetArgumentsTo2dRectangularLatticeVector* pMsg = new CLogcgcSetArgumentsTo2dRectangularLatticeVector(pSimBox->GetCurrentTime(), groupName, xCmdName, yCmdName, 
+        new CLogcgcSetArgumentsTo2dRectangularLatticeVector(pSimBox->GetCurrentTime(), groupName, xCmdName, yCmdName, 
                                                                     xArgName, yArgName, xCmdIndex, yCmdIndex, xmax, ymax, ox, oy, lx, ly);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

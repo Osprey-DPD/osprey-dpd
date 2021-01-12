@@ -111,13 +111,8 @@ void aeProfilinNetwork::Nucleate()
 {
 	ActiveBondListIterator iterBond=m_FreeActiveBonds.begin();
 
-	long bondTotal = m_FreeActiveBonds.size();
-	long polymerTotal = m_FreeActivePolymers.size();
-
 	while(iterBond != m_FreeActiveBonds.end())
 	{
-		aeActiveBond* mySecondBond = *iterBond;
-
 		aeCNTCell* const pCell = GetCellFromBond(*iterBond);
 
 		aeActiveBond* pTargetBond = pCell->UpdateNucleation(*iterBond);

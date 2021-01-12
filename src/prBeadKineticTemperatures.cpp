@@ -212,7 +212,6 @@ void prBeadKineticTemperatures::UpdateState(CSimState& rSimState, const ISimBox*
     AbstractBeadVector vBeads = pISimBox->GetBeads();
 
     bool bIllegalBeadType = false;
-    long illegalType = -1;
 
     for(cAbstractBeadVectorIterator iterBead = vBeads.begin(); iterBead!=vBeads.end(); iterBead++)
     {
@@ -226,8 +225,7 @@ void prBeadKineticTemperatures::UpdateState(CSimState& rSimState, const ISimBox*
         else
         {
             bIllegalBeadType = true;
-            illegalType = type;
-        }
+         }
     }
 
     if(bIllegalBeadType)
@@ -305,7 +303,8 @@ bool prBeadKineticTemperatures::InternalValidateData(const ISimState* const pISi
 
 	SetState(new xxProcessState(xxBase::GetPSPrefix() + GetProcessType() + ToString(GetId()) + "." + pISimState->GetRunId(), GetStartTime(), GetEndTime(), pISimState->GetRunId(), GetProcessType()));
 
-	zOutStream& os = m_pState->putASCIIStartTags();
+	m_pState->putASCIIStartTags();
+//	zOutStream& os = m_pState->putASCIIStartTags();
 //	os << "    MonomerTotal		" << m_MonomerTotal	 << zEndl;
 
 #endif

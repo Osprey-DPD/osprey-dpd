@@ -69,16 +69,16 @@ void ccSelectACNFreeBondsAsTargetImpl::SelectACNFreeBondsAsTarget(const xxComman
 
 		if(pSimBox->CreateCommandTargetACNFreeBonds(targetLabel, acnType))
 		{
-			CLogSelectACNFreeBondsAsTarget* pMsg = new CLogSelectACNFreeBondsAsTarget(pSimBox->GetCurrentTime(), targetLabel, acnType);
+			 new CLogSelectACNFreeBondsAsTarget(pSimBox->GetCurrentTime(), targetLabel, acnType);
 		}
 		else
 		{
-			CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+			 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 #endif
 

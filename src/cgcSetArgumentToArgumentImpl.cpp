@@ -70,11 +70,11 @@ void cgcSetArgumentToArgumentImpl::SetArgumentToArgument(const xxCommand* const 
         const zString destCmdName   = pGroup->GetCommandName(destCmdIndex);
         const zString sourceCmdName = pGroup->GetCommandName(sourceCmdIndex);
 
-		CLogcgcSetArgumentToArgument* pMsg = new CLogcgcSetArgumentToArgument(pSimBox->GetCurrentTime(), groupName, destCmdName, destCmdIndex, destArgName, sourceCmdName, sourceCmdIndex, sourceArgName);
+		new CLogcgcSetArgumentToArgument(pSimBox->GetCurrentTime(), groupName, destCmdName, destCmdIndex, destArgName, sourceCmdName, sourceCmdIndex, sourceArgName);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
  
 #endif

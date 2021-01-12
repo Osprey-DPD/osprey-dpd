@@ -44,6 +44,7 @@ aeBondExternalTriggerOn::~aeBondExternalTriggerOn()
 
 bool aeBondExternalTriggerOn::ActivateHead(const aeActiveBond* const pEnd, const aeActiveBond* const pFree) const
 {
+/*
 	if(aeActiveSimBox::GetIActiveSimBox())
 	{
 		const CPolymer* const pFirstTail  = pEnd->GetTailMonomer();
@@ -79,7 +80,7 @@ bool aeBondExternalTriggerOn::ActivateHead(const aeActiveBond* const pEnd, const
 
 		std::cout << pEnd->CountHeadAdjacentBonds() << " " << pEnd->CountTailAdjacentBonds() << " bonds to head/tail" << zEndl;
 	}
-
+*/
 	return false;
 }
 
@@ -94,6 +95,7 @@ bool aeBondExternalTriggerOn::ActivateHead(const aeActiveBond* const pEnd, const
 
 bool aeBondExternalTriggerOn::ActivateTail(const aeActiveBond* const pEnd, const aeActiveBond* const pFree) const
 {
+/*
 	if(aeActiveSimBox::GetIActiveSimBox())
 	{
 		const CPolymer* const pFirstTail  = pEnd->GetTailMonomer();
@@ -129,7 +131,7 @@ bool aeBondExternalTriggerOn::ActivateTail(const aeActiveBond* const pEnd, const
 
 		std::cout << pEnd->CountHeadAdjacentBonds() << " " << pEnd->CountTailAdjacentBonds() << " bonds to head/tail" << zEndl;
 	}
-
+*/
 	return false;
 }
 

@@ -346,11 +346,11 @@ private:
 	// Data accessible to derived classes
 protected:
 
-	IACNAccessControl*  m_pIACNAccess;			// Interface pointer to access control class
+	IACNAccessControl*  m_pIACNAccess;		// Interface pointer to access control class
 
-	ActiveBondList		m_FreeActiveBonds;		// List of free active bonds (those not in active polymers)
-    ActiveBondList      m_FreePhantomBonds;     // List of free phantom bonds (these are also in the free active bond list)
-    ActivePolymerList	m_FreeActivePolymers;	// List of active polymers
+	ActiveBondList	   m_FreeActiveBonds;		// List of free active bonds (those not in active polymers)
+       ActiveBondList     m_FreePhantomBonds;         // List of free phantom bonds (these are also in the free active bond list)
+       ActivePolymerList  m_FreeActivePolymers;	// List of active polymers
 
 	DensityFieldSequence	m_DensityFields;	// Set of density fields being calculated
 
@@ -366,12 +366,10 @@ private:
 	IActiveSimBox* const m_pShadow;			// Interface pointer to the active SimBox
 
 
-    StringLongMap m_mEventExecutionPeriodFromName;  // Maps of event (period, name) pairs
-    StringEventSourceMMap  m_mEventSourceFromType;  // Multimap of (event type, event source decorator) pairs
+        StringLongMap m_mEventExecutionPeriodFromName;  // Maps of event (period, name) pairs
+        StringEventSourceMMap  m_mEventSourceFromType;  // Multimap of (event type, event source decorator) pairs
 
-
-    
-    ActiveEventList m_Events;				// Active events owned by this network
+        ActiveEventList m_Events;				// Active events owned by this network
 
 	aevActiveEvent* m_pPolymerFormsEvent;				// Event managing polymer formation
 	aevActiveEvent* m_pPolymerDissolvesEvent;			// Event managing polymer breakup

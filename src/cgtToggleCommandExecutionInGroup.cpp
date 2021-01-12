@@ -209,7 +209,7 @@ bool cgtToggleCommandExecutionInGroup::Pack(const tguArgumentSequence& vArgument
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(0)->GetValue(&m_GroupName);
         vArguments.at(1)->GetValue(&m_CommandIndex);

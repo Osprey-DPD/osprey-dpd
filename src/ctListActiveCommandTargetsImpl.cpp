@@ -47,8 +47,8 @@ void ctListActiveCommandTargetsImpl::ListActiveCommandTargets(const xxCommand* c
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
-    CommandTargetSequence targets = pSimBox->GetActiveCommandTargets();
-    const long targetTotal = targets.size();
+        CommandTargetSequence targets = pSimBox->GetActiveCommandTargets();
+        const long targetTotal = targets.size();
 
     if(targetTotal > 0)
     {
@@ -70,10 +70,10 @@ void ctListActiveCommandTargetsImpl::ListActiveCommandTargets(const xxCommand* c
             targetList.push_back(innerTargetLabel);
         }
 
-	    CLogctListActiveCommandTargets* pMsg = new CLogctListActiveCommandTargets(pSimBox->GetCurrentTime(), targetTotal, targetList);
+	    new CLogctListActiveCommandTargets(pSimBox->GetCurrentTime(), targetTotal, targetList);
     }
     else
     {
-        CLogTextMessage* pWarning = new CLogTextMessage(pSimBox->GetCurrentTime(), "No active command targets exist");
+        new CLogTextMessage(pSimBox->GetCurrentTime(), "No active command targets exist");
     }
 }

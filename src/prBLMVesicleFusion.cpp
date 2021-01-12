@@ -544,7 +544,7 @@ void prBLMVesicleFusion::UpdateState(CSimState& rSimState, const ISimBox* const 
 
 			pISimBox->SaveCurrentState();
 
-			CLogVesicleApproach* pMsg = new CLogVesicleApproach(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
+			 new CLogVesicleApproach(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
 																m_AggregateName2, m_AggregateId2, m_CMSeparation);
 		}
 
@@ -627,7 +627,7 @@ void prBLMVesicleFusion::UpdateState(CSimState& rSimState, const ISimBox* const 
 
 				pISimBox->SaveCurrentState();
 
-				CLogVesicleDistalTouch* pMsg = new CLogVesicleDistalTouch(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
+				 new CLogVesicleDistalTouch(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
 																			  m_AggregateName2, m_AggregateId2, m_OuterSeparation);
 			}
 		}
@@ -913,7 +913,7 @@ void prBLMVesicleFusion::UpdateState(CSimState& rSimState, const ISimBox* const 
 
 					pISimBox->SaveCurrentState();
 
-					CLogVesicleDistalMix* pMsg = new CLogVesicleDistalMix(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
+					 new CLogVesicleDistalMix(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
 																		  m_AggregateName2, m_AggregateId2);
 				}				
 			}
@@ -949,7 +949,7 @@ void prBLMVesicleFusion::UpdateState(CSimState& rSimState, const ISimBox* const 
 
 					pISimBox->SaveCurrentState();
 
-					CLogVesicleProximalMix* pMsg = new CLogVesicleProximalMix(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
+					 new CLogVesicleProximalMix(pISimBox->GetCurrentTime(), m_AggregateName1, m_AggregateId1, 
 																		  m_AggregateName2, m_AggregateId2);
 				}
 
@@ -1141,7 +1141,7 @@ void prBLMVesicleFusion::SetMaxCMApproach(const xxCommand* const pCommand)
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1162,7 +1162,7 @@ void prBLMVesicleFusion::SetMaxDistalTouch(const xxCommand* const pCommand)
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1183,7 +1183,7 @@ void prBLMVesicleFusion::SetMinMixThreshold(const xxCommand* const pCommand)
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1204,7 +1204,7 @@ void prBLMVesicleFusion::SetMinPoreSize(const xxCommand* const pCommand)
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1225,7 +1225,7 @@ void prBLMVesicleFusion::SetMinFusionPoreSize(const xxCommand* const pCommand)
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1242,12 +1242,12 @@ void prBLMVesicleFusion::SetCondenseDelay(const xxCommand* const pCommand)
 
 		std::cout << "setting condense delay to " << delay << zEndl;
 
-		CLogpcBLMVesicleFusionSetCondenseDelay* pMsg = new CLogpcBLMVesicleFusionSetCondenseDelay(pCmd->GetExecutionTime(), pid, delay);
+		 new CLogpcBLMVesicleFusionSetCondenseDelay(pCmd->GetExecutionTime(), pid, delay);
 
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1269,7 +1269,7 @@ void prBLMVesicleFusion::SetCondenseDuration(const xxCommand* const pCommand)
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1286,12 +1286,12 @@ void prBLMVesicleFusion::SetStretchDelay(const xxCommand* const pCommand)
 
 		std::cout << "setting stretch delay to " << delay << zEndl;
 
-		CLogpcBLMVesicleFusionSetStretchDelay* pMsg = new CLogpcBLMVesicleFusionSetStretchDelay(pCmd->GetExecutionTime(), pid, delay);
+		 new CLogpcBLMVesicleFusionSetStretchDelay(pCmd->GetExecutionTime(), pid, delay);
 
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1308,12 +1308,12 @@ void prBLMVesicleFusion::SetStretchDuration(const xxCommand* const pCommand)
 
 		std::cout << "setting stretch duration to " << duration << zEndl;
 
-		CLogpcBLMVesicleFusionSetStretchDuration* pMsg = new CLogpcBLMVesicleFusionSetStretchDuration(pCmd->GetExecutionTime(), pid, duration);
+		 new CLogpcBLMVesicleFusionSetStretchDuration(pCmd->GetExecutionTime(), pid, duration);
 
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1334,7 +1334,7 @@ void prBLMVesicleFusion::SetInnerRadius(const xxCommand* const pCommand)
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1355,7 +1355,7 @@ void prBLMVesicleFusion::SetOuterRadius(const xxCommand* const pCommand)
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1376,7 +1376,7 @@ void prBLMVesicleFusion::SetHalfLength(const xxCommand* const pCommand)
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -1397,7 +1397,7 @@ void prBLMVesicleFusion::SetRadialForceMagnitude(const xxCommand* const pCommand
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 

@@ -171,8 +171,6 @@ bool ctRemoveActiveCommandTarget::Execute(long simTime, ISimCmd* const pISimCmd)
 
 bool ctRemoveActiveCommandTarget::IsDataValid(const CInputData& riData) const
 {
-	CInputData& rincData = const_cast<CInputData&>(riData);
-
 	if(!riData.IsExternalNameValid(m_TargetLabel))
 		return ErrorTrace("Invalid active command target name");
 
@@ -194,7 +192,7 @@ bool ctRemoveActiveCommandTarget::IsDataValid(const CInputData& riData) const
 
 bool ctRemoveActiveCommandTarget::Pack(const tguArgumentSequence& vArguments)
 {
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(0)->GetValue(&m_TargetLabel);
         return true;

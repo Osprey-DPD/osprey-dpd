@@ -60,9 +60,9 @@ zOutStream& operator<<(zOutStream& os, const CLogcgcSetArgumentToArgument& rMsg)
 CLogcgcSetArgumentToArgument::CLogcgcSetArgumentToArgument(long time, const zString groupName,                         
                               const zString destCmdName,   long destCmdNo, const zString destArgName, 
                               const zString sourceCmdName, long sourceCmdNo, const zString sourceArgName) : CLogInfoMessage(time), 
-                              m_GroupName(groupName), 
-                              m_DestCommandName(destCmdName),     m_DestCommandNo(destCmdNo), m_DestArgName(destArgName),
-                              m_SourceCommandName(sourceCmdName), m_SourceCommandNo(sourceCmdNo), m_SourceArgName(sourceArgName)                                       
+                              m_GroupName(groupName), m_DestCommandName(destCmdName), m_DestArgName(destArgName),
+                              m_SourceCommandName(sourceCmdName),  m_SourceArgName(sourceArgName), 
+                              m_DestCommandNo(destCmdNo), m_SourceCommandNo(sourceCmdNo)
 {
 }
 

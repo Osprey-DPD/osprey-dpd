@@ -200,8 +200,6 @@ zString CInitialStateBLMMultiVesicle::GetInitialStateType() const
 
 zOutStream& CInitialStateBLMMultiVesicle::put(zOutStream& os) const
 {
-	short int i;	// Counter used several times below
-
 	os << "State	" << "blmmultivesicle"	<< zEndl;
 
 	// BLM data first
@@ -231,7 +229,7 @@ zOutStream& CInitialStateBLMMultiVesicle::put(zOutStream& os) const
 
 	os << "	        " << "UpperFraction	  ";
 
-	for(i=0; i<m_BLMPolymers.size(); i++)
+	for(long unsigned int i=0; i<m_BLMPolymers.size(); i++)
 	{
 		os << "	" << m_BLMUpperFractions.at(i);
 	}
@@ -275,7 +273,7 @@ zOutStream& CInitialStateBLMMultiVesicle::put(zOutStream& os) const
 	// Each vesicle center appears on a separate line with its own Centre keyword.
 	// The number of vesicles is given by the size of the vectors.
 
-	for(i=0; i<m_VXC.size(); i++)
+	for(long unsigned int i=0; i<m_VXC.size(); i++)
 	{
 		os << "			" << "Centre		"	<< m_VXC.at(i) << "  " << m_VYC.at(i) << "  " << m_VZC.at(i) << zEndl;
 	}
@@ -284,7 +282,7 @@ zOutStream& CInitialStateBLMMultiVesicle::put(zOutStream& os) const
 	os << "			" << "Thickness		"	<< m_VThickness		<< zEndl;
 	os << "	        " << "OuterFraction	  ";
 
-	for(i=0; i<m_VPolymers.size(); i++)
+	for(long unsigned int i=0; i<m_VPolymers.size(); i++)
 	{
 		os << "	" << m_VOuterFractions.at(i);
 	}
@@ -472,7 +470,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 	}
 	else
 	{
-		for(short i=0; i<m_BLMPolymers.size(); i++)
+		for(long unsigned int  i=0; i<m_BLMPolymers.size(); i++)
 		{
 			is >> upperFraction;
 
@@ -543,13 +541,13 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			//
 			// The information required per polymer is:
 			//
-			// Name				e.g., Lipid		Cholesterol
-			// Fraction				  0.5		1.0
-			// Position				  0			1
-			// SpringConstant		  128.0		16.0
+			// Name		e.g., Lipid	Cholesterol
+			// Fraction		0.5		1.0
+			// Position	        0		1
+			// SpringConstant	128.0		16.0
 			// UnstretchedLength	  0.5		1.0
 
-			zString polymerisedName			= "";
+			zString polymerisedName		= "";
 			double  polymerisedFraction		= 0.0;
 			long    polymerisedPosition		= 0;
 			double	springConstant			= 0.0;
@@ -562,8 +560,6 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			zLongVector		polymerPositions;
 			zDoubleVector	polymerSpringConstants;
 			zDoubleVector	polymerLengths;
-
-			short i;	// Counter used below
 
 			is >> token;
 			if(!is.good() || token != "Polymer")
@@ -596,7 +592,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> polymerisedFraction;
 					if(!is.good() || polymerisedFraction < 0.0 || polymerisedFraction > 1.0)
@@ -620,7 +616,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> polymerisedPosition;
 					if(!is.good() || polymerisedPosition < 0)
@@ -640,7 +636,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> springConstant;
 					if(!is.good() || springConstant < 0.0)
@@ -660,7 +656,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> unstretchedLength;
 					if(!is.good() || unstretchedLength < 0.0)
@@ -677,7 +673,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			// yet know the types of the polymers in the bilayer we use the
 			// constructor that gives a default value to the type.
 
-			for(i=0; i<polymerNames.size(); i++)
+			for(long unsigned int i=0; i<polymerNames.size(); i++)
 			{			
 				CPolymerCrossLink* pLink = new CPolymerCrossLink(polymerNames.at(i),
 																 polymerFractions.at(i),
@@ -704,10 +700,10 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 
 	// Now the vesicle data
 
-	double xc				= 0.0;
-	double yc				= 0.0;
-	double zc				= 0.0;
-	double outerRadius		= 0.0;
+	double xc		= 0.0;
+	double yc		= 0.0;
+	double zc		= 0.0;
+	double outerRadius	= 0.0;
 	double outerFraction	= 0.0;
 	bool   bVPatches[2];
 
@@ -829,7 +825,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			// Force the centre to lie within the SimBox
 
 			if(!is.good() || xc < 0.01 || yc < 0.01 || zc < 0.01 
-						  || xc > 0.99 || yc > 0.99 || zc > 0.99 )
+				      || xc > 0.99 || yc > 0.99 || zc > 0.99 )
 			{
 				SetDataValid(false);
 				return is;
@@ -901,7 +897,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 	}
 	else
 	{
-		for(short i=0; i<m_VPolymers.size(); i++)
+		for(long unsigned int  i=0; i<m_VPolymers.size(); i++)
 		{
 			is >> outerFraction;
 
@@ -991,8 +987,6 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			zDoubleVector	polymerSpringConstants;
 			zDoubleVector	polymerLengths;
 
-			short i;	// Counter used below
-
 			is >> token;
 			if(!is.good() || token != "Polymer")
 			{
@@ -1024,7 +1018,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> polymerisedFraction;
 					if(!is.good() || polymerisedFraction < 0.0 || polymerisedFraction > 1.0)
@@ -1048,7 +1042,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> polymerisedPosition;
 					if(!is.good() || polymerisedPosition < 0)
@@ -1068,7 +1062,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> springConstant;
 					if(!is.good() || springConstant < 0.0)
@@ -1088,7 +1082,7 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			}
 			else
 			{
-				for(i=0; i<polymerNames.size(); i++)
+				for(long unsigned int i=0; i<polymerNames.size(); i++)
 				{			
 					is >> unstretchedLength;
 					if(!is.good() || unstretchedLength < 0.0)
@@ -1105,13 +1099,12 @@ zInStream& CInitialStateBLMMultiVesicle::get(zInStream& is)
 			// yet know the types of the polymers in the bilayer we use the
 			// constructor that gives a default value to the type.
 
-			for(i=0; i<polymerNames.size(); i++)
+			for(long unsigned int i=0; i<polymerNames.size(); i++)
 			{			
-				CPolymerCrossLink* pLink = new CPolymerCrossLink(polymerNames.at(i),
-																 polymerFractions.at(i),
-																 polymerPositions.at(i),
-																 polymerSpringConstants.at(i),
-																 polymerLengths.at(i));
+				CPolymerCrossLink* pLink = new CPolymerCrossLink(polymerNames.at(i), polymerFractions.at(i),
+										polymerPositions.at(i),
+										polymerSpringConstants.at(i),
+										polymerLengths.at(i));
 				m_VCrossLinks.push_back(pLink);
 			}
 		}
@@ -1413,7 +1406,7 @@ bool CInitialStateBLMMultiVesicle::ValidateData(const CInputData& riData)
 
 	double vLower[3], vUpper[3], vCentre[3];
 
-	for(short int i=0; i<m_VXC.size(); i++)
+	for(long unsigned int i=0; i<m_VXC.size(); i++)
 	{
 		vCentre[0]	= m_VXC.at(i)*riData.GetSimBoxXLength();
 		vCentre[1]	= m_VYC.at(i)*riData.GetSimBoxYLength();

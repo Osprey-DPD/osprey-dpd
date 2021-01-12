@@ -136,7 +136,7 @@ taSpringForceBetweenTargets::~taSpringForceBetweenTargets()
     }
     else
     {
-        CLogTextWarningMessage* pMsg = new CLogTextWarningMessage(IGlobalSimBox::Instance()->GetCurrentTime(), "Error serialising data from decorator " + GetLabel() + " around target " + GetActiveCommandTarget()->GetLabel());
+         new CLogTextWarningMessage(IGlobalSimBox::Instance()->GetCurrentTime(), "Error serialising data from decorator " + GetLabel() + " around target " + GetActiveCommandTarget()->GetLabel());
     }
 }
 
@@ -167,16 +167,12 @@ const zString taSpringForceBetweenTargets::GetTargetType() const
 
 void taSpringForceBetweenTargets::Execute(long simTime)
 {
-	GetInnerDecorator()->Execute(simTime);
+    GetInnerDecorator()->Execute(simTime);
     
-	// debug checks
-	const zString label = GetLabel();
-	long beadTotal      = GetBeadTotal();
-	CCommandTargetNode* const pInner = GetInnerDecorator();
-	CCommandTargetNode* const pOuter = GetOuterDecorator();
-    
+    // debug checks
+    const zString label = GetLabel();
 
-	// We find the current separation between the two targets (as defined by the beads that are closest to their CM), and apply a spring 
+    // We find the current separation between the two targets (as defined by the beads that are closest to their CM), and apply a spring 
     // force to move this separation towards the desired value m_TargetSeparation. There are two ways of doing this: 1) we apply a force to 
     // all beads in the target or, 2) apply a force to the single bead closest to the centre of mass of the target. For now, we use the second
     // option.
@@ -281,7 +277,7 @@ zInStream& taSpringForceBetweenTargets::Read(zInStream& is)
 
     if(!is.good() || m_keff < 0.0 || m_Period < 1)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing spring force between targets decorator (non-positive period?)");
+         new CLogRestartStateBuilderError(0, "Error importing spring force between targets decorator (non-positive period?)");
         return is;
     }
 

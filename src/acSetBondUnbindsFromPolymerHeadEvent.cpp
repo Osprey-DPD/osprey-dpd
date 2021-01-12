@@ -183,19 +183,19 @@ bool acSetBondUnbindsFromPolymerHeadEvent::Execute(long simTime, ISimCmd* const 
 				pBondUnbinds->SetSpringConstant(GetSpringConstant());
 				pBondUnbinds->SetLength(GetLength());
 
-				CLogacSetBondUnbindsFromPolymerHeadEvent* pMsg = new CLogacSetBondUnbindsFromPolymerHeadEvent(GetExecutionTime(), m_ACNType, 
+				 new CLogacSetBondUnbindsFromPolymerHeadEvent(GetExecutionTime(), m_ACNType, 
 																				  m_Duration, m_SpringConstant, m_Length);
 			}
 			else
 			{
-				CLogacInvalidEventCommandTarget* pMsg = new CLogacInvalidEventCommandTarget(GetExecutionTime(), m_ACNType, 
+				 new CLogacInvalidEventCommandTarget(GetExecutionTime(), m_ACNType, 
 					                                              pMACN->GetBondUnbindsFromPolymerHeadEventType(),
 					                                              aevBondUnbindsFromPolymerHead::GetType());
 			}
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

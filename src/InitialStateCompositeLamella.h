@@ -56,23 +56,23 @@ protected:
 private:
 	static const zString m_Type;			// Keyword used to identify initial state type
 
-	StringSequence m_Polymers;				// Polymers composing bilayer
+	StringSequence m_Polymers;			// Polymers composing bilayer
 	zDoubleVector  m_UpperFractions;		// Fractions of polymers in upper monolayer
 	long	       m_X;						
-	long	       m_Y;						// Bilayer normal: only x, y or z allowed
+	long	       m_Y;				// Bilayer normal: only x, y or z allowed
 	long	       m_Z;
-	double	       m_Centre;				// Bilayer centre as fraction of SimBox thickness
-	double	       m_Thickness;				// In units of bead diameters
+	double	       m_Centre;			// Bilayer centre as fraction of SimBox thickness
+	double	       m_Thickness;			// In units of bead diameters
 	bool	       m_bLinearise;			// Flag showing whether polymer is initially straightened
-	bool		   m_bPatches[2];			// Arrange polymers in patches: 0/1
+	bool	       m_bPatches[2];			// Arrange polymers in patches: 0/1
 
 	// Data relating to a polymerised initial state
-	bool					m_bPolymerise;	// Flag showing if initial state is polymerised
-	PolymerCrossLinkVector	m_CrossLinks;	// Vector of cross-linker pointers holding data
+	bool		m_bPolymerise;	               // Flag showing if initial state is polymerised
+	PolymerCrossLinkVector	m_CrossLinks;	       // Vector of cross-linker pointers holding data
 
 	// Local data
 
-	zLongVector m_PolymerTypes;			// Types of polymer composing lamella
+	zLongVector     m_PolymerTypes;			// Types of polymer composing lamella
 	double		m_BilayerArea;			// Area per monolayer
 	double		m_Bilayer1Length;		// Inplane size of bilayer: NOT necessarily x,y coordinates
 	double		m_Bilayer2Length;

@@ -80,10 +80,10 @@ void mcSetRunCompleteIntervalImpl::SetRunCompleteInterval(const xxCommand* const
 
 		pMon->m_RunCompleteInterval = interval;
 
-		CLogSetRunCompleteInterval* pMsg = new CLogSetRunCompleteInterval(pMon->GetCurrentTime(), interval);
+		new CLogSetRunCompleteInterval(pMon->GetCurrentTime(), interval);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 }

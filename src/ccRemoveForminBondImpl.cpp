@@ -64,12 +64,12 @@ void ccRemoveForminBondImpl::RemoveForminBond(const xxCommand* const pCommand)
 
 	if(true)
 	{
-		CLogActiveBondRemoved* pMsg = new CLogActiveBondRemoved(pSimBox->GetCurrentTime(), "Formin", headMonomerName, tailMonomerName,
+		 new CLogActiveBondRemoved(pSimBox->GetCurrentTime(), "Formin", headMonomerName, tailMonomerName,
 																						headMonomerType, tailMonomerType);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 #endif
 }

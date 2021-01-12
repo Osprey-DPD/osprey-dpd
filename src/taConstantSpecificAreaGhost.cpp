@@ -61,10 +61,9 @@ const zString taConstantSpecificAreaGhost::GetType()
 taConstantSpecificAreaGhost::taConstantSpecificAreaGhost(const zString decLabel, CCommandTargetNode* const pReservoirTarget, 
                                                         CCommandTargetNode* const pMembraneTarget, ISimState* pISimState, long beadType, 
                                                         long start, long end,long sampleRate,  double targetAN) : taCumulateDecorator(decLabel, pReservoirTarget, "", start, end),
-                                                        m_pReservoirTarget(0), m_pMembraneTarget(0), m_pISimState(pISimState), m_BeadType(beadType), 
-                                                        m_SampleRate(sampleRate), m_TargetAN(targetAN),
-                                                        m_DeltaPolymerTotal(1), 
-													    m_CurrentPolymerTotal(0), m_CurrentArea(0.0),  m_DeltaArea(0.0),
+                                                        m_BeadType(beadType), m_SampleRate(sampleRate), m_TargetAN(targetAN), 
+                                                        m_pReservoirTarget(0), m_pMembraneTarget(0), m_pISimState(pISimState), 
+                                                        m_DeltaPolymerTotal(1), m_CurrentPolymerTotal(0), m_CurrentArea(0.0),  m_DeltaArea(0.0),
                                                         m_pGhostLipid(0), m_pMembraneLipid(0), m_pGhost(0)
 {
     pReservoirTarget->SetOuterDecorator(this);
@@ -207,9 +206,9 @@ void taConstantSpecificAreaGhost::Execute(long simTime)
 		    }
 
             if(simTime % m_SampleRate == 0 || simTime == m_Start)
-		    {
-			    // ********************
-			    // Main loop
+            {
+	         // ********************
+	         // Main loop
                 // Calculate the mean area in the membrane's current state
             
                 CalculateArea();
@@ -220,18 +219,17 @@ void taConstantSpecificAreaGhost::Execute(long simTime)
                 // Compare the current A/N to the target value, m_TargetAN, and transfer a number of molecules 
                 // from the bulk reservoir to the membrane or vice versa. A negative value means that polymers leave 
                 // the membrane and return to the bulk reservoir. Note that we move a fixed number m_DeltaPolymerTotal = 1 of lipids each invocation.
-				// We change the conservative interactions of the lipids before moving them.
+		// We change the conservative interactions of the lipids before moving them.
 				
-				
-				if(m_DeltaArea > 0)
+		if(m_DeltaArea > 0)
                 {
                     // move polymers from the bulk reservoir to the membrane but check that there actually some ghosts left
 					
-					if(m_vBulkReservoir.size() > 0)
-					{
+			if(m_vBulkReservoir.size() > 0)
+			{
 //                       for(long i=0; i<m_DeltaPolymerTotal; ++i)
 //                       {
-					    m_pGhost = m_vBulkReservoir.back();
+			m_pGhost = m_vBulkReservoir.back();
                         m_vMembraneReservoir.push_back(m_pGhost);
                     
                         m_vBulkReservoir.erase(--m_vBulkReservoir.end());
@@ -240,29 +238,28 @@ void taConstantSpecificAreaGhost::Execute(long simTime)
                     
                         // Copy the membrane polymer's interactions into the newly-arrived ghost polymer
                     
-					    double delta = 0.1;
+			 double delta = 0.1;
 						
-                        for(long j=0; j<vGhostBeads.size(); ++j)
+                        for(long unsigned int j=0; j<vGhostBeads.size(); ++j)
                         {
                             CBead* pMembraneBead = m_vMembraneLipidBeads.at(j);
                             CBead* pGhostBead    = vGhostBeads.at(j);
-							pGhostBead->SetType(pMembraneBead->GetType());
+			     pGhostBead->SetType(pMembraneBead->GetType());
                             CCurrentState::SetBeadDisplayId(pGhostBead->GetId(), CCurrentState::GetBeadDisplayId(pMembraneBead->GetId()));
 							
-							double dx = 16;
+			     double dx = 16;
                             double dy = 16;
                             double dz = 16;
 							
-							m_pISimState->MoveBeadBetweenCNTCells(pGhostBead, dx+delta, dy+delta, dz+delta);
+			     m_pISimState->MoveBeadBetweenCNTCells(pGhostBead, dx+delta, dy+delta, dz+delta);
 							
                             delta += 0.1;
                         }
  //                       }
                     }
-					else
-					{
-		              CLogctConstantSpecificAreaGhostFailed* pMsg = new CLogctConstantSpecificAreaGhostFailed(simTime, decLabel, m_pReservoirTarget->GetLabel(), m_pMembraneTarget->GetLabel(), 
-					                                                                                                             m_vBulkReservoir.size(), m_vMembraneReservoir.size());
+		else
+		{
+		     new CLogctConstantSpecificAreaGhostFailed(simTime, decLabel, m_pReservoirTarget->GetLabel(), m_pMembraneTarget->GetLabel(), m_vBulkReservoir.size(), m_vMembraneReservoir.size());
 					}
                 }
                 else if(m_DeltaArea < 0)
@@ -282,7 +279,7 @@ void taConstantSpecificAreaGhost::Execute(long simTime)
                     
                         // Copy the membrane polymer's interactions into the newly-arrived ghost polymers
                     
-                        for(long j=0; j<vGhostBeads.size(); ++j)
+                        for(long unsigned int j=0; j<vGhostBeads.size(); ++j)
                         {
                             CBead* pOriginalGhostBead = m_vGhostLipidBeads.at(j);
                             CBead* pGhostBead         = vGhostBeads.at(j);
@@ -292,13 +289,11 @@ void taConstantSpecificAreaGhost::Execute(long simTime)
                         }
 //                       }
                     }
-					else
-					{
-		              CLogctConstantSpecificAreaGhostFailed* pMsg = new CLogctConstantSpecificAreaGhostFailed(simTime, decLabel, m_pReservoirTarget->GetLabel(), m_pMembraneTarget->GetLabel(), 
-					                                                                                                             m_vBulkReservoir.size(), m_vMembraneReservoir.size());
-					}
+			else
+			{
+		            new CLogctConstantSpecificAreaGhostFailed(simTime, decLabel, m_pReservoirTarget->GetLabel(), m_pMembraneTarget->GetLabel(), m_vBulkReservoir.size(), m_vMembraneReservoir.size());
+			}
                 }
-
 
                 // Write the CM data to the decorator state file
 
@@ -321,12 +316,11 @@ void taConstantSpecificAreaGhost::Execute(long simTime)
 
                 if(SaveState())
                 {
- //                   CLogctConstantSpecificAreaGhostTimeSeries* pMsg = new CLogctConstantSpecificAreaGhostTimeSeries(simTime, targetLabel, decLabel,  
-//                                                                          m_Start, m_End, m_vPolymers.size());
+ //                   new CLogctConstantSpecificAreaGhostTimeSeries(simTime, targetLabel, decLabel, m_Start, m_End, m_vPolymers.size());
                 }
                 else
                 {
-                    CLogTextWarningMessage* pMsg = new CLogTextWarningMessage(simTime, "Error serialising data from decorator " + decLabel + " around target " + targetLabel);
+                     new CLogTextWarningMessage(simTime, "Error serialising data from decorator " + decLabel + " around target " + targetLabel);
                 }
 		    }
 	    }
@@ -334,7 +328,7 @@ void taConstantSpecificAreaGhost::Execute(long simTime)
     else if(!m_bWrapFailure)
     {
 	    m_bWrapFailure = true;
-	    CLogctNonexistentDecorator* pMsg = new CLogctNonexistentDecorator(simTime, decLabel, "");
+	     new CLogctNonexistentDecorator(simTime, decLabel, "");
     }
 }
 

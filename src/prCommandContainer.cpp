@@ -60,10 +60,9 @@ namespace
 
 	const zString id = prCommandContainer::GetType();
 
-	// This process can only be created internally so we disable the
-	// registration with the class factory
+	// This process should only be created internally
 
-//	const bool bRegistered = acfProcessFactory::Instance()->Register(id, Create);
+	const bool bRegistered = acfProcessFactory::Instance()->Register(id, Create);
 }
 
 //////////////////////////////////////////////////////////////////////

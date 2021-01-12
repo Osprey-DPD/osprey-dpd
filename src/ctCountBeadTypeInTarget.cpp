@@ -196,7 +196,7 @@ bool ctCountBeadTypeInTarget::IsDataValid(const CInputData& riData) const
 
 bool ctCountBeadTypeInTarget::Pack(const tguArgumentSequence& vArguments)
 {
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         ctApplyCommand::Pack(vArguments);
         vArguments.at(1)->GetValue(&m_BeadType);

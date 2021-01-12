@@ -69,10 +69,10 @@ void ctChangeBeadTypeImpl::ChangeBeadType(const xxCommand* const pCommand)
 	// Get the command target from the target list
 
 	CCommandTargetNode* pCmdTarget = pSimBox->GetCommandTarget(label);
-    const long oldType = pCmdTarget->GetCurrentBeadType();
+        const long oldType = pCmdTarget->GetCurrentBeadType();
 	const long newType = pSimBox->GetBeadTypeTotal();
 
-    const zString oldName = pSimBox->GetBeadNameFromType(oldType);
+        const zString oldName = pSimBox->GetBeadNameFromType(oldType);
 
 	// Now we have the target, check it is not composite nor empty, that we can
     // add a new bead type pair to it (which means it cannot be a polymer target)
@@ -115,10 +115,10 @@ void ctChangeBeadTypeImpl::ChangeBeadType(const xxCommand* const pCommand)
 
 		pSimBox->UpdateBeadTypes();
 
-		CLogctChangeBeadType* pMsg = new CLogctChangeBeadType(pSimBox->GetCurrentTime(), label, oldName, newName, oldType, newType);
+		new CLogctChangeBeadType(pSimBox->GetCurrentTime(), label, oldName, newName, oldType, newType);
     }
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

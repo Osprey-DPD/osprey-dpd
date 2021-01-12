@@ -47,7 +47,7 @@ mcSaveBeadDensityFluctuationsImpl::~mcSaveBeadDensityFluctuationsImpl()
 
 void mcSaveBeadDensityFluctuationsImpl::SaveBeadDensityFluctuations(const xxCommand* const pCommand)
 {
-	const mcSaveBeadDensityFluctuations* const pCmd = dynamic_cast<const mcSaveBeadDensityFluctuations*>(pCommand);
+    const mcSaveBeadDensityFluctuations* const pCmd = dynamic_cast<const mcSaveBeadDensityFluctuations*>(pCommand);
 
     const zString beadName         = pCmd->GetBeadName();
 
@@ -61,12 +61,12 @@ void mcSaveBeadDensityFluctuationsImpl::SaveBeadDensityFluctuations(const xxComm
     const long zCell               = pCmd->GetZCellNo();
     const bool bConjugate          = pCmd->GetConjugateFlag();
 
-	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
+    CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 
     const long beadType       = pMon->GetISimBox()->GetBeadTypeFromName(beadName);
-	const long currentTime    = pMon->GetISimBox()->GetCurrentTime();
+    const long currentTime    = pMon->GetISimBox()->GetCurrentTime();
     const long densityPeriod  = pMon->GetISimBox()->GetDensityPeriod();
-    const long samplePeriod   = pMon->GetISimBox()->GetSamplePeriod();
+//    const long samplePeriod   = pMon->GetISimBox()->GetSamplePeriod();
     const long totalTime      = pMon->GetISimBox()->GetTotalTime();
 
     long duration = totalDataPoints*totalDensityPeriods*densityPeriod;
@@ -118,12 +118,12 @@ void mcSaveBeadDensityFluctuationsImpl::SaveBeadDensityFluctuations(const xxComm
 		pProcess->InternalValidateData(pMon->GetISimBox()->IISimState());
 		pMon->GetISimBox()->AddProcess(pProcess);
 
-		CLogSaveBeadDensityFluctuations* pMsg = new CLogSaveBeadDensityFluctuations(pMon->GetCurrentTime(), beadName, beadType, totalDataPoints, totalDensityPeriods, densityPeriod, 
+		 new CLogSaveBeadDensityFluctuations(pMon->GetCurrentTime(), beadName, beadType, totalDataPoints, totalDensityPeriods, densityPeriod, 
                                                 start, end, xCell, yCell, zCell, bConjugate);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 
 }

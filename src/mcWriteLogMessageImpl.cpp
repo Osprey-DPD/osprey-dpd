@@ -47,14 +47,14 @@ void mcWriteLogMessageImpl::WriteLogMessage(const xxCommand* const pCommand)
 
 	CMonitor* pMon = dynamic_cast<CMonitor*>(this);
 
-    const zString msg = pCmd->GetMessage();
+        const zString msg = pCmd->GetMessage();
 
 	if(msg != "")
 	{
-        CLogTextMessage* pMsg = new CLogTextMessage(pMon->GetCurrentTime(), msg);
+         new CLogTextMessage(pMon->GetCurrentTime(), msg);
 	}
 	else
 	{
-        CLogTextMessage* pMsg = new CLogTextMessage(pMon->GetCurrentTime(), "**********");
+         new CLogTextMessage(pMon->GetCurrentTime(), "**********");
 	}
 }

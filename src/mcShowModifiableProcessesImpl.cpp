@@ -45,7 +45,7 @@ void mcShowModifiableProcessesImpl::ShowModifiableProcesses(const xxCommand* con
 {
 #if EnableMonitorCommand == SimCommandEnabled
 
-	const mcShowModifiableProcesses* const pCmd = dynamic_cast<const mcShowModifiableProcesses*>(pCommand);
+//	const mcShowModifiableProcesses* const pCmd = dynamic_cast<const mcShowModifiableProcesses*>(pCommand);
 
 	CMonitor* pMon = dynamic_cast<CMonitor*>(this);
 
@@ -55,6 +55,6 @@ void mcShowModifiableProcessesImpl::ShowModifiableProcesses(const xxCommand* con
 
 	// This command cannot fail
 
-	CLogShowModifiableProcesses* pMsg = new CLogShowModifiableProcesses(pMon->GetCurrentTime(), vProcesses);
+	new CLogShowModifiableProcesses(pMon->GetCurrentTime(), vProcesses);
 #endif
 }

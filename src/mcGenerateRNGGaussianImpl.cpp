@@ -58,5 +58,5 @@ void mcGenerateRNGGaussianImpl::GenerateRNGGaussian(const xxCommand* const pComm
         sequence.push_back(x);
     }
 
-    CLogGenerateRNGSequence* pMsg = new CLogGenerateRNGSequence(pMon->GetCurrentTime(), "Gaussian", sequence);
+     new CLogGenerateRNGSequence(pMon->GetCurrentTime(), "Gaussian", sequence);
 }

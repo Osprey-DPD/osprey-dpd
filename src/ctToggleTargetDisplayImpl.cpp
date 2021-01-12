@@ -76,15 +76,15 @@ void ctToggleTargetDisplayImpl::ToggleTargetDisplay(const xxCommand* const pComm
 
 			const bool bVisible = vTargetBeads.front()->GetVisible();
 
-			CLogctTargetDisplay* pMsg = new CLogctTargetDisplay(pSimBox->GetCurrentTime(), targetLabel, bVisible);
+			new CLogctTargetDisplay(pSimBox->GetCurrentTime(), targetLabel, bVisible);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

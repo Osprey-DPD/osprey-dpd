@@ -60,9 +60,9 @@ void ctTranslateTargetToPlaneImpl::TranslateTargetToPlane(const xxCommand* const
 
 	// Convert relative coordinates to absolute ones
 
-	double fxc = xc*pSimBox->GetSimBoxXLength();
-	double fyc = yc*pSimBox->GetSimBoxYLength();
-	double fzc = zc*pSimBox->GetSimBoxZLength();
+//	double fxc = xc*pSimBox->GetSimBoxXLength();
+//	double fyc = yc*pSimBox->GetSimBoxYLength();
+//	double fzc = zc*pSimBox->GetSimBoxZLength();
 
 	// Get the command target from the target list
 
@@ -77,20 +77,15 @@ void ctTranslateTargetToPlaneImpl::TranslateTargetToPlane(const xxCommand* const
 	// is not applicable to composite targets because they may contain
 	// a multitude of bead types.
 
-	bool bSuccess = true;
-
 	if(pCmdTarget)
 	{
-		const long beadTotal = pCmdTarget->GetBeadTotal();
-
-		const long beadType            = pCmdTarget->GetCurrentBeadType();
 		const long originalBeadType    = pCmdTarget->GetOriginalBeadType();
 		const zString beadName         = pSimBox->GetBeadNameFromType(originalBeadType);
 
-	    CLogctTranslateTargetToPlane* pMsg = new CLogctTranslateTargetToPlane(pSimBox->GetCurrentTime(), targetLabel, decLabel, xn, yn, zn, xc, yc, zc);
+	        new CLogctTranslateTargetToPlane(pSimBox->GetCurrentTime(), targetLabel, decLabel, xn, yn, zn, xc, yc, zc);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

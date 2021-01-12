@@ -206,7 +206,7 @@ bool acSaveActiveBond1dDensityField::Execute(long simTime, ISimCmd* const pISimC
 			// we still issue the log message for the command so that we can see
 			// which command triggered the empty ACN message
 
-			CLogacSaveActiveBond1dDensityField* pMsg1 = new CLogacSaveActiveBond1dDensityField(GetExecutionTime(), m_ACNType);
+			 new CLogacSaveActiveBond1dDensityField(GetExecutionTime(), m_ACNType);
 
 			if(pMACN->GetFreeBondTotal() != 0)
 			{
@@ -214,12 +214,12 @@ bool acSaveActiveBond1dDensityField::Execute(long simTime, ISimCmd* const pISimC
 			}
 			else
 			{
-				CLogacEmptyBondACN* pMsg2 = new CLogacEmptyBondACN(GetExecutionTime(), m_ACNType);
+				 new CLogacEmptyBondACN(GetExecutionTime(), m_ACNType);
 			}
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg3 = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

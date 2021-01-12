@@ -120,9 +120,6 @@ void taRadialForce::Execute(long simTime)
 
 	// debug checks
 	const zString label = GetLabel();
-	long beadTotal      = GetBeadTotal();
-	CCommandTargetNode* const pInner = GetInnerDecorator();
-	CCommandTargetNode* const pOuter = GetOuterDecorator();
 
 	// We use a temporary vector to hold the target's beads because 
 	// applying begin() and end() to the GetBeads() function directly 
@@ -202,7 +199,7 @@ zInStream& taRadialForce::Read(zInStream& is)
 
     if(!is.good() || (m_X == 0 && m_Y == 0 && m_Z == 0))
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing radial force decorator (invalid normal vector?)");
+         new CLogRestartStateBuilderError(0, "Error importing radial force decorator (invalid normal vector?)");
         return is;
     }
 
@@ -210,7 +207,7 @@ zInStream& taRadialForce::Read(zInStream& is)
 
     if(!is.good() || (m_XCentre < 0 || m_YCentre < 0 || m_ZCentre < 0) || m_Magnitude < 0.0)
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing radial force decorator (invalid origin or magnitude?)");
+         new CLogRestartStateBuilderError(0, "Error importing radial force decorator (invalid origin or magnitude?)");
         return is;
     }
 

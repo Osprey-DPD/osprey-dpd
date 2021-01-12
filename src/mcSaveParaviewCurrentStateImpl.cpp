@@ -63,12 +63,12 @@ void mcSaveParaviewCurrentStateImpl::SaveParaviewCurrentState(const xxCommand* c
 	    {
 		    if(pCmd->IsExecutionLogged())
 			{
-		        CLogSaveCurrentState* pMsg = new CLogSaveCurrentState(pMon->GetCurrentTime());
+		         new CLogSaveCurrentState(pMon->GetCurrentTime());
 			}
 	    }
 	    else
 	    {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		     new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	    }
 	}
 	else
@@ -83,11 +83,11 @@ void mcSaveParaviewCurrentStateImpl::SaveParaviewCurrentState(const xxCommand* c
 
     if(pMon->InternalSaveCurrentState(pFormat))
 	{
-		CLogSaveCurrentState* pMsg = new CLogSaveCurrentState(pMon->GetCurrentTime());
+		 new CLogSaveCurrentState(pMon->GetCurrentTime());
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 	
 #endif

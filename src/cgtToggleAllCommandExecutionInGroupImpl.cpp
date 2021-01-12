@@ -57,11 +57,11 @@ void cgtToggleAllCommandExecutionInGroupImpl::ToggleAllCommandExecutionInGroup(c
         bool bActive = !pGroup->IsActive();
         pGroup->SetActive(bActive);
         
-		CLogcgtToggleAllCommandExecutionInGroup* pMsg = new CLogcgtToggleAllCommandExecutionInGroup(pSimBox->GetCurrentTime(), groupName, bActive);
+		new CLogcgtToggleAllCommandExecutionInGroup(pSimBox->GetCurrentTime(), groupName, bActive);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
   
 #endif

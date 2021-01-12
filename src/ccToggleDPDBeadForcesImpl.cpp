@@ -43,7 +43,7 @@ ccToggleDPDBeadForcesImpl::~ccToggleDPDBeadForcesImpl()
 
 void ccToggleDPDBeadForcesImpl::ToggleDPDBeadForces(const xxCommand* const pCommand)
 {
-	const ccToggleDPDBeadForces* const pCmd = dynamic_cast<const ccToggleDPDBeadForces*>(pCommand);
+//	const ccToggleDPDBeadForces* const pCmd = dynamic_cast<const ccToggleDPDBeadForces*>(pCommand);
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
@@ -51,5 +51,5 @@ void ccToggleDPDBeadForcesImpl::ToggleDPDBeadForces(const xxCommand* const pComm
 
 	// This command cannot fail
 
-	CLogToggleDPDBeadForces* pMsg = new CLogToggleDPDBeadForces(pSimBox->GetCurrentTime(), bZeroForce);
+	 new CLogToggleDPDBeadForces(pSimBox->GetCurrentTime(), bZeroForce);
 }

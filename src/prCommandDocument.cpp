@@ -88,12 +88,9 @@ namespace
 
 	const zString id = prCommandDocument::GetType();
 
-	// This process can only be created by command so we disable the
-	// registration with the class factory
+	// This process should only be created internally
 
-	const bool bRegistered = false;
-
-//	const bool bRegistered = acfProcessFactory::Instance()->Register(id, Create);
+	const bool bRegistered = acfProcessFactory::Instance()->Register(id, Create);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -180,11 +177,11 @@ void prCommandDocument::UpdateState(CSimState& rSimState, const ISimBox* const p
 
 			if(xxFile::DoesFileExist(m_DocumentName) && pComDoc->ReadCommandDocument(m_DocumentName))
 			{
-				CLogCommandDocumentImported* pMsg = new CLogCommandDocumentImported(pISimBox->GetCurrentTime(), GetPid(), m_DocumentName);
+				 new CLogCommandDocumentImported(pISimBox->GetCurrentTime(), GetPid(), m_DocumentName);
 			}
 			else
 			{
-				CLogCommandDocumentImportFailed* pMsg = new CLogCommandDocumentImportFailed(pISimBox->GetCurrentTime(), GetPid(), m_DocumentName);
+				 new CLogCommandDocumentImportFailed(pISimBox->GetCurrentTime(), GetPid(), m_DocumentName);
 			}
 		}
 
@@ -241,11 +238,11 @@ void prCommandDocument::SetModifiable(const xxCommand* const pCommand)
 	{
 		m_bIsModifiable = true;
 
-		CLogpcToggleProcessModificationStatus* pMsg = new CLogpcToggleProcessModificationStatus(pCmd->GetExecutionTime(), GetPid(), m_bIsModifiable);
+		 new CLogpcToggleProcessModificationStatus(pCmd->GetExecutionTime(), GetPid(), m_bIsModifiable);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -259,11 +256,11 @@ void prCommandDocument::SetUnmodifiable(const xxCommand* const pCommand)
 	{
 		m_bIsModifiable = false;
 
-		CLogpcToggleProcessModificationStatus* pMsg = new CLogpcToggleProcessModificationStatus(pCmd->GetExecutionTime(), GetPid(), m_bIsModifiable);
+		 new CLogpcToggleProcessModificationStatus(pCmd->GetExecutionTime(), GetPid(), m_bIsModifiable);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 }
 
@@ -282,11 +279,11 @@ void prCommandDocument::SetIrreversibleUnmodifiable(const xxCommand* const pComm
 		m_bNeverModifiable = true;
 		m_bIsModifiable    = false;
 
-		CLogpcProcessModificationForbidden* pMsg = new CLogpcProcessModificationForbidden(pCmd->GetExecutionTime(), pid);
+		 new CLogpcProcessModificationForbidden(pCmd->GetExecutionTime(), pid);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 
 }
@@ -312,11 +309,11 @@ void prCommandDocument::AddDocument(const xxCommand* const pCommand)
 	{
 		m_Documents.push_back(docName);
 
-		CLogpcCommandDocumentAddDocument* pMsg = new CLogpcCommandDocumentAddDocument(pCmd->GetExecutionTime(), GetPid(), docName);
+		 new CLogpcCommandDocumentAddDocument(pCmd->GetExecutionTime(), GetPid(), docName);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+		 new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
 	}
 #endif
 }
@@ -333,7 +330,7 @@ void prCommandDocument::GetPendingDocumentTotal(const xxCommand* const pCommand)
 
 	// This command cannot fail
 
-	CLogpcCommandDocumentGetPendingDocTotal* pMsg = new CLogpcCommandDocumentGetPendingDocTotal(pCmd->GetExecutionTime(), GetPid(), m_Documents.size());
+	 new CLogpcCommandDocumentGetPendingDocTotal(pCmd->GetExecutionTime(), GetPid(), m_Documents.size());
 #endif
 }
 
@@ -348,7 +345,7 @@ void prCommandDocument::GetPendingDocuments(const xxCommand* const pCommand) con
 
 	// This command cannot fail
 
-	CLogpcCommandDocumentGetPendingDocs* pMsg = new CLogpcCommandDocumentGetPendingDocs(pCmd->GetExecutionTime(), GetPid(), m_Documents);
+	 new CLogpcCommandDocumentGetPendingDocs(pCmd->GetExecutionTime(), GetPid(), m_Documents);
 #endif
 }
 

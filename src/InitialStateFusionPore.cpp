@@ -71,11 +71,7 @@ namespace
 // Note that there is no way to set default data for the two lamellae as we 
 // don't have access to the polymers that are defined in the control data file.
 
-CInitialStateFusionPore::CInitialStateFusionPore() : m_X(0), m_Y(0), m_Z(0), 
-													 m_BilayerArea(0.0),
-													 m_Bilayer1Length(0.0),
-												     m_Bilayer2Length(0.0),
-												     m_bLinearise(false)
+CInitialStateFusionPore::CInitialStateFusionPore() : m_X(0), m_Y(0), m_Z(0), m_bLinearise(false), m_BilayerArea(0.0), m_Bilayer1Length(0.0), m_Bilayer2Length(0.0) 
 {
 	m_Polymers1.clear();
 	m_Polymers2.clear();
@@ -85,7 +81,7 @@ CInitialStateFusionPore::CInitialStateFusionPore() : m_X(0), m_Y(0), m_Z(0),
 
 	for(short int i=0; i<2; i++)
 	{
-		m_Centre[i]			= 0.0;
+		m_Centre[i]		= 0.0;
 		m_Thickness[i]		= 0.0;
 		m_BilayerCentre[i]	= 0.0;
 		m_UpperHead[i]		= 0.0;
@@ -104,24 +100,24 @@ CInitialStateFusionPore& CInitialStateFusionPore::operator=(const CInitialStateF
 {
 	if(this != &oldISL)
 	{
-		m_Polymers1			= oldISL.m_Polymers1;
-		m_Polymers2			= oldISL.m_Polymers2;
-		m_X					= oldISL.m_X;
-		m_Y					= oldISL.m_Y;
-		m_Z					= oldISL.m_Z;
-		m_Centre[0]			= oldISL.m_Centre[0];
-		m_Centre[1]			= oldISL.m_Centre[1];
+		m_Polymers1		= oldISL.m_Polymers1;
+		m_Polymers2		= oldISL.m_Polymers2;
+		m_X			= oldISL.m_X;
+		m_Y			= oldISL.m_Y;
+		m_Z			= oldISL.m_Z;
+		m_Centre[0]		= oldISL.m_Centre[0];
+		m_Centre[1]		= oldISL.m_Centre[1];
 		m_Thickness[0]		= oldISL.m_Thickness[0];
 		m_Thickness[1]		= oldISL.m_Thickness[1];
 		m_bLinearise		= oldISL.m_bLinearise;
 		m_UpperFractions	= oldISL.m_UpperFractions;
-		m_PolymerTypes1		= oldISL.m_PolymerTypes1;
-		m_PolymerTypes2		= oldISL.m_PolymerTypes2;
+		m_PolymerTypes1	= oldISL.m_PolymerTypes1;
+		m_PolymerTypes2	= oldISL.m_PolymerTypes2;
 	    m_BilayerArea		= oldISL.m_BilayerArea;
-	    m_Bilayer1Length	= oldISL.m_Bilayer1Length;
-	    m_Bilayer2Length	= oldISL.m_Bilayer2Length;
-	    m_BilayerCentre[0]	= oldISL.m_BilayerCentre[0];
-	    m_BilayerCentre[1]	= oldISL.m_BilayerCentre[1];
+	    m_Bilayer1Length	        = oldISL.m_Bilayer1Length;
+	    m_Bilayer2Length	        = oldISL.m_Bilayer2Length;
+	    m_BilayerCentre[0]	        = oldISL.m_BilayerCentre[0];
+	    m_BilayerCentre[1]	        = oldISL.m_BilayerCentre[1];
 	    m_UpperHead[0]		= oldISL.m_UpperHead[0];
 	    m_UpperHead[1]		= oldISL.m_UpperHead[1];
 	    m_LowerHead[0]		= oldISL.m_LowerHead[0];
@@ -166,7 +162,7 @@ zOutStream& CInitialStateFusionPore::put(zOutStream& os) const
 
 	os << "	        " << "UpperFraction	  ";
 
-	for(short i=0; i<m_Polymers1.size(); i++)
+	for(long unsigned int i=0; i<m_Polymers1.size(); i++)
 	{
 		os << "	" << m_UpperFractions.at(i);
 	}
@@ -344,7 +340,7 @@ zInStream& CInitialStateFusionPore::get(zInStream& is)
 	}
 	else
 	{
-		for(short i=0; i<m_Polymers1.size(); i++)
+		for(long unsigned int i=0; i<m_Polymers1.size(); i++)
 		{
 			is >> upperFraction;
 

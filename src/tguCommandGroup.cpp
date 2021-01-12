@@ -37,7 +37,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-tguCommandGroup::tguCommandGroup(const zString name) : m_Name(name), m_bValid(true), m_bActive(true),
+tguCommandGroup::tguCommandGroup(const zString name) : m_Name(name), m_bActive(true), m_bValid(true), 
                                                        m_Time(0), m_Total(0), m_Period(0),
                                                        m_pCommandSet(0)
 {
@@ -62,8 +62,8 @@ tguCommandGroup::tguCommandGroup(const zString name) : m_Name(name), m_bValid(tr
 
 tguCommandGroup::tguCommandGroup(const tguCommandGroup& oldGroup) : xxBase(oldGroup), 
                                     m_Name(oldGroup.m_Name+"1"),
-                                    m_bValid(oldGroup.m_bValid),
                                     m_bActive(oldGroup.m_bActive),
+                                    m_bValid(oldGroup.m_bValid),
                                     m_Time(oldGroup.m_Time),
                                     m_Total(oldGroup.m_Total),
                                     m_Period(oldGroup.m_Period),
@@ -185,7 +185,7 @@ bool tguCommandGroup::Execute(ISimState* const pISimState)
                 // and no more executions for a group. In both cases the group 
                 // will be removed from the active groups in the SimBox
 
-                CLogcgtExecuteCommandGroupFailed* pMsg = new CLogcgtExecuteCommandGroupFailed(m_Time, GetName());
+                new CLogcgtExecuteCommandGroupFailed(m_Time, GetName());
                 SetValid(false);
             }
         }   
@@ -334,8 +334,6 @@ bool tguCommandGroup::InstantiateCommand(unsigned long index)
             // for integers, reals and strings, and those arguments whose values 
             // are copied from a different command/argument.
 
-            const long argTotal = GetArgumentTotalForCommand(index);
-
             zString hashedArgName = "";
             zString argName = "";
             zString argType = "";
@@ -475,12 +473,11 @@ bool tguCommandGroup::InstantiateCommand(unsigned long index)
 
                 if(bValid)
                 {
-                    CLogcgtCommandPackingFailed* pMsg1 = new CLogcgtCommandPackingFailed(m_Time, GetName(), cmdName, argNames);
+                    new CLogcgtCommandPackingFailed(m_Time, GetName(), cmdName, argNames);
                 }
                 else
                 {
-                    CLogcgtCommandInstantiationFailed* pMsg2 = new CLogcgtCommandInstantiationFailed(m_Time, GetName(), cmdName, 
-                                                               argName, argType, argSource);
+                    new CLogcgtCommandInstantiationFailed(m_Time, GetName(), cmdName, argName, argType, argSource);
                 }
 
 
@@ -496,7 +493,7 @@ bool tguCommandGroup::InstantiateCommand(unsigned long index)
         else
         {
             // Issue a log message that the command is unrecognised
-            CLogcgtUnrecognisedCommand* pMsg3 = new CLogcgtUnrecognisedCommand(m_Time, GetName(), cmdName);
+            new CLogcgtUnrecognisedCommand(m_Time, GetName(), cmdName);
             return false;
         }
     }

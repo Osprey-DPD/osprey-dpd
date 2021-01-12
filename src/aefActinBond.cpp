@@ -184,7 +184,7 @@ bool aefActinBond::Activate(aeActiveBond* const pTargetBond)
         if(pTargetBond->GetHeadAdjacentBond() != 0 || pTargetBond->GetTailAdjacentBond() != 0)
         {
             const zString txt = "Target bond has neighbours " + IGlobalSimBox::Instance()->ToString(pTargetBond->GetHeadAdjacentBond()->GetId()) + " " + IGlobalSimBox::Instance()->ToString(pTargetBond->GetTailAdjacentBond()->GetId());
-            CLogTextErrorMessage* pMsg = new CLogTextErrorMessage(IGlobalSimBox::Instance()->GetCurrentTime(), txt);
+            new CLogTextErrorMessage(IGlobalSimBox::Instance()->GetCurrentTime(), txt);
         }
 
 		if(GetHeadMonomer())	// Current bond is the tail of the active polymer

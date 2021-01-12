@@ -161,12 +161,12 @@ void ccAddReceptorBondImpl::AddReceptorBond(const xxCommand* const pCommand)
 
 		pSimBox->SetActiveBondsOn(true);
 		
-		CLogActiveBondAdded* pMsg = new CLogActiveBondAdded(pSimBox->GetCurrentTime(), pShadowSimBox->GetReceptorNetwork()->GetType(), headMonomerName, tailMonomerName,
+		 new CLogActiveBondAdded(pSimBox->GetCurrentTime(), pShadowSimBox->GetReceptorNetwork()->GetType(), headMonomerName, tailMonomerName,
 																						  headMonomerType, tailMonomerType);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 
 	}
 #endif

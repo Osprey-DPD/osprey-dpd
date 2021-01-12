@@ -157,11 +157,11 @@ bool acCancelActivePolymerLimit::Execute(long simTime, ISimCmd* const pISimCmd) 
             // To turn off the active polymer limit we just set it to zero.
 			pMACN->SetActivePolymerLimit(0);
 
-			CLogacCancelActivePolymerLimit* pMsg = new CLogacCancelActivePolymerLimit(GetExecutionTime(), m_ACNType);
+			 new CLogacCancelActivePolymerLimit(GetExecutionTime(), m_ACNType);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

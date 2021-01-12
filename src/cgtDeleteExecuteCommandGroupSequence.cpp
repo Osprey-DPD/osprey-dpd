@@ -194,7 +194,7 @@ bool cgtDeleteExecuteCommandGroupSequence::Pack(const tguArgumentSequence& vArgu
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(0)->GetValue(&m_Name);
 

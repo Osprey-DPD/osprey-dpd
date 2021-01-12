@@ -200,7 +200,7 @@ bool cgcSetArgumentsTo3dRectangularLatticeVector::Pack(const tguArgumentSequence
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(vArguments.size() == GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         return cgcSetArgumentsTo3dRealLatticeVector::Pack(vArguments);
     }

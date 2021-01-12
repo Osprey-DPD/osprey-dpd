@@ -84,11 +84,11 @@ void ctWorkDoneOnBeadTypeInTargetImpl::WorkDoneOnBeadTypeInTarget(const xxComman
 			std::cout << fdx << " " << fdy << " " << fdz << " work done = " << workDone << zEndl;
 	}
 
-		CLogctWorkDoneOnBeadTypeInTarget* pMsg = new CLogctWorkDoneOnBeadTypeInTarget(pSimBox->GetCurrentTime(), label, beadName, soughtType, beadTotal, workDone);
+		new CLogctWorkDoneOnBeadTypeInTarget(pSimBox->GetCurrentTime(), label, beadName, soughtType, beadTotal, workDone);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 
 	}
 }

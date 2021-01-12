@@ -392,7 +392,7 @@ void prVesicleShear::UpdateState(CSimState& rSimState, const ISimBox* const pISi
 			}
 			else
 			{
-				CLogCreateEventFailed* pMessage = new CLogCreateEventFailed(pISimBox->GetCurrentTime(), m_pVesicleUnbinds);
+				new CLogCreateEventFailed(pISimBox->GetCurrentTime(), m_pVesicleUnbinds);
 
 				delete m_pVesicleUnbinds;
 			}

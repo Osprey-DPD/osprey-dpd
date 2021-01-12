@@ -46,14 +46,14 @@ mcToggleRestartWarningMessagesImpl::~mcToggleRestartWarningMessagesImpl()
 
 void mcToggleRestartWarningMessagesImpl::ToggleRestartWarningMessages(const xxCommand* const pCommand)
 {
-	const mcToggleRestartWarningMessages* const pCmd = dynamic_cast<const mcToggleRestartWarningMessages*>(pCommand);
+//	const mcToggleRestartWarningMessages* const pCmd = dynamic_cast<const mcToggleRestartWarningMessages*>(pCommand);
 
 	CMonitor* pMon = dynamic_cast<CMonitor*>(this);
 
-    pMon->m_bLogRestartWarningMessages = !pMon->m_bLogRestartWarningMessages;
+        pMon->m_bLogRestartWarningMessages = !pMon->m_bLogRestartWarningMessages;
 
 	// This command cannot fail
 
-    CLogToggleRestartWarningMessages* pMsg = new CLogToggleRestartWarningMessages(pMon->GetCurrentTime(), pMon->m_bLogRestartWarningMessages);
+        new CLogToggleRestartWarningMessages(pMon->GetCurrentTime(), pMon->m_bLogRestartWarningMessages);
 }
 

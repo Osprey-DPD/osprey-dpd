@@ -337,7 +337,7 @@ bool evLamellaBilayerPhaseSeparation::Execute(long simTime, ISimEvent* const pIS
 //		{
 //			pISimEvent->SaveCurrentState();
 
-//			CLogLamellaPore* pMsg = new CLogLamellaPore(simTime, m_AggregateName, m_AggregateId);
+//			 new CLogLamellaPore(simTime, m_AggregateName, m_AggregateId);
 
 //			InActivateEvent();		
 //		}

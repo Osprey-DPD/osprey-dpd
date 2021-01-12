@@ -147,7 +147,7 @@ void taSerialiseBondCoordinatesEventAnalysis::Normalise()
 {
     if(!m_pFile->Serialize())
     {
-        CLogTextWarningMessage* pMsg = new CLogTextWarningMessage(IGlobalSimBox::Instance()->GetCurrentTime(), "Error serialising time series data in decorator " + GetLabel() + " wrapping target " + GetActiveCommandTarget()->GetLabel());
+         new CLogTextWarningMessage(IGlobalSimBox::Instance()->GetCurrentTime(), "Error serialising time series data in decorator " + GetLabel() + " wrapping target " + GetActiveCommandTarget()->GetLabel());
     }
 }
 

@@ -54,11 +54,11 @@ void cgtDeleteCommandGroupImpl::InternalDeleteCommandGroup(const xxCommand* cons
 
 	if(pSimBox->DeleteCommandGroup(groupName))
 	{
-		CLogcgtDeleteCommandGroup* pMsg = new CLogcgtDeleteCommandGroup(pSimBox->GetCurrentTime(), groupName);
+		new CLogcgtDeleteCommandGroup(pSimBox->GetCurrentTime(), groupName);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

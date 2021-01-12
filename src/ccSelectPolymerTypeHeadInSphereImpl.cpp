@@ -81,7 +81,7 @@ void ccSelectPolymerTypeHeadInSphereImpl::SelectPolymerTypeHeadInSphere(const xx
 	// Find the integer type of the specified polymers and their head bead type
 
 	const long polyType = pSimBox->GetPolymerTypeFromName(polyName);
-	const long beadType = pSimBox->GetPolymerHeadType(polyType);
+//	const long beadType = pSimBox->GetPolymerHeadType(polyType);
 
 	const double xSphereCentre = xCentre*pSimBox->GetSimBoxXLength();
 	const double ySphereCentre = yCentre*pSimBox->GetSimBoxYLength();
@@ -153,11 +153,11 @@ void ccSelectPolymerTypeHeadInSphereImpl::SelectPolymerTypeHeadInSphere(const xx
 
 	if(pSimBox->CreateCommandTargetPolymer(label, polyType, vTargetPolymers))
 	{
-		CLogSelectPolymerTypeInRegion* pMsg = new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "Sphere", polyName, polyType, polyTotal);
+		 new CLogSelectPolymerTypeInRegion(pSimBox->GetCurrentTime(), label, "Sphere", polyName, polyType, polyTotal);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 
 #endif

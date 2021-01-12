@@ -297,7 +297,7 @@ bool ctPolymerisePolymerTripleInTarget::Pack(const tguArgumentSequence& vArgumen
     // First check that at least the number of constant arguments is present,
     // and this should include the m_BondTotal parameter
 
-    if(vArguments.size() > GetArgumentTotal())
+    if(static_cast<long>(vArguments.size()) > GetArgumentTotal())
     {
         ctApplyCommand::Pack(vArguments);
 
@@ -309,7 +309,7 @@ bool ctPolymerisePolymerTripleInTarget::Pack(const tguArgumentSequence& vArgumen
 
         // Now check that there are exactly m_ArgumentTotal + m_BondTotal arguments
     
-        if(vArguments.size() == m_BondTotal + GetArgumentTotal())
+        if(static_cast<long>(vArguments.size()) == m_BondTotal + GetArgumentTotal())
         {
             long headIndex = 0;
             long tailIndex = 0;

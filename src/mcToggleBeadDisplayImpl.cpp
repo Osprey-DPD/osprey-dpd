@@ -117,7 +117,7 @@ void mcToggleBeadDisplayImpl::ToggleBeadDisplay(const xxCommand* const pCommand)
 #if EnableParallelCommands == SimMPSEnabled
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogBeadDisplay* pMsg = new CLogBeadDisplay(pMon->GetCurrentTime(), beadName, beadType, bDisplay);
+		    new CLogBeadDisplay(pMon->GetCurrentTime(), beadName, beadType, bDisplay);
         }
 		else
 		{
@@ -129,7 +129,7 @@ void mcToggleBeadDisplayImpl::ToggleBeadDisplay(const xxCommand* const pCommand)
 	{
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		     new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
         }
         else
         {
@@ -138,11 +138,11 @@ void mcToggleBeadDisplayImpl::ToggleBeadDisplay(const xxCommand* const pCommand)
         }
     }
 #else
-		CLogBeadDisplay* pMsg = new CLogBeadDisplay(pMon->GetCurrentTime(), beadName, beadType, bDisplay);
+		new CLogBeadDisplay(pMon->GetCurrentTime(), beadName, beadType, bDisplay);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 #endif
 }

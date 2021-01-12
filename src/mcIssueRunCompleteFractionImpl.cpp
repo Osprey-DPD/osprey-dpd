@@ -79,11 +79,11 @@ void mcIssueRunCompleteFractionImpl::IssueRunCompleteFraction(const xxCommand* c
 
 	if(interval == 0)
 	{
-		CLogRunCompleteFraction* pMsg = new CLogRunCompleteFraction(pMon->GetCurrentTime(), percentComplete);
+		 new CLogRunCompleteFraction(pMon->GetCurrentTime(), percentComplete);
 	}
 	else if(interval > 0 && interval <= 100)
 	{
-		CLogRunCompleteFraction* pMsg = new CLogRunCompleteFraction(pMon->GetCurrentTime(), percentComplete);
+		 new CLogRunCompleteFraction(pMon->GetCurrentTime(), percentComplete);
 
 		long lastInterval	= (100*currentTime/(interval*totalTime))*interval;
 
@@ -98,7 +98,7 @@ void mcIssueRunCompleteFractionImpl::IssueRunCompleteFraction(const xxCommand* c
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 
 }

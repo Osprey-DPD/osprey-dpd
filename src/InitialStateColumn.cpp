@@ -335,7 +335,6 @@ bool CInitialStateColumn::ValidateData(const CInputData& riData)
         {
             do 
             {
-                long slab = imm->first;
                 const zString polymerName =  imm->second;
 
 		        long polymerType = (*riData.GetPolymerNamesMap().find(polymerName)).second;

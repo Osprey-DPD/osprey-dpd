@@ -288,7 +288,7 @@ private:
     // Functions to create new polymer instances to wrap those that enter the processor's Space
 	
     bool CreateEmptyPolymers();
-	bool CreateEmptyExtendedPolymers();
+    bool CreateEmptyExtendedPolymers();
 	
 	// Function to remove an entry from the extended bond map defined by the pair (key, extended bond id)
 
@@ -318,11 +318,11 @@ protected:
 
     const CNTCellVector&           m_rvCNTCells;              // All CNT cells in processor's Space
     CNTCellVector                  m_vBulkCNTCells;           // CNT cells within the bulk of processor's Space
-	PolymerList                    m_lEmptyPolymers;          // Set of empty polymers waiting to be filled by single-bead polymers re-entering
-	ExtendedPolymerList            m_lEmptyExtendedPolymers;  // Set of empty extended polymers waiting to be filled
+    PolymerList                    m_lEmptyPolymers;          // Set of empty polymers waiting to be filled by single-bead polymers re-entering
+    ExtendedPolymerList            m_lEmptyExtendedPolymers;  // Set of empty extended polymers waiting to be filled
     LongPolymerMap                 m_mBulkPolymers;           // Set of polymers wholly within processor Space
     LongExtendedPolymerMap         m_mExtendedPolymers;       // Set of polymers that cross processor boundaries
-	LongExtendedBondMMap           m_mmExtendedBonds;         // Set of bonds that cross processor boundaries
+    LongExtendedBondMMap           m_mmExtendedBonds;         // Set of bonds that cross processor boundaries
     LongNanoparticleMap            m_mBulkNanoparticles;      // Set of nanoparticles wholly within processor space
     LongExtendedNanoparticleMap    m_mBorderNanoparticles;    // Set of nanoparticles that may span processor boundaries
 
@@ -332,8 +332,8 @@ protected:
     long   m_BeadTotal;                 // Total number of beads in thisprocessor's Space.
     long   m_ExtendedBondCounter;       // Number of extended bonds held by all processors: used by derived classes for debug purposes
     long   m_ExtendedBondForceCounter;  // Number of extended bonds on all processors whose force have been calculated per timestep: "
-	double m_AngMom[3];                 // Total angular momentum    "
-	double m_CMVel[3];                  // CM velocity for all beads in processor's Space
+    double m_AngMom[3];                 // Total angular momentum    "
+    double m_CMVel[3];                  // CM velocity for all beads in processor's Space
 
 
 
@@ -372,44 +372,41 @@ protected:
 // Pids of adjacent processors assigned and used by derived classes. Note that all pids are assigned an illegal value in the 
 // constructor so that derived classes must assign correct values to those pids that they use.
 
-	long UFacePid;
-	long DFacePid;
-	long RFacePid;
-	long LFacePid;
-	long TFacePid;
-	long BFacePid;
+    long UFacePid;
+    long DFacePid;
+    long RFacePid;
+    long LFacePid;
+    long TFacePid;
+    long BFacePid;
 
-	long TREdgePid;
-	long TLEdgePid;
-	long BREdgePid;
-	long BLEdgePid;
+    long TREdgePid;
+    long TLEdgePid;
+    long BREdgePid;
+    long BLEdgePid;
 
-	long UREdgePid;
-	long ULEdgePid;
-	long UTEdgePid;
-	long UBEdgePid;
+    long UREdgePid;
+    long ULEdgePid;
+    long UTEdgePid;
+    long UBEdgePid;
 
-	long DREdgePid;
-	long DLEdgePid;
-	long DTEdgePid;
-	long DBEdgePid;
+    long DREdgePid;
+    long DLEdgePid;
+    long DTEdgePid;
+    long DBEdgePid;
 
-	long UTRCornerPid;
-	long UTLCornerPid;
-	long UBRCornerPid;
-	long UBLCornerPid;
-	long DTRCornerPid;
-	long DTLCornerPid;
+    long UTRCornerPid;
+    long UTLCornerPid;
+    long UBRCornerPid;
+    long UBLCornerPid;
+    long DTRCornerPid;
+    long DTLCornerPid;
     long DBRCornerPid;
     long DBLCornerPid;
-   
    
 // Local data used by derived classes in writing out debug and logging information about a run   
    
 
     long localBeadTotalTimer;  // Bead total counter
-    long    m_CMVCounter;      // No of samples of CM velocity taken
-	
 	
     zDoubleVector  m_vXCMVel;  // CM velocity for each processor accumulated on P0
     zDoubleVector  m_vYCMVel;
@@ -435,11 +432,11 @@ private:
 
     long m_NPid[27];   // Pids of containing processor's 26 nearest neighbours including itself
 	
-	long velCounter;
+    long velCounter;
 	
-	// Debugging data that checks bead properties for each Border region
-	
-	long    m_IntPerBeadCounter;        // Counter for samples of the interactions/bead and beads/cell
+    // Debugging data that checks bead properties for each Border region
+
+    long m_IntPerBeadCounter;        // Counter for samples of the interactions/bead and beads/cell
 
     // Beads per cell
 	double  m_MeanBulkBeadsPerCell;

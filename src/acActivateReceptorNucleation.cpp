@@ -134,7 +134,7 @@ bool acActivateReceptorNucleation::Execute(long simTime, ISimCmd* const pISimCmd
 			{
 				pNetwork->ActivateReceptorNucleation();
 												
-				CLogacActivateReceptorNucleation* pMsg = new CLogacActivateReceptorNucleation(GetExecutionTime(), m_ACNType);
+				 new CLogacActivateReceptorNucleation(GetExecutionTime(), m_ACNType);
 			}
 			else
 			{
@@ -143,7 +143,7 @@ bool acActivateReceptorNucleation::Execute(long simTime, ISimCmd* const pISimCmd
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

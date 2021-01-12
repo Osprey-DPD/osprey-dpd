@@ -178,7 +178,7 @@ bool CInclusiveRestartState::Serialize()
 
         if(!m_riState.IsRestartStateValid())
         {
-            CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Unable to write non-bead data inclusive restart state");
+            new CLogRestartStateBuilderError(0, "Unable to write non-bead data inclusive restart state");
             return false;
         }
     }
@@ -240,7 +240,7 @@ bool CInclusiveRestartState::Serialize()
 
                 if(!m_riState.IsRestartStateValid())
                 {
-                    CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Unable to write inclusive restart state");
+                    new CLogRestartStateBuilderError(0, "Unable to write inclusive restart state");
                     return false;
                 }
 	        }
@@ -293,7 +293,7 @@ bool CInclusiveRestartState::Serialize()
                         // Check for the keyword not being found
                         if(!m_inStream.good() || m_inStream.eof())
                         {
-                            CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Unable to read inclusive restart state (has user modified unchangeable data?)");
+                            new CLogRestartStateBuilderError(0, "Unable to read inclusive restart state (has user modified unchangeable data?)");
                             return false;
                         }
                     }
@@ -303,7 +303,7 @@ bool CInclusiveRestartState::Serialize()
 
                     if(!m_riState.IsRestartStateValid())
                     {
-                        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Unable to read inclusive restart state (has user modified unchangeable data?)");
+                        new CLogRestartStateBuilderError(0, "Unable to read inclusive restart state (has user modified unchangeable data?)");
                         return false;
                     }
                 }
@@ -316,12 +316,12 @@ bool CInclusiveRestartState::Serialize()
 
                     if(rState.IsUnexpectedBeadTypeFound())
                     {
-                        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Unable to read coordinates-only restart state (unexpected bead type found)");
+                        new CLogRestartStateBuilderError(0, "Unable to read coordinates-only restart state (unexpected bead type found)");
                         return false;
                     }
                     else
                     {
-                        CLogRestartStateBuilderWarning* pMsg = new CLogRestartStateBuilderWarning(0, "Expected an inclusive restart state, but found bead coordinates only: simulation proceeding without targets or polymerised molecules");
+                        new CLogRestartStateBuilderWarning(0, "Expected an inclusive restart state, but found bead coordinates only: simulation proceeding without targets or polymerised molecules");
                     }
                 }
 	        }
@@ -331,11 +331,11 @@ bool CInclusiveRestartState::Serialize()
             // Error in the CRestartState data, bead coordinates may have been corrupted
             if(IsFileWritable())
             {
-                CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(GetCurrentTime(), "Unable to write bead coordinates");
+                new CLogRestartStateBuilderError(GetCurrentTime(), "Unable to write bead coordinates");
             }
             else
             {
-                CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Unable to read bead coordinates (is restart file corrupt?");
+                new CLogRestartStateBuilderError(0, "Unable to read bead coordinates (is restart file corrupt?");
             }
 
             return false;

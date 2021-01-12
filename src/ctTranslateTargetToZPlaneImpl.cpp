@@ -77,7 +77,6 @@ void ctTranslateTargetToZPlaneImpl::TranslateTargetToZPlane(const xxCommand* con
 	// is not applicable to composite targets because they may contain
 	// a multitude of bead types.
 
-	bool bSuccess = true;
 	long oldIndex = 0;
 	long newIndex = 0;
 	long ix, iy, iz;
@@ -90,9 +89,9 @@ void ctTranslateTargetToZPlaneImpl::TranslateTargetToZPlane(const xxCommand* con
 		{
 			for(BeadVectorIterator iterBead=vTargetBeads.begin(); iterBead!=vTargetBeads.end(); iterBead++)
 			{
-                 ix = static_cast<long>((*iterBead)->GetXPos()/pSimBox->GetSimBoxXCellWidth());
-                 iy = static_cast<long>((*iterBead)->GetYPos()/pSimBox->GetSimBoxYCellWidth());
-                 iz = static_cast<long>((*iterBead)->GetZPos()/pSimBox->GetSimBoxZCellWidth());
+                               ix = static_cast<long>((*iterBead)->GetXPos()/pSimBox->GetSimBoxXCellWidth());
+                               iy = static_cast<long>((*iterBead)->GetYPos()/pSimBox->GetSimBoxYCellWidth());
+                               iz = static_cast<long>((*iterBead)->GetZPos()/pSimBox->GetSimBoxZCellWidth());
 				 		
 				 oldIndex = pSimBox->GetSimBoxXCellNo()*(pSimBox->GetSimBoxYCellNo()*iz+iy) + ix;
 				 
@@ -113,15 +112,15 @@ void ctTranslateTargetToZPlaneImpl::TranslateTargetToZPlane(const xxCommand* con
                  }
 			}
 			
-	        CLogctTranslateTargetToZPlane* pMsg = new CLogctTranslateTargetToZPlane(pSimBox->GetCurrentTime(), targetLabel, zc);
+	            new CLogctTranslateTargetToZPlane(pSimBox->GetCurrentTime(), targetLabel, zc);
 		}
 		else
 		{
-			CLogctEmptyTarget* pMsg = new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
+			new CLogctEmptyTarget(pSimBox->GetCurrentTime(), targetLabel);
 		}
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
 	}
 }

@@ -78,17 +78,17 @@ void ctListCommandTargetActivitiesImpl::ListCommandTargetActivities(const xxComm
             // Remove the last entry as this is the target's own label
             decList.pop_back();
 
-    	    CLogctListCommandTargetActivities* pMsg = new CLogctListCommandTargetActivities(pSimBox->GetCurrentTime(), targetLabel, decList);
+    	    new CLogctListCommandTargetActivities(pSimBox->GetCurrentTime(), targetLabel, decList);
         }
         else
         {
             const zString msg = "Command target " + targetLabel + " has no activities";
-            CLogTextMessage* pWarning = new CLogTextMessage(pSimBox->GetCurrentTime(), msg);
+            new CLogTextMessage(pSimBox->GetCurrentTime(), msg);
         }
 
     }
     else
     {
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
     }
 }

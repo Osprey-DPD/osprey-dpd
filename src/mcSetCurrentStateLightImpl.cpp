@@ -58,6 +58,6 @@ void mcSetCurrentStateLightImpl::SetCurrentStateLight(const xxCommand* const pCo
 	pMon->m_vLightY.push_back(dy);
 	pMon->m_vLightZ.push_back(dz);
 
-	CLogCurrentStateLight* pMsg = new CLogCurrentStateLight(pMon->GetCurrentTime(), dx, dy, dz);
+	new CLogCurrentStateLight(pMon->GetCurrentTime(), dx, dy, dz);
 }
 

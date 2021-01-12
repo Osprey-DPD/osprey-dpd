@@ -161,11 +161,11 @@ bool acSetFixedTailOffRate::Execute(long simTime, ISimCmd* const pISimCmd) const
 		{
 			pMACN->SetFixedTailOffRate(m_Rate);
 
-			CLogacSetFixedTailOffRate* pMsg = new CLogacSetFixedTailOffRate(GetExecutionTime(), m_ACNType, m_Rate);
+			 new CLogacSetFixedTailOffRate(GetExecutionTime(), m_ACNType, m_Rate);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

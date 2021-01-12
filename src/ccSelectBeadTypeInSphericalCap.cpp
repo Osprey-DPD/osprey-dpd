@@ -272,7 +272,7 @@ bool ccSelectBeadTypeInSphericalCap::Pack(const tguArgumentSequence& vArguments)
 {
 #if EnableCommandGroups == SimCommandEnabled
 
-    if(ccSelectBeadTypeInRegion::Pack(vArguments) && vArguments.size() == GetArgumentTotal())
+    if(ccSelectBeadTypeInRegion::Pack(vArguments) && static_cast<long>(vArguments.size()) == GetArgumentTotal())
     {
         vArguments.at(2)->GetValue(&m_XC);
         vArguments.at(3)->GetValue(&m_YC);

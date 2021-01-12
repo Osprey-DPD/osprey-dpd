@@ -87,10 +87,10 @@ void mcSetPolymerTypeDisplayIdImpl::SetPolymerTypeDisplayId(const xxCommand* con
 			}
 		}
 
-		CLogPolymerDisplayId* pMsg = new CLogPolymerDisplayId(pMon->GetCurrentTime(), polymerName, polymerType, displayId);
+		new CLogPolymerDisplayId(pMon->GetCurrentTime(), polymerName, polymerType, displayId);
 	}
 	else
 	{
-		CLogCommandFailed* pMsg = new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+		 new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
 	}
 }

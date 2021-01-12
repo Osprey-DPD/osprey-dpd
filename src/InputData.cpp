@@ -1826,10 +1826,10 @@ zString CInputData::RemoveSpaces(zString oldString) const
 	zStringIterator iterBack = oldString.end();
 	iterBack--;
 
-	for(long j=0; j<oldString.size(); j++)
+	for(long unsigned int j=0; j<oldString.size(); j++)
 	{
-		if(*iterFor == ' ')
-			oldString.erase(iterFor);	// erase automatically increments iterator
+		if(*iterFor == ' ') {
+			oldString.erase(iterFor); }	// erase automatically increments iterator
 		if(*iterBack == ' ')
 		{
 			oldString.erase(iterBack);	
@@ -3193,7 +3193,7 @@ bool CInputData::IsRestartDataValid(LongBeadTypeMap    mNewBeadTypes,
 		// CInputDPDFile and CInputMDFile to indicate how many types have been
 		// created so far. CInputData however counts from 0.
 
-		for(long beadNo=1; beadNo<=mNewBeadTypes.size(); beadNo++)
+		for(long unsigned int beadNo=1; beadNo<=mNewBeadTypes.size(); beadNo++)
 		{
 			cLongBeadTypeIterator iterNewBead =           mNewBeadTypes.find(beadNo);
 			cLongBeadTypeIterator iterOldBead = oldinFile.mNewBeadTypes.find(beadNo);
@@ -3210,7 +3210,7 @@ bool CInputData::IsRestartDataValid(LongBeadTypeMap    mNewBeadTypes,
 
 		// Check all bond names agree
 
-		for(long bondNo=1; bondNo<=mNewBondTypes.size(); bondNo++)
+		for(long unsigned int bondNo=1; bondNo<=mNewBondTypes.size(); bondNo++)
 		{
 			cLongBondTypeIterator iterNewBond =           mNewBondTypes.find(bondNo);
 			cLongBondTypeIterator iterOldBond = oldinFile.mNewBondTypes.find(bondNo);
@@ -3222,7 +3222,7 @@ bool CInputData::IsRestartDataValid(LongBeadTypeMap    mNewBeadTypes,
 		}
 		// Check all polymer data agrees
 
-		for(long polyNo=1; polyNo<=mNewPolymerTypes.size(); polyNo++)
+		for(long unsigned int polyNo=1; polyNo<=mNewPolymerTypes.size(); polyNo++)
 		{
 			cLongPolymerTypeIterator iterNewPolymer =           mNewPolymerTypes.find(polyNo);
 			cLongPolymerTypeIterator iterOldPolymer = oldinFile.mNewPolymerTypes.find(polyNo);
@@ -3234,8 +3234,8 @@ bool CInputData::IsRestartDataValid(LongBeadTypeMap    mNewBeadTypes,
 		}
 
 	}
-	else
-		return ErrorTrace("Error reading restart control data file");
+	else {
+		return ErrorTrace("Error reading restart control data file"); }
 
 	return bRestartOK;
 }
@@ -3598,7 +3598,7 @@ bool CInputData::IsCommandGroupPresent(const zString label) const
 
 const zString CInputData::GetPolymerTypeShape(long polyType) const
 {
-	if(polyType >= 0 && polyType < m_mPolymerShapes.size())
+	if(polyType >= 0 && polyType < static_cast<long>(m_mPolymerShapes.size()))
 	{
 		cLongStringIterator iterPoly = m_mPolymerShapes.find(polyType);
 
@@ -3630,7 +3630,7 @@ const zString CInputData::GetPolymerTypeShape(const zString polyName) const
 
 long CInputData::GetPolymerTypeSize(long polyType) const
 {
-	if(polyType >= 0 && polyType < m_mPolymerSizes.size())
+	if(polyType >= 0 && polyType < static_cast<long>(m_mPolymerSizes.size()))
 	{
 		cLongLongIterator iterPoly = m_mPolymerSizes.find(polyType);
 
@@ -3662,7 +3662,7 @@ long CInputData::GetPolymerTypeSize(const zString polyName) const
 
 double CInputData::GetPolymerTypeFraction(long polyType) const
 {
-	if(polyType >= 0 && polyType < m_mPolymerFractions.size())
+	if(polyType >= 0 && polyType < static_cast<long>(m_mPolymerFractions.size()))
 	{
 		cLongDoubleIterator iterPoly = m_mPolymerFractions.find(polyType);
 

@@ -166,11 +166,11 @@ bool acSetTailADPMultiplier::Execute(long simTime, ISimCmd* const pISimCmd) cons
 		{
 			pMActin->SetTailADPMultiplier(m_Multiplier);
 
-			CLogacSetTailADPMultiplier* pMsg = new CLogacSetTailADPMultiplier(GetExecutionTime(), m_ACNType, m_Multiplier);
+			 new CLogacSetTailADPMultiplier(GetExecutionTime(), m_ACNType, m_Multiplier);
 		}
 		else
 		{
-			CLogacNetworkNotModifiable* pMsg = new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
+			 new CLogacNetworkNotModifiable(GetExecutionTime(), m_ACNType);
 		}
 
 		return true;

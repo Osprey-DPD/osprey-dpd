@@ -48,14 +48,13 @@ void ctConstantSpecificAreaGhostImpl::ConstantSpecificArea(const xxCommand* cons
 {
 	const ctConstantSpecificAreaGhost* const pCmd = dynamic_cast<const ctConstantSpecificAreaGhost*>(pCommand);
 
-
 	const zString	targetLabel         = pCmd->GetReservoirTargetName();
 	const zString	decLabel	        = pCmd->GetDecLabel();
 	const zString	membraneLabel       = pCmd->GetMembraneTargetName();
     
     std::cout << "Proc " << xxParallelBase::GlobalGetRank() << " ConstantSpecificAreaGhostImpl has targets " << targetLabel << " " << membraneLabel << " " << decLabel << zEndl;
 
-    const zString	beadName            = pCmd->GetBeadName();
+        const zString	beadName            = pCmd->GetBeadName();
 
 	const long      sampleRate	        = pCmd->GetSampleRate();	 
 	const double      targetAN	        = pCmd->GetTargetAN();	 
@@ -64,10 +63,10 @@ void ctConstantSpecificAreaGhostImpl::ConstantSpecificArea(const xxCommand* cons
 
 	CSimBox* const pSimBox = dynamic_cast<CSimBox*>(this);
 
-    const long start = pSimBox->GetCurrentTime();
-    const long end = pSimBox->GetTotalTime();
+        const long start = pSimBox->GetCurrentTime();
+        const long end = pSimBox->GetTotalTime();
 
-    long beadType          = pSimBox->GetBeadTypeFromName(beadName);
+        long beadType = pSimBox->GetBeadTypeFromName(beadName);
 
 	// Get the ghost reservoir and membrane targets from the target list
 
@@ -76,8 +75,6 @@ void ctConstantSpecificAreaGhostImpl::ConstantSpecificArea(const xxCommand* cons
 
 	// Now we have the target, create a taConstantSpecificAreaGhost decorator object 
 	// and wrap the target with it to enable the area algorithm to work.
-
-	bool bSuccess = true;
 
 	if(pCmdTarget && pMembraneTarget)
 	{
@@ -105,15 +102,15 @@ void ctConstantSpecificAreaGhostImpl::ConstantSpecificArea(const xxCommand* cons
                                                 pISimState, beadType, start, end, sampleRate, targetAN);
 
 
-		pSimBox->m_ActiveCommandTargets.push_back(pDec);
+	pSimBox->m_ActiveCommandTargets.push_back(pDec);
 
-		// Log sucessful execution of the command
+	// Log sucessful execution of the command
         
 
 #if EnableParallelSimBox == SimMPSEnabled
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-            CLogctConstantSpecificAreaGhost* pMsg = new CLogctConstantSpecificAreaGhost(pSimBox->GetCurrentTime(), membraneLabel, targetLabel, decLabel, 
+            new CLogctConstantSpecificAreaGhost(pSimBox->GetCurrentTime(), membraneLabel, targetLabel, decLabel, 
                                                                                         beadName, sampleRate, targetAN);
         }
     }
@@ -121,17 +118,16 @@ void ctConstantSpecificAreaGhostImpl::ConstantSpecificArea(const xxCommand* cons
 	{
         if(xxParallelBase::GlobalGetRank() == 0)
         {
-		    CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+            new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
             
         }
     }
 #else
-        CLogctConstantSpecificAreaGhost* pMsg = new CLogctConstantSpecificAreaGhost(pSimBox->GetCurrentTime(), membraneLabel, targetLabel, decLabel, 
-                                                                                beadName, sampleRate, targetAN);
+            new CLogctConstantSpecificAreaGhost(pSimBox->GetCurrentTime(), membraneLabel, targetLabel, decLabel, beadName, sampleRate, targetAN);
     }
     else
     {
-        CLogCommandFailed* pMsg = new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
+         new CLogCommandFailed(pSimBox->GetCurrentTime(), pCmd);
     }
 #endif
 

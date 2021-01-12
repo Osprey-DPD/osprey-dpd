@@ -153,7 +153,7 @@ zInStream& taConstantForce::Read(zInStream& is)
 
     if(!is.good() || (m_X == 0 && m_Y == 0 && m_Z == 0))
     {
-        CLogRestartStateBuilderError* pMsg = new CLogRestartStateBuilderError(0, "Error importing constant force decorator (invalid normal vector?)");
+         new CLogRestartStateBuilderError(0, "Error importing constant force decorator (invalid normal vector?)");
         return is;
     }
 

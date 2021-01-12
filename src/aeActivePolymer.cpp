@@ -318,8 +318,6 @@ void aeActivePolymer::AddForce()
 
 	for(ActiveBondListIterator iterBond=m_Bonds.begin(); iterBond!=m_Bonds.end(); iterBond++)
 	{
-		aeActiveBond* pBond = (*iterBond);
-
 		(*iterBond)->AddForce();
 	}
 }

@@ -166,7 +166,7 @@ void taBinSuccessIntervalsEventAnalysis::Normalise()
 
     if(!m_pFile->Serialize())
     {
-        CLogTextWarningMessage* pMsg = new CLogTextWarningMessage(IGlobalSimBox::Instance()->GetCurrentTime(), "Error serialising data from histogram calculation in decorator " + GetLabel() + " wrapping target " + GetActiveCommandTarget()->GetLabel());
+         new CLogTextWarningMessage(IGlobalSimBox::Instance()->GetCurrentTime(), "Error serialising data from histogram calculation in decorator " + GetLabel() + " wrapping target " + GetActiveCommandTarget()->GetLabel());
     }
 
     if(m_BinTotal > 0)
