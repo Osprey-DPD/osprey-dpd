@@ -303,6 +303,11 @@ void ISimBoxBase::SaveParaviewCurrentState(const xxCommand* const pCommand) cons
 	m_pISimBox->IIMonitorCmd()->SaveParaviewCurrentState(pCommand);
 }
 
+void ISimBoxBase::SavePolymerBeadRDF(const xxCommand* const pCommand) const
+{
+	m_pISimBox->IIMonitorCmd()->SavePolymerBeadRDF(pCommand);
+}
+
 void ISimBoxBase::SavePovrayCurrentState(const xxCommand* const pCommand) const
 {
 	m_pISimBox->IIMonitorCmd()->SavePovrayCurrentState(pCommand);

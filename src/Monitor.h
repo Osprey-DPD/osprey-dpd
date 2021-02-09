@@ -44,6 +44,7 @@ class CCurrentStateFormat;
 #include "mcSaveCurrentStateImpl.h"
 #include "mcSaveNonBeadInclusiveRestartStateImpl.h"
 #include "mcSaveParaviewCurrentStateImpl.h"
+#include "mcSavePolymerBeadRDFImpl.h"
 #include "mcSavePovrayCurrentStateImpl.h"
 #include "mcSaveRestartStateImpl.h"
 #include "mcSetAnalysisPeriodImpl.h"
@@ -99,6 +100,7 @@ class CMonitor : public ISimBoxBase, public virtual IMonitorCmd,
 				public mcSaveCurrentStateImpl,
 				public mcSaveNonBeadInclusiveRestartStateImpl,
 				public mcSaveParaviewCurrentStateImpl,
+				public mcSavePolymerBeadRDFImpl,
 				public mcSavePovrayCurrentStateImpl,
 				public mcSaveRestartStateImpl,
 				public mcSetAnalysisPeriodImpl,
@@ -161,6 +163,7 @@ class CMonitor : public ISimBoxBase, public virtual IMonitorCmd,
 	friend class  mcSaveCurrentStateImpl;
 	friend class  mcSaveNonBeadInclusiveRestartStateImpl;
 	friend class  mcSaveParaviewCurrentStateImpl;
+	friend class  mcSavePolymerBeadRDFImpl;
 	friend class  mcSavePovrayCurrentStateImpl;
 	friend class  mcSaveRestartStateImpl;
 	friend class  mcSetAnalysisPeriodImpl;

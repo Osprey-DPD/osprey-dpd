@@ -53,6 +53,7 @@ public:
 	virtual void			         SaveCurrentStateCmd(const xxCommand* const pCommand) = 0;
 	virtual void     SaveNonBeadInclusiveRestartStateCmd(const xxCommand* const pCommand) = 0;
 	virtual void		        SaveParaviewCurrentState(const xxCommand* const pCommand) = 0;
+	virtual void                      SavePolymerBeadRDF(const xxCommand* const pCommand) = 0;
 	virtual void		          SavePovrayCurrentState(const xxCommand* const pCommand) = 0;
 	virtual void			         SaveRestartStateCmd(const xxCommand* const pCommand) = 0;
 	virtual void			           SetAnalysisPeriod(const xxCommand* const pCommand) = 0;
