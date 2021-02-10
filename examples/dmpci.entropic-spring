@@ -1,0 +1,69 @@
+dpd
+
+Title	" Pulling a polymer "
+Date    10/02/21
+Comment	" Entropic spring simulation: what is the force-extension curve?
+          A constant is applied to the two ends of the spring for a time and the extension can be measured
+          from its end-to-end length observable that is written to the dmpchs file. "
+
+
+State	random
+
+
+Bead  W
+      0.5
+      25
+      4.5	
+
+Bead  B
+      0.5
+      25    25
+      4.5   4.5
+
+Bead  BH
+      0.5
+      25   25   25
+      4.5  4.5  4.5
+
+Bead  BT
+      0.5
+      25   25   25   25
+      4.5  4.5  4.5  4.5
+
+
+
+Bond  B B  128.0  0.5
+Bond  BH B 128.0  0.5
+Bond  BT B 128.0  0.5
+
+Polymer	Water    0.9998   " (W) "
+Polymer Spring   0.0002   " (BH (14 B) BT) "
+
+Box         30  10  10       1  1  1
+Density		3
+Temp        1
+RNGSeed		-4436
+Lambda		0.5
+Step		0.01
+Time		6000
+SamplePeriod     10
+AnalysisPeriod	 6000
+DensityPeriod    6000
+DisplayPeriod    100
+RestartPeriod    6000
+Grid		1  1  1
+
+
+Command	ToggleBeadDisplay             1    W
+Command SetCurrentStateCamera         1    0.5 -1.0 -0.5  0.5 0.5 0.5
+Command SetCurrentStateDefaultFormat  1    Paraview
+
+Command SelectBeadTypeInSimBox        1  head  BH
+Command SelectBeadTypeInSimBox        1  tail  BT
+
+Command ConstantForceOnTarget         1000  head  fh   1 0 0   1.0
+Command ConstantForceOnTarget         1000  tail  ft   1 0 0   -1.0
+
+Command RemoveCommandTargetActivity   5000   fh
+Command RemoveCommandTargetActivity   5000   ft
+

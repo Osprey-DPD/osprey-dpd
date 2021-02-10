@@ -1,0 +1,41 @@
+dpd
+
+Title	" Water "
+Date    10/02/21
+Comment	" Single component water simulation. Measuring the pressure as a function of the bead density parameter (e.g., Density  3)
+          allows the equation of state to be determined. Ignore the first analysis period (1 - 5000 timesteps) to allow the system to equilibrate and then take the value from the second period (5001 - 10000).
+
+          Note. If you edit the title above or this comment there must be at least one space between the quotes and the text. Blank lines are allowed.   "
+
+
+State	random
+
+
+Bead  W
+      0.5
+      25
+      4.5
+
+Polymer	Water    1.0   " (W) "
+
+
+Box         10  10  10       1  1  1
+Density		3
+Temp        1
+RNGSeed		-26784
+Lambda		0.5
+Step		0.02
+Time		10000
+SamplePeriod     10
+AnalysisPeriod	 5000
+DensityPeriod    10000
+DisplayPeriod    1000
+RestartPeriod    10000
+Grid		1  1  1
+
+
+Command	ToggleBeadDisplay             1    W
+Command SetCurrentStateCamera         1    0.5 -1.0 -0.5  0.5 0.5 0.5
+Command SetCurrentStateDefaultFormat  1    Paraview
+
+

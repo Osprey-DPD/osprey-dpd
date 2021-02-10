@@ -1,0 +1,81 @@
+dpd
+
+Title	" Molecular force spectroscopy "
+Date    10/02/21
+Comment	" Pulling a single lipid out of a membrane  "
+
+State	compositelamella
+       	Polymers			Lipid  Lipid1
+        Normal			0 0 1
+        Centre			0.5
+        Thickness		5.0
+        Linearise		1
+       	UpperFraction	0.5  1
+        Patches         0  0
+       	Polymerise		0
+
+Bead  H
+      0.5
+      30	
+      4.5	
+
+Bead  T
+      0.5
+      35  10
+      4.5 4.5
+
+Bead  W
+      0.5
+      30    75    25
+      4.5    4.5    4.5
+
+Bead  H1
+      0.5
+      30    35    30   30
+      4.5   4.5   4.5  4.5
+
+
+Bond    H  H  128	0.5
+Bond    H  T  128	0.5
+Bond    T  T  128	0.5
+Bond    H1 H  128   0.5
+
+BondPair	H T T	15.0	0.0
+BondPair	T T T	15.0	0.0
+
+Polymer	Water   0.978967   " (W) "
+Polymer Lipid   0.021013   " (H H (* (T T T T)) H T T T T) "
+Polymer Lipid1  0.00002    " (H1 H (* (T T T T)) H T T T T) "
+
+Box       32 32 32       1  1  1
+Density		3
+Temp        1
+RNGSeed		-319822
+Lambda		0.5
+Step		0.02
+Time		10000
+SamplePeriod     10
+AnalysisPeriod	 10000
+DensityPeriod    10000
+DisplayPeriod    100
+RestartPeriod    10000
+Grid		10 10 256
+
+
+Command	ToggleBeadDisplay              1    W
+Command SetCurrentStateCamera          1    0.5 -0.5 -0.5  0.5 0.5 0.5
+Command SetCurrentStateDefaultFormat   1    Paraview
+
+Command Comment   1 // Following commands apply a force upwards to the single lipid with the H1 bead  //
+
+Command SelectBeadTypeInSimBox        1  head  H1
+Command SelectPolymerTypeInSimBox     1  labelledLipid  Lipid1
+
+Command ConstantForceOnTarget         1  head  fh   0 0 1   10.0
+Command MSDOfPolymerTarget            10  labelledLipid  msd1 10 100
+
+Command RemoveCommandTargetActivity   5000   fh
+
+
+
+

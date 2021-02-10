@@ -1,0 +1,48 @@
+dpd
+
+Title	" Water/Polymer "
+Date    10/02/21
+Comment	"  Single phantom chain polymer in water simulation. How does the polymer's end-to-end length fluctuate?   "
+
+
+State	random
+
+
+Bead  W
+      0.5
+      25
+      4.5
+
+Bead  B
+      0.5
+      25    25
+      4.5   4.5
+
+Bond  B B 128.0  0.5
+
+
+
+Polymer	Water    0.9995  " (W) "
+Polymer PEG      0.0005  " (B (6 B) B) "
+
+
+Box         10  10  10       1  1  1
+Density		3
+Temp        1
+RNGSeed		-33145
+Lambda		0.5
+Step		0.02
+Time		10000
+SamplePeriod     10
+AnalysisPeriod	 5000
+DensityPeriod    10000
+DisplayPeriod    1000
+RestartPeriod    10000
+Grid		1  1  1
+
+
+Command	ToggleBeadDisplay             1    W
+Command SetCurrentStateCamera         1    0.5 -1.0 -0.5  0.5 0.5 0.5
+Command SetCurrentStateDefaultFormat  1    Paraview
+
+
