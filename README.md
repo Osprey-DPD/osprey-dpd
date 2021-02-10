@@ -37,7 +37,7 @@ The code is executed by entering its name at the command line and providing a si
 $ ./dpd  001
 ```
 
-will invoke the code and cause it to read its input from the file "dmpci.001" that must be located in the current directory. If the specified file is not found, the code creates a default input file that can then be modified as desired. Example input files will be added soon.
+will invoke the code and cause it to read its input from the file "dmpci.001" that must be located in the current directory. If the specified file is not found, the code creates a default input file that can then be modified as desired. Some simple input files for various cases can be found in the /examples directory.
 
 The User Guide describes how to compile and run the code, and explains many of the code features.
 
