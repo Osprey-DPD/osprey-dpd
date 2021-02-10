@@ -2,7 +2,7 @@ dpd
 
 Title	" Water and oil phase separation "
 Date    10/02/21
-Comment	" 50:50 mixture of water and oil to see them phase separate. The cross interaction parameter
+Comment	" 75:25 mixture of water and oil to see them phase separate. The cross interaction parameter
           is large to drive them to separate.
 
           Note. If you edit the title above or this comment there must be at least one space between the quotes and the text. Blank lines are allowed.   "
