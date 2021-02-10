@@ -4,8 +4,12 @@ Title	" Water "
 Date    10/02/21
 Comment	" Single component water simulation. Measuring the pressure as a function of the bead density parameter (e.g., Density  3)
           allows the equation of state to be determined. Ignore the first analysis period (1 - 5000 timesteps) to allow the system to equilibrate and then take the value from the second period (5001 - 10000).
+          
+          Note that the snapshots will be written in paraview format because of the command on line 43.
+          Go here for information about Paraview - https://www.paraview.org. Deleting that command will result in snapshots being written in
+          Povray format - http://www.povray.org, which is the default.
 
-          Note. If you edit the title above or this comment there must be at least one space between the quotes and the text. Blank lines are allowed.   "
+          NB. If you edit the title above or this comment there must be at least one space between the quotes and the text. Blank lines are allowed.   "
 
 
 State	random
