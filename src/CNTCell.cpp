@@ -2407,7 +2407,7 @@ double CCNTCell::GetExponentialRandomNo()
 
 double CCNTCell::GetGaussRandomNo()
 {
-	return CCNTCell::Gasdev();
+    return CCNTCell::Gasdev();
 }
 
 // Private helper function to return a "random" number that is read in from 
@@ -2465,14 +2465,22 @@ uint32_t CCNTCell::lcg(uint64_t &state)
 }
                                 
 // Gaussian random number generator.
-// It returns a normally distributed deviate with zero mean and unit variance, using one of the above
-// functions (Randf) as the source of uniform deviates.
-//
-// NOT IMPLEMENTED YET
+// It returns a normally distributed deviate with zero mean and unit variance, using Randf
+// as the source of uniform deviates.
 
 double CCNTCell::Gasdev()
 {
-    return 0.0;
+    double v1, v2, s, ss;
+    
+    do{
+        v1 = 2.0*CCNTCell::Randf() - 1.0;
+        v2 = 2.0*CCNTCell::Randf() - 1.0;
+        s = v1*v1 + v2*v2;
+       } while (s >= 1.0 || ss == 0.0);
+    
+    ss = sqrt(-2.0*log(s)/s);
+    
+    return v1*ss;
 }
 
 // Exponentially-distributed random number generator.
