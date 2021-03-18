@@ -12,8 +12,9 @@ class taForceDecorator;
 
 
 #include "taCumulateDecorator.h"
+#include "xxFile.h"
 
-class taExternalWork : public taCumulateDecorator
+class taExternalWork : public taCumulateDecorator, public xxFile
 {
 public:
 	// ****************************************
@@ -50,6 +51,8 @@ public:
 
 
     virtual void Execute(long simTime);
+
+    virtual bool Serialize();
 
 
 	// ****************************************

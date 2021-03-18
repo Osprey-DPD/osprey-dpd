@@ -1,16 +1,3 @@
-/* **********************************************************************
-Copyright 2020  Dr. J. C. Shillcock and Prof. Dr. R. Lipowsky, Director at the Max Planck Institute (MPI) of Colloids and Interfaces; Head of Department Theory and Bio-Systems.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-********************************************************************** */
 // taExternalWork.cpp: implementation of the taExternalWork class.
 //
 //////////////////////////////////////////////////////////////////////
@@ -20,6 +7,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "SimMathFlags.h"
 #include "taExternalWork.h"
 #include "taForceDecorator.h"
+#include "IGlobalSimBox.h"
 #include "LogctExternalWorkOnTarget.h"
 #include "LogctNonexistentDecorator.h"
 
@@ -63,15 +51,14 @@ const zString taExternalWork::GetType()
 taExternalWork::taExternalWork(const zString label, CCommandTargetNode* const pDec, 
 							   taForceDecorator* const pForceDec,
 							   long start, long end) : taCumulateDecorator(label, pDec, pForceDec->GetLabel(), start, end),
-							   m_pForceDec(pForceDec), m_Work(0.0)
+							   xxFile(label + "." + IGlobalSimBox::Instance()->GetRunId(), true), m_pForceDec(pForceDec), m_Work(0.0)
 {
 	pDec->SetOuterDecorator(this);
-
 }
 
 taExternalWork::~taExternalWork()
 {
-
+    Close();
 }
 
 // Non-static member function to return the target's type.
@@ -140,11 +127,14 @@ void taExternalWork::Execute(long simTime)
 			}
 
 			m_Work += workDone;
+			
+			m_outStream << simTime << " " << workDone << " " << m_Work << zEndl;
+
 		}
 		else if(!m_bWrapFailure)
 		{
 			m_bWrapFailure = true;
-			 new CLogctNonexistentDecorator(simTime, decLabel, m_WrappedLabel);
+			new CLogctNonexistentDecorator(simTime, decLabel, m_WrappedLabel);
 		}
 	}
 	else if(simTime == m_End)
@@ -153,8 +143,13 @@ void taExternalWork::Execute(long simTime)
 		// when details about the bead type in the target are recorded, and the
 		// end of the calculation, when only the work done is written out.
 
-		 new CLogctExternalWorkOnTarget(simTime, targetLabel, m_WrappedLabel, decLabel, m_Work);
+		new CLogctExternalWorkOnTarget(simTime, targetLabel, m_WrappedLabel, decLabel, m_Work);
 	}
+}
+
+bool taExternalWork::Serialize()
+{
+    return true;
 }
 
 // ****************************************
