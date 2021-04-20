@@ -20,6 +20,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "CommandTargetPolymer.h"
 #include "Polymer.h"
 #include "Bead.h"
+#include "IGlobalSimBox.h"
+
 
 //////////////////////////////////////////////////////////////////////
 // Global members
@@ -139,13 +141,87 @@ void CCommandTargetPolymer::RemovePolymer(CPolymer* pPolymer)
 {
     if(pPolymer && find(m_Polymers.begin(), m_Polymers.end(), pPolymer) != m_Polymers.end())
 	{
-	m_Polymers.erase(find(m_Polymers.begin(), m_Polymers.end(), pPolymer));
+		m_Polymers.erase(find(m_Polymers.begin(), m_Polymers.end(), pPolymer));
     }
 }
 
 
 // ****************************************
 // Implementation of the IQueryBeadTarget interface
+
+// Function to calculate the CM of the polymer target by summing over the CM of all polymers contained in it.
+// The PBCs are applied to ensure that all polymers in the target have their coordinates evaluated less than
+// half a box width apart. We arbitrarily use the first polymer's coordinates to determine whether subsequent
+// ones should be shifted by a box length. Finally, we check if the CM of the targt is outside the PBCs and
+// bring it back in if so. Note that this may not work if a target is so large that its contained polymers
+// can span more than half a box length: but then the simulation box is probably too small anyway.
+
+aaVector CCommandTargetPolymer::GetCM() const
+{
+    const double polymerTotal = static_cast<double>(GetPolymerTotal());
+    
+    double tcm[3];
+    tcm[0] = 0.0;
+    tcm[1] = 0.0;
+    tcm[2] = 0.0;
+    
+    const double x0 = m_Polymers.front()->GetCM().GetX();
+    const double y0 = m_Polymers.front()->GetCM().GetY();
+    const double z0 = m_Polymers.front()->GetCM().GetZ();
+
+    for(cPolymerVectorIterator citerPoly = m_Polymers.begin(); citerPoly != m_Polymers.end(); ++citerPoly)
+    {
+        double x = (*citerPoly)->GetCM().GetX();
+        double y = (*citerPoly)->GetCM().GetY();
+        double z = (*citerPoly)->GetCM().GetZ();
+
+        // Apply PBCs
+            
+        if( (x - x0) > IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
+            x = x - IGlobalSimBox::Instance()->GetSimBoxXLength();
+        else if( (x - x0) < -IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
+            x = x + IGlobalSimBox::Instance()->GetSimBoxXLength();
+
+        if( (y - y0) > IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
+            y = y - IGlobalSimBox::Instance()->GetSimBoxYLength();
+        else if( (y - y0) < -IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
+            y = y + IGlobalSimBox::Instance()->GetSimBoxYLength();
+
+        if( (z - z0) > IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
+            z = z - IGlobalSimBox::Instance()->GetSimBoxZLength();
+        else if( (z - z0) < -IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
+            z = z + IGlobalSimBox::Instance()->GetSimBoxZLength();
+ 
+        tcm[0] += x;
+        tcm[1] += y;
+        tcm[2] += z;
+    }
+    
+    tcm[0] /= polymerTotal;
+    tcm[1] /= polymerTotal;
+    tcm[2] /= polymerTotal;
+    
+    // If the CM is outside the PBCs translate it back in
+    
+    if( tcm[0] > IGlobalSimBox::Instance()->GetSimBoxXLength() )
+        tcm[0] = tcm[0] - IGlobalSimBox::Instance()->GetSimBoxXLength();
+    else if( tcm[0] < 0.0 )
+        tcm[0] = tcm[0] + IGlobalSimBox::Instance()->GetSimBoxXLength();
+
+    if( tcm[1] > IGlobalSimBox::Instance()->GetSimBoxYLength() )
+        tcm[1] = tcm[1] - IGlobalSimBox::Instance()->GetSimBoxYLength();
+    else if( tcm[1] < 0.0 )
+        tcm[1] = tcm[1] + IGlobalSimBox::Instance()->GetSimBoxYLength();
+
+    if( tcm[2] > IGlobalSimBox::Instance()->GetSimBoxZLength() )
+        tcm[2] = tcm[2] - IGlobalSimBox::Instance()->GetSimBoxZLength();
+    else if( tcm[2] < 0.0 )
+        tcm[2] = tcm[2] + IGlobalSimBox::Instance()->GetSimBoxZLength();
+
+    aaVector cm(tcm[0], tcm[1], tcm[2]);
+
+    return cm;
+}
 
 bool CCommandTargetPolymer::IsBeadTypeInTarget(long type) const
 {
@@ -295,10 +371,10 @@ zOutStream& CCommandTargetPolymer::Write(zOutStream& os) const
         os << (*citerPoly)->GetId() << zEndl;
     }
 
-    if(GetOuterDecorator()) {
-        return GetOuterDecorator()->Write(os); }
-    else {
-        return os; }
+    if(GetOuterDecorator())
+        return GetOuterDecorator()->Write(os);
+    else
+        return os;
 }
 
 // Virtual function to replace a target's integer proxies with actual pointers.

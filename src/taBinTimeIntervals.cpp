@@ -42,15 +42,11 @@ const zString taBinTimeIntervals::GetType()
 // command target being wrapped by the decorator, to the CCommandTargetNode
 // base class. We use a helper function to set the data to sensible values.
 
-taBinTimeIntervals::taBinTimeIntervals(const zString label, CCommandTargetNode* const pDec, bool bBinTotal) : taLabelDecorator(label, pDec),
-                                       m_bFixedBinTotal(bBinTotal),
-                                       m_BinTotal(0),
-                                       m_XMin(0), m_XMax(0), 
-                                       m_OldValue(0), m_XWidth(0.0)
+taBinTimeIntervals::taBinTimeIntervals(const zString label, CCommandTargetNode* const pDec, bool bBinTotal) : taHistogramDecorator(label, pDec), m_bFixedBinTotal(bBinTotal)
 
 {
     // The histogram is constructed using either a fixed number of bins or a fixed
-    // bin width. The type chosen cannot be changed during the lifetime of the instance.
+    // bin width. The type chosen cannot be changed during the lifeSpace of the instance.
 
     if(m_bFixedBinTotal)
     {
@@ -60,6 +56,7 @@ taBinTimeIntervals::taBinTimeIntervals(const zString label, CCommandTargetNode* 
     {
         ResetFixedBinWidth(1.0);  // Use default value for the bin widths
     }
+
 }
 
 taBinTimeIntervals::~taBinTimeIntervals()
@@ -74,108 +71,22 @@ const zString taBinTimeIntervals::GetTargetType() const
     return m_Type;
 }
 
-// Function to return the integer number of entries in the ith bin. If i is outside 
-// the range of the histogram, we return 0.
-
-long taBinTimeIntervals::GetBinNumber(long i) const
-{
-    long value = 0;
-
-    if(i >= 0 && i < m_BinTotal)
-    {
-        value = m_Bins.at(i);
-    }
-
-    return value;
-}
-
-// Function to return the fraction of entries in the ith bin. If there are no
-// data points, we return 0.0 to avoid a NaN result.
-
-double taBinTimeIntervals::GetBinFraction(long i) const
-{
-    double value = 0.0;
-
-    if(m_Data.size() > 0)
-    {
-        value = static_cast<double>(GetBinNumber(i))/static_cast<double>(m_Data.size());
-    }
-
-    return value;
-}
-
-// Function to reset the calculation of the histogram given that the 
-// number of bins is constant. The only required parameter is the number of bins 
-// into which to bin the data. If an invalid value is supplied, we use a single bin.
-// We set the size of the m_Bins container in the normalisation functions below.
-// The m_Data container is initialised to zero size as we use push_back to add the data.
-
-void taBinTimeIntervals::ResetFixedBinTotal(long bins)
-{
-    if(bins > 0)
-    {
-        m_BinTotal = bins;
-    }
-    else
-    {
-        m_BinTotal = 1;
-    }
-
-    m_XMin     = 0;
-    m_XMax     = 1;
-    m_OldValue = -1;
-    m_XWidth = static_cast<double>((m_XMax - m_XMin)*(1 + 2*m_BinTotal))/static_cast<double>(2*m_BinTotal*m_BinTotal);
-
-    m_Data.clear();
-    m_Bins.clear();
-}
-
-// Function to reset the calculation of the histogram given that the 
-// width of the bins is constant. The only required parameter is the bin width. 
-// If an invalid value is supplied, we use a single bin.
-
-void taBinTimeIntervals::ResetFixedBinWidth(double width)
-{
-    if(width > 0.0)
-    {
-        m_XWidth = width;
-    }
-    else
-    {
-        m_XWidth = 1.0;
-    }
-
-    m_XMin     = 0;
-    m_XMax     = 1;
-    m_OldValue = -1;
-
-    // Define a width such that it gives the same number of bins as the 
-    // ResetFixedBinTotal() function for the same bin width.
-
-    const double x = 2.0*m_XWidth/static_cast<double>(m_XMax - m_XMin);
-
-    m_BinTotal = static_cast<long>((1.0 + sqrt(1.0 + x))/x);
-
-    m_Data.clear();
-    m_Bins.clear();
-}
-
 // Function used to add a new integer data point. We don't sort the data until
 // it has all been added, but just store the values in a temporary container.
 // We also adjust the upper and lower bounds according to the data.
 
-void taBinTimeIntervals::AddDataPoint(long x)
+void taBinTimeIntervals::AddDataPoint(double x)
 {
     // On first entry we just store the value ready for the next time.
     // This assumes that -1 is not a valid value!
 
-    if(m_OldValue == -1)
+    if(m_OldValue < 0.0)
     {
         m_OldValue = x;
     }
     else
     {
-        long interval = x - m_OldValue;
+        double interval = x - m_OldValue;
         m_OldValue = x;
 
         m_Data.push_back(interval);
@@ -188,24 +99,27 @@ void taBinTimeIntervals::AddDataPoint(long x)
 }
 
 // Function to construct a histogram out of the data entered so far. Note that
-// one of the helper functions ResetFixedBinTotal() or ResetFixedBinWidth() must
+// one of the sub-class's helper functions ResetFixedBinTotal() or ResetFixedBinWidth() must
 // be called before trying to normalise the data as they define the number of bins
 // or the bin width that are used in this function. We do resize the histogram here
 // and initialise its elements to zero.
 //
-// We store the bin data as integer and fractional values. We don't empty the bins 
+// We store the bin data as integer and fractional values. We don't empty the bins
 // in case we want to add more data later.  The helper reset functions are used to
 // reset the histogram.
 
-void taBinTimeIntervals::Normalise()
+void taBinTimeIntervals::Normalise(double norm)
 {
-    long j; // counter user below
+/*
+ long j; // counter user below
 
-    if(m_bFixedBinTotal)
+ if(m_bFixedBinTotal)
     {
-        m_Bins.resize(m_BinTotal, 0); 
+        m_Bins.resize(m_BinTotal, 0.0);
         m_XWidth = static_cast<double>((m_XMax - m_XMin)*(1 + 2*m_BinTotal))/static_cast<double>(2*m_BinTotal*m_BinTotal);
 
+        std::cout << "Fixed bin total: total, min, max values, binWidth " << m_BinTotal << " " << m_XMin << " " << m_XMax << " " << m_XWidth <<  zEndl;
+        
         // Sort the data into the histogram. If there is no data all the bins
         // are zero.
 
@@ -214,7 +128,7 @@ void taBinTimeIntervals::Normalise()
             for(j=0; j<GetSampleTotal(); j++)
             {
                 long interval = m_Data.at(j);
-                long pointer  = interval/static_cast<long>(m_XWidth);
+                long pointer  = static_cast<long>(interval/static_cast<long>(m_XWidth));
 
                 if(pointer >= 0 && pointer < m_BinTotal)
                 {
@@ -232,25 +146,33 @@ void taBinTimeIntervals::Normalise()
     {
         // Sort the data into the histogram. If there is no data we create a single
         // bin with contents of zero and a width as specified by the user.
-
+        
+        std::cout << "Fixed bin width: total,  min, max values, binWidth " << m_BinTotal << " " << m_XMin << " " << m_XMax << " " << m_XWidth <<  zEndl;
+        
         if(GetSampleTotal() > 0)
         {
             const double x = 2.0*m_XWidth/static_cast<double>(m_XMax - m_XMin);
 
             m_BinTotal = static_cast<long>((1.0 + sqrt(1.0 + x))/x);
-            m_Bins.resize(m_BinTotal, 0); 
+            m_Bins.resize(m_BinTotal, 0.0);
+            
+            std::cout << "Setting m_BinTotal = " << m_BinTotal <<  " bin width = " << m_XWidth << " with sample total = " << GetSampleTotal() << zEndl;
 
             for(j=0; j<GetSampleTotal(); j++)
             {
-                long interval = m_Data.at(j);
-                long pointer  = interval/static_cast<long>(m_XWidth);
+                long pointer  = static_cast<long>(m_Data.at(j)/m_XWidth);
+                
+                std::cout << "sample no " << j << " " << m_Data.at(j) << " " << pointer << zEndl;
+
 
                 if(pointer >= 0 && pointer < m_BinTotal)
                 {
+                    std::cout << "adding point to bin " << pointer << zEndl;
                     m_Bins.at(pointer) += 1;
                 }
                 else if(pointer == m_BinTotal)
                 {
+                    std::cout << "Point in final bin" << zEndl;
                     pointer--;
                     m_Bins.at(pointer) += 1;
                 }
@@ -259,11 +181,68 @@ void taBinTimeIntervals::Normalise()
         else
         {
             m_BinTotal = 1;
-            m_Bins.resize(m_BinTotal, 0); 
+            m_Bins.resize(m_BinTotal, 0.0);
         }
     }
+    
+    */
 }
 
+// Function to reset the calculation of the histogram given that the
+// number of bins is constant. The only required parameter is the number of bins
+// into which to bin the data. If an invalid value is supplied, we use a single bin.
+// We set the size of the m_Bins container in the normalisation functions below.
+// The m_Data container is initialised to zero size as we use push_back to add the data.
+
+void taBinTimeIntervals::ResetFixedBinTotal(long bins)
+{
+    if(bins > 0)
+    {
+        m_BinTotal = bins;
+    }
+    else
+    {
+        m_BinTotal = 1;
+    }
+
+    m_XMin     = 0.0;
+    m_XMax     = 1.0;
+    m_OldValue = -1.0;
+    m_XWidth = static_cast<double>((m_XMax - m_XMin)*(1 + 2*m_BinTotal))/static_cast<double>(2*m_BinTotal*m_BinTotal);
+
+    m_Data.clear();
+    m_Bins.clear();
+}
+
+// Function to reset the calculation of the histogram given that the
+// width of the bins is constant. The only required parameter is the bin width.
+// If an invalid value is supplied, we use a single bin.
+
+void taBinTimeIntervals::ResetFixedBinWidth(double width)
+{
+    if(width > 0.0)
+    {
+        m_XWidth = width;
+    }
+    else
+    {
+        m_XWidth = 1.0;
+    }
+
+    m_XMin     = 0.0;
+    m_XMax     = 1.0;
+    m_OldValue = -1.0;
+
+    // Define a width such that it gives the same number of bins as the
+    // ResetFixedBinTotal() function for the same bin width.
+
+    const double x = 2.0*m_XWidth/static_cast<double>(m_XMax - m_XMin);
+
+    m_BinTotal = static_cast<long>((1.0 + sqrt(1.0 + x))/x);
+
+    m_Data.clear();
+    m_Bins.clear();
+}
 
 // ****************************************
 // Implementation of the ISerialiseInclusiveRestartState interface that

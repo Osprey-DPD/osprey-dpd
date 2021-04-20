@@ -112,6 +112,8 @@ class aeActiveSimBox;
     #include "ctChangeNamedBeadTypeInCompositeTargetImpl.h"
     #include "ctConstantSpecificAreaGhostImpl.h"
     #include "ctCylinderLinearForceOnTargetImpl.h"
+    #include "ctCylindricalDistributionOfCompositeTargetImpl.h"
+    #include "ctCylindricalDistributionOfPolymerTargetImpl.h"
     #include "ctDistanceMovedByTargetImpl.h"
     #include "ctEdgeClampForceOnTargetImpl.h"
     #include "ctExtractBeadTypesIntoCompositeTargetImpl.h"
@@ -240,6 +242,8 @@ class CSimBox : public ISimState,
 								  public ctChangeNamedBeadTypeInCompositeTargetImpl,
 								  public ctConstantSpecificAreaGhostImpl,
 								  public ctCylinderLinearForceOnTargetImpl,
+                                  public ctCylindricalDistributionOfCompositeTargetImpl,
+                                  public ctCylindricalDistributionOfPolymerTargetImpl,
 								  public ctDistanceMovedByTargetImpl,
 								  public ctEdgeClampForceOnTargetImpl,
 								  public ctExternalWorkOnTargetImpl,
@@ -362,6 +366,8 @@ class CSimBox : public ISimState,
 	friend class ctChangeNamedBeadTypeInCompositeTargetImpl;
 	friend class ctConstantSpecificAreaGhostImpl;
 	friend class ctCylinderLinearForceOnTargetImpl;
+    friend class ctCylindricalDistributionOfCompositeTargetImpl;
+    friend class ctCylindricalDistributionOfPolymerTargetImpl;
 	friend class ctDistanceMovedByTargetImpl;
 	friend class ctEdgeClampForceOnTargetImpl;
 	friend class ctExternalWorkOnTargetImpl;

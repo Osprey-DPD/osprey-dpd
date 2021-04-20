@@ -2476,7 +2476,7 @@ double CCNTCell::Gasdev()
         v1 = 2.0*CCNTCell::Randf() - 1.0;
         v2 = 2.0*CCNTCell::Randf() - 1.0;
         s = v1*v1 + v2*v2;
-       } while (s >= 1.0 || ss == 0.0);
+       } while (s >= 1.0 || s == 0.0);
     
     ss = sqrt(-2.0*log(s)/s);
     

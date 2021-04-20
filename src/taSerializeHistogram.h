@@ -8,7 +8,7 @@
 
 // Forward declarations
 
-class taBinTimeIntervals;
+class taHistogramDecorator;
 
 
 #include "taFileLabel.h"
@@ -56,7 +56,7 @@ public:
 	// Public access functions
 public:
 
-	void SetHistogram(taBinTimeIntervals* const pHistogram);
+    void SetHistogram(taHistogramDecorator* const pHistogram);
 
 
 	// ****************************************
@@ -82,7 +82,7 @@ protected:
 
 private:
 
-    taBinTimeIntervals* m_pHistogram;   // Pointer to the histogram whose data is to be serialized
+    taHistogramDecorator* m_pHistogram;   // Pointer to the histogram whose data is to be serialized
 
 };
 

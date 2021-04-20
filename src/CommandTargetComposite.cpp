@@ -269,6 +269,22 @@ long CCommandTargetComposite::GetTargetTotal() const
 	return m_mTargetMap.size();
 }
 
+// Function to return a sequence of all the contained targets to allow iterating over them.
+// We have to copy them from the stored map into a sequence container. 
+
+CommandTargetSequence CCommandTargetComposite::GetTargets() const
+{
+    CommandTargetSequence targets;
+    targets.clear();
+    
+    for(cStringTargetIterator citerST=m_mTargetMap.begin(); citerST!=m_mTargetMap.end(); ++citerST)
+    {
+        targets.push_back(citerST->second);
+    }
+
+    return targets;
+}
+
 // Function to add a target to the composite's map using its label as the key. 
 // A target can be added directly at most once, and if both targets are composite
 // we check that each is not contained in the other. But we cannot check that

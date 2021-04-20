@@ -105,12 +105,11 @@ zInStream& operator>>(zInStream& is, CCommandTargetNode& target)
 
 CCommandTargetNode::CCommandTargetNode(const zString label) : m_pState(0),
                                                               m_id(++CCommandTargetNode::m_CommandTargetTotal), 
-							        m_Label(label),
+										                      m_Label(label),
                                                               m_InnerDecoratorName(""),
                                                               m_OuterDecoratorName(""),
-                                                              m_pInnerDecorator(0),
-							        m_pOuterDecorator(0)
-
+															  m_pInnerDecorator(0),
+															  m_pOuterDecorator(0)
 {
     m_ProxyIds.clear();
 }
@@ -127,8 +126,8 @@ CCommandTargetNode::CCommandTargetNode(const zString label, CCommandTargetNode* 
                                                                 m_Label(label),
                                                                 m_InnerDecoratorName(""),
                                                                 m_OuterDecoratorName(""),
-                                                                m_pInnerDecorator(pDec),
-                                                                m_pOuterDecorator(0)
+																m_pInnerDecorator(pDec),
+																m_pOuterDecorator(0)
 {
     m_ProxyIds.clear();
 }
@@ -195,6 +194,13 @@ bool CCommandTargetNode::IsSimpleBeadTargetInComposite() const
 
 // ****************************************
 // Functions implemented by CCommandTarget that holds beads.
+
+aaVector CCommandTargetNode::GetCM() const
+{
+    aaVector cm(0.0, 0.0, 0.0);
+
+    return cm;
+}
 
 bool CCommandTargetNode::IsBeadTypeInTarget(long type) const
 {
@@ -314,6 +320,14 @@ void CCommandTargetNode::RemovePolymer(CPolymer* pPolymer)
 long CCommandTargetNode::GetTargetTotal() const
 {
 	return 0;
+}
+
+CommandTargetSequence CCommandTargetNode::GetTargets() const
+{
+    CommandTargetSequence targets;
+    targets.clear();
+
+    return targets;
 }
 
 bool CCommandTargetNode::AddTarget(CCommandTargetNode *const pTarget)

@@ -15,10 +15,13 @@ class xxDecoratorState;
 // that derived classes can replace their proxy contents with actual pointers;
 // and the log error message in case importing a target from a restart state fails.
 
+
 #include "acfTargetFactory.h"
 #include "InitialState.h"
 #include "LogRestartStateBuilderError.h"
 
+
+#include "aaVector.h"
 #include "xxBase.h"
 #include "ISerialiseInclusiveRestartState.h"
 
@@ -115,6 +118,8 @@ public:
     inline long          GetId()                const {return m_id;}
 	inline const zString GetLabel()				const {return m_Label;}
 
+    virtual aaVector GetCM() const;
+
 	virtual bool IsBeadTypeInTarget(long type)  const;
 	virtual long GetBeadTotalForType(long type)	const;
 	virtual long GetBeadTotal()					const;
@@ -148,6 +153,7 @@ public:
 	// Functions implemented by CCompositeTarget
 
 	virtual long GetTargetTotal() const;
+    virtual CommandTargetSequence GetTargets() const;
 	virtual bool AddTarget(CCommandTargetNode* const pTarget);
 	virtual bool RemoveTarget(const zString label);
 	virtual CCommandTargetNode* GetTarget(const zString label)	const;
@@ -220,17 +226,17 @@ protected:
 private:
 
     const long      m_id;           // Target's unique numeric id
-    const zString   m_Label;	     // Target's unique identifying label
+	const zString	m_Label;		// Target's unique identifying label
 
     zString m_InnerDecoratorName;   // Proxy name for the inner decorator
     zString m_OuterDecoratorName;   // Proxy name for the outer decorator
 
-    // Pointers to the previous and next decorators around a command target.
-    // For the wrapped command target itself, the inner pointer is always null,
-    // and the outer pointer points to the first decorator applied.
+	// Pointers to the previous and next decorators around a command target.
+	// For the wrapped command target itself, the inner pointer is always null,
+	// and the outer pointer points to the first decorator applied.
 
-    CCommandTargetNode* m_pInnerDecorator;
-    CCommandTargetNode* m_pOuterDecorator;
+	CCommandTargetNode* m_pInnerDecorator;
+	CCommandTargetNode* m_pOuterDecorator;
 
 };
 

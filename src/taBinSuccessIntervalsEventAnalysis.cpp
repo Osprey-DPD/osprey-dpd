@@ -162,7 +162,7 @@ IEAD* taBinSuccessIntervalsEventAnalysis::ConnectESDInterface(taEventSourceDecor
 
 void taBinSuccessIntervalsEventAnalysis::Normalise()
 {
-    m_pHistogram->Normalise();
+    m_pHistogram->Normalise(0);
 
     if(!m_pFile->Serialize())
     {

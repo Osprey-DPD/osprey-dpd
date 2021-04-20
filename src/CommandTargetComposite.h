@@ -73,6 +73,7 @@ public:
 	// Functions peculiar to composite targets
 
 	virtual long GetTargetTotal() const;
+    virtual CommandTargetSequence GetTargets() const;
 	virtual bool AddTarget(CCommandTargetNode* const pTarget);
 	virtual bool RemoveTarget(const zString label);
 	CCommandTargetNode* GetTarget(const zString label) const;

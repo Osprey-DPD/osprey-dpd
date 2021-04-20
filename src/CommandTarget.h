@@ -49,9 +49,11 @@ public:
 	// ****************************************
 	// Public access functions
 public:
+    
+ 	// IQueryBeadTarget interface
 
-	// IQueryBeadTarget interface
-
+    virtual aaVector GetCM() const;
+    
 	virtual bool IsBeadTypeInTarget(long type)      const;
 	virtual long GetBeadTotalForType(long type)     const;
 	virtual long	   GetBeadTotal()		        const;

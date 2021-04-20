@@ -102,8 +102,83 @@ const zString CCommandTarget::GetTargetType() const
     return m_Type;
 }
 
+
 // ****************************************
 // Implementation of the IQueryBeadTarget interface
+
+// Function to calculate the CM of the target. We loop over all beads in the target and calculate their CM.
+// The PBCs are applied to ensure that all beads in the target have their coordinates evaluated less than
+// half a box width apart. We arbitrarily use the first bead's coordinates to determine whether subsequent
+// ones should be shifted by a box length. Finally, we check if the CM of the targt is outside the PBCs and
+// bring it back in if so. Note that this may not work if a target is so large that its contained beads
+// can span more than half a box length: but then the simulation box is probably too small anyway.
+
+aaVector CCommandTarget::GetCM() const
+{
+    const double beadTotal = static_cast<double>(GetBeadTotal());
+
+    double tcm[3];
+    tcm[0] = 0.0;
+    tcm[1] = 0.0;
+    tcm[2] = 0.0;
+    
+    const double x0 = m_Beads.front()->GetXPos();
+    const double y0 = m_Beads.front()->GetYPos();
+    const double z0 = m_Beads.front()->GetZPos();
+
+    for(cBeadVectorIterator citerBead = m_Beads.begin(); citerBead != m_Beads.end(); ++citerBead)
+    {
+        double x = (*citerBead)->GetXPos();
+        double y = (*citerBead)->GetYPos();
+        double z = (*citerBead)->GetZPos();
+
+        // Apply PBCs
+        
+        if( (x - x0) > IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
+            x = x - IGlobalSimBox::Instance()->GetSimBoxXLength();
+        else if( (x - x0) < -IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
+            x = x + IGlobalSimBox::Instance()->GetSimBoxXLength();
+
+        if( (y - y0) > IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
+            y = y - IGlobalSimBox::Instance()->GetSimBoxYLength();
+        else if( (y - y0) < -IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
+            y = y + IGlobalSimBox::Instance()->GetSimBoxYLength();
+
+        if( (z - z0) > IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
+            z = z - IGlobalSimBox::Instance()->GetSimBoxZLength();
+        else if( (z - z0) < -IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
+            z = z + IGlobalSimBox::Instance()->GetSimBoxZLength();
+
+        tcm[0] += (*citerBead)->GetXPos();
+        tcm[1] += (*citerBead)->GetYPos();
+        tcm[2] += (*citerBead)->GetZPos();
+    }
+
+    tcm[0] /= beadTotal;
+    tcm[1] /= beadTotal;
+    tcm[2] /= beadTotal;
+    
+    // If the CM is outside the PBCs translate it back in
+    
+    if( tcm[0] > IGlobalSimBox::Instance()->GetSimBoxXLength() )
+        tcm[0] = tcm[0] - IGlobalSimBox::Instance()->GetSimBoxXLength();
+    else if( tcm[0] < 0.0 )
+        tcm[0] = tcm[0] + IGlobalSimBox::Instance()->GetSimBoxXLength();
+
+    if( tcm[1] > IGlobalSimBox::Instance()->GetSimBoxYLength() )
+        tcm[1] = tcm[1] - IGlobalSimBox::Instance()->GetSimBoxYLength();
+    else if( tcm[1] < 0.0 )
+        tcm[1] = tcm[1] + IGlobalSimBox::Instance()->GetSimBoxYLength();
+
+    if( tcm[2] > IGlobalSimBox::Instance()->GetSimBoxZLength() )
+        tcm[2] = tcm[2] - IGlobalSimBox::Instance()->GetSimBoxZLength();
+    else if( tcm[2] < 0.0 )
+        tcm[2] = tcm[2] + IGlobalSimBox::Instance()->GetSimBoxZLength();
+
+    aaVector cm(tcm[0], tcm[1], tcm[2]);
+
+    return cm;
+}
 
 bool CCommandTarget::IsBeadTypeInTarget(long type) const
 {

@@ -7,7 +7,6 @@
 
 
 #include "CommandTargetNode.h"
-#include "xxBase.h"	// Added by ClassView
 
 class CCommandTargetPolymer : public CCommandTargetNode
 {
@@ -53,13 +52,15 @@ public:
 
 	// IQueryBeadTarget interface
 
+    virtual aaVector GetCM() const;
+
 	virtual bool IsBeadTypeInTarget(long type)  const;
 	virtual long GetBeadTotalForType(long type) const;
 	virtual long GetBeadTotal() const;
 	virtual BeadVector GetBeads() const;
 
 	// IQueryPolymerTarget interface
-
+ 
 	virtual bool IsPolymerTypeInTarget(long type)	const;
 	virtual long GetPolymerTotalForType(long type)	const;
 	virtual long GetPolymerTotal()					const;
