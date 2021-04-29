@@ -245,6 +245,7 @@ class xxProcessObject;
 // ****************************************
 #elif xxBasePlatform == xxBaseXCMAC	// Mac OS X/XCode compiler console app
 
+    #include <cstdint>     // Needed for uint32_t and uint64_t types
     #include <string.h>    // Needed for parallel compilation using mpicxx
     #include <string>
 	#include <list>
