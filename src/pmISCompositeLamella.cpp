@@ -417,35 +417,35 @@ void pmISCompositeLamella::BuildDerivedType(MsgDataTypePtr pMsgDataType)
     MPI_Aint startAddress;
     MPI_Aint address;
 
-    MPI_Address(&m_X,  &startAddress);
+    MPI_Get_address(&m_X,  &startAddress);
     displacements[0] = 0;
 
-    MPI_Address(&m_Y,  &address);
+    MPI_Get_address(&m_Y,  &address);
     displacements[1] = address - startAddress;
 
-    MPI_Address(&m_Z,  &address);
+    MPI_Get_address(&m_Z,  &address);
     displacements[2] = address - startAddress;
 
-    MPI_Address(&m_LongLinearise, &address);
+    MPI_Get_address(&m_LongLinearise, &address);
     displacements[3] = address - startAddress;
 
-    MPI_Address(&m_LongUpperPatches, &address);
+    MPI_Get_address(&m_LongUpperPatches, &address);
     displacements[4] = address - startAddress;
 
-    MPI_Address(&m_LongLowerPatches, &address);
+    MPI_Get_address(&m_LongLowerPatches, &address);
     displacements[5] = address - startAddress;
 
-    MPI_Address(&m_Centre,  &address);
+    MPI_Get_address(&m_Centre,  &address);
     displacements[6] = address - startAddress;
 
-    MPI_Address(&m_Thickness,  &address);
+    MPI_Get_address(&m_Thickness,  &address);
     displacements[7] = address - startAddress;
 
     // Build the derived datatype and commit it: we use the m_pMPIDataType member
     // variable in the base class to hold the new type and pass it to the
     // other member functions.
 
-    MPI_Type_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
+    MPI_Type_create_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
     MPI_Type_commit(pMsgDataType);
 
 #endif

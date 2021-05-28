@@ -325,32 +325,32 @@ void pmISLamella::BuildDerivedType(MsgDataTypePtr pMsgDataType)
 
 //    long linearise  = 0; Commented out 7/2/11 I don't know what it is here for JCS
 
-    MPI_Address(&m_LongLinearise, &startAddress);
+    MPI_Get_address(&m_LongLinearise, &startAddress);
     displacements[0] = 0;
 
-    MPI_Address(&m_X,  &address);
+    MPI_Get_address(&m_X,  &address);
     displacements[1] = address - startAddress;
 
-    MPI_Address(&m_Y,  &address);
+    MPI_Get_address(&m_Y,  &address);
     displacements[2] = address - startAddress;
 
-    MPI_Address(&m_Z,  &address);
+    MPI_Get_address(&m_Z,  &address);
     displacements[3] = address - startAddress;
 
-    MPI_Address(&m_Centre,  &address);
+    MPI_Get_address(&m_Centre,  &address);
     displacements[4] = address - startAddress;
 
-    MPI_Address(&m_Thickness,  &address);
+    MPI_Get_address(&m_Thickness,  &address);
     displacements[5] = address - startAddress;
 
-    MPI_Address(&m_UpperFraction,  &address);
+    MPI_Get_address(&m_UpperFraction,  &address);
     displacements[6] = address - startAddress;
 
     // Build the derived datatype and commit it: we use the m_pMPIDataType member
     // variable in the base class to hold the new type and pass it to the
     // other member functions.
 
-    MPI_Type_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
+    MPI_Type_create_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
     MPI_Type_commit(pMsgDataType);
 
 #endif

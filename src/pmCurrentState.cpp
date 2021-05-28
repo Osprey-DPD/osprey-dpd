@@ -434,25 +434,25 @@ void pmCurrentState::BuildDerivedType(MsgDataTypePtr pMsgDataType)
     MPI_Aint startAddress;
     MPI_Aint address;
 
-    MPI_Address(&m_Id[0], &startAddress);
+    MPI_Get_address(&m_Id[0], &startAddress);
     displacements[0] = 0;
 
-    MPI_Address(&m_BeadType[0], &address);
+    MPI_Get_address(&m_BeadType[0], &address);
 	displacements[1] = address - startAddress;
 
-    MPI_Address(&m_Radius[0], &address);
+    MPI_Get_address(&m_Radius[0], &address);
 	displacements[2] = address - startAddress;
 
-    MPI_Address(&m_X[0], &address);
+    MPI_Get_address(&m_X[0], &address);
 	displacements[3] = address - startAddress;
 
-    MPI_Address(&m_Y[0], &address);
+    MPI_Get_address(&m_Y[0], &address);
 	displacements[4] = address - startAddress;
 
-    MPI_Address(&m_Z[0], &address);
+    MPI_Get_address(&m_Z[0], &address);
 	displacements[5] = address - startAddress;
 
-    MPI_Type_struct(6, block_lengths, displacements, typelist, pMsgDataType);
+    MPI_Type_create_struct(6, block_lengths, displacements, typelist, pMsgDataType);
     MPI_Type_commit(pMsgDataType);
 
 #endif

@@ -186,7 +186,7 @@ void pmSimBoxNeighbourResponse::Send(long procId)
 // Wrapper for the Mpi function:
 // MPI_Recv(message, length, MPI_CHAR, dest, tag, MPI_COMM_WORLD);
 
-// Function called when P0 receive a message from a processor that contains
+// Function called when P0 receives a message from a processor that contains
 // a list of all of its neighbouring processors' ids plus its own.
 
 void pmSimBoxNeighbourResponse::Receive()
@@ -206,7 +206,7 @@ void pmSimBoxNeighbourResponse::Receive()
 
         m_SenderId = data[0];
 
-        for(long i=0; i<27; i++)
+        for(long i=0; i<26; i++)
         {
             m_NNProcId[i] = data[i+1];
         }

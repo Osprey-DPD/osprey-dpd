@@ -410,89 +410,89 @@ void pmInputData::BuildDerivedType(MsgDataTypePtr pMsgDataType)
     MPI_Aint startAddress;
     MPI_Aint address;
 
-    MPI_Address(&m_BeadTypes, &startAddress);
+    MPI_Get_address(&m_BeadTypes, &startAddress);
     displacements[0] = 0;
 
-    MPI_Address(&m_BondTypes, &address);
+    MPI_Get_address(&m_BondTypes, &address);
     displacements[1] = address - startAddress;
 
-    MPI_Address(&m_BondPairTypes, &address);
+    MPI_Get_address(&m_BondPairTypes, &address);
     displacements[2] = address - startAddress;
 
-    MPI_Address(&m_PolymerTypes, &address);
+    MPI_Get_address(&m_PolymerTypes, &address);
     displacements[3] = address - startAddress;
 
-    MPI_Address(&m_RNGSeed, &address);
+    MPI_Get_address(&m_RNGSeed, &address);
     displacements[4] = address - startAddress;
 
-    MPI_Address(&m_TotalTime,  &address);
+    MPI_Get_address(&m_TotalTime,  &address);
     displacements[5] = address - startAddress;
 
-    MPI_Address(&m_SamplePeriod,  &address);
+    MPI_Get_address(&m_SamplePeriod,  &address);
     displacements[6] = address - startAddress;
 
-    MPI_Address(&m_AnalysisPeriod,  &address);
+    MPI_Get_address(&m_AnalysisPeriod,  &address);
     displacements[7] = address - startAddress;
 
-    MPI_Address(&m_DensityPeriod,  &address);
+    MPI_Get_address(&m_DensityPeriod,  &address);
     displacements[8] = address - startAddress;
 
-    MPI_Address(&m_DisplayPeriod,  &address);
+    MPI_Get_address(&m_DisplayPeriod,  &address);
     displacements[9] = address - startAddress;
 
-    MPI_Address(&m_RestartPeriod,  &address);
+    MPI_Get_address(&m_RestartPeriod,  &address);
     displacements[10] = address - startAddress;
 
-    MPI_Address(&m_ProcessorsXNo,  &address);
+    MPI_Get_address(&m_ProcessorsXNo,  &address);
     displacements[11] = address - startAddress;
 
-    MPI_Address(&m_ProcessorsYNo,  &address);
+    MPI_Get_address(&m_ProcessorsYNo,  &address);
     displacements[12] = address - startAddress;
 
-    MPI_Address(&m_ProcessorsZNo,  &address);
+    MPI_Get_address(&m_ProcessorsZNo,  &address);
     displacements[13] = address - startAddress;
 
-    MPI_Address(&m_CNTXCellNo,  &address);
+    MPI_Get_address(&m_CNTXCellNo,  &address);
     displacements[14] = address - startAddress;
 
-    MPI_Address(&m_CNTYCellNo,  &address);
+    MPI_Get_address(&m_CNTYCellNo,  &address);
     displacements[15] = address - startAddress;
 
-    MPI_Address(&m_CNTZCellNo,  &address);
+    MPI_Get_address(&m_CNTZCellNo,  &address);
     displacements[16] = address - startAddress;
 
-    MPI_Address(&m_GridXCellNo,  &address);
+    MPI_Get_address(&m_GridXCellNo,  &address);
     displacements[17] = address - startAddress;
 
-    MPI_Address(&m_GridYCellNo,  &address);
+    MPI_Get_address(&m_GridYCellNo,  &address);
     displacements[18] = address - startAddress;
 
-    MPI_Address(&m_GridZCellNo,  &address);
+    MPI_Get_address(&m_GridZCellNo,  &address);
     displacements[19] = address - startAddress;
 
-    MPI_Address(&m_BeadDensity,  &address);
+    MPI_Get_address(&m_BeadDensity,  &address);
     displacements[20] = address - startAddress;
 
-    MPI_Address(&m_Temperature,  &address);
+    MPI_Get_address(&m_Temperature,  &address);
     displacements[21] = address - startAddress;
 
-    MPI_Address(&m_StepSize,  &address);
+    MPI_Get_address(&m_StepSize,  &address);
     displacements[22] = address - startAddress;
 
-    MPI_Address(&m_CNTXCellWidth,  &address);
+    MPI_Get_address(&m_CNTXCellWidth,  &address);
     displacements[23] = address - startAddress;
 
-    MPI_Address(&m_CNTYCellWidth,  &address);
+    MPI_Get_address(&m_CNTYCellWidth,  &address);
     displacements[24] = address - startAddress;
 
-    MPI_Address(&m_CNTZCellWidth,  &address);
+    MPI_Get_address(&m_CNTZCellWidth,  &address);
     displacements[25] = address - startAddress;
 
 #if SimIdentifier == BD
-    MPI_Address(&m_Lambda,  &address);
+    MPI_Get_address(&m_Lambda,  &address);
     displacements[26] = address - startAddress;
 #elif SimIdentifier == DPD
-    MPI_Address(&m_Lambda,  &address);
+    MPI_Get_address(&m_Lambda,  &address);
     displacements[26] = address - startAddress;
 #elif SimIdentifier == MD
 // Not implemented yet
@@ -500,7 +500,7 @@ void pmInputData::BuildDerivedType(MsgDataTypePtr pMsgDataType)
 
     // Build the derived datatype and commit it
 
-    MPI_Type_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
+    MPI_Type_create_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
     MPI_Type_commit(pMsgDataType);
 
 #endif

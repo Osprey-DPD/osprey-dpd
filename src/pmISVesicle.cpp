@@ -316,29 +316,29 @@ void pmISVesicle::BuildDerivedType(MsgDataTypePtr pMsgDataType)
     MPI_Aint startAddress;
     MPI_Aint address;
 
-    MPI_Address(&m_XC,  &startAddress);
+    MPI_Get_address(&m_XC,  &startAddress);
     displacements[0] = 0;
 
-    MPI_Address(&m_YC,  &address);
+    MPI_Get_address(&m_YC,  &address);
     displacements[1] = address - startAddress;
 
-    MPI_Address(&m_ZC,  &address);
+    MPI_Get_address(&m_ZC,  &address);
     displacements[2] = address - startAddress;
 
-    MPI_Address(&m_OuterRadius,  &address);
+    MPI_Get_address(&m_OuterRadius,  &address);
     displacements[3] = address - startAddress;
 
-    MPI_Address(&m_Thickness,  &address);
+    MPI_Get_address(&m_Thickness,  &address);
     displacements[4] = address - startAddress;
 
-    MPI_Address(&m_OuterFractions.at(0),  &address);
+    MPI_Get_address(&m_OuterFractions.at(0),  &address);
     displacements[5] = address - startAddress;
 
     // Build the derived datatype and commit it: we use the m_pMPIDataType member
     // variable in the base class to hold the new type and pass it to the
     // other member functions.
 
-    MPI_Type_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
+    MPI_Type_create_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
     MPI_Type_commit(pMsgDataType);
 
 #endif

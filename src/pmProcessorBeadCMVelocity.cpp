@@ -289,21 +289,21 @@ void pmProcessorBeadCMVelocity::BuildDerivedType(MsgDataTypePtr pMsgDataType)
     MPI_Aint startAddress;
     MPI_Aint address;
 
-    MPI_Address(&m_BeadTotal, &startAddress);
+    MPI_Get_address(&m_BeadTotal, &startAddress);
     displacements[0] = 0;
 
-    MPI_Address(&m_XCMVel, &address);
+    MPI_Get_address(&m_XCMVel, &address);
     displacements[1] = address - startAddress;
 
-    MPI_Address(&m_YCMVel, &address);
+    MPI_Get_address(&m_YCMVel, &address);
     displacements[2] = address - startAddress;
 
-    MPI_Address(&m_ZCMVel, &address);
+    MPI_Get_address(&m_ZCMVel, &address);
     displacements[3] = address - startAddress;
 
     // Build the derived datatype and commit it
 
-    MPI_Type_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
+    MPI_Type_create_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
     MPI_Type_commit(pMsgDataType);
 
 #endif

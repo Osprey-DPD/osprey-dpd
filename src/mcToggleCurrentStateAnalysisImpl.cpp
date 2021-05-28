@@ -48,9 +48,7 @@ mcToggleCurrentStateAnalysisImpl::~mcToggleCurrentStateAnalysisImpl()
 
 void mcToggleCurrentStateAnalysisImpl::ToggleCurrentStateAnalysis(const xxCommand* const pCommand)
 {
-//	const mcToggleCurrentStateAnalysis* const pCmd = dynamic_cast<const mcToggleCurrentStateAnalysis*>(pCommand);
-
-        CMonitor* pMon = dynamic_cast<CMonitor*>(this);
+    CMonitor* pMon = dynamic_cast<CMonitor*>(this);
 
 #if SimMPS == SimulationDisabled
 	pMon->m_bCurrentStateAnalysis = !pMon->m_bCurrentStateAnalysis;
@@ -59,6 +57,8 @@ void mcToggleCurrentStateAnalysisImpl::ToggleCurrentStateAnalysis(const xxComman
 
 	new CLogToggleCurrentStateAnalysis(pMon->GetCurrentTime(), pMon->m_bCurrentStateAnalysis);
 #elif SimMPS == SimulationEnabled
+    const mcToggleCurrentStateAnalysis* const pCmd = dynamic_cast<const mcToggleCurrentStateAnalysis*>(pCommand);
+    
 	new CLogCommandForbiddenInParallelRun(pMon->GetCurrentTime(), pCmd);
 #endif
 }

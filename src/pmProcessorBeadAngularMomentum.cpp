@@ -290,21 +290,21 @@ void pmProcessorBeadAngularMomentum::BuildDerivedType(MsgDataTypePtr pMsgDataTyp
     MPI_Aint startAddress;
     MPI_Aint address;
 
-    MPI_Address(&m_BeadTotal, &startAddress);
+    MPI_Get_address(&m_BeadTotal, &startAddress);
     displacements[0] = 0;
 
-    MPI_Address(&m_XAngMom, &address);
+    MPI_Get_address(&m_XAngMom, &address);
     displacements[1] = address - startAddress;
 
-    MPI_Address(&m_YAngMom, &address);
+    MPI_Get_address(&m_YAngMom, &address);
     displacements[2] = address - startAddress;
 
-    MPI_Address(&m_ZAngMom, &address);
+    MPI_Get_address(&m_ZAngMom, &address);
     displacements[3] = address - startAddress;
 
     // Build the derived datatype and commit it
 
-    MPI_Type_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
+    MPI_Type_create_struct(dataTotal, block_lengths, displacements, typelist, pMsgDataType);
     MPI_Type_commit(pMsgDataType);
 
 #endif
