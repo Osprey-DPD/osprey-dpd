@@ -42,7 +42,7 @@ $ ./dpd  001
 will invoke the code and cause it to read its input from the file "dmpci.001" that must be located in the current directory. If the specified file is not found, the code creates a default input file that can then be modified as desired. Some simple input files for various cases can be found in the /examples directory.
 
 
-### Publications using OSPREY-DPD
+### Publications using Osprey-DPD
 
 [Phase behaviour and structure of a model biomolecular condensate,](https://pubs.rsc.org/en/content/articlelanding/2020/SM/D0SM00813C#!divAbstract)
 J. C. Shillcock, M. Brochut, E. Chenais, J. H. Ipsen, Soft Matter, 2020, 16, 6413.
