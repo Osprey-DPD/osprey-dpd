@@ -88,8 +88,8 @@ int main(int argc, char* argv[])
 	
 	// Select the error handler mechanism
 		
-    int errorCode;
-	errorCode = MPI_Comm_set_errhandler(MPI_COMM_WORLD, MPI_ERRORS_RETURN);
+ //   int errorCode;
+//	errorCode = MPI_Comm_set_errhandler(MPI_COMM_WORLD, MPI_ERRORS_RETURN);
 		
 //	std::cout << "Proc " << my_rank << " has set error handling on and has error string length " << MPI_MAX_ERROR_STRING << zEndl;
 	

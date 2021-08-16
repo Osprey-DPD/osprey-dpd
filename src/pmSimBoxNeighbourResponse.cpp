@@ -164,8 +164,7 @@ void pmSimBoxNeighbourResponse::Send(long procId)
     {
         long dest = 0;   // Local variables used by MPI_Send, MPI_Recv
         long tag  = 0;
-        MPI_Status status;
-
+ 
         long data[27];
         data[0] = m_SenderId;
         for(long i=1; i<27; i++)

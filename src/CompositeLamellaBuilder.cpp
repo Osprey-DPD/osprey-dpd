@@ -506,18 +506,19 @@ bool CCompositeLamellaBuilder::AssembleRandomP(CInitialState& riState, const zDo
 
 	// Randomly position the beads in all non-bilayer polymers in the empty regions
 	
-	double xp[3];				// Coordinates to assign to a bead
+	double xp[3];				    // Coordinates to assign to a bead
 	xp[0]        = 0.0;
 	xp[1]        = 0.0;
 	xp[2]        = 0.0;
-	long index   = 0;			// counter used several times below
-	double width = 0.0;			// region width used several times below
-	double freeLength = 0.0;	// total width of all free regions
+	double width = 0.0;			    // region width used several times below
+	double freeLength = 0.0;	    // total width of all free regions
 
 	// Get the total length of the free regions. Note that the size of the
 	// exRegions container must be even.
 
-	for(index=1; index<exRegions.size()/2; index++)
+    long unsigned int index   = 0;  // Counter used several times below
+
+    for(index=1; index<exRegions.size()/2; index++)
 	{
 		width = exRegions.at(2*index) - exRegions.at(2*index-1);
 		freeLength += width;
@@ -556,7 +557,7 @@ bool CCompositeLamellaBuilder::AssembleRandomP(CInitialState& riState, const zDo
 			rindex = CCNTCell::GetRandomNo();
 			bNotAssigned = true;
 
-			for(long nindex=0; nindex<freeRegionRatio.size(); nindex++)
+			for(long unsigned int nindex=0; nindex<freeRegionRatio.size(); nindex++)
 			{
 				if(bNotAssigned && rindex <= freeRegionRatio.at(nindex))
 				{
@@ -566,7 +567,9 @@ bool CCompositeLamellaBuilder::AssembleRandomP(CInitialState& riState, const zDo
 			}
 
 			if(bNotAssigned)
+            {
 				index = 0;
+            }
 
 			width = exRegions.at(2*index+2) - exRegions.at(2*index+1);
 						

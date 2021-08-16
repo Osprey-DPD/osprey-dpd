@@ -260,12 +260,12 @@ void mpaInitialState::CreatePolymersP0()
 
 	double nalphasum = 0.0;
 
-	for(long type=0; type<m_pSerialIS->vPolymerTypes.size(); type++)
+	for(long unsigned int type=0; type<m_pSerialIS->vPolymerTypes.size(); type++)
 	{
 		nalphasum+= static_cast<double>(m_pSerialIS->GetPolymerSizeForType(type))*m_vPolymerFractions.at(type);
 	}
 	
-	for(long type1=0; type1<m_pSerialIS->vPolymerTypes.size(); type1++)
+	for(long unsigned int type1=0; type1<m_pSerialIS->vPolymerTypes.size(); type1++)
 	{
 		m_pSerialIS->m_vPolymerTypeTotal.push_back(static_cast<long>(m_vPolymerFractions.at(type1)*totalBeads/nalphasum));
 	}

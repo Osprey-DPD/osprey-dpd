@@ -3782,7 +3782,6 @@ void CInputData::ReceiveBeadTypeData(const pmBeadData* const pMsg)
     // First, unpack the bead data and then store it in a generic CBeadType instance
 
     const zString name = pMsg->GetBeadName();
-    long          type = pMsg->GetBeadType();
     double      radius = pMsg->GetRadius();
     zDoubleVector vConsInt = pMsg->GetConsInt();
     zDoubleVector vDissInt = pMsg->GetDissInt();
@@ -3801,13 +3800,14 @@ void CInputData::ReceiveBeadTypeData(const pmBeadData* const pMsg)
 
     // To allow for extensions we check the simulation type here
 #if SimIdentifier == DPD
-	bool newTypeAdded = AddBeadType(name, pBead->GetDPDStructure());
+	AddBeadType(name, pBead->GetDPDStructure());
 #endif
 
     // Debug output to check messaging:
 
 /*
-    std::cout << "Processor " << xxParallelBase::GlobalGetRank() << " receiving bead data: " << name << " " << type << " " << radius << zEndl;
+   long type = pMsg->GetBeadType();
+     std::cout << "Processor " << xxParallelBase::GlobalGetRank() << " receiving bead data: " << name << " " << type << " " << radius << zEndl;
     for(long i=0; i<pMsg->GetTypeTotal(); i++)
     {
         std::cout << " " << vConsInt.at(i);

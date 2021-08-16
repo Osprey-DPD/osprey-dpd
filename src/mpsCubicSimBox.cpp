@@ -1152,7 +1152,6 @@ void mpsCubicSimBox::UpdateBorderPos()
 		m_rvCNTCells[GetCellIndexFromCoords(ix,iy,iz)]->AddBeadtoCell(*iterBead);
 	}
 	 
-	long in = 0;
 	BeadListIterator iterBead2;
 	zLongVector vPolymerIdVector;
 	vPolymerIdVector = m_Msg3U.GetPolymerIds();

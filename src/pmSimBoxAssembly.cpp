@@ -208,7 +208,7 @@ void pmSimBoxAssembly::Receive()
             {
                 m_bFailed = true;
 
-			    CLogpmSimBoxAssemblyFailed* pMsg1 = new CLogpmSimBoxAssemblyFailed(currentTime, m_SenderRank);
+			    new CLogpmSimBoxAssemblyFailed(currentTime, m_SenderRank);
             }
 		
 		}

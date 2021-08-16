@@ -412,10 +412,6 @@ void mpsPlanarZSimBox::UpdateBorderPos()
 {
 #if SimMPS == SimulationEnabled
 
-	long initialBeadTotal = 0;
-	
-	initialBeadTotal = GetBeadTotalInCNTCells();
-
 //    std::cout << "****************************************" << zEndl;
 //    std::cout  << "Processor " << GetRank() << " has entered mpsPlanarZSimBox's UpdateBorderPos with neighbours (R,L,T,B) " << RFacePid << " " << LFacePid << " " << TFacePid << " " << BFacePid << zEndl;
 //    std::cout  << "and diagonal processors (TR,BR,TL,BL) " << TREdgePid << " " << BREdgePid << " " << TLEdgePid << " " << BLEdgePid << zEndl;

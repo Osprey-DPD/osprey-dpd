@@ -2169,7 +2169,7 @@ void mpsSimBox::MoveOwningPolymersToBulk(long oldPid, BeadList& lBeads, const zL
 
     // First ensure that there are enough empty polymer instances to wrap incoming beads
 	
-	while(lBeads.size() > GetEmptyPolymerTotal() && CreateEmptyPolymers())
+	while(static_cast<long>(lBeads.size()) > GetEmptyPolymerTotal() && CreateEmptyPolymers())
 	{
 		std::cout << "Processor " << GetRank()  << " has to create new empty polymers for " << lBeads.size() << " received instances" << zEndl;
 	}
@@ -2178,7 +2178,6 @@ void mpsSimBox::MoveOwningPolymersToBulk(long oldPid, BeadList& lBeads, const zL
 			
     for(BeadListIterator iterBead=lBeads.begin(); iterBead!=lBeads.end(); iterBead++)
 	{
-	    const long beadId           = (*iterBead)->GetId();
 	    const long location         = vBeadLocations.at(ip);
 	    const long firstBondId      = vFirstBondIds.at(ip);
 	    const long firstBondPairId  = vFirstBPIds.at(ip);
@@ -2429,7 +2428,7 @@ void mpsSimBox::ListExtendedBond(long bondId) const
 
 	if(m_mmExtendedBonds.find(bondId) != m_mmExtendedBonds.end())
 	{				
-	    long                        key = (m_mmExtendedBonds.find(bondId))->first;
+//	    long                        key = (m_mmExtendedBonds.find(bondId))->first;
 		mpuExtendedBond* pExtBond       = (m_mmExtendedBonds.find(bondId))->second;
 									 
         std::cout << "********************************************************************************" << zEndl;

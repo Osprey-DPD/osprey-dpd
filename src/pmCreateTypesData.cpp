@@ -311,7 +311,6 @@ void pmCreateTypesData::Receive()
 {
 #if SimMPS == SimulationEnabled
 
-    int tag = 0;
     MPI_Status status;
 
     MPI_Recv(m_Array, 1000, MPI_LONG, MPI_ANY_SOURCE, GetTag(), MPI_COMM_WORLD, &status);

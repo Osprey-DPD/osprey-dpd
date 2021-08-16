@@ -44,7 +44,7 @@ ctTranslateTargetToC1PointImpl::~ctTranslateTargetToC1PointImpl()
 
 // Command handler function to translate all beads in a command target to a given point with C1 symmetry.
 // We check that we have a polymer target because if not we cannot identify which beads belong to  which polymer so that we 
-// can rigidly translate them. If we don't have a polymer target, we siply move all beads to the fixed point.
+// can rigidly translate them. If we don't have a polymer target, we simply move all beads to the fixed point.
 //
 // We translate the head bead of each polymer to a position with user-supplied coordinates,
 // which are entered as a fraction of the SimBox Z dimension, and then rigidly translate the remaining beads in the polymer. 
@@ -97,12 +97,12 @@ void ctTranslateTargetToC1PointImpl::TranslateTargetToC1Point(const xxCommand* c
 	// is not applicable to composite targets because they may contain
 	// a multitude of bead types.
 
-	long oldIndex = 0;
-	long newIndex = 0;
-	long ix, iy, iz;
+#if EnableParallelCommands == SimMPSDisabled
+    long oldIndex = 0;
+    long newIndex = 0;
+    long ix, iy, iz;
     bool bFirstBead = true;  // Flag used to indicate whether we are placing the first bead or subsequent beads
 
-#if EnableParallelCommands == SimMPSDisabled
     if(pPolymerTarget)  // We have a polymer target
     {
         PolymerVector vTargetPolymers = pPolymerTarget->GetPolymers();

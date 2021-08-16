@@ -496,12 +496,6 @@ bool CRandomBuilder::AssembleP(CInitialState& riState)
 //	double beadY = offset;
 //	double beadZ = offset;
 
-	long ix, iy, iz;
-	
-	ix = 0;
-	iy = 0;
-	iz = 0;
-
 	for(i=0; i<riState.GetBeadTotal(); i++)
 	{
 		index	= static_cast<long>(rvelDist.size()*CCNTCell::GetRandomNo());
@@ -512,15 +506,17 @@ bool CRandomBuilder::AssembleP(CInitialState& riState)
 
 		if(xp[0] > riState.GetSimBoxXLength())		// Bead outside box
 		{
-			CLogBuilderError* pMsg = new CLogBuilderError(0, "Bead "+ ToString(i) +" X coord outside box");
+			new CLogBuilderError(0, "Bead "+ ToString(i) +" X coord outside box");
 			return ErrorTrace("Error creating random initial state");
 		}
 		else if(riState.GetSimBoxXLength() - xp[0] < m_CoordErrorLimit)	// Bead just within box
+        {
 			xp[0] = 0.0;
-
+        }
+        
 		if(xp[1] > riState.GetSimBoxYLength())		// Bead outside box
 		{
-			CLogBuilderError* pMsg = new CLogBuilderError(0, "Bead "+ ToString(i) +" Y coord outside box");
+			new CLogBuilderError(0, "Bead "+ ToString(i) +" Y coord outside box");
 			return ErrorTrace("Error creating random initial state");
 		}
 		else if(riState.GetSimBoxYLength() - xp[1] < m_CoordErrorLimit)	// Bead just within box
@@ -551,11 +547,13 @@ bool CRandomBuilder::AssembleP(CInitialState& riState)
 
 		if(xp[2] > riState.GetSimBoxZLength())		// Bead outside box
 		{
-			CLogBuilderError* pMsg = new CLogBuilderError(0, "Bead "+ ToString(i) +" Z coord outside box");
+			new CLogBuilderError(0, "Bead "+ ToString(i) +" Z coord outside box");
 			return ErrorTrace("Error creating random initial state");
 		}
 		else if(riState.GetSimBoxZLength() - xp[2] < m_CoordErrorLimit)	// Bead just within box
-			xp[2] = 0.0;	
+        {
+			xp[2] = 0.0;
+        }
 
 		vtheta	= acos(1.0-2.0*CCNTCell::GetRandomNo());
 		vphi	= xxBase::m_globalTwoPI*CCNTCell::GetRandomNo();
@@ -583,7 +581,9 @@ bool CRandomBuilder::AssembleP(CInitialState& riState)
         xp[1] = 0.5 + static_cast<double>(iy)*riState.GetCNTYCellWidth();
         xp[2] = 0.5 + static_cast<double>(iz)*riState.GetCNTZCellWidth();
 		
-		ix++;
+        long ix, iy, iz;
+ 
+        ix++;
 		if(ix == riState.GetCNTXCellNo())
 		{
 		    ix = 0;
@@ -810,7 +810,7 @@ bool CRandomBuilder::AssembleP(CInitialState& riState)
 		// P0 writes the initial velocity distribution to the CLogState object using
 		// a CLogVelDistMessage object.
 
-		CLogVelDistMessage* pMsg = new CLogVelDistMessage(0, riState.GetkT(), vmean, v2mean, var);
+		new CLogVelDistMessage(0, riState.GetkT(), vmean, v2mean, var);
 	}
 	else
 	{

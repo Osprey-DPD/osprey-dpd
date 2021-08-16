@@ -152,7 +152,6 @@ mpuExtendedPolymer::mpuExtendedPolymer(long newPid, const CAbstractBead* const p
 	// the missing bead returns to the owning processor. But it should not be used as its bead pointers may be invalid when their bead instances
 	// are re-used.
 	
-	CBond* pBond;
 	mpuExtendedBond* pExtBond;
 	mpuGhostBead* pHeadGhost = 0;
 	mpuGhostBead* pTailGhost = 0;

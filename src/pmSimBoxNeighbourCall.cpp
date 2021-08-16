@@ -258,7 +258,7 @@ void pmSimBoxNeighbourCall::Receive()
 				}
 			}
 		
-			CLogpmSimBoxNeighbourList* pMsg1 = new CLogpmSimBoxNeighbourList(currentTime, m_SenderId, m_NNProcId);
+			new CLogpmSimBoxNeighbourList(currentTime, m_SenderId, m_NNProcId);
 		}
     }
 
