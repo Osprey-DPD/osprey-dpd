@@ -6203,7 +6203,7 @@ PolymerVector CSimBox::GetPolymersInRectangularRegion(double x, double y, double
     r[1] = y;
     r[2] = z;
 
-    CCNTCell* const pCentralCell = GetCNTCellFromCoords(r);
+ //   CCNTCell* const pCentralCell = GetCNTCellFromCoords(r);
 
     // And find the CNT cell at the origin (bottom left) of the rectangular region.
 

@@ -154,31 +154,31 @@ void pmSendBeadPacketToProc::Send(long procId)
 {
 #if SimMPS == SimulationEnabled
 
-    if(!IsProcessZero() && procId == 0)
-    {
-        long dest = 0;   // Local variables used by MPI_Send, MPI_Recv
-        long tag  = 1;
+//    if(!IsProcessZero() && procId == 0)
+ //   {
+//        long dest = 0;   // Local variables used by MPI_Send, MPI_Recv
+//        long tag  = 1;
 
-		dest = procId;
+//		dest = procId;
 		
         // First, we have to fill the m_NNProcId array with the ids of our
         // nearest neighbours. But note that this array should include the id
         // of the processor itself as well as its neighbours.
 
-        long data[28];
-        data[0] = m_SenderId;
+//        long data[28];
+//        data[0] = m_SenderId;
 //        for(long i=1; i<28; i++)
 //        {
 //            data[i] = m_NNProcId[i-1];
 //        }
 
 //        MPI_Send(&data, 28, MPI_LONG, dest, tag, MPI_COMM_WORLD);
-	}
-    else
-    {
+//	}
+//    else
+//    {
 		// This branch should not be seen	
-		std::cout << "Error: processor " << m_ProcId << " trying to call Send() " << zEndl;
-    }
+//		std::cout << "Error: processor " << m_ProcId << " trying to call Send() " << zEndl;
+//    }
 
 #endif
 }
@@ -191,14 +191,14 @@ void pmSendBeadPacketToProc::Send(long procId)
 void pmSendBeadPacketToProc::Receive()
 {
 #if SimMPS == SimulationEnabled
-
+/*
     // Only P0 should respond to this message, and it writes the data to the logfile.
 
-    if(IsProcessZero())
-    {
-        long tag    = 1; // Local variables used by MPI_Send, MPI_Recv
-        MPI_Status status;
-        long data[28];
+//    if(IsProcessZero())
+//    {
+//        long tag    = 1; // Local variables used by MPI_Send, MPI_Recv
+//        MPI_Status status;
+//        long data[28];
 //		for(long j=0; j<28; j++)
 //		{
 //			data[j] = 0;
@@ -207,18 +207,18 @@ void pmSendBeadPacketToProc::Receive()
 // Collect data from P0 and all PN in turn
 
 //		long currentTime = IGlobalSimBox::Instance()->GetCurrentTime();
-		long currentTime = 0;
+//		long currentTime = 0;
 				
-        for(long source = 0; source < GetWorld() ; source++)
-		{
-		    if(source > 0)
-			{
+//        for(long source = 0; source < GetWorld() ; source++)
+//		{
+//		    if(source > 0)
+//			{
 //				MPI_Recv(&data, 28, MPI_LONG, source, tag, MPI_COMM_WORLD, &status);
 
 				// Unpack the data into the sending processor's own id and those
 				// of its nearest neighbours.
 
-				m_SenderId = data[0];
+//				m_SenderId = data[0];
 
 //				for(long i=0; i<27; i++)
 //				{
@@ -227,9 +227,9 @@ void pmSendBeadPacketToProc::Receive()
 			}
 		
 //			CLogpmSimBoxNeighbourList* pMsg1 = new CLogpmSimBoxNeighbourList(currentTime, m_SenderId, m_NNProcId);
-		}
-    }
-
+//		}
+//    }
+*/
 #endif
 }
 
