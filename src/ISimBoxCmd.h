@@ -121,10 +121,11 @@ public:
     virtual void	     ListAllCommandTargetActivities(const xxCommand* const pCommand) = 0;
     virtual void			ListCommandTargetActivities(const xxCommand* const pCommand) = 0;
     virtual void			         ListCommandTargets(const xxCommand* const pCommand) = 0;
+    virtual void                          MSDBeadTarget(const xxCommand* const pCommand) = 0;
+    virtual void                       MSDPolymerTarget(const xxCommand* const pCommand) = 0;
 	virtual void		      PlanarAnchorForceOnTarget(const xxCommand* const pCommand) = 0;
     virtual void			 PolymerisePolymersInTarget(const xxCommand* const pCommand) = 0;
 	virtual void		PolymerisePolymerTripleInTarget(const xxCommand* const pCommand) = 0;
-    virtual void			           MSDPolymerTarget(const xxCommand* const pCommand) = 0;
     virtual void			               RgBeadTarget(const xxCommand* const pCommand) = 0;
     virtual void			            RgPolymerTarget(const xxCommand* const pCommand) = 0;
 	virtual void			 RotationalMSDPolymerTarget(const xxCommand* const pCommand) = 0;

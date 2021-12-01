@@ -123,6 +123,7 @@ class aeActiveSimBox;
     #include "ctListAllCommandTargetActivitiesImpl.h"
     #include "ctListCommandTargetActivitiesImpl.h"
     #include "ctListCommandTargetsImpl.h"
+    #include "ctMSDOfBeadTargetImpl.h"
     #include "ctMSDOfPolymerTargetImpl.h"
     #include "ctPlanarAnchorForceOnTargetImpl.h"
     #include "ctPolymerisePolymersInTargetImpl.h"
@@ -253,7 +254,8 @@ class CSimBox : public ISimState,
 								  public ctListAllCommandTargetActivitiesImpl,
 								  public ctListCommandTargetActivitiesImpl,
 								  public ctListCommandTargetsImpl,
-								  public ctMSDOfPolymerTargetImpl,
+                                  public ctMSDOfBeadTargetImpl,
+                                  public ctMSDOfPolymerTargetImpl,
 								  public ctPlanarAnchorForceOnTargetImpl,
 								  public ctPolymerisePolymersInTargetImpl,
 								  public ctPolymerisePolymerTripleInTargetImpl,
@@ -377,7 +379,8 @@ class CSimBox : public ISimState,
 	friend class ctListAllCommandTargetActivitiesImpl;
 	friend class ctListCommandTargetActivitiesImpl;
 	friend class ctListCommandTargetsImpl;
-	friend class ctMSDOfPolymerTargetImpl;
+    friend class ctMSDOfBeadTargetImpl;
+    friend class ctMSDOfPolymerTargetImpl;
 	friend class ctPlanarAnchorForceOnTargetImpl;
 	friend class ctPolymerisePolymersInTargetImpl;
 	friend class ctPolymerisePolymerTripleInTargetImpl;
