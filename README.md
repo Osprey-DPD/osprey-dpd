@@ -50,8 +50,7 @@ H. Honaryar, J. A. LaNasa, R. J. Hickey, J. C. Shillcock, Z. Niroobakhsh, Soft M
 [Non-monotonic fibril surface occlusion by GFP tags from coase-grained molecular simulations,](https://www.sciencedirect.com/science/article/pii/S2001037021005262?via%3Dihub)
 J. C. Shillcock, J. Hastings, N. Riguet, H. A. Lashuel, Computational and Structural Biotechnology Journal, 2022, 20, 309-321.
 
-[Coupling bulk phase separataion of disordered proteins to membrane domain formation in molecular simulations on a bespoke compute fabric,]
-(https://www.mdpi.com/2077-0375/12/1/17/htm)
+[Coupling bulk phase separataion of disordered proteins to membrane domain formation in molecular simulations on a bespoke compute fabric,](https://www.mdpi.com/2077-0375/12/1/17/htm)
 J. C. Shillcock, D. B. Thomas, J. R. Beaumont, G. M. Bragg, M. L. Vousden, A. D. Brown, Membranes, 2022, 12, 17
 
 [Phase behaviour and structure of a model biomolecular condensate,](https://pubs.rsc.org/en/content/articlelanding/2020/SM/D0SM00813C#!divAbstract)
