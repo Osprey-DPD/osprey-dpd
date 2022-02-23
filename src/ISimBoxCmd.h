@@ -126,6 +126,7 @@ public:
 	virtual void		      PlanarAnchorForceOnTarget(const xxCommand* const pCommand) = 0;
     virtual void			 PolymerisePolymersInTarget(const xxCommand* const pCommand) = 0;
 	virtual void		PolymerisePolymerTripleInTarget(const xxCommand* const pCommand) = 0;
+    virtual void              ReflectingBarrierOnTarget(const xxCommand* const pCommand) = 0;
     virtual void			               RgBeadTarget(const xxCommand* const pCommand) = 0;
     virtual void			            RgPolymerTarget(const xxCommand* const pCommand) = 0;
 	virtual void			 RotationalMSDPolymerTarget(const xxCommand* const pCommand) = 0;

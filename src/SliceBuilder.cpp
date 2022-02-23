@@ -226,10 +226,25 @@ bool CSliceBuilder::Assemble(CInitialState &riState)
 	// ****************************************
 	// Set the in-plane velocities of the beads from a 3d Maxwell distribution 
 	// with a mean  value and variance fixed from the temperature. This applies 
-	// to all beads not just the ones in the vesicle. We indicate that a 3d
-	// distribution is required by passing in a zero normal vector.
+	// to all beads not just the ones in the slice. We indicate that a 3d
+	// distribution is required by passing in a zero normal vector otherwise
 
-	AssignMaxwellVelocities(riState, 0, 0, 0);
+	// the normal to the slab is used.
+
+	if(m_XN == 1)
+	{
+	    AssignMaxwellVelocities(riState, 1, 0, 0);
+	}
+	else if(m_YN == 1)
+	{
+	    AssignMaxwellVelocities(riState, 0, 1, 0);
+
+	}
+	else if(m_ZN == 1)
+	{
+	    AssignMaxwellVelocities(riState, 0, 0, 1);
+	}
+
 
 	return true;
 }

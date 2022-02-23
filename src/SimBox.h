@@ -128,6 +128,7 @@ class aeActiveSimBox;
     #include "ctPlanarAnchorForceOnTargetImpl.h"
     #include "ctPolymerisePolymersInTargetImpl.h"
     #include "ctPolymerisePolymerTripleInTargetImpl.h"
+    #include "ctReflectingBarrierOnTargetImpl.h"
     #include "ctRgOfBeadTargetImpl.h"
     #include "ctRgOfPolymerTargetImpl.h"
     #include "ctRotationalMSDOfPolymerTargetImpl.h"
@@ -259,6 +260,7 @@ class CSimBox : public ISimState,
 								  public ctPlanarAnchorForceOnTargetImpl,
 								  public ctPolymerisePolymersInTargetImpl,
 								  public ctPolymerisePolymerTripleInTargetImpl,
+                                  public ctReflectingBarrierOnTargetImpl,
                                   public ctRgOfBeadTargetImpl,
                                   public ctRgOfPolymerTargetImpl,
 								  public ctRotationalMSDOfPolymerTargetImpl,
@@ -385,6 +387,7 @@ class CSimBox : public ISimState,
 	friend class ctPolymerisePolymersInTargetImpl;
 	friend class ctPolymerisePolymerTripleInTargetImpl;
     friend class ctRgOfBeadTargetImpl;
+    friend class ctReflectingBarrierOnTargetImpl;
     friend class ctRgOfPolymerTargetImpl;
 	friend class ctRotationalMSDOfPolymerTargetImpl;
 	friend class ctSelectBeadsInSphericalTargetRegionImpl;
