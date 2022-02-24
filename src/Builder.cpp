@@ -608,31 +608,19 @@ bool CBuilder::isRandomPolymerSlabs::Assemble(CInitialState& riState)
 			if(m_X == 1)
 			{
 				xp[0] = m_ExcludedRegions.at(2*index+1) + width*CCNTCell::GetRandomNo();
-
-				if( xp[0] < 1.0 )
-				{
-				    xp[0] += 0.1;
-				}
-				else if( xp[0] > riState.GetSimBoxXLength() - 1.0)
-				{
-				    xp[0] -= 0.1;
-				}
-
-				xp[1] = 0.95*riState.GetSimBoxYLength()*CCNTCell::GetRandomNo();
-				xp[2] = 0.95*riState.GetSimBoxZLength()*CCNTCell::GetRandomNo();
+				xp[1] = 0.98*riState.GetSimBoxYLength()*CCNTCell::GetRandomNo();
+				xp[2] = 0.98*riState.GetSimBoxZLength()*CCNTCell::GetRandomNo();
 			}
 			else if(m_Y == 1)
 			{
-				xp[0] = 0.95*riState.GetSimBoxXLength()*CCNTCell::GetRandomNo();
-
+				xp[0] = 0.98*riState.GetSimBoxXLength()*CCNTCell::GetRandomNo();
 				xp[1] = m_ExcludedRegions.at(2*index+1) + width*CCNTCell::GetRandomNo();
-
-				xp[2] = 0.95*riState.GetSimBoxZLength()*CCNTCell::GetRandomNo();
+				xp[2] = 0.98*riState.GetSimBoxZLength()*CCNTCell::GetRandomNo();
 			}
 			else if(m_Z == 1)
 			{
-				xp[0] = 0.95*riState.GetSimBoxXLength()*CCNTCell::GetRandomNo();
-				xp[1] = 0.95*riState.GetSimBoxYLength()*CCNTCell::GetRandomNo();
+				xp[0] = 0.98*riState.GetSimBoxXLength()*CCNTCell::GetRandomNo();
+				xp[1] = 0.98*riState.GetSimBoxYLength()*CCNTCell::GetRandomNo();
 					
 				xp[2] = m_ExcludedRegions.at(2*index+1) + width*CCNTCell::GetRandomNo();
 			}
