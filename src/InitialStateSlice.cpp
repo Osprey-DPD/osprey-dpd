@@ -189,7 +189,7 @@ zInStream& CInitialStateSlice::get(zInStream& is)
 
                 // The widths are in units of the SimBox size
 
-	            if(!is.good() || width < 0.0 || width > 1.0 || runningWidth >= 1.0)
+	            if(!is.good() || width < 0.0 || width > 1.0 || runningWidth > 1.0)
 	            {
 		            SetDataValid(false);
 		            return is;
