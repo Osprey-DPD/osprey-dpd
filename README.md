@@ -44,8 +44,8 @@ will invoke the code and cause it to read its input from the file "dmpci.001" th
 
 ### Publications using Osprey-DPD
 
-Investigating the morphological transitions in an associative surfactant ternary system,
-H. Honaryar, J. A. LaNasa, R. J. Hickey, J. C. Shillcock, Z. Niroobakhsh, Soft Matter, 2022 (under review)
+[Investigating the morphological transitions in an associative surfactant ternary system,](https://pubs.rsc.org/en/content/articlelanding/2022/sm/d1sm01668g)
+H. Honaryar, J. A. LaNasa, R. J. Hickey, J. C. Shillcock, Z. Niroobakhsh, Soft Matter, 2022 (accepted)
 
 [Non-monotonic fibril surface occlusion by GFP tags from coase-grained molecular simulations,](https://www.sciencedirect.com/science/article/pii/S2001037021005262?via%3Dihub)
 J. C. Shillcock, J. Hastings, N. Riguet, H. A. Lashuel, Computational and Structural Biotechnology Journal, 2022, 20, 309-321.
