@@ -48,7 +48,7 @@ will invoke the code and cause it to read its input from the file "dmpci.001" th
 J. C. Shillcock, C. Lagisquet, J. Alexandre, L. Vuillon, J. H. Ipsen, Biorxiv preprint, 2022.
 
 [Investigating the morphological transitions in an associative surfactant ternary system,](https://pubs.rsc.org/en/content/articlelanding/2022/sm/d1sm01668g)
-H. Honaryar, J. A. LaNasa, R. J. Hickey, J. C. Shillcock, Z. Niroobakhsh, Soft Matter, 2022.
+H. Honaryar, J. A. LaNasa, R. J. Hickey, J. C. Shillcock, Z. Niroobakhsh, Soft Matter, 2022, 18:2611-2633.
 
 [Non-monotonic fibril surface occlusion by GFP tags from coase-grained molecular simulations,](https://www.sciencedirect.com/science/article/pii/S2001037021005262?via%3Dihub)
 J. C. Shillcock, J. Hastings, N. Riguet, H. A. Lashuel, Computational and Structural Biotechnology Journal, 2022, 20, 309-321.
