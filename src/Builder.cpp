@@ -3547,8 +3547,8 @@ bool CBuilder::isVesicle::Assemble(CInitialState& riState)
 
 	for(monolayerIndex=0; monolayerIndex<2; monolayerIndex++)
 	{
-		double theta  = m_DTheta[monolayerIndex];
-		double phi    = 0.0;
+		double theta  = 0.5*m_DTheta[monolayerIndex];
+		double phi    = m_DPhi[monolayerIndex];
 
 		for(long icu=0; icu<m_MonolayerTotal[monolayerIndex]; icu++)
 		{
@@ -3574,7 +3574,7 @@ bool CBuilder::isVesicle::Assemble(CInitialState& riState)
 
   			phi += (m_DPhi[monolayerIndex]/sin(theta));
 
-			if(phi > xxBase::m_globalTwoPI - m_DPhi[monolayerIndex])
+			if(phi > xxBase::m_globalTwoPI - 0.5*m_DPhi[monolayerIndex])
 			{
 				theta += m_DTheta[monolayerIndex];
 				phi = 0.0;
