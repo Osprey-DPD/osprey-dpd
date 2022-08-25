@@ -44,8 +44,8 @@ will invoke the code and cause it to read its input from the file "dmpci.001" th
 
 ### Publications using Osprey-DPD
 
-[Model biomolecular condensates have heterogeneous structure quantitatively dependent on the interaction profile of their constituent macromolecules,](https://www.biorxiv.org/content/10.1101/2022.03.25.485792v1)
-J. C. Shillcock, C. Lagisquet, J. Alexandre, L. Vuillon, J. H. Ipsen, Biorxiv preprint, 2022.
+[Model biomolecular condensates have heterogeneous structure quantitatively dependent on the interaction profile of their constituent macromolecules,](https://doi.org/10.1039/D2SM00387B)
+J. C. Shillcock, C. Lagisquet, J. Alexandre, L. Vuillon, J. H. Ipsen, Soft Matter, 2022.
 
 [Investigating the morphological transitions in an associative surfactant ternary system,](https://pubs.rsc.org/en/content/articlelanding/2022/sm/d1sm01668g)
 H. Honaryar, J. A. LaNasa, R. J. Hickey, J. C. Shillcock, Z. Niroobakhsh, Soft Matter, 2022, 18:2611-2633.
