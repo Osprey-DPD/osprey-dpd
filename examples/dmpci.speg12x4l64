@@ -1,0 +1,76 @@
+dpd
+
+Title	" LLPS crowder "
+Date 10/10/22
+Comment    " 6B10 major component with weak aEE and 4 x crowder.
+
+
+  "
+
+State    random
+
+
+Bead	W
+    	0.5
+    	25	
+    	4.5	
+
+Bead	E
+    	0.5
+        25    8
+    	4.5   4.5
+
+Bead	B
+    	0.5
+    	23    25    25
+    	4.5   4.5   4.5
+     
+Bead    F
+        0.5
+        25    8     25    8
+        4.5   4.5   4.5   4.5
+
+Bead    P
+        0.5
+        25    80    80    80   80
+        4.5   4.5   4.5   4.5  4.5
+
+
+Bond	E  E   128  0.5
+Bond	B  B   128  0.5
+Bond	E  B   128  0.5
+Bond    F  F   128  0.5
+Bond    F  B   128  0.5
+Bond    P  P   128  0.5
+
+
+BondPair B B B   5.0  0.0
+BondPair P P P   5.0  0.0
+
+Polymer Rod     0.0006   " (E E (* E) (* E) (10 B) (4 F) (10 B) (4 F) (10 B) (4 F) (10 B) (4 F) (10 B) E (* E) (* E) E) "  
+Polymer Crowder 0.0048   " (P ( 10  P ) P) " 
+Polymer Water   0.9946   " (W) " 
+
+
+Box        64  64  64             1 1 1
+Density        3
+Temp           1
+RNGSeed     -678009
+Lambda		0.5
+Step		0.002
+Time             1000000
+SamplePeriod     1000
+AnalysisPeriod   250000
+DensityPeriod    1000000
+DisplayPeriod    10000
+RestartPeriod    500000
+Grid  1 1 1
+
+Command ToggleBeadDisplay              1   W
+Command SetCurrentStateCamera          1   0.5 -1.5 0.5  0.5 0.5 0.5
+
+Command SetTimeStepSize                1000  0.02
+
+
+
+
