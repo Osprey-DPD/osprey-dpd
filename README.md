@@ -44,6 +44,9 @@ will invoke the code and cause it to read its input from the file "dmpci.001" th
 
 ### Publications using Osprey-DPD
 
+[Macromolecular crowding is surprisingly unable to deform the structure of a model biomolecular condensate,](https://www.biorxiv.org/content/10.1101/2022.12.12.520052v1)
+J. C. Shillcock, D. B. Thomas, J. H. Ipsen, A. D. Brown, biorxiv.org, 15th December, 2022.
+
 [Model biomolecular condensates have heterogeneous structure quantitatively dependent on the interaction profile of their constituent macromolecules,](https://doi.org/10.1039/D2SM00387B)
 J. C. Shillcock, C. Lagisquet, J. Alexandre, L. Vuillon, J. H. Ipsen, Soft Matter, 2022.
 
