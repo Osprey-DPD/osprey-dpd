@@ -134,7 +134,6 @@ prPairCorrelationFunction::prPairCorrelationFunction(const CSimState* const pSim
 	
 	for(PolymerVectorIterator iterPoly=vAllPolymers.begin(); iterPoly != vAllPolymers.end(); ++iterPoly)
 	{
-//        if(m_mPolyTypes.find((*iterPoly)->GetType())->second)
         if(m_mPolyTypes.find((*iterPoly)->GetType()) != m_mPolyTypes.end())
 		{
 			BeadVector vAllBeads = (*iterPoly)->GetBeads();
@@ -148,7 +147,7 @@ prPairCorrelationFunction::prPairCorrelationFunction(const CSimState* const pSim
 	
 	// Debug output of the total beads
 	
-	std::cout << "prPairCorrelationFunction using " << m_mPolyTypes.size() << " polymer types, and found " << m_vBeads.size() << " total beads" << zEndl;
+//	std::cout << "prPairCorrelationFunction using " << m_mPolyTypes.size() << " polymer types, and found " << m_vBeads.size() << " total beads" << zEndl;
 
 }
 
@@ -215,7 +214,7 @@ void prPairCorrelationFunction::UpdateState(CSimState& rSimState, const ISimBox*
 	{
 		m_SamplesTaken++;
 
-		std::cout << "Sample " <<  m_SamplesTaken << " of g(r) at time " << pISimBox->GetCurrentTime() << zEndl;
+//		std::cout << "Sample " <<  m_SamplesTaken << " of g(r) at time " << pISimBox->GetCurrentTime() << zEndl;
 		
 		// Calculate the instantaneous RDF for beads of the selected types and add to the running histogram.
 		// We iterate over each bead and add the number of beads within each spherical shell to a running
@@ -320,7 +319,7 @@ void prPairCorrelationFunction::UpdateState(CSimState& rSimState, const ISimBox*
                 pTSD->SetValue(iq+1, m_vIQ.at(iq), "I(q)");
             }
 
-            std::cout << "Dumping I(q) to file at time " << pISimBox->GetCurrentTime() << " with data and q points " << m_DataPoints << " " << m_QPoints << " points and samples " << m_SamplesTaken << zEndl;
+ //           std::cout << "Dumping I(q) to file at time " << pISimBox->GetCurrentTime() << " with data and q points " << m_DataPoints << " " << m_QPoints << " points and samples " << m_SamplesTaken << zEndl;
 		}
      }
 
@@ -395,8 +394,8 @@ void prPairCorrelationFunction::TrapezoidalRule(const double dh)
     
    // Zero the vector holding the I(q) function. Note it was sized in the constructor.
     
-    std::cout << "****************************************" << zEndl;
-    std::cout << "Trapezoidal rule using data: " << qmin << " " << qmax << " " << dq << " " << m_QPoints << " " << dh << " " << N << " " << m_vRDF.size() << zEndl;
+//    std::cout << "****************************************" << zEndl;
+//    std::cout << "Trapezoidal rule using data: " << qmin << " " << qmax << " " << dq << " " << m_QPoints << " " << dh << " " << N << " " << m_vRDF.size() << zEndl;
     
     double qvalue = qmin;
     

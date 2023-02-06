@@ -46,7 +46,7 @@ zOutStream& operator<<(zOutStream& os, const CLogSavePairCorrelationFunction& rM
 #elif EnableXMLCommands == SimXMLDisabled
 
 	// ASCII output 
-    os << " Saving pair correlation function for polymers: " << zEndl;
+    os << " Saving pair correlation function excluding polymers: " << zEndl;
     for(czBoolVectorIterator citer=rMsg.m_vExcludedPolymers.begin(); citer!=rMsg.m_vExcludedPolymers.end(); citer++)
     {
         os << *citer << " ";
