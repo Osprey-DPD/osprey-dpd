@@ -298,6 +298,11 @@ void ISimBoxBase::SaveNonBeadInclusiveRestartStateCmd(const xxCommand* const pCo
 	m_pISimBox->IIMonitorCmd()->SaveNonBeadInclusiveRestartStateCmd(pCommand);
 }
 
+void ISimBoxBase::SavePairCorrelationFunction(const xxCommand* const pCommand) const
+{
+    m_pISimBox->IIMonitorCmd()->SavePairCorrelationFunction(pCommand);
+}
+
 void ISimBoxBase::SaveParaviewCurrentState(const xxCommand* const pCommand) const
 {
 	m_pISimBox->IIMonitorCmd()->SaveParaviewCurrentState(pCommand);

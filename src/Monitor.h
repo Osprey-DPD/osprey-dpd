@@ -43,6 +43,7 @@ class CCurrentStateFormat;
 #include "mcSaveBeadVelocityScalarProduct1dProfileImpl.h"
 #include "mcSaveCurrentStateImpl.h"
 #include "mcSaveNonBeadInclusiveRestartStateImpl.h"
+#include "mcSavePairCorrelationFunctionImpl.h"
 #include "mcSaveParaviewCurrentStateImpl.h"
 #include "mcSavePolymerBeadRDFImpl.h"
 #include "mcSavePovrayCurrentStateImpl.h"
@@ -99,6 +100,7 @@ class CMonitor : public ISimBoxBase, public virtual IMonitorCmd,
 				public mcSaveBeadVelocityScalarProduct1dProfileImpl,
 				public mcSaveCurrentStateImpl,
 				public mcSaveNonBeadInclusiveRestartStateImpl,
+                public mcSavePairCorrelationFunctionImpl,
 				public mcSaveParaviewCurrentStateImpl,
 				public mcSavePolymerBeadRDFImpl,
 				public mcSavePovrayCurrentStateImpl,
@@ -162,6 +164,7 @@ class CMonitor : public ISimBoxBase, public virtual IMonitorCmd,
 	friend class  mcSaveBeadVelocityScalarProduct1dProfileImpl;
 	friend class  mcSaveCurrentStateImpl;
 	friend class  mcSaveNonBeadInclusiveRestartStateImpl;
+    friend class  mcSavePairCorrelationFunctionImpl;
 	friend class  mcSaveParaviewCurrentStateImpl;
 	friend class  mcSavePolymerBeadRDFImpl;
 	friend class  mcSavePovrayCurrentStateImpl;

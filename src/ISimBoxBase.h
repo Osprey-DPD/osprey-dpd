@@ -92,8 +92,9 @@ public:
 	void            SaveCommandHistoryToCurrentTime(const xxCommand* const pCommand) const;
 	void		                SaveCurrentStateCmd(const xxCommand* const pCommand) const;
 	void        SaveNonBeadInclusiveRestartStateCmd(const xxCommand* const pCommand) const;
+    void                SavePairCorrelationFunction(const xxCommand* const pCommand) const;
 	void	               SaveParaviewCurrentState(const xxCommand* const pCommand) const;
-	void                         SavePolymerBeadRDF(const xxCommand* const pCommand) const;
+    void                         SavePolymerBeadRDF(const xxCommand* const pCommand) const;
 	void	                 SavePovrayCurrentState(const xxCommand* const pCommand) const;
 	void			               SaveProtocolFile(const xxCommand* const pCommand) const;
 	void		                SaveRestartStateCmd(const xxCommand* const pCommand) const;

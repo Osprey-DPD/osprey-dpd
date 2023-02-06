@@ -52,6 +52,7 @@ public:
 	virtual void  SaveBeadVelocityScalarProduct1dProfile(const xxCommand* const pCommand) = 0;
 	virtual void			         SaveCurrentStateCmd(const xxCommand* const pCommand) = 0;
 	virtual void     SaveNonBeadInclusiveRestartStateCmd(const xxCommand* const pCommand) = 0;
+    virtual void             SavePairCorrelationFunction(const xxCommand* const pCommand) = 0;
 	virtual void		        SaveParaviewCurrentState(const xxCommand* const pCommand) = 0;
 	virtual void                      SavePolymerBeadRDF(const xxCommand* const pCommand) = 0;
 	virtual void		          SavePovrayCurrentState(const xxCommand* const pCommand) = 0;
