@@ -299,9 +299,14 @@ void prPairCorrelationFunction::UpdateState(CSimState& rSimState, const ISimBox*
 				rdfSum += m_vRDF.at(ir);
 				
                 // The beadPairNorm in next line should be removed for RDF curves to increase with increasing concentration
-				m_vRDF.at(ir) /= (beadPairNorm*shellVolume*m_SamplesTaken);
+				//				m_vRDF.at(ir) /= (beadPairNorm*shellVolume*m_SamplesTaken);
 				
-				std::cout << ir << " " << shellVolume << " " << m_vRDF.at(ir) << zEndl;
+		// Nex line is to test the I(q) calculation from Paissoni et al JCTC 2020. We simply count the number of pairs at a separation r, and
+		//normalise by the number of samples only.
+		
+				m_vRDF.at(ir) /= (m_SamplesTaken);
+				
+				//				std::cout << ir << " " << shellVolume << " " << m_vRDF.at(ir) << zEndl; << ir << " " << shellVolume << " " << m_vRDF.at(ir) << zEndl;
 				
 //				pTSD->SetValue(ir+1, m_vRDF.at(ir), "Bead RDF");
 			}
@@ -409,7 +414,7 @@ void prPairCorrelationFunction::TrapezoidalRule(const double dh)
         double rvalue;
         rvalue = m_dr;
 
-        for(long ir=1; ir<N; ++ir)
+        for(long ir = 1; ir < N; ++ir)
         {
             integrand += m_vRDF.at(ir)*sin(qvalue*rvalue)/(qvalue*rvalue);
             rvalue += m_dr;
