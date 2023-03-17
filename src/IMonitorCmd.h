@@ -57,6 +57,7 @@ public:
 	virtual void                      SavePolymerBeadRDF(const xxCommand* const pCommand) = 0;
 	virtual void		          SavePovrayCurrentState(const xxCommand* const pCommand) = 0;
 	virtual void			         SaveRestartStateCmd(const xxCommand* const pCommand) = 0;
+    virtual void                                SaveSAXS(const xxCommand* const pCommand) = 0;
 	virtual void			           SetAnalysisPeriod(const xxCommand* const pCommand) = 0;
 	virtual void		                SetBeadDisplayId(const xxCommand* const pCommand) = 0;
 	virtual void		            SetBeadTypeDisplayId(const xxCommand* const pCommand) = 0;
@@ -73,6 +74,7 @@ public:
 	virtual void	     SetRestartStateDefaultInclusive(const xxCommand* const pCommand) = 0;
 	virtual void		          SetRunCompleteInterval(const xxCommand* const pCommand) = 0;
 	virtual void				         SetSamplePeriod(const xxCommand* const pCommand) = 0;
+    virtual void            SetSAXSProcessBeadElectronNo(const xxCommand* const pCommand) = 0;
 	virtual void			           ToggleBeadDisplay(const xxCommand* const pCommand) = 0;
 	virtual void		           ToggleCurrentStateBox(const xxCommand* const pCommand) = 0;
 	virtual void		        ToggleDensityFieldOutput(const xxCommand* const pCommand) = 0;

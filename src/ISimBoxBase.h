@@ -98,6 +98,7 @@ public:
 	void	                 SavePovrayCurrentState(const xxCommand* const pCommand) const;
 	void			               SaveProtocolFile(const xxCommand* const pCommand) const;
 	void		                SaveRestartStateCmd(const xxCommand* const pCommand) const;
+    void                                   SaveSAXS(const xxCommand* const pCommand) const;
 	void		               SetAllBeadsInvisible(const xxCommand* const pCommand) const;
 	void		                 SetAllBeadsVisible(const xxCommand* const pCommand) const;
 	void                          SetAnalysisPeriod(const xxCommand* const pCommand) const;
@@ -116,6 +117,7 @@ public:
 	void            SetRestartStateDefaultInclusive(const xxCommand* const pCommand) const;
 	void	                 SetRunCompleteInterval(const xxCommand* const pCommand) const;
 	void                            SetSamplePeriod(const xxCommand* const pCommand) const;
+    void               SetSAXSProcessBeadElectronNo(const xxCommand* const pCommand) const;
 	void			               ShowAllProcesses(const xxCommand* const pCommand) const;
 	void	                ShowModifiableProcesses(const xxCommand* const pCommand) const;
 	void			              ToggleBeadDisplay(const xxCommand* const pCommand) const;

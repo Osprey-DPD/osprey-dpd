@@ -48,6 +48,7 @@ class CCurrentStateFormat;
 #include "mcSavePolymerBeadRDFImpl.h"
 #include "mcSavePovrayCurrentStateImpl.h"
 #include "mcSaveRestartStateImpl.h"
+#include "mcSaveSAXSImpl.h"
 #include "mcSetAnalysisPeriodImpl.h"
 #include "mcSetBeadDisplayIdImpl.h"
 #include "mcSetBeadTypeDisplayIdImpl.h"
@@ -64,6 +65,7 @@ class CCurrentStateFormat;
 #include "mcSetRestartStateDefaultInclusiveImpl.h"
 #include "mcSetRunCompleteIntervalImpl.h"
 #include "mcSetSamplePeriodImpl.h"
+#include "mcSetSAXSProcessBeadElectronNoImpl.h"
 #include "mcToggleBeadDisplayImpl.h"
 #include "mcToggleCurrentStateBoxImpl.h"
 #include "mcToggleDensityFieldOutputImpl.h"
@@ -105,6 +107,7 @@ class CMonitor : public ISimBoxBase, public virtual IMonitorCmd,
 				public mcSavePolymerBeadRDFImpl,
 				public mcSavePovrayCurrentStateImpl,
 				public mcSaveRestartStateImpl,
+                public mcSaveSAXSImpl,
 				public mcSetAnalysisPeriodImpl,
 				public mcSetBeadDisplayIdImpl,
 				public mcSetBeadTypeDisplayIdImpl,
@@ -121,6 +124,7 @@ class CMonitor : public ISimBoxBase, public virtual IMonitorCmd,
 				public mcSetRestartStateDefaultInclusiveImpl,
 				public mcSetRunCompleteIntervalImpl,
 				public mcSetSamplePeriodImpl,
+                public mcSetSAXSProcessBeadElectronNoImpl,
 				public mcToggleBeadDisplayImpl,
 				public mcToggleCurrentStateBoxImpl,
 				public mcToggleDensityFieldOutputImpl,
@@ -169,6 +173,7 @@ class CMonitor : public ISimBoxBase, public virtual IMonitorCmd,
 	friend class  mcSavePolymerBeadRDFImpl;
 	friend class  mcSavePovrayCurrentStateImpl;
 	friend class  mcSaveRestartStateImpl;
+    friend class  mcSaveSAXSImpl;
 	friend class  mcSetAnalysisPeriodImpl;
 	friend class  mcSetBeadDisplayIdImpl;
 	friend class  mcSetBeadTypeDisplayIdImpl;
@@ -185,6 +190,7 @@ class CMonitor : public ISimBoxBase, public virtual IMonitorCmd,
 	friend class  mcSetRestartStateDefaultInclusiveImpl;
 	friend class  mcSetRunCompleteIntervalImpl;
 	friend class  mcSetSamplePeriodImpl;
+    friend class  mcSetSAXSProcessBeadElectronNoImpl;
 	friend class  mcToggleBeadDisplayImpl;
 	friend class  mcToggleCurrentStateBoxImpl;
 	friend class  mcToggleDensityFieldOutputImpl;

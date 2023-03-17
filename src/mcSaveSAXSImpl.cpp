@@ -11,46 +11,43 @@ Redistribution and use in source and binary forms, with or without modification,
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ********************************************************************** */
-// mcSavePairCorrelationFunctionImpl.cpp: implementation of the mcSavePairCorrelationFunctionImpl class.
+// mcSaveSAXSImpl.cpp: implementation of the mcSaveSAXSImpl class.
 //
 //////////////////////////////////////////////////////////////////////
 
 #include "StdAfx.h"
 #include "SimDefs.h"
-#include "mcSavePairCorrelationFunctionImpl.h"
-#include "mcSavePairCorrelationFunction.h"
+#include "mcSaveSAXSImpl.h"
+#include "mcSaveSAXS.h"
 #include "Monitor.h"
 #include "ISimBox.h"
-#include "prPairCorrelationFunction.h"
-#include "LogSavePairCorrelationFunction.h"
+#include "prSAXS.h"
+#include "LogSaveSAXS.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-mcSavePairCorrelationFunctionImpl::mcSavePairCorrelationFunctionImpl()
+mcSaveSAXSImpl::mcSaveSAXSImpl()
 {
 }
 
-mcSavePairCorrelationFunctionImpl::~mcSavePairCorrelationFunctionImpl()
+mcSaveSAXSImpl::~mcSaveSAXSImpl()
 {
 
 }
 
 // Command handler function to calculate the RDF of a selected bead type in a selected polymer type and write it to file.
 
-void mcSavePairCorrelationFunctionImpl::SavePairCorrelationFunction(const xxCommand* const pCommand)
+void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
 {
-	const mcSavePairCorrelationFunction* const pCmd = dynamic_cast<const mcSavePairCorrelationFunction*>(pCommand);
+	const mcSaveSAXS* const pCmd = dynamic_cast<const mcSaveSAXS*>(pCommand);
 
     const long analysisPeriods  = pCmd->GetAnalysisPeriods();
-    const long dataPoints       = pCmd->GetTotalDataPoints();
-    const double rMax           = pCmd->GetRMax();
+    const long qPoints          = pCmd->GetTotalDataPoints();
     const zBoolVector vExcluded = pCmd->GetExcludedPolymers();
     
-    std::cout << "Executing PCF " << analysisPeriods << " " << dataPoints << " " << rMax << " " << vExcluded.size() << zEndl;
-    
-    
+    std::cout << "Executing SAXS process " << analysisPeriods << " " << qPoints << " " << vExcluded.size() << zEndl;
     
 	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 
@@ -103,14 +100,14 @@ void mcSavePairCorrelationFunctionImpl::SavePairCorrelationFunction(const xxComm
         }
                 
 
-        prPairCorrelationFunction* const pProcess = new prPairCorrelationFunction(pMon->m_pSimState, analysisPeriods, dataPoints, rMax, mPolyTypes);
+        prSAXS* const pProcess = new prSAXS(pMon->m_pSimState, analysisPeriods, qPoints, mPolyTypes);
         
 		pProcess->InternalValidateData(pMon->GetISimBox()->IISimState());
 		
 		pMon->GetISimBox()->AddProcess(pProcess);
 
-		new CLogSavePairCorrelationFunction(pMon->GetCurrentTime(), analysisPeriods, dataPoints,
-                                                start, end, samplePeriod, rMax, vExcluded);
+		new CLogSaveSAXS(pMon->GetCurrentTime(), analysisPeriods, qPoints,
+                                                 start, end, samplePeriod, vExcluded);
 	}
 	else
 	{

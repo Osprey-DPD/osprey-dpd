@@ -330,6 +330,11 @@ void ISimBoxBase::SaveRestartStateCmd(const xxCommand* const pCommand) const
 	m_pISimBox->IIMonitorCmd()->SaveRestartStateCmd(pCommand);
 }
 
+void ISimBoxBase::SaveSAXS(const xxCommand* const pCommand) const
+{
+    m_pISimBox->IIMonitorCmd()->SaveSAXS(pCommand);
+}
+
 void ISimBoxBase::SetAllBeadsInvisible(const xxCommand* const pCommand) const
 {
 #if EnableMonitorCommand == SimCommandEnabled
@@ -423,6 +428,11 @@ void ISimBoxBase::SetRunCompleteInterval(const xxCommand* const pCommand) const
 void ISimBoxBase::SetSamplePeriod(const xxCommand* const pCommand) const
 {
 	m_pISimBox->IIMonitorCmd()->SetSamplePeriod(pCommand);
+}
+
+void ISimBoxBase::SetSAXSProcessBeadElectronNo(const xxCommand* const pCommand) const
+{
+    m_pISimBox->IIMonitorCmd()->SetSAXSProcessBeadElectronNo(pCommand);
 }
 
 void ISimBoxBase::ShowAllProcesses(const xxCommand* const pCommand) const
