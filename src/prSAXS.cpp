@@ -295,7 +295,7 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
                 pTSD->SetValue(iq+1, m_vIQ.at(iq), "I(q)");
             }
 
-            std::cout << "Dumping I(q) to file at time " << pISimBox->GetCurrentTime() << " with q points " << " " << m_QPoints << " points and samples " << m_SamplesTaken << zEndl;
+            std::cout << "Dumping I(q) to file at time " << pISimBox->GetCurrentTime() << " with q points " << m_QPoints << " points and samples " << m_SamplesTaken << zEndl;
 		}
      }
 
