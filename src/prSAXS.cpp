@@ -213,11 +213,12 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 						
 		double dx[3];
         
-        // Define the min and max q values from the box size and bead diameter.
+        // Define the min and max q values from the box size and bead diameter. Also the total number of bead pairs for normalisation.
     
         const double qmin = xxBase::m_globalTwoPI/IGlobalSimBox::Instance()->GetSimBoxZLength();  // We assume the box is cubic and use LZ
         const double qmax = xxBase::m_globalTwoPI;  // d0 = 1
         const double dq = (qmax - qmin)/static_cast<double>(m_QPoints);
+        const double totalBeadPairs = static_cast<double>(m_vBeads.size()*m_vBeads.size());
             
         // Loop over all q values, adding the contributions from each bead pair weighted by their electon numbers.
         
@@ -275,6 +276,8 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 				}
 			}
             
+            m_vIQ.at(iq) /= totalBeadPairs;
+
             qvalue += dq;
 		}
 				
@@ -295,7 +298,7 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
                 pTSD->SetValue(iq+1, m_vIQ.at(iq), "I(q)");
             }
 
-            std::cout << "Dumping I(q) to file at time " << pISimBox->GetCurrentTime() << " with q points " << m_QPoints << " points and samples " << m_SamplesTaken << zEndl;
+            std::cout << "Dumping I(q) to file at time " << pISimBox->GetCurrentTime() << " with q points " << m_QPoints << " points and samples " << m_SamplesTaken << " and total bead pairs " << totalBeadPairs << zEndl;
 		}
      }
 
