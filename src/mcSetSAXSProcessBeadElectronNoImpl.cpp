@@ -68,16 +68,24 @@ void mcSetSAXSProcessBeadElectronNoImpl::SetSAXSProcessBeadElectronNo(const xxCo
     
     ProcessSequence vProcesses = pMon->GetISimBox()->GetProcesses();
     ProcessIterator iterProc = find_if(vProcesses.begin(), vProcesses.end(), aaGetProcessId(pid));
-    
-    prSAXS* pSAXS = dynamic_cast<prSAXS*>(*iterProc);
-    
-	if(beadType >= 0 && beadTotal > 0 && iterProc!= vProcesses.end() && pSAXS && pSAXS->SetBeadTypeElectronNo(beadType, eno))
+        
+	if(beadType >= 0 && beadTotal > 0 && iterProc!= vProcesses.end())
 	{
-        const zString procName = prSAXS::GetType() + pMon->ToString(pid);
-               
-        std::cout << "Target process exists " << procName << " setting eno to " << eno << " for " << beadTotal << " beads of type " << beadType << zEndl;
+        prSAXS* pSAXS = dynamic_cast<prSAXS*>(*iterProc);
+        
+        if(pSAXS && pSAXS->SetBeadTypeElectronNo(beadType, eno))
+        {
+            const zString procName = prSAXS::GetType() + pMon->ToString(pid);
+                   
+            std::cout << "Target process exists " << procName << " setting eno to " << eno << " for " << beadTotal << " beads of type " << beadType << zEndl;
 
-        new CLogSetSAXSProcessBeadElectronNo(pMon->GetCurrentTime(), procName, beadName, beadType, beadTotal, eno);
+            new CLogSetSAXSProcessBeadElectronNo(pMon->GetCurrentTime(), procName, beadName, beadType, beadTotal, eno);
+        }
+        else
+        {
+            new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
+        }
+        
 	}
 	else
 	{
