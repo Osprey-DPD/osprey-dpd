@@ -139,29 +139,29 @@ zInStream& mcSaveSAXS::get(zInStream& is)
     
   	is >> m_TotalAnalysisPeriods;
 
-	if(!is.good() || m_TotalAnalysisPeriods < 1)
+	if(!is.good())
 	   SetCommandValid(false);
 
-    // Get the minimum and maximum q values in the range. They must not be negative but can be zero.
+    // Get the minimum and maximum q values in the range. They must not be negative and qmin must be greater
+    // than zero unless both are zero, which indicates that the code should use the default range.
     
     is >> m_QMin;
 
-    if(!is.good() || m_QMin < 0.0)
+    if(!is.good())
        SetCommandValid(false);
        
     is >> m_QMax;
 
-    if(!is.good() || m_QMax < 0.0 || m_QMax <= m_QMin)
+    if(!is.good())
        SetCommandValid(false);
        
-
 	// Check that the number of data points is positive definite. 
     // We check that there is at least one sample possible given the current
     // value of the simulation sampling period below.
 
 	is >> m_TotalDataPoints;
 
-	if(!is.good() || m_TotalDataPoints < 1)
+	if(!is.good())
 	   SetCommandValid(false);
 	   
 	// Store which polymers should be included/excluded from the calculation. We don't check that the correct number
@@ -233,6 +233,29 @@ bool mcSaveSAXS::Execute(long simTime, ISimCmd* const pISimCmd) const
 
 bool mcSaveSAXS::IsDataValid(const CInputData& riData) const
 {
+    // Check the range of the q values, and the numbers of data points.
+    
+    if(m_QMin < 0.0 || m_QMax < 0.0)
+    {
+        return ErrorTrace("Invalid scattering vector range (negative endpoint)");
+    }
+    else if(m_QMin > 0.0 && m_QMax == m_QMin)
+    {
+        return ErrorTrace("Invalid scattering vector range (equal endpoints)");
+    }
+    else if( m_QMax < m_QMin)
+    {
+        return ErrorTrace("Invalid scattering vector range (upper endpoint smaller than lower)");
+    }
+    else if (m_TotalDataPoints < 1)
+    {
+        return ErrorTrace("No q values specified");
+    }
+    else if (m_TotalAnalysisPeriods < 1)
+    {
+        return ErrorTrace("At least one analysis period must be specified");
+    }
+           
     long currentTime  = GetExecutionTime();
     long duration     = m_TotalAnalysisPeriods*riData.GetAnalysisPeriod();
 

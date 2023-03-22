@@ -80,8 +80,8 @@ private:
 	long    m_TotalAnalysisPeriods;	     // Number of analysis periods to sample over
 	long    m_TotalDataPoints;	         // Number of q values in I(q)
     
-    double  m_QMin;                      // Minimum q value to use (>=0.0)
-    double  m_QMax;                      // Maximum q value to use ( if == 0.0, default range will be applied
+    double  m_QMin;                      // Minimum q value to use (> 0.0, inverse Angstrom)
+    double  m_QMax;                      // Maximum q value to use (if == 0.0, default range will be applied)
 	
     zBoolVector   m_vExcludedPolymers;   // Polymers to exclude from the calculation
 

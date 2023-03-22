@@ -98,9 +98,9 @@ private:								// Data specific to the process
 
     long         m_AnalysisPeriods;     // No of analysis periods to sample over
     long         m_QPoints;             // Number of q values to use in I(q)
-    double       m_QMin;                // Minimum q value in range
-    double       m_QMax;                // Maximum q value in range
-    const double m_dQ;                  // Increment in the scattering wave vector magnitude q
+    double       m_QMin;                // Minimum q value in range (inverse Angstrom)
+    double       m_QMax;                // Maximum q value in range (inverse Angstrom)
+    const double m_dQ;                  // Increment in the scattering wave vector magnitude q (inverse Angstrom)
 
     LongLongMap  m_mPolyTypes;          // Map of the polymer numeric type ids to include in calculation
     

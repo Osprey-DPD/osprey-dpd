@@ -37,7 +37,10 @@ mcSaveSAXSImpl::~mcSaveSAXSImpl()
 
 }
 
-// Command handler function to calculate the RDF of a selected bead type in a selected polymer type and write it to file.
+// Command handler function to calculate the SAXS scattering function for a selected set of polymer types.
+// The prSAXS process implements the Debye formula for a specified range of q scattering wave vector values.
+// All data is assumed to have been validated in the calling command. But note that we have to set the default range
+// for the scattering vector here if the user hasn't specified it.
 
 void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
 {
@@ -45,9 +48,17 @@ void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
 
     const long   analysisPeriods  = pCmd->GetAnalysisPeriods();
     const long   qPoints          = pCmd->GetTotalDataPoints();
-    const double qMin             = pCmd->GetQMin();
-    const double qMax             = pCmd->GetQMax();
+          double qMin             = pCmd->GetQMin();
+          double qMax             = pCmd->GetQMax();
     const zBoolVector vExcluded   = pCmd->GetExcludedPolymers();
+    
+    // If the user hasn't specified the scattering vector range, we use the default of the inverse box size and bead diameter.
+    
+    if(qMin == 0.0 && qMax == 0.0)
+    {
+        qMin = xxBase::m_globalTwoPI/IGlobalSimBox::Instance()->GetSimBoxZLength();
+        qMax = xxBase::m_globalTwoPI;
+    }
     
     std::cout << "Executing SAXS process " << analysisPeriods << " " << qPoints << " " << " " << qMin << " " << qMax << " " << vExcluded.size() << zEndl;
     
@@ -101,23 +112,7 @@ void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
             ++key;
         }
                 
-
-        // Distinguish the cases where the user doesdoesn't specify the range.
-        
-        prSAXS* pProcess = NULL;
-
-        if(qMax > qMin && qMax > 0.0)  // User has specified range
-        {
-            pProcess = new prSAXS(pMon->m_pSimState, analysisPeriods, qPoints, qMin, qMax, mPolyTypes);
-        }
-        else if(qMax == 0.0 && qMin == 0.0) // Set default range in process
-        {
-            pProcess = new prSAXS(pMon->m_pSimState, analysisPeriods, qPoints, mPolyTypes);
-        }
-        else
-        {
-            new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
-        }
+        prSAXS* pProcess =  new prSAXS(pMon->m_pSimState, analysisPeriods, qPoints, qMin, qMax, mPolyTypes);
         
         if(pProcess)
         {
