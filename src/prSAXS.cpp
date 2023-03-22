@@ -70,7 +70,7 @@ namespace
 
 // Default constructor
 
-prSAXS::prSAXS() : m_AnalysisPeriods(0), m_QPoints(0), m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0)
+prSAXS::prSAXS() : m_AnalysisPeriods(0), m_QPoints(0), m_QMin(0.0), m_QMax(0.0), m_dQ(0.0), m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0)
 {
     m_mPolyTypes.clear();
 	m_vBeads.clear();
@@ -78,9 +78,9 @@ prSAXS::prSAXS() : m_AnalysisPeriods(0), m_QPoints(0), m_SamplePeriod(0), m_Samp
     m_mElectronNo.clear();
 }
 
-// Constructor for use when the process is created by command. Default values for
-// all required parameters must be passed to this constructor. We do NOT check that
-// the analysis performed by this process can be completed during the run, nor that
+// Constructor for use when the process is created by command and the user does not specify qmin and qmax.
+// The default values using the box size and bead diameter are used. Note that the SimBox must be cubic
+// We do NOT check that the analysis performed by this process can be completed during the run, nor that
 // the number of bead types is constant during the analysis period. If the context
 // within which this process operates becomes invalid, the process terminates and 
 // logs an error message to the log file.
@@ -90,6 +90,9 @@ prSAXS::prSAXS(const CSimState* const pSimState,
 									long qPoints, LongLongMap mPolyTypes) :
                                     m_AnalysisPeriods(analysisPeriods),
 									m_QPoints(qPoints),
+                                    m_QMin(xxBase::m_globalTwoPI/IGlobalSimBox::Instance()->GetSimBoxZLength()),
+                                    m_QMax(xxBase::m_globalTwoPI),
+                                    m_dQ((m_QMax - m_QMin)/static_cast<double>(m_QPoints)),
 									m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0),
                                     m_mPolyTypes(mPolyTypes)
 {
@@ -151,6 +154,85 @@ prSAXS::prSAXS(const CSimState* const pSimState,
 	std::cout << "prSAXS using " << m_mPolyTypes.size() << " polymer types, and found " << m_vBeads.size() << " total beads" << zEndl;
 
 }
+
+// Constructor for use when the process is created by command and the user specifies the minimum and maximum q values.
+//
+// We do NOT check that the analysis performed by this process can be completed during the run, nor that
+// the number of bead types is constant during the analysis period. If the context
+// within which this process operates becomes invalid, the process terminates and
+// logs an error message to the log file.
+
+prSAXS::prSAXS(const CSimState* const pSimState,
+                                    long analysisPeriods,
+                                    long qPoints,
+                                    double qMin, double qMax,
+                                    LongLongMap mPolyTypes) :
+                                    m_AnalysisPeriods(analysisPeriods),
+                                    m_QPoints(qPoints),
+                                    m_QMin(qMin), m_QMax(qMax),
+                                    m_dQ((m_QMax - m_QMin)/static_cast<double>(m_QPoints)),
+                                    m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0),
+                                    m_mPolyTypes(mPolyTypes)
+{
+    m_vBeads.clear();
+    m_vIQ.resize(m_QPoints, 0.0);  // This can be overwritten in the TrapezoidalRule function
+    
+    // Empty the map of the electron numbers for all bead types. Note that maps only allow a single entry, so
+    // we don't try and fill it with zeroes and overwrite.  We would have to remove an element before we added the new one.
+    
+    m_mElectronNo.clear();
+    
+    // Set the times at which the process' analysis will be performed. This is
+    // defined to be the time from the start of the next full analysis period as
+    // defined in the CMonitor until the end of the number of such periods given
+    // by m_AnalysisPeriods.
+
+    long currentTime      = IGlobalSimBox::Instance()->GetCurrentTime();
+    long analysisPeriod   = pSimState->GetAnalysisPeriod();
+    m_SamplePeriod          = pSimState->GetSamplePeriod();
+    long duration         = m_AnalysisPeriods*analysisPeriod;
+    m_SampleTotal         = duration/m_SamplePeriod;
+
+    long start = 0;
+    long end   = 0;
+
+    if(currentTime%analysisPeriod == 0)
+    {
+        start = currentTime;
+    }
+    else
+    {
+        start = (currentTime/analysisPeriod + 1)*analysisPeriod;
+    }
+
+    end = start + duration;
+
+    SetStartTime(start);
+    SetEndTime(end);
+
+    // Store the beads of the selected polymer types that occur within the selected polymer type
+    
+    PolymerVector vAllPolymers = pSimState->GetPolymers();
+    
+    for(PolymerVectorIterator iterPoly=vAllPolymers.begin(); iterPoly != vAllPolymers.end(); ++iterPoly)
+    {
+        if(m_mPolyTypes.find((*iterPoly)->GetType()) != m_mPolyTypes.end())
+        {
+            BeadVector vAllBeads = (*iterPoly)->GetBeads();
+            
+            for(cBeadVectorIterator iterBead = vAllBeads.begin(); iterBead!=vAllBeads.end(); iterBead++)
+            {
+                m_vBeads.push_back(*iterBead);
+            }
+        }
+    }
+    
+    // Debug output of the total beads
+    
+    std::cout << "prSAXS using " << m_mPolyTypes.size() << " polymer types, and found " << m_vBeads.size() << " total beads" << zEndl;
+
+}
+
 
 prSAXS::~prSAXS()
 {
@@ -215,14 +297,11 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
         
         // Define the min and max q values from the box size and bead diameter. Also the total number of bead pairs for normalisation.
     
-        const double qmin = xxBase::m_globalTwoPI/IGlobalSimBox::Instance()->GetSimBoxZLength();  // We assume the box is cubic and use LZ
-        const double qmax = xxBase::m_globalTwoPI;  // d0 = 1
-        const double dq = (qmax - qmin)/static_cast<double>(m_QPoints);
         const double totalBeadPairs = static_cast<double>(m_vBeads.size()*m_vBeads.size());
             
         // Loop over all q values, adding the contributions from each bead pair weighted by their electon numbers.
         
-        double qvalue = qmin;
+        double qvalue = m_QMin;
     
         for(long iq = 0; iq < m_QPoints; ++iq)
         {
@@ -278,7 +357,7 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
             
             m_vIQ.at(iq) /= totalBeadPairs;
 
-            qvalue += dq;
+            qvalue += m_dQ;
 		}
 				
 		if(m_SamplesTaken == m_SampleTotal)

@@ -53,7 +53,9 @@ public:
 public:
 
 	inline long	  GetAnalysisPeriods()                const {return m_TotalAnalysisPeriods;}
-	inline long   GetTotalDataPoints()                const {return m_TotalDataPoints;}
+    inline long   GetTotalDataPoints()                const {return m_TotalDataPoints;}
+    inline double GetQMin()                           const {return m_QMin;}
+    inline double GetQMax()                           const {return m_QMax;}
     inline const  zBoolVector GetExcludedPolymers()   const {return m_vExcludedPolymers;}
 
 	// ****************************************
@@ -77,6 +79,9 @@ private:
 
 	long    m_TotalAnalysisPeriods;	     // Number of analysis periods to sample over
 	long    m_TotalDataPoints;	         // Number of q values in I(q)
+    
+    double  m_QMin;                      // Minimum q value to use (>=0.0)
+    double  m_QMax;                      // Maximum q value to use ( if == 0.0, default range will be applied
 	
     zBoolVector   m_vExcludedPolymers;   // Polymers to exclude from the calculation
 

@@ -21,9 +21,11 @@ public:
 
 	prSAXS();
 
-	// Constructor for use by the command that creates this process
+	// Constructor for use by the commands that create this process
 
-	prSAXS(const CSimState* const pSimState, long analysisPeriods, long qPoints, LongLongMap mPolyTypes);
+    prSAXS(const CSimState* const pSimState, long analysisPeriods, long qPoints, LongLongMap mPolyTypes);
+
+    prSAXS(const CSimState* const pSimState, long analysisPeriods, long qPoints, double qMin, double qMax, LongLongMap mPolyTypes);
 
 	virtual ~prSAXS();
 
@@ -94,9 +96,12 @@ protected:
 
 private:								// Data specific to the process
 
-    long  m_AnalysisPeriods;       		// No of analysis periods to sample over
-    long  m_QPoints;                    // Number of q values to use in I(q)
-    
+    long         m_AnalysisPeriods;     // No of analysis periods to sample over
+    long         m_QPoints;             // Number of q values to use in I(q)
+    double       m_QMin;                // Minimum q value in range
+    double       m_QMax;                // Maximum q value in range
+    const double m_dQ;                  // Increment in the scattering wave vector magnitude q
+
     LongLongMap  m_mPolyTypes;          // Map of the polymer numeric type ids to include in calculation
     
 // Local data

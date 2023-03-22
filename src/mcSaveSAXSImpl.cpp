@@ -43,11 +43,13 @@ void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
 {
 	const mcSaveSAXS* const pCmd = dynamic_cast<const mcSaveSAXS*>(pCommand);
 
-    const long analysisPeriods  = pCmd->GetAnalysisPeriods();
-    const long qPoints          = pCmd->GetTotalDataPoints();
-    const zBoolVector vExcluded = pCmd->GetExcludedPolymers();
+    const long   analysisPeriods  = pCmd->GetAnalysisPeriods();
+    const long   qPoints          = pCmd->GetTotalDataPoints();
+    const double qMin             = pCmd->GetQMin();
+    const double qMax             = pCmd->GetQMax();
+    const zBoolVector vExcluded   = pCmd->GetExcludedPolymers();
     
-    std::cout << "Executing SAXS process " << analysisPeriods << " " << qPoints << " " << vExcluded.size() << zEndl;
+    std::cout << "Executing SAXS process " << analysisPeriods << " " << qPoints << " " << " " << qMin << " " << qMax << " " << vExcluded.size() << zEndl;
     
 	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 
@@ -100,14 +102,35 @@ void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
         }
                 
 
-        prSAXS* const pProcess = new prSAXS(pMon->m_pSimState, analysisPeriods, qPoints, mPolyTypes);
+        // Distinguish the cases where the user doesdoesn't specify the range.
         
-		pProcess->InternalValidateData(pMon->GetISimBox()->IISimState());
-		
-		pMon->GetISimBox()->AddProcess(pProcess);
+        prSAXS* pProcess = NULL;
 
-		new CLogSaveSAXS(pMon->GetCurrentTime(), analysisPeriods, qPoints,
-                                                 start, end, samplePeriod, vExcluded);
+        if(qMax > qMin && qMax > 0.0)  // User has specified range
+        {
+            pProcess = new prSAXS(pMon->m_pSimState, analysisPeriods, qPoints, qMin, qMax, mPolyTypes);
+        }
+        else if(qMax == 0.0 && qMin == 0.0) // Set default range in process
+        {
+            pProcess = new prSAXS(pMon->m_pSimState, analysisPeriods, qPoints, mPolyTypes);
+        }
+        else
+        {
+            new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+        }
+        
+        if(pProcess)
+        {
+		    pProcess->InternalValidateData(pMon->GetISimBox()->IISimState());
+		
+		    pMon->GetISimBox()->AddProcess(pProcess);
+
+		    new CLogSaveSAXS(pMon->GetCurrentTime(), analysisPeriods, qPoints, qMin, qMax, start, end, samplePeriod, vExcluded);
+        }
+        else
+        {
+            new CLogCommandFailed(pCmd->GetExecutionTime(), pCmd);
+        }
 	}
 	else
 	{

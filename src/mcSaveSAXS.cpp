@@ -61,13 +61,16 @@ namespace
 
 mcSaveSAXS::mcSaveSAXS(long executionTime) : xxCommand(executionTime),
 														m_TotalAnalysisPeriods(0),
-														m_TotalDataPoints(0)
+														m_TotalDataPoints(0), m_QMin(0.0), m_QMax(0.0)
 {
     m_vExcludedPolymers.clear();
 }
 
-mcSaveSAXS::mcSaveSAXS(const mcSaveSAXS& oldCommand) : xxCommand(oldCommand),  m_TotalAnalysisPeriods(oldCommand.m_TotalAnalysisPeriods),
+mcSaveSAXS::mcSaveSAXS(const mcSaveSAXS& oldCommand) : xxCommand(oldCommand),
+                            m_TotalAnalysisPeriods(oldCommand.m_TotalAnalysisPeriods),
                             m_TotalDataPoints(oldCommand.m_TotalDataPoints),
+                            m_QMin(oldCommand.m_QMin),
+                            m_QMax(oldCommand.m_QMax),
                             m_vExcludedPolymers(oldCommand.m_vExcludedPolymers)
 {
 }
@@ -83,6 +86,8 @@ mcSaveSAXS::~mcSaveSAXS()
 // *********
 //
 //  m_TotalAnalysisPeriods	- Number of analysis periods to sample over
+//  m_QMin                  - Minimum q value in range
+//  m_QMax                  - Maximum q value in range
 //  m_TotalDataPoints       - Number of Q values in the I(q) curve
 //  m_ExcludedPolymers      - Boolean vector showing which polymers to exclude and include
 
@@ -97,7 +102,9 @@ zOutStream& mcSaveSAXS::put(zOutStream& os) const
 
 	putXMLStartTags(os);
 	os << "<AnalysisPeriods>" << m_TotalAnalysisPeriods << "</AnalysisPeriods>" << zEndl;
-	os << "<DataPoints>"      << m_TotalDataPoints      << "</DataPoints>"      << zEndl;
+    os << "<DataPoints>"      << m_TotalDataPoints      << "</DataPoints>"      << zEndl;
+    os << "<QMin>"            << m_QMin                 << "</QMin>"      << zEndl;
+    os << "<QMax>"            << m_QMax                 << "</QMax>"      << zEndl;
 
     for(czBoolVectorIterator citer=m_vExcludedPolymers.begin(); citer!=m_vExcludedPolymers.end(); citer++)
     {
@@ -109,7 +116,7 @@ zOutStream& mcSaveSAXS::put(zOutStream& os) const
 
 	// ASCII output 
 	putASCIIStartTags(os);
-    os << " " << m_TotalAnalysisPeriods << " " << m_TotalDataPoints << " ";
+    os << " " << m_TotalAnalysisPeriods << " " << m_TotalDataPoints << " " << m_QMin << " " << m_QMax << " ";
     
     for(czBoolVectorIterator citer=m_vExcludedPolymers.begin(); citer!=m_vExcludedPolymers.end(); citer++)
     {
@@ -134,6 +141,19 @@ zInStream& mcSaveSAXS::get(zInStream& is)
 
 	if(!is.good() || m_TotalAnalysisPeriods < 1)
 	   SetCommandValid(false);
+
+    // Get the minimum and maximum q values in the range. They must not be negative but can be zero.
+    
+    is >> m_QMin;
+
+    if(!is.good() || m_QMin < 0.0)
+       SetCommandValid(false);
+       
+    is >> m_QMax;
+
+    if(!is.good() || m_QMax < 0.0 || m_QMax <= m_QMin)
+       SetCommandValid(false);
+       
 
 	// Check that the number of data points is positive definite. 
     // We check that there is at least one sample possible given the current

@@ -39,21 +39,23 @@ zOutStream& operator<<(zOutStream& os, const CLogSaveSAXS& rMsg)
     os << "<SamplePeriod>"         << rMsg.m_SamplePeriod          << "</SamplePeriod>"    << zEndl;
     os << "<TotalAnalysisPeriods>" << rMsg.m_TotalAnalysisPeriods  << "</TotalAnalysisPeriods>" << zEndl;
     os << "<N>"                    << rMsg.m_TotalDataPoints   << "</N>" << zEndl;
+    os << "<QMin>"                 << rMsg.m_QMin   << "</QMin>" << zEndl;
+    os << "<QMax>"                 << rMsg.m_QMax   << "</QMax>" << zEndl;
 	os << "</Text>" << zEndl;
 	os << "</Body>" << zEndl;
 
 #elif EnableXMLCommands == SimXMLDisabled
 
 	// ASCII output 
-    os << " Saving SAXS scattering function while excluding polymers: " << zEndl;
+    os << " SAXS scattering function excluding polymers: " << zEndl;
     for(czBoolVectorIterator citer=rMsg.m_vExcludedPolymers.begin(); citer!=rMsg.m_vExcludedPolymers.end(); citer++)
     {
         os << *citer << " ";
     }
     os << zEndl;
-    os << " sampling during " << rMsg.m_Start << " " << rMsg.m_End << " with sample period " << rMsg.m_SamplePeriod << zEndl;
+    os << " sampled during " << rMsg.m_Start << " " << rMsg.m_End << " with sample periods " << rMsg.m_SamplePeriod << zEndl;
     os << " (equivalent to " << rMsg.m_TotalAnalysisPeriods << " analysis periods)";
-    os << " using " << rMsg.m_TotalDataPoints << " Q value points" << zEndl;
+    os << " using " << rMsg.m_TotalDataPoints << " Q values in the range " << rMsg.m_QMin << " " << rMsg.m_QMax << zEndl;
 
 
 #endif
@@ -65,11 +67,12 @@ zOutStream& operator<<(zOutStream& os, const CLogSaveSAXS& rMsg)
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CLogSaveSAXS::CLogSaveSAXS(long time, long analysisPeriods, long dataPoints,
+CLogSaveSAXS::CLogSaveSAXS(long time, long analysisPeriods, long dataPoints, double qMin, double qMax,
 											   long start, long end, long samplePeriod, 
 											   zBoolVector vExcludedPolymers) : CLogInfoMessage(time),
 												m_TotalAnalysisPeriods(analysisPeriods),
 												m_TotalDataPoints(dataPoints),
+                                                m_QMin(qMin), m_QMax(qMax),
 												m_Start(start), m_End(end), m_SamplePeriod(samplePeriod), 
 												m_vExcludedPolymers(vExcludedPolymers)
 {
