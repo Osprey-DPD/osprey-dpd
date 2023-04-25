@@ -86,9 +86,9 @@ mcSaveSAXS::~mcSaveSAXS()
 // *********
 //
 //  m_TotalAnalysisPeriods	- Number of analysis periods to sample over
+//  m_TotalDataPoints       - Number of Q values in the I(q) curve
 //  m_QMin                  - Minimum q value in range
 //  m_QMax                  - Maximum q value in range
-//  m_TotalDataPoints       - Number of Q values in the I(q) curve
 //  m_ExcludedPolymers      - Boolean vector showing which polymers to exclude and include
 
 
@@ -142,6 +142,15 @@ zInStream& mcSaveSAXS::get(zInStream& is)
 	if(!is.good())
 	   SetCommandValid(false);
 
+    // Check that the number of data points is positive definite.
+    // We check that there is at least one sample possible given the current
+    // value of the simulation sampling period below.
+
+    is >> m_TotalDataPoints;
+
+    if(!is.good())
+       SetCommandValid(false);
+
     // Get the minimum and maximum q values in the range. They must not be negative and qmin must be greater
     // than zero unless both are zero, which indicates that the code should use the default range.
     
@@ -155,14 +164,6 @@ zInStream& mcSaveSAXS::get(zInStream& is)
     if(!is.good())
        SetCommandValid(false);
        
-	// Check that the number of data points is positive definite. 
-    // We check that there is at least one sample possible given the current
-    // value of the simulation sampling period below.
-
-	is >> m_TotalDataPoints;
-
-	if(!is.good())
-	   SetCommandValid(false);
 	   
 	// Store which polymers should be included/excluded from the calculation. We don't check that the correct number
     // is entered here, but do it in the Validate function. We need to know the total number of
