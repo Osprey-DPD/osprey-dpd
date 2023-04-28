@@ -294,15 +294,13 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 		m_SamplesTaken++;
 
 		std::cout << "Sample " <<  m_SamplesTaken << " of I(q) at time " << pISimBox->GetCurrentTime() << " " << m_QMin << " " << m_QMax << " " << m_dQ << " " << m_QPoints << zEndl;
-						
+ 						
 		double dx[3];
         
         // Define the min and max q values from the box size and bead diameter. Also the total number of bead pairs for normalisation.
     
         const double totalBeadPairs = static_cast<double>(m_vBeads.size()*m_vBeads.size());
         
-//        std::cout << "# beads " << m_vBeads.size() << " # pairs  " << totalBeadPairs << zEndl;
-            
         // Loop over all q values, adding the contributions from each bead pair weighted by their electon numbers.
         // To svoid double counting, we start the second loop with the iterator equal to the first.
         
@@ -357,21 +355,21 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
                         const double dvalue = (eno1*eno2*sin(qvalue*dr)/(qvalue*dr));
                         m_vIQ.at(iq) += dvalue;
                         
- //                       std::cout << "Diff: " << iq << " " << qvalue << " " << dvalue << zEndl;
+//                        std::cout << "Diff: " << iq << " " << qvalue << " " << dvalue << zEndl;
                     }
                     else
                     {
                         // i = j here so we have the same bead, and because Sinx/x = 1 when x = 0, the contribution is just F(q)**2.
                         m_vIQ.at(iq) += (eno1*eno2);
+                        
+//                        std::cout << "adding " << eno1 << " " << eno2 << " " << qvalue << " " << dr << zEndl;
                     }
                     
-//                        std::cout << "adding " << eno1 << " " << eno2 << " " << qvalue << " " << dr << zEndl;
 				}
 			}
             
-            m_vIQ.at(iq) /= totalBeadPairs;
-
- //           std::cout << "After: iq " << iq << " " << qvalue << " " << m_vIQ.at(iq) << zEndl;
+            
+//            std::cout << "After: iq " << iq << " " << qvalue << " " << m_vIQ.at(iq) << zEndl;
             
            qvalue += m_dQ;
         }
@@ -384,10 +382,11 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 					
 			m_pState->AddTimeSeriesData(pTSD);
 			            
-            // Now write the I(q) to file, after normalising the result by the number of samples taken.
+            // Now write the I(q) to file, after normalising the result by the number of bead pairs and samples taken.
 
             for(long iq=0; iq < m_QPoints; ++iq)
             {
+                m_vIQ.at(iq) /= totalBeadPairs;
                 m_vIQ.at(iq) = m_vIQ.at(iq)/static_cast<double>(m_SamplesTaken);
                 
                 pTSD->SetValue(iq+1, m_vIQ.at(iq), "I(q)");
