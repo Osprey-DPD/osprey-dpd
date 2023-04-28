@@ -176,7 +176,7 @@ prSAXS::prSAXS(const CSimState* const pSimState,
                                     m_mBeadTypes(mBeadTypes)
 {
     m_vBeads.clear();
-    m_vIQ.resize(m_QPoints, 0.0);  // This can be overwritten in the TrapezoidalRule function
+    m_vIQ.resize(m_QPoints, 0.0);
     
     // Empty the map of the electron numbers for all bead types. Note that maps only allow a single entry, so
     // we don't try and fill it with zeroes and overwrite.  We would have to remove an element before we added the new one.
@@ -322,9 +322,10 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
         
                     dx[0] = (*iterBead1)->GetXPos() - (*iterBead2)->GetXPos();
                     dx[1] = (*iterBead1)->GetYPos() - (*iterBead2)->GetYPos();
-						
-                    // Correct for the PBCs
+                    dx[2] = (*iterBead1)->GetZPos() - (*iterBead2)->GetZPos();
 
+                    // Correct for the PBCs
+/*
                     if( dx[0] > IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
                         dx[0] = dx[0] - IGlobalSimBox::Instance()->GetSimBoxXLength();
                     else if( dx[0] < -IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
@@ -345,7 +346,7 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
                     #else
                         dx[2] = 0.0;
                     #endif
-						
+*/
                      double dr = sqrt(dx[0]*dx[0] + dx[1]*dx[1] + dx[2]*dx[2]);
                         
 //                    std::cout << "out: iq " << iq << " " << qvalue << " " << eno1 << " " << eno2 << " " << dr << zEndl;
@@ -465,8 +466,6 @@ bool prSAXS::SetBeadTypeElectronNo(long beadType, double eno)
     {
         bValid = true;
     }
-    
-    std::cout << "Setting bead electron number for type " << beadType << " to value " << eno << zEndl;
     
     return bValid;
 }

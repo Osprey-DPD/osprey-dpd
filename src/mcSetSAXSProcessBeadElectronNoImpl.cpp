@@ -77,15 +77,12 @@ void mcSetSAXSProcessBeadElectronNoImpl::SetSAXSProcessBeadElectronNo(const xxCo
         {
             const zString procName = prSAXS::GetType() + pMon->ToString(pid);
                    
-            std::cout << "Target process exists " << procName << " setting eno to " << eno << " for " << beadTotal << " beads of type " << beadType << zEndl;
-
             new CLogSetSAXSProcessBeadElectronNo(pMon->GetCurrentTime(), procName, beadName, beadType, beadTotal, eno);
         }
         else
         {
             new CLogCommandFailed(pMon->GetCurrentTime(), pCmd);
         }
-        
 	}
 	else
 	{
