@@ -229,7 +229,7 @@ bool mcSaveSAXS::Execute(long simTime, ISimCmd* const pISimCmd) const
 // Function to check that the data defining the command is valid. Note that the analysis starts at the beginning
 // of the next full analysis period and continues for an integer number of periods. We also ensure the
 // maximum range is less than the box size and that the polymer and bead names are valid. We check that the polymer
-// type exists but not the bead type so that types created dynamically by command can also have their RDF calculated.
+// type exists but not the bead type so that types created dynamically by command can also have their SAXS pattern calculated.
 // Note that polymers cannot be created or renamed by command.
 
 bool mcSaveSAXS::IsDataValid(const CInputData& riData) const
@@ -278,7 +278,7 @@ bool mcSaveSAXS::IsDataValid(const CInputData& riData) const
     end = start + duration;
     
     if( end > riData.GetTotalTime() || duration%riData.GetSamplePeriod() != 0)
-		return ErrorTrace("Invalid duration or multiple of SamplePeriod for polymer bead RDF analysis");
+		return ErrorTrace("Invalid duration or multiple of SamplePeriod for SAXS analysis");
 	else if( m_vExcludedPolymers.size() != riData.GetPolymerTypeTotal())
         return ErrorTrace("Excluded polymer vector has wrong size");
     else
