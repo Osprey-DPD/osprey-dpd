@@ -92,12 +92,12 @@ prSAXS::prSAXS(const CSimState* const pSimState,
 									m_QPoints(qPoints),
                                     m_QMin(xxBase::m_globalTwoPI/IGlobalSimBox::Instance()->GetSimBoxZLength()),
                                     m_QMax(xxBase::m_globalTwoPI),
-                                    m_dQ((m_QMax - m_QMin)/static_cast<double>(m_QPoints)),
+                                    m_dQ((m_QMax - m_QMin)/static_cast<double>(m_QPoints-1)),
 									m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0),
                                     m_mPolyTypes(mPolyTypes)
 {
 	m_vBeads.clear();
-    m_vIQ.resize(m_QPoints, 0.0);  // This can be overwritten in the TrapezoidalRule function
+    m_vIQ.resize(m_QPoints, 0.0);  // This can be overwritten in the sum over bead pairs
     
     // Empty the map of the electron numbers for all bead types. Note that maps only allow a single entry, so
     // we don't try and fill it with zeroes and overwrite.  We would have to remove an element before we added the new one.
@@ -152,6 +152,7 @@ prSAXS::prSAXS(const CSimState* const pSimState,
 	// Debug output of the total beads
 	
 	std::cout << "prSAXS using " << m_mPolyTypes.size() << " polymer types, and found " << m_vBeads.size() << " total beads" << zEndl;
+    std::cout << "Using default limits " << m_QMin << " " << m_QMax << zEndl;
 
 }
 
@@ -170,7 +171,7 @@ prSAXS::prSAXS(const CSimState* const pSimState,
                                     m_AnalysisPeriods(analysisPeriods),
                                     m_QPoints(qPoints),
                                     m_QMin(qMin), m_QMax(qMax),
-                                    m_dQ((m_QMax - m_QMin)/static_cast<double>(m_QPoints)),
+                                    m_dQ((m_QMax - m_QMin)/static_cast<double>(m_QPoints-1)),
                                     m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0),
                                     m_mPolyTypes(mPolyTypes)
 {
@@ -230,6 +231,7 @@ prSAXS::prSAXS(const CSimState* const pSimState,
     // Debug output of the total beads
     
     std::cout << "prSAXS using " << m_mPolyTypes.size() << " polymer types, and found " << m_vBeads.size() << " total beads" << zEndl;
+    std::cout << "Using user-defined limits " << m_QMin << " " << m_QMax << " step " << m_dQ << zEndl;
 
 }
 
@@ -291,74 +293,89 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 	{
 		m_SamplesTaken++;
 
-		std::cout << "Sample " <<  m_SamplesTaken << " of I(q) at time " << pISimBox->GetCurrentTime() << zEndl;
+		std::cout << "Sample " <<  m_SamplesTaken << " of I(q) at time " << pISimBox->GetCurrentTime() << " " << m_QMin << " " << m_QMax << " " << m_dQ << " " << m_QPoints << zEndl;
 						
 		double dx[3];
         
         // Define the min and max q values from the box size and bead diameter. Also the total number of bead pairs for normalisation.
     
         const double totalBeadPairs = static_cast<double>(m_vBeads.size()*m_vBeads.size());
+        
+//        std::cout << "# beads " << m_vBeads.size() << " # pairs  " << totalBeadPairs << zEndl;
             
         // Loop over all q values, adding the contributions from each bead pair weighted by their electon numbers.
+        // To svoid double counting, we start the second loop with the iterator equal to the first.
         
         double qvalue = m_QMin;
-    
+        
+        std::cout << "First q value = " << qvalue << zEndl;
+                    
         for(long iq = 0; iq < m_QPoints; ++iq)
         {
-			for(cBeadVectorIterator iterBead1 = m_vBeads.begin(); iterBead1!=m_vBeads.end(); ++iterBead1)
+            for(cBeadVectorIterator iterBead1 = m_vBeads.begin(); iterBead1!=m_vBeads.end(); ++iterBead1)
 			{
-				for(cBeadVectorIterator iterBead2 = m_vBeads.begin(); iterBead2!=m_vBeads.end(); ++iterBead2)
+                const double eno1 = m_mElectronNo.find((*iterBead1)->GetType())->second;
+
+                 // Include the double counting of off diagonal elements
+                
+                for(cBeadVectorIterator iterBead2 = m_vBeads.begin(); iterBead2!=m_vBeads.end(); ++iterBead2)
 				{
-                    const double eno1 = m_mElectronNo.find((*iterBead1)->GetType())->second;
                     const double eno2 = m_mElectronNo.find((*iterBead2)->GetType())->second;
-
-					if(iterBead1 != iterBead2)
-					{
-						dx[0] = (*iterBead1)->GetXPos() - (*iterBead2)->GetXPos();
-						dx[1] = (*iterBead1)->GetYPos() - (*iterBead2)->GetYPos();
+        
+                    dx[0] = (*iterBead1)->GetXPos() - (*iterBead2)->GetXPos();
+                    dx[1] = (*iterBead1)->GetYPos() - (*iterBead2)->GetYPos();
 						
-							// Correct for the PBCs
+                    // Correct for the PBCs
 
-							if( dx[0] > IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
-								dx[0] = dx[0] - IGlobalSimBox::Instance()->GetSimBoxXLength();
-							else if( dx[0] < -IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
-								dx[0] = dx[0] + IGlobalSimBox::Instance()->GetSimBoxXLength();
+                    if( dx[0] > IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
+                        dx[0] = dx[0] - IGlobalSimBox::Instance()->GetSimBoxXLength();
+                    else if( dx[0] < -IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
+                        dx[0] = dx[0] + IGlobalSimBox::Instance()->GetSimBoxXLength();
 
-							if( dx[1] > IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
-								dx[1] = dx[1] - IGlobalSimBox::Instance()->GetSimBoxYLength();
-							else if( dx[1] < -IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
-								dx[1] = dx[1] + IGlobalSimBox::Instance()->GetSimBoxYLength();
+                    if( dx[1] > IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
+                        dx[1] = dx[1] - IGlobalSimBox::Instance()->GetSimBoxYLength();
+                    else if( dx[1] < -IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
+                        dx[1] = dx[1] + IGlobalSimBox::Instance()->GetSimBoxYLength();
 
-						#if SimDimension == 3
-							dx[2] = (*iterBead1)->GetZPos() - (*iterBead2)->GetZPos();
+                    #if SimDimension == 3
+                    dx[2] = (*iterBead1)->GetZPos() - (*iterBead2)->GetZPos();
 
-							if( dx[2] > IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
-								dx[2] = dx[2] - IGlobalSimBox::Instance()->GetSimBoxZLength();
-							else if( dx[2] < -IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
-								dx[2] = dx[2] + IGlobalSimBox::Instance()->GetSimBoxZLength();
-						#else
-							dx[2] = 0.0;
-						#endif
+                    if( dx[2] > IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
+                        dx[2] = dx[2] - IGlobalSimBox::Instance()->GetSimBoxZLength();
+                    else if( dx[2] < -IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
+                        dx[2] = dx[2] + IGlobalSimBox::Instance()->GetSimBoxZLength();
+                    #else
+                        dx[2] = 0.0;
+                    #endif
 						
-						const double dr = sqrt(dx[0]*dx[0] + dx[1]*dx[1] + dx[2]*dx[2]);
+                     double dr = sqrt(dx[0]*dx[0] + dx[1]*dx[1] + dx[2]*dx[2]);
                         
- 
-                        m_vIQ.at(iq) += eno1*eno2*sin(qvalue*dr)/(qvalue*dr);
-                    //                      std::cout << "adding " << eno1 << " " << eno2 << " " << qvalue << " " << dr << zEndl;
+//                    std::cout << "out: iq " << iq << " " << qvalue << " " << eno1 << " " << eno2 << " " << dr << zEndl;
+
+                    
+                    if(dr > 0.000001)
+                    {
+                        const double dvalue = (eno1*eno2*sin(qvalue*dr)/(qvalue*dr));
+                        m_vIQ.at(iq) += dvalue;
+                        
+ //                       std::cout << "Diff: " << iq << " " << qvalue << " " << dvalue << zEndl;
                     }
                     else
                     {
-                        // i = j here so we have the same bead, as Sinx/x = 1, the contribution is just F(q)**2.
-                        
-                        m_vIQ.at(iq) += eno1*eno2;
+                        // i = j here so we have the same bead, and because Sinx/x = 1 when x = 0, the contribution is just F(q)**2.
+                        m_vIQ.at(iq) += (eno1*eno2);
                     }
+                    
+//                        std::cout << "adding " << eno1 << " " << eno2 << " " << qvalue << " " << dr << zEndl;
 				}
 			}
             
             m_vIQ.at(iq) /= totalBeadPairs;
 
-            qvalue += m_dQ;
-		}
+ //           std::cout << "After: iq " << iq << " " << qvalue << " " << m_vIQ.at(iq) << zEndl;
+            
+           qvalue += m_dQ;
+        }
 				
 		if(m_SamplesTaken == m_SampleTotal)
 		{
@@ -377,7 +394,7 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
                 pTSD->SetValue(iq+1, m_vIQ.at(iq), "I(q)");
             }
 
-            std::cout << "Dumping I(q) to file at time " << pISimBox->GetCurrentTime() << " with q points " << m_QPoints << " points and samples " << m_SamplesTaken << " and total bead pairs " << totalBeadPairs << zEndl;
+            std::cout << "Dumping I(q) to file at time " << pISimBox->GetCurrentTime() << " with q points " << m_QPoints << " dq " << m_dQ << " and samples " << m_SamplesTaken << " and total bead pairs " << totalBeadPairs << zEndl;
 		}
      }
 
@@ -450,6 +467,8 @@ bool prSAXS::SetBeadTypeElectronNo(long beadType, double eno)
     {
         bValid = true;
     }
+    
+    std::cout << "Setting bead electron number for type " << beadType << " to value " << eno << zEndl;
     
     return bValid;
 }
