@@ -72,7 +72,7 @@ namespace
 
 prSAXS::prSAXS() : m_AnalysisPeriods(0), m_QPoints(0), m_QMin(0.0), m_QMax(0.0), m_dQ(0.0), m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0)
 {
-    m_mPolyTypes.clear();
+    m_mBeadTypes.clear();
 	m_vBeads.clear();
     m_vIQ.clear();
     m_mElectronNo.clear();
@@ -87,14 +87,14 @@ prSAXS::prSAXS() : m_AnalysisPeriods(0), m_QPoints(0), m_QMin(0.0), m_QMax(0.0),
 
 prSAXS::prSAXS(const CSimState* const pSimState,
 									long analysisPeriods,
-									long qPoints, LongLongMap mPolyTypes) :
+									long qPoints, LongLongMap mBeadTypes) :
                                     m_AnalysisPeriods(analysisPeriods),
 									m_QPoints(qPoints),
                                     m_QMin(xxBase::m_globalTwoPI/IGlobalSimBox::Instance()->GetSimBoxZLength()),
                                     m_QMax(xxBase::m_globalTwoPI),
                                     m_dQ((m_QMax - m_QMin)/static_cast<double>(m_QPoints-1)),
 									m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0),
-                                    m_mPolyTypes(mPolyTypes)
+                                    m_mBeadTypes(mBeadTypes)
 {
 	m_vBeads.clear();
     m_vIQ.resize(m_QPoints, 0.0);  // This can be overwritten in the sum over bead pairs
@@ -132,26 +132,26 @@ prSAXS::prSAXS(const CSimState* const pSimState,
 	SetStartTime(start);
 	SetEndTime(end);
 
-	// Store the beads of the selected polymer types that occur within the selected polymer type
+	// Store the beads whose types have been specified as contributing to the SAXS pattern
 	
 	PolymerVector vAllPolymers = pSimState->GetPolymers();
 	
 	for(PolymerVectorIterator iterPoly=vAllPolymers.begin(); iterPoly != vAllPolymers.end(); ++iterPoly)
 	{
-        if(m_mPolyTypes.find((*iterPoly)->GetType()) != m_mPolyTypes.end())
-		{
-			BeadVector vAllBeads = (*iterPoly)->GetBeads();
+        BeadVector vAllBeads = (*iterPoly)->GetBeads();
 			
-			for(cBeadVectorIterator iterBead = vAllBeads.begin(); iterBead!=vAllBeads.end(); iterBead++)
-			{
+        for(cBeadVectorIterator iterBead = vAllBeads.begin(); iterBead!=vAllBeads.end(); iterBead++)
+        {
+            if(m_mBeadTypes.find((*iterBead)->GetType()) != m_mBeadTypes.end())
+            {
                 m_vBeads.push_back(*iterBead);
             }
-		}
+        }
 	}
 	
 	// Debug output of the total beads
 	
-	std::cout << "prSAXS using " << m_mPolyTypes.size() << " polymer types, and found " << m_vBeads.size() << " total beads" << zEndl;
+	std::cout << "prSAXS using " << m_mBeadTypes.size() << " bead types, and found " << m_vBeads.size() << " total beads" << zEndl;
     std::cout << "Using default limits " << m_QMin << " " << m_QMax << zEndl;
 
 }
@@ -167,13 +167,13 @@ prSAXS::prSAXS(const CSimState* const pSimState,
                                     long analysisPeriods,
                                     long qPoints,
                                     double qMin, double qMax,
-                                    LongLongMap mPolyTypes) :
+                                    LongLongMap mBeadTypes) :
                                     m_AnalysisPeriods(analysisPeriods),
                                     m_QPoints(qPoints),
                                     m_QMin(qMin), m_QMax(qMax),
                                     m_dQ((m_QMax - m_QMin)/static_cast<double>(m_QPoints-1)),
                                     m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0),
-                                    m_mPolyTypes(mPolyTypes)
+                                    m_mBeadTypes(mBeadTypes)
 {
     m_vBeads.clear();
     m_vIQ.resize(m_QPoints, 0.0);  // This can be overwritten in the TrapezoidalRule function
@@ -217,20 +217,20 @@ prSAXS::prSAXS(const CSimState* const pSimState,
     
     for(PolymerVectorIterator iterPoly=vAllPolymers.begin(); iterPoly != vAllPolymers.end(); ++iterPoly)
     {
-        if(m_mPolyTypes.find((*iterPoly)->GetType()) != m_mPolyTypes.end())
-        {
-            BeadVector vAllBeads = (*iterPoly)->GetBeads();
+        BeadVector vAllBeads = (*iterPoly)->GetBeads();
             
-            for(cBeadVectorIterator iterBead = vAllBeads.begin(); iterBead!=vAllBeads.end(); iterBead++)
+        for(cBeadVectorIterator iterBead = vAllBeads.begin(); iterBead!=vAllBeads.end(); iterBead++)
+        {
+            if(m_mBeadTypes.find((*iterBead)->GetType()) != m_mBeadTypes.end())
             {
                 m_vBeads.push_back(*iterBead);
             }
         }
     }
-    
+
     // Debug output of the total beads
     
-    std::cout << "prSAXS using " << m_mPolyTypes.size() << " polymer types, and found " << m_vBeads.size() << " total beads" << zEndl;
+    std::cout << "prSAXS using " << m_mBeadTypes.size() << " bead types, and found " << m_vBeads.size() << " total beads" << zEndl;
     std::cout << "Using user-defined limits " << m_QMin << " " << m_QMax << " step " << m_dQ << zEndl;
 
 }
@@ -307,9 +307,7 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
         // To svoid double counting, we start the second loop with the iterator equal to the first.
         
         double qvalue = m_QMin;
-        
-        std::cout << "First q value = " << qvalue << zEndl;
-                    
+    
         for(long iq = 0; iq < m_QPoints; ++iq)
         {
             for(cBeadVectorIterator iterBead1 = m_vBeads.begin(); iterBead1!=m_vBeads.end(); ++iterBead1)

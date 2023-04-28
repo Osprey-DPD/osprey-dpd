@@ -63,7 +63,7 @@ mcSaveSAXS::mcSaveSAXS(long executionTime) : xxCommand(executionTime),
 														m_TotalAnalysisPeriods(0),
 														m_TotalDataPoints(0), m_QMin(0.0), m_QMax(0.0)
 {
-    m_vExcludedPolymers.clear();
+    m_vIncludedBeads.clear();
 }
 
 mcSaveSAXS::mcSaveSAXS(const mcSaveSAXS& oldCommand) : xxCommand(oldCommand),
@@ -71,7 +71,7 @@ mcSaveSAXS::mcSaveSAXS(const mcSaveSAXS& oldCommand) : xxCommand(oldCommand),
                             m_TotalDataPoints(oldCommand.m_TotalDataPoints),
                             m_QMin(oldCommand.m_QMin),
                             m_QMax(oldCommand.m_QMax),
-                            m_vExcludedPolymers(oldCommand.m_vExcludedPolymers)
+                            m_vIncludedBeads(oldCommand.m_vIncludedBeads)
 {
 }
 
@@ -89,7 +89,7 @@ mcSaveSAXS::~mcSaveSAXS()
 //  m_TotalDataPoints       - Number of Q values in the I(q) curve
 //  m_QMin                  - Minimum q value in range
 //  m_QMax                  - Maximum q value in range
-//  m_ExcludedPolymers      - Boolean vector showing which polymers to exclude and include
+//  m_vIncludedBeads        - Boolean vector showing which bead types to include, allowing for dynamically-created types too
 
 
 zOutStream& mcSaveSAXS::put(zOutStream& os) const
@@ -106,9 +106,9 @@ zOutStream& mcSaveSAXS::put(zOutStream& os) const
     os << "<QMin>"            << m_QMin                 << "</QMin>"      << zEndl;
     os << "<QMax>"            << m_QMax                 << "</QMax>"      << zEndl;
 
-    for(czBoolVectorIterator citer=m_vExcludedPolymers.begin(); citer!=m_vExcludedPolymers.end(); citer++)
+    for(czBoolVectorIterator citer=m_vIncludedBeads.begin(); citer!=m_vIncludedBeads.end(); citer++)
     {
-        os << "<Exclude>" << *citer << "<Exclude>" << zEndl;
+        os << "<Included>" << *citer << "<Include>" << zEndl;
     }
     putXMLEndTags(os);
 
@@ -118,7 +118,7 @@ zOutStream& mcSaveSAXS::put(zOutStream& os) const
 	putASCIIStartTags(os);
     os << " " << m_TotalAnalysisPeriods << " " << m_TotalDataPoints << " " << m_QMin << " " << m_QMax << " ";
     
-    for(czBoolVectorIterator citer=m_vExcludedPolymers.begin(); citer!=m_vExcludedPolymers.end(); citer++)
+    for(czBoolVectorIterator citer=m_vIncludedBeads.begin(); citer!=m_vIncludedBeads.end(); citer++)
     {
         os << *citer << " ";
     }
@@ -165,9 +165,9 @@ zInStream& mcSaveSAXS::get(zInStream& is)
        SetCommandValid(false);
        
 	   
-	// Store which polymers should be included/excluded from the calculation. We don't check that the correct number
-    // is entered here, but do it in the Validate function. We need to know the total number of
-    // polymer types.
+	// Store which bead types should be included/excluded from the calculation. We don't check that the correct number
+    // is entered here because we allow for bead types that will be created by command during the simulation. The set of entries
+    // is terminated by -1.
 	
     long value = 0;
     
@@ -176,13 +176,13 @@ zInStream& mcSaveSAXS::get(zInStream& is)
         is >> value;
         if(is.good())
         {
-            if(value == 0)
+            if(value == 1)
             {
-                m_vExcludedPolymers.push_back(1);
+                m_vIncludedBeads.push_back(true);
             }
-            else if(value == 1)
+            else if(value == 0)
             {
-                m_vExcludedPolymers.push_back(0);
+                m_vIncludedBeads.push_back(false);
             }
         }
         else
@@ -279,8 +279,6 @@ bool mcSaveSAXS::IsDataValid(const CInputData& riData) const
     
     if( end > riData.GetTotalTime() || duration%riData.GetSamplePeriod() != 0)
 		return ErrorTrace("Invalid duration or multiple of SamplePeriod for SAXS analysis");
-	else if( m_vExcludedPolymers.size() != riData.GetPolymerTypeTotal())
-        return ErrorTrace("Excluded polymer vector has wrong size");
     else
 	    return true;
 }

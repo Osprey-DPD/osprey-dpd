@@ -56,7 +56,7 @@ public:
     inline long   GetTotalDataPoints()                const {return m_TotalDataPoints;}
     inline double GetQMin()                           const {return m_QMin;}
     inline double GetQMax()                           const {return m_QMax;}
-    inline const  zBoolVector GetExcludedPolymers()   const {return m_vExcludedPolymers;}
+    inline const  zBoolVector GetIncludedBeads()      const {return m_vIncludedBeads;}
 
 	// ****************************************
 	// Protected local functions
@@ -83,7 +83,7 @@ private:
     double  m_QMin;                      // Minimum q value to use (> 0.0, inverse Angstrom)
     double  m_QMax;                      // Maximum q value to use (if == 0.0, default range will be applied)
 	
-    zBoolVector   m_vExcludedPolymers;   // Polymers to exclude from the calculation
+    zBoolVector   m_vIncludedBeads;      // Bead types to include in the calculation
 
 
 };

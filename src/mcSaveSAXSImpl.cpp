@@ -50,7 +50,7 @@ void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
     const long   qPoints          = pCmd->GetTotalDataPoints();
           double qMin             = pCmd->GetQMin();
           double qMax             = pCmd->GetQMax();
-    const zBoolVector vExcluded   = pCmd->GetExcludedPolymers();
+    const zBoolVector vIncluded   = pCmd->GetIncludedBeads();
     
     // If the user hasn't specified the scattering vector range, we use the default of the inverse box size and bead diameter.
     
@@ -59,9 +59,7 @@ void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
         qMin = xxBase::m_globalTwoPI/IGlobalSimBox::Instance()->GetSimBoxZLength();
         qMax = xxBase::m_globalTwoPI;
     }
-    
-    std::cout << "Executing SAXS process " << analysisPeriods << " " << qPoints << " " << " " << qMin << " " << qMax << " " << vExcluded.size() << zEndl;
-    
+        
 	CMonitor* const pMon = dynamic_cast<CMonitor*>(this);
 
 	const long currentTime    = pMon->GetISimBox()->GetCurrentTime();
@@ -69,8 +67,6 @@ void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
     const long samplePeriod   = pMon->GetISimBox()->GetSamplePeriod();
     const long totalTime      = pMon->GetISimBox()->GetTotalTime();
     
-//    const long polymerType    = pMon->GetISimBox()->IISimState()->GetPolymerTypeFromName(polymerName);
-
     long duration = analysisPeriods*analysisPeriod;
 
     // The analysis starts at the beginning of the next full analysis period 
@@ -96,23 +92,24 @@ void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
 	{
 		// Create the process object.
         
-        // Create a map containing the types of polymers to include in the calculation. We use a map because we can
-        // check membership rapidly. Note this map is the inverse of the exclusion map that is passed in.
+        // Create a map containing the types of beads to include in the calculation. We use a map because we can
+        // check membership rapidly. Note that some of the bead types may have been dynamically created, but they
+        // must exist at the time this command is executed.
         
-        LongLongMap  mPolyTypes;
+        LongLongMap  mBeadTypes;
         
         long key=0;
-        for(czBoolVectorIterator ind=vExcluded.begin(); ind!=vExcluded.end(); ++ind)
+        for(czBoolVectorIterator ind=vIncluded.begin(); ind!=vIncluded.end(); ++ind)
         {
-            if(!(*ind))
+            if((*ind))
             {
-                std::cout << "Including polymer " << key << " " << pMon->GetISimBox()->GetPolymerNameFromType(key) << zEndl;
-                mPolyTypes.insert(zPairLL(key, key));
+//                std::cout << "Including bead " << key << " " << pMon->GetISimBox()->GetBeadNameFromType(key) << zEndl;
+                mBeadTypes.insert(zPairLL(key, key));
             }
             ++key;
         }
                 
-        prSAXS* pProcess =  new prSAXS(pMon->m_pSimState, analysisPeriods, qPoints, qMin, qMax, mPolyTypes);
+        prSAXS* pProcess =  new prSAXS(pMon->m_pSimState, analysisPeriods, qPoints, qMin, qMax, mBeadTypes);
         
         if(pProcess)
         {
@@ -120,7 +117,7 @@ void mcSaveSAXSImpl::SaveSAXS(const xxCommand* const pCommand)
 		
 		    pMon->GetISimBox()->AddProcess(pProcess);
 
-		    new CLogSaveSAXS(pMon->GetCurrentTime(), analysisPeriods, qPoints, qMin, qMax, start, end, samplePeriod, vExcluded);
+		    new CLogSaveSAXS(pMon->GetCurrentTime(), analysisPeriods, qPoints, qMin, qMax, start, end, samplePeriod, vIncluded);
         }
         else
         {

@@ -30,9 +30,9 @@ zOutStream& operator<<(zOutStream& os, const CLogSaveSAXS& rMsg)
 	// XML output
 	os << "<Body>" << zEndl;
 	os << "<Name>SaveSAXS</Name>"  << zEndl;
-    for(czBoolVectorIterator citer=rMsg.m_vExcludedPolymers.begin(); citer!=rMsg.m_vExcludedPolymers.end(); citer++)
+    for(czBoolVectorIterator citer=rMsg.m_vIncludedBeads.begin(); citer!=rMsg.m_vIncludedBeads.end(); citer++)
     {
-        os << "<Exclude>" << *citer << "<Exclude>" << zEndl;
+        os << "<Include>" << *citer << "<Include>" << zEndl;
     }
 	os << "<Text>" << zEndl;
     os << "<StartTime>"            << rMsg.m_Start                 << "</StartTime>" << "<EndTime>" << rMsg.m_End << "</EndTime>" << zEndl;
@@ -47,8 +47,8 @@ zOutStream& operator<<(zOutStream& os, const CLogSaveSAXS& rMsg)
 #elif EnableXMLCommands == SimXMLDisabled
 
 	// ASCII output 
-    os << " SAXS scattering function excluding polymers: " << zEndl;
-    for(czBoolVectorIterator citer=rMsg.m_vExcludedPolymers.begin(); citer!=rMsg.m_vExcludedPolymers.end(); citer++)
+    os << " SAXS scattering function including beads: " << zEndl;
+    for(czBoolVectorIterator citer=rMsg.m_vIncludedBeads.begin(); citer!=rMsg.m_vIncludedBeads.end(); citer++)
     {
         os << *citer << " ";
     }
@@ -69,12 +69,12 @@ zOutStream& operator<<(zOutStream& os, const CLogSaveSAXS& rMsg)
 
 CLogSaveSAXS::CLogSaveSAXS(long time, long analysisPeriods, long dataPoints, double qMin, double qMax,
 											   long start, long end, long samplePeriod, 
-											   zBoolVector vExcludedPolymers) : CLogInfoMessage(time),
+											   zBoolVector vIncludedBeads) : CLogInfoMessage(time),
 												m_TotalAnalysisPeriods(analysisPeriods),
 												m_TotalDataPoints(dataPoints),
                                                 m_QMin(qMin), m_QMax(qMax),
 												m_Start(start), m_End(end), m_SamplePeriod(samplePeriod), 
-												m_vExcludedPolymers(vExcludedPolymers)
+												m_vIncludedBeads(vIncludedBeads)
 {
 
 }

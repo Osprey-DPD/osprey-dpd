@@ -23,9 +23,9 @@ public:
 
 	// Constructor for use by the commands that create this process
 
-    prSAXS(const CSimState* const pSimState, long analysisPeriods, long qPoints, LongLongMap mPolyTypes);
+    prSAXS(const CSimState* const pSimState, long analysisPeriods, long qPoints, LongLongMap mBeadTypes);
 
-    prSAXS(const CSimState* const pSimState, long analysisPeriods, long qPoints, double qMin, double qMax, LongLongMap mPolyTypes);
+    prSAXS(const CSimState* const pSimState, long analysisPeriods, long qPoints, double qMin, double qMax, LongLongMap mBeadTypes);
 
 	virtual ~prSAXS();
 
@@ -102,7 +102,7 @@ private:								// Data specific to the process
     double       m_QMax;                // Maximum q value in range (inverse Angstrom)
     const double m_dQ;                  // Increment in the scattering wave vector magnitude q (inverse Angstrom)
 
-    LongLongMap  m_mPolyTypes;          // Map of the polymer numeric type ids to include in calculation
+    LongLongMap  m_mBeadTypes;          // Map of the bead numeric type ids to include in calculation
     
 // Local data
 

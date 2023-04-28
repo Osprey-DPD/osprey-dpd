@@ -16,7 +16,7 @@ public:
 
 	CLogSaveSAXS(long time, long analysisPeriods,
                  long dataPoints, double qMin, double qMax, long start, long end,
-                 long samplePeriod, zBoolVector vExcludedPolymers);
+                 long samplePeriod, zBoolVector vIncludedBeads);
 
 	virtual ~CLogSaveSAXS();		// Public so the CLogState can delete messages
 
@@ -65,11 +65,11 @@ private:
     const double m_QMin;                 // Minimum q value in range
     const double m_QMax;                 // Maximum q value in range
 
-	const long	 m_Start;		        // Time at which analysis starts
-	const long	 m_End;			        // Time at which analysis ends
+	const long	 m_Start;		         // Time at which analysis starts
+	const long	 m_End;			         // Time at which analysis ends
 	const long   m_SamplePeriod;         // Simulation sample period
 
-    zBoolVector  m_vExcludedPolymers;   // Polymers to exclude from the calculation
+    zBoolVector  m_vIncludedBeads;       // Beads to include in the calculation
 
 };
 
