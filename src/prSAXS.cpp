@@ -297,10 +297,8 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
  						
 		double dx[3];
         
-        // Define the min and max q values from the box size and bead diameter. Also the total number of bead pairs for normalisation.
+        // Define the min and max q values from the box size and bead diameter.
     
-        const double totalBeadPairs = static_cast<double>(m_vBeads.size()*m_vBeads.size());
-        
         // Loop over all q values, adding the contributions from each bead pair weighted by their electon numbers.
         // To svoid double counting, we start the second loop with the iterator equal to the first.
         
@@ -384,6 +382,8 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 			            
             // Now write the I(q) to file, after normalising the result by the number of bead pairs and samples taken.
 
+            const double totalBeadPairs = static_cast<double>(m_vBeads.size()*m_vBeads.size());
+            
             for(long iq=0; iq < m_QPoints; ++iq)
             {
                 m_vIQ.at(iq) /= totalBeadPairs;
