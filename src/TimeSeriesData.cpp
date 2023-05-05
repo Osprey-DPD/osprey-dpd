@@ -49,13 +49,13 @@ zOutStream& operator<<(zOutStream& os, const CTimeSeriesData& rTSD)
 	os << "</Data>" << zEndl;
 
 #elif EnableXMLProcesses == SimXMLDisabled
-
+    
+    czDoubleVectorIterator iterSDev=rTSD.m_vSDevSet.begin();
+    
 	for(czDoubleVectorIterator iterData=rTSD.m_vDataSet.begin(); iterData!=rTSD.m_vDataSet.end(); iterData++)
 	{
-		os << setw(12) << setprecision(6) << zLeft;
-		os << (*iterData) << " ";
+		os << setw(12) << setprecision(6) << zLeft << (*iterData) << " " << (*iterSDev++) <<zEndl;
 	}
-	os << zEndl;
 
 #endif
 
@@ -75,7 +75,8 @@ CTimeSeriesData::CTimeSeriesData(long dataSetSize)
 	// This is different from reserve() that only allocates memory to the 
 	// vector but does not change its "size()".
 
-	m_vDataSet.resize(dataSetSize, 0.0);
+    m_vDataSet.resize(dataSetSize, 0.0);
+    m_vSDevSet.resize(dataSetSize, 0.0);
 	m_vDataLabels.resize(dataSetSize);
 }
 
@@ -97,5 +98,14 @@ void CTimeSeriesData::SetValue(long id, double value, zString label)
 {
 	m_vDataSet.at(id)	 = value;
 	m_vDataLabels.at(id) = label;
+}
+
+// Overloaded function to set the value of a data member and its stdandard deviation in the current data set.
+
+void CTimeSeriesData::SetValue(long id, double value, double sdev, zString label)
+{
+    m_vDataSet.at(id)     = value;
+    m_vSDevSet.at(id)     = sdev;
+    m_vDataLabels.at(id)  = label;
 }
 

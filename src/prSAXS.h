@@ -113,7 +113,8 @@ private:								// Data specific to the process
 	BeadVector  m_vBeads;				// Set of beads whose RDF is calculated
 	
     zDoubleVector  m_vIQ;               // Scattering function I(q)
-    
+    zDoubleVector  m_vIQSq;             // Sqaure of the scattering function I(q)*I(q)
+
     LongDoubleMap  m_mElectronNo;       // Map of bead type to electron number
 };
 

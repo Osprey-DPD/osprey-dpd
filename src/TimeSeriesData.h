@@ -42,11 +42,15 @@ public:
 	// Public access functions
 public:
 
-	void SetValue(long id, double value, zString label="data");
+    // Overloaded functions to allow either just the data or data/sdev to be stored
+    
+    void SetValue(long id, double value, zString label="data");
+    void SetValue(long id, double value, double sdev, zString label="data");
 
 	inline long   Size()            const {return m_vDataSet.size();}
 	inline long   GetTime()         const {return static_cast<long>(m_vDataSet.at(0));}	// Time must be 0th element
-	inline double GetValue(long id) const {return m_vDataSet.at(id);}
+    inline double GetValue(long id) const {return m_vDataSet.at(id);}
+    inline double GetSDev(long id)  const {return m_vSDevSet.at(id);}
 
 	// ****************************************
 	// Protected local functions
@@ -66,8 +70,9 @@ private:
 	// Data members
 private:
 
-	zDoubleVector	m_vDataSet;			// Set of stored values
-	StringSequence	m_vDataLabels;		// Labels to identify stored values
+    zDoubleVector    m_vDataSet;            // Set of stored values
+    zDoubleVector    m_vSDevSet;            // Set of standard deviations of the stored values
+	StringSequence	 m_vDataLabels;		    // Labels to identify stored values
 
 
 };

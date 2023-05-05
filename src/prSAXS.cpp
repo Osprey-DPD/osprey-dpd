@@ -75,6 +75,7 @@ prSAXS::prSAXS() : m_AnalysisPeriods(0), m_QPoints(0), m_QMin(0.0), m_QMax(0.0),
     m_mBeadTypes.clear();
 	m_vBeads.clear();
     m_vIQ.clear();
+    m_vIQSq.clear();
     m_mElectronNo.clear();
 }
 
@@ -98,7 +99,8 @@ prSAXS::prSAXS(const CSimState* const pSimState,
 {
 	m_vBeads.clear();
     m_vIQ.resize(m_QPoints, 0.0);  // This can be overwritten in the sum over bead pairs
-    
+    m_vIQSq.resize(m_QPoints, 0.0);  // This can be overwritten in the sum over bead pairs
+
     // Empty the map of the electron numbers for all bead types. Note that maps only allow a single entry, so
     // we don't try and fill it with zeroes and overwrite.  We would have to remove an element before we added the new one.
     
@@ -177,7 +179,8 @@ prSAXS::prSAXS(const CSimState* const pSimState,
 {
     m_vBeads.clear();
     m_vIQ.resize(m_QPoints, 0.0);
-    
+    m_vIQSq.resize(m_QPoints, 0.0);
+
     // Empty the map of the electron numbers for all bead types. Note that maps only allow a single entry, so
     // we don't try and fill it with zeroes and overwrite.  We would have to remove an element before we added the new one.
     
@@ -352,14 +355,18 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
                     {
                         const double dvalue = (eno1*eno2*sin(qvalue*dr)/(qvalue*dr));
                         m_vIQ.at(iq) += dvalue;
-                        
+                        m_vIQSq.at(iq) += dvalue*dvalue;
+
 //                        std::cout << "Diff: " << iq << " " << qvalue << " " << dvalue << zEndl;
                     }
                     else
                     {
                         // i = j here so we have the same bead, and because Sinx/x = 1 when x = 0, the contribution is just F(q)**2.
-                        m_vIQ.at(iq) += (eno1*eno2);
                         
+                        const double eprod =eno1*eno2;
+                        m_vIQ.at(iq) += eprod;
+                        m_vIQSq.at(iq) += (eprod*eprod);
+
 //                        std::cout << "adding " << eno1 << " " << eno2 << " " << qvalue << " " << dr << zEndl;
                     }
                     
@@ -382,17 +389,24 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 			            
             // Now write the I(q) to file, after normalising the result by the number of bead pairs and samples taken.
 
-            const double totalBeadPairs = static_cast<double>(m_vBeads.size()*m_vBeads.size());
+            const double invTotalBeadPairs = 1.0/static_cast<double>(m_vBeads.size()*m_vBeads.size());
+            const double invSamplesTaken = 1.0/static_cast<double>(m_SamplesTaken);
             
+        
             for(long iq=0; iq < m_QPoints; ++iq)
             {
-                m_vIQ.at(iq) /= totalBeadPairs;
-                m_vIQ.at(iq) = m_vIQ.at(iq)/static_cast<double>(m_SamplesTaken);
+                m_vIQ.at(iq)   *= invTotalBeadPairs;
+                m_vIQ.at(iq)   *= invSamplesTaken;
                 
-                pTSD->SetValue(iq+1, m_vIQ.at(iq), "I(q)");
+                m_vIQSq.at(iq) *= invTotalBeadPairs;
+                m_vIQSq.at(iq) *= invSamplesTaken;
+
+                const double iqSDev = sqrt(m_vIQSq.at(iq) - m_vIQ.at(iq)*m_vIQ.at(iq));
+ 
+                pTSD->SetValue(iq+1, m_vIQ.at(iq), iqSDev, "I(q)");
             }
 
-            std::cout << "Dumping I(q) to file at time " << pISimBox->GetCurrentTime() << " with q points " << m_QPoints << " dq " << m_dQ << " and samples " << m_SamplesTaken << " and total bead pairs " << totalBeadPairs << zEndl;
+            std::cout << "Dumping I(q) to file at time " << pISimBox->GetCurrentTime() << " with q points " << m_QPoints << " dq " << m_dQ << " and samples " << m_SamplesTaken << " and total bead pairs " << 1.0/invTotalBeadPairs << zEndl;
 		}
      }
 
