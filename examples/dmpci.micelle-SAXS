@@ -1,0 +1,77 @@
+dpd
+
+Title	" Micellet in water  "
+Date	19/05/21
+Comment	" Two types of polymer pre-assembled into a micelle.
+
+  "
+
+
+State   micelle
+        Polymers   Surfactant Alcohol
+        Centre     0.5  0.5  0.5
+        Radius     5
+
+
+Bead	W
+    	0.5
+    	25	
+    	4.5	
+
+Bead	H
+    	0.5
+    	25  25
+    	4.5   4.5
+
+Bead	T
+    	0.5
+    	25  25    25
+    	4.5   4.5   4.5
+
+Bead	OH
+    	0.5
+    	25  25    25     25
+    	4.5   4.5   4.5    4.5
+
+
+
+
+Bond	H H	 128	0.5
+Bond	H T  128    0.5
+Bond	T T  128    0.5
+
+Bond	OH T   128    0.5
+
+BondPair H T T    20.0  0.0
+BondPair T T T    20.0  0.0
+BondPair OH T T   20.0  0.0
+
+Polymer Water          0.930   " (W) "
+Polymer Surfactant     0.060    " (H H T T T T)  "
+Polymer Alcohol        0.010   " (OH T T)  "
+
+
+Box		24 24 24			1 1 1
+Density		3
+Temp		1
+RNGSeed		-887022
+Lambda		0.5
+Step		0.001
+Time		200
+SamplePeriod	10
+AnalysisPeriod	100
+DensityPeriod	100
+DisplayPeriod   100
+RestartPeriod	100
+Grid		1 1 1
+    
+
+Command	ToggleBeadDisplay              1   W
+Command	SetCurrentStateCamera	       1   0.5 -1.5 0.5  0.5 0.5 0.5
+
+Command SetCurrentStateDefaultFormat   1 Paraview
+
+Command SaveSAXS 1  1 100   0 0    0 1 1 -1
+Command SetSAXSProcessBeadElectronNo 1 1 H 1
+Command SetSAXSProcessBeadElectronNo 1 1 T 2
+Command SetSAXSProcessBeadElectronNo 1 1 OH 3

@@ -276,9 +276,12 @@ bool mcSaveSAXS::IsDataValid(const CInputData& riData) const
     }
 
     end = start + duration;
-    
-    if( end > riData.GetTotalTime() || duration%riData.GetSamplePeriod() != 0)
-		return ErrorTrace("Invalid duration or multiple of SamplePeriod for SAXS analysis");
+
+
+    if( end > riData.GetTotalTime())
+        return ErrorTrace("Invalid duration for SAXS analysis, total time="+std::to_string(riData.GetTotalTime())+", end="+std::to_string(end));
+    else if (duration%riData.GetSamplePeriod() != 0)
+		return ErrorTrace("Duration is not a multiple of SamplePeriod for SAXS analysis");
     else
 	    return true;
 }

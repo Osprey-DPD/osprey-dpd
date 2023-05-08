@@ -13,6 +13,7 @@ class CSimState;
 
 #include "xxProcess.h"
 
+
 class prSAXS : public xxProcess
 {
 	// ****************************************
@@ -90,6 +91,21 @@ protected:
 	// ****************************************
 	// Private functions
 
+	void UpdateState_InnerLoop_ref(CSimState& rSimState, const ISimBox* const pISimBox);
+	void UpdateState_InnerLoop_v1(CSimState& rSimState, const ISimBox* const pISimBox);
+	void UpdateState_InnerLoop_v2(CSimState& rSimState, const ISimBox* const pISimBox);
+	void UpdateState_InnerLoop_v3(CSimState& rSimState, const ISimBox* const pISimBox);
+	void UpdateState_InnerLoop_v4(CSimState& rSimState, const ISimBox* const pISimBox);
+	void UpdateState_InnerLoop_v4_threads(CSimState& rSimState, const ISimBox* const pISimBox);
+	#if OSPREY_DPD_HAVE_OPENMP
+	void UpdateState_InnerLoop_v4_omp(CSimState& rSimState, const ISimBox* const pISimBox);
+	#endif
+	#if OSPREY_DPD_HAVE_STL_PARALLEL
+	void UpdateState_InnerLoop_v4_stl_parallel(CSimState& rSimState, const ISimBox* const pISimBox);
+	#endif
+
+	double DistanceMetric(const CAbstractBead *a, const CAbstractBead *b) const;
+	float DistanceMetric(const float *a, const float *b) const;
 
 	// ****************************************
 	// Data members
