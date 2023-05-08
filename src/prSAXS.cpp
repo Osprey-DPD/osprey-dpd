@@ -310,7 +310,7 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 
 		std::cout << "Sample " <<  m_SamplesTaken << " of I(q) at time " << pISimBox->GetCurrentTime() << " " << m_QMin << " " << m_QMax << " " << m_dQ << " " << m_QPoints << zEndl;
 
-        const bool verify=true;
+        const bool verify=false;
         if(verify){
             std::vector<double> origIq=m_vIQ;
             std::vector<double> origIqSqr=m_vIQSq;
