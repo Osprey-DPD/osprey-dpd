@@ -34,6 +34,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "LogBuilderError.h"
 #include "LogVelDistMessage.h"	// needed to output the initial velocity distribution
 
+#include <random>
+
 
 // STL using declarations
 
@@ -49,6 +51,20 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 //////////////////////////////////////////////////////////////////////
 // Static variable definitions
 //////////////////////////////////////////////////////////////////////
+
+// This is a wrapper to allow compilation on C++17 where std::random_shuffle has been removed.
+// The shuffle produced will be different to random_shuffle, but that order is implementation
+// defined and may not even be stable between runs.
+
+// This is shared. If the Builder code becomes multi-threaded then there
+// is a potential issue.
+static std::mt19937_64 g_ShuffleRng;
+
+template<class T>
+static void random_shuffle_wrapper(T begin, T end)
+{
+	std::shuffle(begin, end, g_ShuffleRng);
+}
 
 
 //////////////////////////////////////////////////////////////////////
@@ -1028,10 +1044,10 @@ bool CBuilder::isBilayer::Assemble(CInitialState& riState)
 	// Patches of polymers are specified for each monolayer independently
 
 	if(!m_bPatches[0])
-		random_shuffle(m_RandomUpperIndex.begin(), m_RandomUpperIndex.end());
+		random_shuffle_wrapper(m_RandomUpperIndex.begin(), m_RandomUpperIndex.end());
 	
 	if(!m_bPatches[1])
-		random_shuffle(m_RandomLowerIndex.begin(), m_RandomLowerIndex.end());
+		random_shuffle_wrapper(m_RandomLowerIndex.begin(), m_RandomLowerIndex.end());
 
 	// ****************************************
 	// Loop over the number of vertices in the lattices. We have to take care 
@@ -1594,10 +1610,10 @@ bool CBuilder::isFreeBilayer::Assemble(CInitialState& riState)
 	// Patches of polymers are specified for each monolayer independently
 
 	if(!m_bPatches[0])
-		random_shuffle(m_RandomUpperIndex.begin(), m_RandomUpperIndex.end());
+		random_shuffle_wrapper(m_RandomUpperIndex.begin(), m_RandomUpperIndex.end());
 	
 	if(!m_bPatches[1])
-		random_shuffle(m_RandomLowerIndex.begin(), m_RandomLowerIndex.end());
+		random_shuffle_wrapper(m_RandomLowerIndex.begin(), m_RandomLowerIndex.end());
 
 	// ****************************************
 	// Loop over the number of vertices in the lattices. We have to take care 
@@ -2118,8 +2134,8 @@ bool CBuilder::isMultiBilayer::Assemble(CInitialState& riState)
 
 	// No patches are allowed
 
-	random_shuffle(m_RandomUpperIndex.begin(), m_RandomUpperIndex.end());
-	random_shuffle(m_RandomLowerIndex.begin(), m_RandomLowerIndex.end());
+	random_shuffle_wrapper(m_RandomUpperIndex.begin(), m_RandomUpperIndex.end());
+	random_shuffle_wrapper(m_RandomLowerIndex.begin(), m_RandomLowerIndex.end());
 
 	// ****************************************
 	// Loop over the number of vertices in the lattices. We have to take care 
@@ -2789,7 +2805,7 @@ bool CBuilder::isWormMicelle::Assemble(CInitialState& riState)
 	// in the order they are defined
 
 	if(!m_bPatches)
-		random_shuffle(m_RandomIndex.begin(), m_RandomIndex.end());
+		random_shuffle_wrapper(m_RandomIndex.begin(), m_RandomIndex.end());
 
 	// Loop over the number of lipids in the micelle and assign coordinates to 
 	// the polymers with their tails positioned at the coordinates in the 
@@ -3585,10 +3601,10 @@ bool CBuilder::isVesicle::Assemble(CInitialState& riState)
 	// Patches of polymers are specified for each monolayer independently
 
 	if(!m_bPatches[0])
-		random_shuffle(m_RandomOuterIndex.begin(), m_RandomOuterIndex.end());
+		random_shuffle_wrapper(m_RandomOuterIndex.begin(), m_RandomOuterIndex.end());
 
 	if(!m_bPatches[1])
-		random_shuffle(m_RandomInnerIndex.begin(), m_RandomInnerIndex.end());
+		random_shuffle_wrapper(m_RandomInnerIndex.begin(), m_RandomInnerIndex.end());
 
 	// ****************************************
 	// Loop over each type of polymer in the monolayers and assign coordinates to 
@@ -4029,10 +4045,10 @@ bool CBuilder::isMultiVesicle::Assemble(CInitialState& riState)
 	// Patches of polymers are specified for each monolayer independently
 
 	if(!m_bPatches[0])
-		random_shuffle(m_RandomOuterIndex.begin(), m_RandomOuterIndex.end());
+		random_shuffle_wrapper(m_RandomOuterIndex.begin(), m_RandomOuterIndex.end());
 
 	if(!m_bPatches[1])
-		random_shuffle(m_RandomInnerIndex.begin(), m_RandomInnerIndex.end());
+		random_shuffle_wrapper(m_RandomInnerIndex.begin(), m_RandomInnerIndex.end());
 
 	// ****************************************
 	// Loop over each type of polymer in the monolayers and assign coordinates to 

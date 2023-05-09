@@ -32,7 +32,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "LogState.h"
 #include "LogBuilderError.h"	// needed to log errors assembling the initial state
 
-
+#include <random>
 
 
 //////////////////////////////////////////////////////////////////////
@@ -881,7 +881,9 @@ bool CLamellaBuilder::Assemble(CInitialState& riState)
 			// vector because we cannot change the vector's size while iterating
 			// through it.
 
-			random_shuffle(m_vPolymerisedBonds.begin(), m_vPolymerisedBonds.end());
+			// Remove random_shuffle to make it compile on c++17
+			std::minstd_rand rng(rand());
+			std::shuffle(m_vPolymerisedBonds.begin(), m_vPolymerisedBonds.end(), rng);
 
 			const long removeNo = static_cast<long>((1.0 - m_PolymerisedFraction)*m_vPolymerisedBonds.size());
 

@@ -22,9 +22,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "aeCNTCell.h"
 #include "aeActiveBond.h"
 
-// STL using declarations
-
-	using std::random_shuffle;
+#include <random>
 
 
 //////////////////////////////////////////////////////////////////////
@@ -280,7 +278,10 @@ aeActiveBond* aeCNTCell::UpdatePolymerisation(aeActiveBond* const pBond)
 		copy(lNNBonds.begin(), lNNBonds.end(), back_inserter(vLocalBonds));
     }
 
-	random_shuffle(vLocalBonds.begin(), vLocalBonds.end());
+	// Used shuffle, as random_shuffle deprecated in C++17
+	// Shuffle is implementation defined, but so was random_shuffle
+	std::minstd_rand rng(rand());
+	shuffle(vLocalBonds.begin(), vLocalBonds.end(), rng);
 
     ActiveBondIterator iterBond=vLocalBonds.begin();
 	aeActiveBond* pTargetBond = 0;
