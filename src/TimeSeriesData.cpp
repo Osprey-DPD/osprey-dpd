@@ -29,37 +29,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 // Global functions for serialization
 //////////////////////////////////////////////////////////////////////
 
+// Function to write out the command data to file. We pass the
+// stream output operator to the put() function. This is because the << and >> operators cannot be
+// treated polymporphically.
+
 zOutStream& operator<<(zOutStream& os, const CTimeSeriesData& rTSD)
 {
-	// If XML output is enabled wrap the data in start and end tags and place each
-	// data item inside an element whose name is given by the item's label.
-	// Note that the label strings are not used if XML output is disabled.
-
-#if EnableXMLProcesses == SimXMLEnabled
-	cStringSequenceIterator iterLabel = rTSD.m_vDataLabels.begin();
-
-	os << "<Data>";
-	for(czDoubleVectorIterator iterData=rTSD.m_vDataSet.begin(); iterData!=rTSD.m_vDataSet.end(); iterData++)
-	{
-		os << "<" << (*iterLabel) << ">";
-		os << setw(12) << setprecision(6) << zLeft << (*iterData);
-		os << "</" << (*iterLabel) << ">";
-		iterLabel++;
-	}
-	os << "</Data>" << zEndl;
-
-#elif EnableXMLProcesses == SimXMLDisabled
-    
-    czDoubleVectorIterator iterSDev=rTSD.m_vSDevSet.begin();
-    
-	for(czDoubleVectorIterator iterData=rTSD.m_vDataSet.begin(); iterData!=rTSD.m_vDataSet.end(); iterData++)
-	{
-		os << setw(12) << setprecision(6) << zLeft << (*iterData) << " " << (*iterSDev++) <<zEndl;
-	}
-
-#endif
-
-	return os;
+    return rTSD.put(os);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -75,8 +51,7 @@ CTimeSeriesData::CTimeSeriesData(long dataSetSize)
 	// This is different from reserve() that only allocates memory to the 
 	// vector but does not change its "size()".
 
-    m_vDataSet.resize(dataSetSize, 0.0);
-    m_vSDevSet.resize(dataSetSize, 0.0);
+	m_vDataSet.resize(dataSetSize, 0.0);
 	m_vDataLabels.resize(dataSetSize);
 }
 
@@ -84,6 +59,40 @@ CTimeSeriesData::~CTimeSeriesData()
 {
 
 }
+
+zOutStream& CTimeSeriesData::put(zOutStream& os) const
+{
+    // If XML output is enabled wrap the data in start and end tags and place each
+    // data item inside an element whose name is given by the item's label.
+    // Note that the label strings are not used if XML output is disabled.
+
+#if EnableXMLProcesses == SimXMLEnabled
+    cStringSequenceIterator iterLabel = m_vDataLabels.begin();
+
+    os << "<Data>";
+    for(czDoubleVectorIterator iterData=m_vDataSet.begin(); iterData!=m_vDataSet.end(); iterData++)
+    {
+        os << "<" << (*iterLabel) << ">";
+        os << setw(12) << setprecision(6) << zLeft << (*iterData);
+        os << "</" << (*iterLabel) << ">";
+        iterLabel++;
+    }
+    os << "</Data>" << zEndl;
+
+#elif EnableXMLProcesses == SimXMLDisabled
+
+    for(czDoubleVectorIterator iterData=m_vDataSet.begin(); iterData!=m_vDataSet.end(); iterData++)
+    {
+        os << setw(12) << setprecision(6) << zLeft;
+        os << (*iterData) << " ";
+    }
+    os << zEndl;
+
+#endif
+
+    return os;
+}
+
 
 // Function to set the value of a data member in the current data set.
 // If the id is not in the range of the data set vector an error occurs.
@@ -98,14 +107,5 @@ void CTimeSeriesData::SetValue(long id, double value, zString label)
 {
 	m_vDataSet.at(id)	 = value;
 	m_vDataLabels.at(id) = label;
-}
-
-// Overloaded function to set the value of a data member and its stdandard deviation in the current data set.
-
-void CTimeSeriesData::SetValue(long id, double value, double sdev, zString label)
-{
-    m_vDataSet.at(id)     = value;
-    m_vSDevSet.at(id)     = sdev;
-    m_vDataLabels.at(id)  = label;
 }
 

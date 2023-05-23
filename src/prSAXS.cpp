@@ -26,7 +26,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "ISimBox.h"
 #include "Bead.h"
 #include "Polymer.h"
-#include "TimeSeriesData.h"
+#include "TimeSeriesMeanData.h"
 #include "InputData.h"
 
 #include <unistd.h>
@@ -340,9 +340,9 @@ void prSAXS::UpdateState(CSimState& rSimState, const ISimBox* const pISimBox)
 
 		if(m_SamplesTaken == m_SampleTotal)
 		{
-			CTimeSeriesData* const pTSD = new CTimeSeriesData(m_QPoints+1);
+			CTimeSeriesMeanData* const pTSD = new CTimeSeriesMeanData(m_QPoints+1);
 			
-			pTSD->SetValue(0,  pISimBox->GetCurrentTime(), "Time");
+			pTSD->SetValue(0,  pISimBox->GetCurrentTime(), 0.0, "Time");
 					
 			m_pState->AddTimeSeriesData(pTSD);
 			            
@@ -1291,7 +1291,7 @@ bool prSAXS::ValidateData(const CInputData &riData)
 bool prSAXS::InternalValidateData(const ISimState* const pISimState)
 {
 	// An xxProcessState is created to hold the data that the process wants
-	// to write to file. Data is passed as a series of CTimeSeriesData objects
+	// to write to file. Data is passed as a series of CTimeSeriesMeanData objects
 	// as used for CHistoryState. Because this function is called after the
 	// original xxProcess instance is copied (so that the xxProcessObject instance
 	// can be discarded), creating the xxAggregateState here does not result in
