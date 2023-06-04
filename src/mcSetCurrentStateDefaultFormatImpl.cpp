@@ -61,6 +61,15 @@ void mcSetCurrentStateDefaultFormatImpl::SetCurrentStateDefaultFormat(const xxCo
 		    new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
         }
 	}
+	else if(format == "PovrayWithBonds")
+	{
+		pMon->m_DefaultCurrentStateFormat = "PovrayWithBonds";
+
+        if(xxParallelBase::GlobalGetRank() == 0)
+        {
+		    new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
+        }
+	}
 	else if(format == "Amira")
 	{
 		pMon->m_DefaultCurrentStateFormat = "Amira";
@@ -94,6 +103,12 @@ void mcSetCurrentStateDefaultFormatImpl::SetCurrentStateDefaultFormat(const xxCo
 	if(format == "Povray")
 	{
 		pMon->m_DefaultCurrentStateFormat = "Povray";
+
+		new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
+	}
+	else if(format == "PovrayWithBonds")
+	{
+		pMon->m_DefaultCurrentStateFormat = "PovrayWithBonds";
 
 		new CLogSetCurrentStateDefaultFormat(pMon->GetCurrentTime(), pMon->m_DefaultCurrentStateFormat);
 	}

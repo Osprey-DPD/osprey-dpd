@@ -66,6 +66,7 @@ public:
 	inline CAbstractBead*    GetTail() const	 {return m_pTail;}
 	inline BeadVector& GetBeads()			     {return m_vBeads;}
 	inline BondVector& GetBonds()			     {return m_vBonds;}
+	inline const BondVector& GetBonds() const    {return m_vBonds;}
 	inline BondPairVector& GetBondPairs()        {return m_vBondPairs;}
 
 	// Function to return a third bead in the polymer apart from its Head and Tail

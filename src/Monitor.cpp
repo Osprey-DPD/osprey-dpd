@@ -1499,6 +1499,12 @@ void CMonitor::SaveCurrentState()
 								    m_bDisplayBox, m_BeadTypeSize, 
 									m_Camera, m_Target, m_vLightX, m_vLightY, m_vLightZ);
 	}
+	else if( m_DefaultCurrentStateFormat == "PovrayWithBonds" )
+	{
+		pFormat = new CPovrayFormat(m_SimBoxXLength, m_SimBoxYLength, m_SimBoxZLength,
+								    m_bDisplayBox, m_BeadTypeSize, 
+									m_Camera, m_Target, m_vLightX, m_vLightY, m_vLightZ, true);
+	}
 	else if( m_DefaultCurrentStateFormat == "Amira" )
 	{
 		pFormat = new CAmiraFormat(m_SimBoxXLength, m_SimBoxYLength, m_SimBoxZLength,

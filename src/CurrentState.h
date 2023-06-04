@@ -97,6 +97,7 @@ private:
 	// that may have moved between processors
 
 	const AbstractBeadVector	m_vAllBeads;
+	const PolymerVector	       m_vAllPolymers;
 
 	StringSequence				m_BeadNames;
 	StringSequence				m_BeadColours;

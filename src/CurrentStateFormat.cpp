@@ -93,6 +93,12 @@ CCurrentStateFormat::~CCurrentStateFormat()
 
 }
 
+// Default behaviour is that formats don't need to know about bonds
+bool CCurrentStateFormat::UsesBonds() const
+{
+	return false;
+}
+
 // Protected function that returns a named colour given a numeric bead type.
 // If the type is larger than the colour array, we return the first entry.
 
@@ -108,6 +114,7 @@ const zString CCurrentStateFormat::GetBeadColourFromType(long beadType) const
     }
 }
 
+
 // Do-nothing implementation of the function to write out snapshot information 
 // following the bead data. Not all formats require this, so we make it a
 // non-pure virtual function. Any derived class that wants to use it must
@@ -115,5 +122,9 @@ const zString CCurrentStateFormat::GetBeadColourFromType(long beadType) const
 
 void CCurrentStateFormat::SerializeFooter(zOutStream& os, const long beadTotal)
 {
+}
 
+// Do-nothing implementation.
+void CCurrentStateFormat::SerializeBond(zOutStream& os, const CPolymer &polymer, const CBond &bond)
+{
 }
