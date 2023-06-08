@@ -33,6 +33,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include <algorithm>
 #include <numeric>
 #include <thread>
+#include <cassert>
+#include <mutex>
+#include <atomic>
 
 
 //////////////////////////////////////////////////////////////////////
