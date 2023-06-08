@@ -9,7 +9,7 @@ The User Guide describes how to compile and run the code, and explains many of t
 On Linux platforms, the code is compiled and linked using the GNU C++ compiler with the following two commands executed in the source code directory:
 
 ```shell
-$ g++ -c -O3 *.cpp
+$ g++ -c -O3 -std=c++11 *.cpp
 $ g++ -o dpd *.o
 ```
 
