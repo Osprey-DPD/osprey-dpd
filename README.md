@@ -10,7 +10,7 @@ On Linux platforms, the code is compiled and linked using the GNU C++ compiler w
 
 ```shell
 $ g++ -c -O3 -std=c++11 *.cpp
-$ g++ -o dpd *.o
+$ g++ -o dpd *.o -pthread
 ```
 
 One can also build it using cmake:
