@@ -23,6 +23,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "ISimBox.h"
 #include "InputData.h"
 #include "Bead.h"
+#include "Polymer.h"
+#include "Bond.h"
 
 // **********************************************************************
 // Global Functions and members
@@ -112,6 +114,7 @@ CCurrentState::CCurrentState(const long currentTime, const zString runId,
                              double xmax, double ymax, double zmax) : xxState(xxBase::GetCSPrefix() + runId + ".con." + ToString(currentTime) + pFormat->GetFileExtension(), true, currentTime, runId),
 															 m_pFormat(pFormat),
 															 m_vAllBeads(pISimBox->GetBeads()),
+															 m_vAllPolymers(pISimBox->GetPolymers()),
 															 m_bRestrictCoords(bRestrictCoords),
 															 m_SimBoxXLength(pISimBox->GetSimSpaceXLength()),
 															 m_SimBoxYLength(pISimBox->GetSimSpaceYLength()),
@@ -217,6 +220,20 @@ bool CCurrentState::Serialize()
 
 				if(!m_outStream.good())
 					return IOError("Error writing CurrentState data to file");
+			}
+		}
+	}
+
+	if(m_pFormat->UsesBonds()){
+		for(const CPolymer *polymer : m_vAllPolymers){
+			for(const CBond *bond : polymer->GetBonds()){
+				const auto *head=bond->GetHead();
+				const auto *tail=bond->GetTail();
+				if(!(head->GetVisible()&&tail->GetVisible())){
+					continue;
+				}
+				
+				m_pFormat->SerializeBond(m_outStream, *polymer, *bond);
 			}
 		}
 	}

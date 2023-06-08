@@ -19,6 +19,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "SimDefs.h"
 #include "PovrayFormat.h"
 
+#include "Bond.h"
+#include "Polymer.h"
+#include "AbstractBead.h"
+
 //////////////////////////////////////////////////////////////////////
 // Global members
 //////////////////////////////////////////////////////////////////////
@@ -37,10 +41,13 @@ CPovrayFormat::CPovrayFormat(double lx, double ly, double lz, bool bDisplayBox,
 							const double camera[3], const double target[3],
 							zDoubleVector vLightX, 
 							zDoubleVector vLightY, 
-							zDoubleVector vLightZ) : CCurrentStateFormat(lx, ly, lz, bDisplayBox, beadTypeTotal), 
+							zDoubleVector vLightZ,
+							bool showBonds
+							) : CCurrentStateFormat(lx, ly, lz, bDisplayBox, beadTypeTotal), 
 													 m_vLightX(vLightX),
 													 m_vLightY(vLightY),
-													 m_vLightZ(vLightZ)
+													 m_vLightZ(vLightZ),
+													 m_ShowBonds(showBonds)
 {
 	// Set the default data needed to save CCurrentState data in PovRay format.
 	// This requires the camera and target coordinates to be specified 
@@ -109,6 +116,12 @@ void CPovrayFormat::SerializeHeader(zOutStream& os, const long beadTotal)
 		os << "     texture{ pigment{ color rgbf < 0.9,0.9,0.9,0.9 > } } }" << zEndl;
 	}
 
+	if(m_ShowBonds){
+		os << "#declare BeadRadiusScale = 0.4; " << zEndl;
+		os << "#declare BondStickColour = Black; " << zEndl;
+		os << "#declare BondStickRadius = 0.09; " << zEndl;
+	}
+
 	os << zEndl << zEndl;	
 }
 
@@ -118,11 +131,63 @@ void CPovrayFormat::SerializeHeader(zOutStream& os, const long beadTotal)
 void CPovrayFormat::SerializeBead(zOutStream& os, const zString name, const long type, const double radius,
 								  const double x, const double y, const double z)
 {
+	std::string r=std::to_string(radius);
+	if(m_ShowBonds){
+		r = "BeadRadiusScale * "+r;
+	}
+
 	os << "sphere { " << "< "	<< x << ", "
 								<< y << ", "
 								<< z << " >, "
-								<< radius
+								<< r
 							    << " texture { pigment {color " << GetBeadColourFromType(type);
 	os << "} } }" << zEndl;
 
+}
+
+
+void CPovrayFormat::SerializeBond(zOutStream& os, const CPolymer &polymer, const CBond &bond)
+{
+	const auto &head=*bond.GetHead();
+	const auto &tail=*bond.GetTail();
+
+	double hx=head.GetXPos(), hy=head.GetYPos(), hz=head.GetZPos();
+	double tx=tail.GetXPos(), ty=tail.GetYPos(), tz=tail.GetZPos();
+	double dx[3]={ hx-tx, hy-ty, hz-tz };
+	double lends[3] = { m_SimBoxXLength, m_SimBoxYLength, m_SimBoxZLength };
+
+	bool wrapped=false;
+	for(int d=0; d<3; d++){
+		if(dx[d] < -lends[d]/2){
+			dx[d] += lends[d];
+			wrapped=true;
+		}else if(dx[d] > lends[d]/2){
+			dx[d] -= lends[d];
+			wrapped=true;
+		}
+	}
+
+	if(!wrapped){
+		os << "cylinder { ";
+		os << " < "<< hx << " " << hy << " " << hz << " >, ";
+		os << " < "<< tx << " " << ty << " " << tz << " >, ";
+		os << "BondStickRadius open texture { pigment {color BondStickColour } } ";
+		os << " } " << zEndl;
+	}else{
+		// This is an attempt to have little stalks going off the edge.
+		// However, it results in cylinders sticking vertically up through z,
+		// as well as lots of little stalks
+		/*os << "cylinder { ";
+		os << " < "<< hx << " " << hy << " " << hz << " >, ";
+		os << " < "<< hx-dx[0] << " " << hy-dx[1] << " " << hz-dx[2] << " >, ";
+		os << "BondStickRadius open texture { pigment {color BondStickColour } } ";
+		os << " } " << zEndl;
+
+		os << "cylinder { ";
+		os << " < "<< tx+dx[0] << " " << ty+dx[1] << " " << tz+dx[2] << " >, ";
+		os << " < "<< tx << " " << ty << " " << tz << " >, ";
+		os << "BondStickRadius open texture { pigment {color BondStickColour } } ";
+		os << " } " << zEndl;
+		*/
+	}
 }

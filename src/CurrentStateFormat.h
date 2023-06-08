@@ -31,11 +31,15 @@ public:
 
 	virtual const zString GetFileExtension() const = 0;
 
+	// Return true if this format needs to know about bonds
+	virtual bool UsesBonds() const;
+
 	// Function to ensure that derived classes can write their data to file
 
 	virtual void SerializeHeader(zOutStream& os, const long beadTotal) = 0;
 	virtual void SerializeBead(zOutStream& os, const zString name, const long type, const double radius,
 								const double x, const double y, const double z) = 0;
+	virtual void SerializeBond(zOutStream& os, const CPolymer &polymer, const CBond &bond);
 	virtual void SerializeFooter(zOutStream& os, const long beadTotal);
 
 	// ****************************************
