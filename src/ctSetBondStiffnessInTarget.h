@@ -17,7 +17,8 @@ public:
 	ctSetBondStiffnessInTarget(long executionTime);
 	ctSetBondStiffnessInTarget(const ctSetBondStiffnessInTarget& oldCommand);
 
-	ctSetBondStiffnessInTarget(long executionTime, const zString target);
+	ctSetBondStiffnessInTarget(long executionTime, const zString target, const zString name,
+                               double modulus, double phi0);
 
 	virtual ~ctSetBondStiffnessInTarget();
 	
@@ -52,12 +53,15 @@ public:
 
     virtual long GetCommandArgumentTotal() const {return m_ArgumentTotal;}
 
+    virtual bool Pack(const tguArgumentSequence& vArguments);
 
 	// ****************************************
 	// Public access functions
 public:
 
-
+    inline const zString  GetName()           const {return m_Name;};
+    inline         double GetBendingModulus() const {return m_BendingModulus;}
+    inline         double GetPhi0()           const {return m_Phi0;}
 
 	// ****************************************
 	// Protected local functions
@@ -78,6 +82,9 @@ private:
 	// Data members
 private:
 
+    zString m_Name;                 // Name of corresponding CBondPair object
+    double m_BendingModulus;        // New value of bending modulus
+    double m_Phi0;                  // New preferred angle for bond pair
 
 };
 

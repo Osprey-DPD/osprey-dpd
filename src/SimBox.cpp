@@ -213,6 +213,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "LogctRemoveActiveCommandTarget.h"
 #include "LogctRemoveCommandTargetActivity.h"
 #include "LogctRemoveTargetFromComposite.h"
+#include "LogctSetBondStiffness.h"
 #include "LogctSetBondStrength.h"
 #include "LogctSineForceOnTarget.h"
 #include "LogctUnFreezeBeadsInTarget.h"
@@ -5456,11 +5457,86 @@ void CSimBox::SetBondStrengthByPositionInTarget(const xxCommand* const pCommand)
 #endif
 }
 
+// Function to change the parameters of a specified bond pair type held in a
+// command target. The bondpairs are part of a polymer type that is held
+// by a CCommandTargetPolymer. Note that the bondspairs may occur in more than
+// one polymer type and, if the target is composite, this could result
+// in bondpairs beind modified in several polymer types.
 
 void CSimBox::SetBondStiffnessInTarget(const xxCommand* const pCommand)
 {
 #if EnableTargetCommand == SimCommandEnabled
 
+    const ctSetBondStiffnessInTarget* const pCmd = dynamic_cast<const ctSetBondStiffnessInTarget*>(pCommand);
+
+    // Unpack the data identifying the bondpair type that is changed by the command
+    // and the new values of its strength and preferred angle.
+    // If the simulation type is MD we normalise the strength by the
+    // energy scale taken from the first species' LJ potential depth.
+
+    const zString label            = pCmd->GetTargetLabel();
+    const zString bondPairName     = pCmd->GetName();
+    const double modulus           = pCmd->GetBendingModulus();
+    const double phi0              = pCmd->GetPhi0();
+
+    const long bondPairType        = GetBondPairTypeFromName(bondPairName);
+
+    // Get the command target from the target list
+
+    CCommandTargetNode* pCmdTarget = GetCommandTarget(label);
+
+    // Now we have the target, check it is not composite, get the
+    // polymers contained in it and from them obtain the specified bonds;
+    // if no bonds are found issue an error message.
+
+    if(pCmdTarget && !pCmdTarget->IsComposite())
+    {
+
+#if SimIdentifier == MD
+        modulus /= GetEnergyScale();
+#endif
+
+        PolymerVector vTargetPolymers = pCmdTarget->GetPolymers();
+
+        BondPairVector vTargetBondPairs;
+        vTargetBondPairs.clear();
+
+        for(PolymerVectorIterator iterPoly=vTargetPolymers.begin(); iterPoly!=vTargetPolymers.end(); iterPoly++)
+        {
+            BondPairVector vBondPairs = (*iterPoly)->GetBondPairs();
+            vTargetBondPairs.insert(vTargetBondPairs.end(), vBondPairs.begin(), vBondPairs.end());
+        }
+
+        // Count the number of bondpairs whose parameters are changed to enable
+        // an error message if no bonds of the specified type are found
+
+        long bondsChanged = 0;
+
+        for(BondPairVectorIterator iterBond=vTargetBondPairs.begin(); iterBond!=vTargetBondPairs.end(); iterBond++)
+        {
+            if((*iterBond)->GetType() == bondPairType)
+            {
+                bondsChanged++;
+                (*iterBond)->SetModulus(modulus);
+                (*iterBond)->SetPhi0(phi0);
+            }
+        }
+
+        if(bondsChanged > 0)
+        {
+            // Create a message indicating that the bondpair parameters have changed
+
+            new CLogctSetBondStiffness(m_SimTime, label, bondPairName, bondPairType, bondsChanged, modulus, phi0);
+        }
+        else
+        {
+            new CLogCommandFailed(m_SimTime, pCmd);
+        }
+    }
+    else    // Log a command failed message
+    {
+        new CLogCommandFailed(m_SimTime, pCmd);
+    }
 #endif
 }
 

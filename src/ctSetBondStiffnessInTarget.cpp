@@ -41,7 +41,7 @@ const zString ctSetBondStiffnessInTarget::GetType()
 // Static member variable holding the number of user-defined arguments
 // (not including the execution time) needed by this class.
 
-long ctSetBondStiffnessInTarget::m_ArgumentTotal = 1;
+long ctSetBondStiffnessInTarget::m_ArgumentTotal = 4;
 
 long ctSetBondStiffnessInTarget::GetArgumentTotal()
 {
@@ -69,17 +69,24 @@ namespace
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-ctSetBondStiffnessInTarget::ctSetBondStiffnessInTarget(long executionTime) : ctApplyCommand(executionTime)
+ctSetBondStiffnessInTarget::ctSetBondStiffnessInTarget(long executionTime) : ctApplyCommand(executionTime),
+                             m_Name(""), m_BendingModulus(0.0), m_Phi0(0.0)
 {
 }
 
-ctSetBondStiffnessInTarget::ctSetBondStiffnessInTarget(const ctSetBondStiffnessInTarget& oldCommand) : ctApplyCommand(oldCommand)
+ctSetBondStiffnessInTarget::ctSetBondStiffnessInTarget(const ctSetBondStiffnessInTarget& oldCommand) : ctApplyCommand(oldCommand),
+                            m_Name(oldCommand.m_Name),
+                            m_BendingModulus(oldCommand.m_BendingModulus),
+                            m_Phi0(oldCommand.m_Phi0)
 {
 }
 
 // Constructor for use when creating the command internally.
 
-ctSetBondStiffnessInTarget::ctSetBondStiffnessInTarget(long executionTime, const zString target) : ctApplyCommand(executionTime, target)
+ctSetBondStiffnessInTarget::ctSetBondStiffnessInTarget(long executionTime, const zString target, 
+                                                       const zString name, double modulus,
+                                                       double phi0) : ctApplyCommand(executionTime, target),
+                                                       m_Name(name), m_BendingModulus(modulus), m_Phi0(phi0)
 {
 }
 
@@ -92,8 +99,10 @@ ctSetBondStiffnessInTarget::~ctSetBondStiffnessInTarget()
 // Arguments
 // *********
 //
-//	No arguments for this command as the CCommandTarget holds the new bond type
-//
+//  m_Name                    name of the target bond type
+//  m_BendingModulus          bending stiffness for the target bondpair
+//  m_Phi0                    preferred angle for the target spring
+
 
 zOutStream& ctSetBondStiffnessInTarget::put(zOutStream& os) const
 {
@@ -102,10 +111,13 @@ zOutStream& ctSetBondStiffnessInTarget::put(zOutStream& os) const
 	// XML output
 	putXMLStartTags(os);
 
-	// Put the base class data first
-	ctApplyCommand::put(os);
+    // Put the base class data first
+    ctApplyCommand::put(os);
 
-	// now the derived class data - except there isn't any for this command
+    os << "<BondPairName>"      << m_Name              << "</BondPairName>" << zEndl;
+    os << "<BendingModulus>"    << m_BendingModulus    << "</BendingModulus>" << zEndl;
+    os << "<PreferredAngle>"    << m_Phi0              << "</PreferredAngle>" << zEndl;
+
 	putXMLEndTags(os);
 
 #elif EnableXMLCommands == SimXMLDisabled
@@ -113,6 +125,7 @@ zOutStream& ctSetBondStiffnessInTarget::put(zOutStream& os) const
 	// ASCII output 
 	putASCIIStartTags(os);
 	ctApplyCommand::put(os);
+    os << m_Name << " " << m_BendingModulus << " " << m_Phi0;
 	putASCIIEndTags(os);
 
 #endif
@@ -122,9 +135,21 @@ zOutStream& ctSetBondStiffnessInTarget::put(zOutStream& os) const
 
 zInStream& ctSetBondStiffnessInTarget::get(zInStream& is)
 {
-	// Read the base class data first
+    // Read the base class data first
+    
+     ctApplyCommand::get(is);
+    
+    // Check that the modulus and preferred angle are positive.
+    // We check that the name corresponds to a valid CBond object in
+    // IsDataValid() as the CInputData object has to create the map holding
+    // the names of valid CBonds first.
 
-	return ctApplyCommand::get(is);
+    is >> m_Name >> m_BendingModulus >> m_Phi0;
+    
+    if(!is.good() || m_BendingModulus < 0.0 || m_Phi0 < 0.0)
+       SetCommandValid(false);
+
+    return is;
 }
 
 // Non-static function to return the type of the command
@@ -158,12 +183,54 @@ bool ctSetBondStiffnessInTarget::Execute(long simTime, ISimCmd* const pISimCmd) 
 		return false;
 }
 
-// Function to check that the command data are valid. Because no data 
-// is required by this command except a valid command target, and the
-// check for validity is performed in the base class, it just returns 
-// the base class result.
+// Function to check that the command data are valid.
+// We check that the specified bondpair name is valid, that the bondpair type
+// exists and let the base class check the target name. The actual
+// bondpair parameters have been checked above.
 
 bool ctSetBondStiffnessInTarget::IsDataValid(const CInputData& riData) const
 {
-	return ctApplyCommand::IsDataValid(riData);
+    if(!riData.IsExternalNameValid(m_Name))
+        return ErrorTrace("Invalid Bondpair name");
+    else if(!riData.IsBondPairinMap(m_Name))
+        return ErrorTrace("Bondpair not found in map");
+    else
+        return ctApplyCommand::IsDataValid(riData);
 }
+
+// VF that allows an empty command instance to fill up its parameters after creation.
+// It is typically used by the command groups to allow the command's arguments to
+// be set when each of the group's commands is instantiated. The function returns
+// true if all the command's parameters are correctly assigned values.
+//
+// The argument contains instances of types derived from tguArgumentBase that must
+// be in the order expected by the command as it tries to cast them to the types
+// it expects.
+//
+// This command expects the following types (in addition to its base class types):
+//
+// m_Name               - string
+// m_BendingModulus     - double
+// m_Phi0               - double
+
+bool ctSetBondStiffnessInTarget::Pack(const tguArgumentSequence& vArguments)
+{
+    if(ctApplyCommand::Pack(vArguments) && static_cast<long>(vArguments.size()) == GetArgumentTotal())
+    {
+        vArguments.at(1)->GetValue(&m_Name);
+        vArguments.at(2)->GetValue(&m_BendingModulus);
+        vArguments.at(3)->GetValue(&m_Phi0);
+
+        if(m_BendingModulus < 0.0 || m_Phi0 < 0.0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
