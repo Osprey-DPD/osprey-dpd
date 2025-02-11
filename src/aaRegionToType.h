@@ -34,7 +34,6 @@
 // STL using declarations
 
 	using std::count_if;
-	using std::unary_function;
 
 // **********************************************************************
 // Definitions of function objects used in analysing aggregates. 
@@ -55,7 +54,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaDouble : public unary_function<double, aaScalar>  
+class aaDouble
 {
 public:
 	aaDouble();
@@ -83,13 +82,13 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaGetAggregateId  : public unary_function<CAnalysis, bool>  
+class aaGetAggregateId
 {
 public:
 	aaGetAggregateId(long id);
 	~aaGetAggregateId();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const CAnalysis* const pInst) const
 	{
 		return (pInst->GetId() == m_id);
 	}
@@ -108,13 +107,13 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaGetCommandId  : public unary_function<xxCommand, bool>  
+class aaGetCommandId
 {
 public:
 	aaGetCommandId(long id);
 	~aaGetCommandId();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const xxCommand* const pInst) const
 	{
 		return (pInst->GetId() == m_id);
 	}
@@ -137,13 +136,13 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaGetEventId  : public unary_function<xxEvent, bool>  
+class aaGetEventId
 {
 public:
 	aaGetEventId(long id);
 	~aaGetEventId();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const xxEvent* const pInst) const
 	{
 		return (pInst->GetId() == m_id);
 	}
@@ -162,13 +161,13 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaGetProcessId  : public unary_function<xxProcess, bool>  
+class aaGetProcessId
 {
 public:
 	aaGetProcessId(long id);
 	~aaGetProcessId();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const xxProcess* const pInst) const
 	{
 		return (pInst->GetId() == m_id);
 	}
@@ -187,13 +186,13 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaGetAggregateName  : public unary_function<CAnalysis, bool>  
+class aaGetAggregateName
 {
 public:
 	aaGetAggregateName(const zString name);
 	~aaGetAggregateName();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const CAnalysis* const pInst) const
 	{
 		return (pInst->GetType() == m_Name);
 	}
@@ -212,13 +211,13 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaGetCommandName  : public unary_function<xxCommand, bool>  
+class aaGetCommandName
 {
 public:
 	aaGetCommandName(const zString name);
 	~aaGetCommandName();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const xxCommand* const pInst) const
 	{
 		return (pInst->GetCommandType() == m_Name);
 	}
@@ -237,13 +236,13 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaGetCommandExecutionTime  : public unary_function<xxCommand, bool>  
+class aaGetCommandExecutionTime
 {
 public:
 	aaGetCommandExecutionTime(long time);
 	~aaGetCommandExecutionTime();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const xxCommand* const pInst) const
 	{
 		return (pInst->GetExecutionTime() == m_ExecutionTime);
 	}
@@ -263,13 +262,13 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaCommandExecutionTimeLess  : public unary_function<xxCommand, bool>  
+class aaCommandExecutionTimeLess
 {
 public:
 	aaCommandExecutionTimeLess(long time);
 	~aaCommandExecutionTimeLess();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const xxCommand* const pInst) const
 	{
 		return (pInst->GetExecutionTime() < m_ExecutionTime);
 	}
@@ -289,13 +288,13 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaCommandExecutionTimeGreater  : public unary_function<xxCommand, bool>  
+class aaCommandExecutionTimeGreater
 {
 public:
 	aaCommandExecutionTimeGreater(long time);
 	~aaCommandExecutionTimeGreater();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const xxCommand* const pInst) const
 	{
 		return (pInst->GetExecutionTime() > m_ExecutionTime);
 	}
@@ -314,13 +313,13 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaGetEventName  : public unary_function<xxEvent, bool>  
+class aaGetEventName
 {
 public:
 	aaGetEventName(const zString name);
 	~aaGetEventName();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const xxEvent* const pInst) const
 	{
 		return (pInst->GetEventType() == m_Name);
 	}
@@ -339,13 +338,13 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaGetProcessName  : public unary_function<xxProcess, bool>  
+class aaGetProcessName
 {
 public:
 	aaGetProcessName(const zString name);
 	~aaGetProcessName();
 
-	result_type operator() (const argument_type* const pInst) const
+	bool operator() (const xxProcess* const pInst) const
 	{
 		return (pInst->GetProcessType() == m_Name);
 	}
@@ -364,7 +363,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadId  : public unary_function<CAbstractBead*, bool>  
+class aaBeadId
 {
 public:
 	aaBeadId(long beadId);
@@ -393,7 +392,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadType  : public unary_function<CAbstractBead*, bool>  
+class aaBeadType
 {
 public:
 	aaBeadType(long type);
@@ -422,7 +421,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadType2  : public unary_function<CAbstractBead*, bool>  
+class aaBeadType2
 {
 public:
 	aaBeadType2(long type1, long type2);
@@ -449,7 +448,7 @@ private:
 // condition compared to the value specified in their constructors.
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadTypeLess  : public unary_function<CAbstractBead*, bool>  
+class aaBeadTypeLess
 {
 public:
 	aaBeadTypeLess(long type);
@@ -463,7 +462,7 @@ private:
 	const long m_Type;
 };
 
-class aaBeadTypeGreater  : public unary_function<CAbstractBead*, bool>  
+class aaBeadTypeGreater
 {
 public:
 	aaBeadTypeGreater(long type);
@@ -490,7 +489,7 @@ private:
 
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadTypeCompLess  : public unary_function<CAbstractBead*, bool>  
+class aaBeadTypeCompLess
 {
 public:
 	bool operator() (const CAbstractBead* const pBead1,
@@ -500,7 +499,7 @@ public:
 	}
 };
 
-class aaBeadTypeCompGreater  : public unary_function<CAbstractBead*, bool>  
+class aaBeadTypeCompGreater
 {
 public:
 	bool operator() (const CAbstractBead* const pBead1,
@@ -521,7 +520,7 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaPolymerType  : public unary_function<CPolymer*, bool>  
+class aaPolymerType
 {
 public:
 	aaPolymerType(long type);
@@ -548,7 +547,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaPolymerTypeLess  : public unary_function<CPolymer*, bool>  
+class aaPolymerTypeLess
 {
 public:
 	aaPolymerTypeLess(long type);
@@ -562,7 +561,7 @@ private:
 	const long m_Type;
 };
 
-class aaPolymerTypeGreater  : public unary_function<CPolymer*, bool>  
+class aaPolymerTypeGreater
 {
 public:
 	aaPolymerTypeGreater(long type);
@@ -589,7 +588,7 @@ private:
 
 //////////////////////////////////////////////////////////////////////
 
-class aaPolymerTypeCompLess : public unary_function<CPolymer*, bool>  
+class aaPolymerTypeCompLess
 {
 public:
 	bool operator() (const CPolymer* const pPolymer1,
@@ -599,7 +598,7 @@ public:
 	}
 };
 
-class aaPolymerTypeCompGreater : public unary_function<CPolymer*, bool>  
+class aaPolymerTypeCompGreater
 {
 public:
 	bool operator() (const CPolymer* const pPolymer1,
@@ -620,7 +619,7 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaCNTCellNumber  : public unary_function<CCNTCell, long>
+class aaCNTCellNumber
 {
 public:
 	aaCNTCellNumber(long beadType);
@@ -661,7 +660,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-template <class R, class T> class aaRegionToType  : public unary_function<R, T>  
+template <class R, class T> class aaRegionToType
 {
 public:
 	virtual ~aaRegionToType() {};
@@ -685,7 +684,7 @@ protected:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaCellNumber  : public unary_function<CCell, double>
+class aaCellNumber
 {
 public:
 	aaCellNumber(long beadType);
@@ -721,7 +720,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaCellXCM  : public unary_function<CCell, double>
+class aaCellXCM
 {
 public:
 	aaCellXCM(long beadType);
@@ -758,7 +757,7 @@ private:
 	long m_BeadType;
 };
 
-class aaCellYCM  : public unary_function<CCell, double>
+class aaCellYCM
 {
 public:
 	aaCellYCM(long beadType);
@@ -795,7 +794,7 @@ private:
 	long m_BeadType;
 };
 
-class aaCellZCM  : public unary_function<CCell, double>
+class aaCellZCM
 {
 public:
 	aaCellZCM(long beadType);
@@ -1006,7 +1005,7 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadStressXProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaBeadStressXProfile
 {
 public:
 	aaBeadStressXProfile(long index);
@@ -1029,7 +1028,7 @@ private:
 	long m_Index;
 };
 
-class aaBeadStressYProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaBeadStressYProfile
 {
 public:
 	aaBeadStressYProfile(long index);
@@ -1052,7 +1051,7 @@ private:
 	long m_Index;
 };
 
-class aaBeadStressZProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaBeadStressZProfile
 {
 public:
 	aaBeadStressZProfile(long index);
@@ -1092,7 +1091,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBondStressXProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaBondStressXProfile
 {
 public:
 	aaBondStressXProfile(long index);
@@ -1115,7 +1114,7 @@ private:
 	long m_Index;
 };
 
-class aaBondStressYProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaBondStressYProfile
 {
 public:
 	aaBondStressYProfile(long index);
@@ -1138,7 +1137,7 @@ private:
 	long m_Index;
 };
 
-class aaBondStressZProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaBondStressZProfile
 {
 public:
 	aaBondStressZProfile(long index);
@@ -1178,7 +1177,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBondPairStressXProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaBondPairStressXProfile
 {
 public:
 	aaBondPairStressXProfile(long index);
@@ -1201,7 +1200,7 @@ private:
 	long m_Index;
 };
 
-class aaBondPairStressYProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaBondPairStressYProfile
 {
 public:
 	aaBondPairStressYProfile(long index);
@@ -1224,7 +1223,7 @@ private:
 	long m_Index;
 };
 
-class aaBondPairStressZProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaBondPairStressZProfile
 {
 public:
 	aaBondPairStressZProfile(long index);
@@ -1265,7 +1264,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaStressZProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaStressZProfile
 {
 public:
 	aaStressZProfile();
@@ -1295,7 +1294,7 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaStressComponentProfile  : public unary_function<aaStressTensorPoint, aaScalar>
+class aaStressComponentProfile
 {
 public:
 	aaStressComponentProfile(long index);
@@ -1324,7 +1323,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadXPos  : public unary_function<CAbstractBead*, double>  
+class aaBeadXPos
 {
 public:
 	aaBeadXPos();
@@ -1336,7 +1335,7 @@ public:
 	}
 };
 
-class aaBeadYPos  : public unary_function<CAbstractBead*, double>  
+class aaBeadYPos
 {
 public:
 	aaBeadYPos();
@@ -1348,7 +1347,7 @@ public:
 	}
 };
 
-class aaBeadZPos  : public unary_function<CAbstractBead*, double>  
+class aaBeadZPos
 {
 public:
 	aaBeadZPos();
@@ -1370,7 +1369,7 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadXMom  : public unary_function<CAbstractBead*, double>  
+class aaBeadXMom
 {
 public:
 	aaBeadXMom();
@@ -1382,7 +1381,7 @@ public:
 	}
 };
 
-class aaBeadYMom  : public unary_function<CAbstractBead*, double>  
+class aaBeadYMom
 {
 public:
 	aaBeadYMom();
@@ -1394,7 +1393,7 @@ public:
 	}
 };
 
-class aaBeadZMom  : public unary_function<CAbstractBead*, double>  
+class aaBeadZMom
 {
 public:
 	aaBeadZMom();
@@ -1417,7 +1416,7 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadXForce  : public unary_function<CAbstractBead*, double>  
+class aaBeadXForce
 {
 public:
 	aaBeadXForce();
@@ -1429,7 +1428,7 @@ public:
 	}
 };
 
-class aaBeadYForce  : public unary_function<CAbstractBead*, double>  
+class aaBeadYForce
 {
 public:
 	aaBeadYForce();
@@ -1441,7 +1440,7 @@ public:
 	}
 };
 
-class aaBeadZForce  : public unary_function<CAbstractBead*, double>  
+class aaBeadZForce
 {
 public:
 	aaBeadZForce();
@@ -1464,7 +1463,7 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaActiveBondXPos  : public unary_function<aeActiveBond*, double>  
+class aaActiveBondXPos
 {
 public:
 	aaActiveBondXPos();
@@ -1476,7 +1475,7 @@ public:
 	}
 };
 
-class aaActiveBondYPos  : public unary_function<aeActiveBond*, double>  
+class aaActiveBondYPos
 {
 public:
 	aaActiveBondYPos();
@@ -1488,7 +1487,7 @@ public:
 	}
 };
 
-class aaActiveBondZPos  : public unary_function<aeActiveBond*, double>  
+class aaActiveBondZPos
 {
 public:
 	aaActiveBondZPos();
@@ -1513,11 +1512,11 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadIdEqual  : public unary_function<CAbstractBead, bool>  
+class aaBeadIdEqual
 {
 public:
 
-	result_type operator() (const argument_type* const pInst1, const argument_type* const pInst2) const
+	bool operator() (const CAbstractBead* const pInst1, const CAbstractBead* const pInst2) const
 	{
 		return (pInst1->GetId() == pInst2->GetId());
 	}
@@ -1535,11 +1534,11 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadIdGreater  : public unary_function<CAbstractBead, bool>  
+class aaBeadIdGreater
 {
 public:
 
-	result_type operator() (const argument_type* const pInst1, const argument_type* const pInst2) const
+	bool operator() (const CAbstractBead* const pInst1, const CAbstractBead* const pInst2) const
 	{
 		return (pInst1->GetId() > pInst2->GetId());
 	}
@@ -1558,11 +1557,11 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadIdLess  : public unary_function<CAbstractBead, bool>  
+class aaBeadIdLess
 {
 public:
 
-	result_type operator() (const argument_type* const pInst1, const argument_type* const pInst2) const
+	bool operator() (const CAbstractBead* const pInst1, const CAbstractBead* const pInst2) const
 	{
 		return (pInst1->GetId() < pInst2->GetId());
 	}
@@ -1579,7 +1578,7 @@ public:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadXPosLess  : public unary_function<CAbstractBead*, bool>  
+class aaBeadXPosLess
 {
 public:
 	aaBeadXPosLess(double limit);
@@ -1593,7 +1592,7 @@ private:
 	const double m_Limit;
 };
 
-class aaBeadYPosLess  : public unary_function<CAbstractBead*, bool>  
+class aaBeadYPosLess
 {
 public:
 	aaBeadYPosLess(double limit);
@@ -1608,7 +1607,7 @@ private:
 };
 
 
-class aaBeadZPosLess  : public unary_function<CAbstractBead*, bool>  
+class aaBeadZPosLess
 {
 public:
 	aaBeadZPosLess(double limit);
@@ -1633,7 +1632,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadXPosGreater  : public unary_function<CAbstractBead*, bool>  
+class aaBeadXPosGreater
 {
 public:
 	aaBeadXPosGreater(double limit);
@@ -1647,7 +1646,7 @@ private:
 	const double m_Limit;
 };
 
-class aaBeadYPosGreater  : public unary_function<CAbstractBead*, bool>  
+class aaBeadYPosGreater
 {
 public:
 	aaBeadYPosGreater(double limit);
@@ -1662,7 +1661,7 @@ private:
 };
 
 
-class aaBeadZPosGreater  : public unary_function<CAbstractBead*, bool>  
+class aaBeadZPosGreater
 {
 public:
 	aaBeadZPosGreater(double limit);
@@ -1689,7 +1688,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaBeadXPosGreaterEqual  : public unary_function<CAbstractBead*, bool>  
+class aaBeadXPosGreaterEqual
 {
 public:
 	aaBeadXPosGreaterEqual(double limit);
@@ -1703,7 +1702,7 @@ private:
 	const double m_Limit;
 };
 
-class aaBeadYPosGreaterEqual  : public unary_function<CAbstractBead*, bool>  
+class aaBeadYPosGreaterEqual
 {
 public:
 	aaBeadYPosGreaterEqual(double limit);
@@ -1718,7 +1717,7 @@ private:
 };
 
 
-class aaBeadZPosGreaterEqual  : public unary_function<CAbstractBead*, bool>  
+class aaBeadZPosGreaterEqual
 {
 public:
 	aaBeadZPosGreaterEqual(double limit);
@@ -1741,7 +1740,7 @@ private:
 //
 //////////////////////////////////////////////////////////////////////
 
-class aaTranslateCoordinate : public unary_function<double, double>
+class aaTranslateCoordinate
 {
 public:
 	aaTranslateCoordinate(double l);
