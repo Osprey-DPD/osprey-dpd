@@ -84,6 +84,8 @@
 //  17/10/07    I added a new flag to allow the parallel version of DPD to 
 //              be conditionally-compiled in: SimMPS.
 //
+//  11/02/25    I removed all legacy platforms except for the standard linux/mac version from xxBase.h
+//
 // **********************************************************************
 
 // True/false flags used to distinguish binary compilation options.
@@ -122,6 +124,7 @@
 // ***********************
 // Platform or compiler identifier to allow different implementations of the STL
 // and other features. There is a corresponding flag, xxBasePlatform in xxBase.h.
+// This conditional has been removed, but they are left here for historic reasons.
 
 #define MFC			1
 #define CONSOLE			2
@@ -145,10 +148,6 @@
 #define NEWPLATFORM9 	20
 #define NEWPLATFORM10 	21
 
-
-// I find that using the same platform flag for all linux-based platforms works fine.
-
-#define Platform XCMAC
 
 // ***********************
 // Uncomment the next variable to allow each DPD bead type to have an explicit
