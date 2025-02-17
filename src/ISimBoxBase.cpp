@@ -288,6 +288,11 @@ void ISimBoxBase::SaveCommandHistoryToCurrentTime(const xxCommand* const pComman
 #endif
 }
 
+void ISimBoxBase::SaveCompositeTargetBeadRDF(const xxCommand* const pCommand) const
+{
+    m_pISimBox->IIMonitorCmd()->SaveCompositeTargetBeadRDF(pCommand);
+}
+
 void ISimBoxBase::SaveCurrentStateCmd(const xxCommand* const pCommand) const
 {
 	m_pISimBox->IIMonitorCmd()->SaveCurrentStateCmd(pCommand);

@@ -90,6 +90,7 @@ public:
 	void          SaveBeadDensityFluctuationsByType(const xxCommand* const pCommand) const;
     void                         SaveCommandHistory(const xxCommand* const pCommand) const;
 	void            SaveCommandHistoryToCurrentTime(const xxCommand* const pCommand) const;
+    void                 SaveCompositeTargetBeadRDF(const xxCommand* const pCommand) const;
 	void		                SaveCurrentStateCmd(const xxCommand* const pCommand) const;
 	void        SaveNonBeadInclusiveRestartStateCmd(const xxCommand* const pCommand) const;
     void                SavePairCorrelationFunction(const xxCommand* const pCommand) const;

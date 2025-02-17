@@ -50,6 +50,7 @@ public:
 	virtual void       SaveBeadDensityFluctuationsByType(const xxCommand* const pCommand) = 0;
 	virtual void             SaveBeadKineticTemperatures(const xxCommand* const pCommand) = 0;
 	virtual void  SaveBeadVelocityScalarProduct1dProfile(const xxCommand* const pCommand) = 0;
+    virtual void              SaveCompositeTargetBeadRDF(const xxCommand* const pCommand) = 0;
 	virtual void			         SaveCurrentStateCmd(const xxCommand* const pCommand) = 0;
 	virtual void     SaveNonBeadInclusiveRestartStateCmd(const xxCommand* const pCommand) = 0;
     virtual void             SavePairCorrelationFunction(const xxCommand* const pCommand) = 0;
