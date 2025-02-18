@@ -68,8 +68,6 @@ void mcSaveCompositeTargetBeadRDFImpl::SaveCompositeTargetBeadRDF(const xxComman
     
     long duration = analysisPeriods*analysisPeriod;
     
-    std::cout << " Debug composite targetRDF:  " << currentTime << " " << targetName << " " << beadName << " " << beadType << " " << rMax << " " << dataPoints << zEndl;
-
     // The analysis starts at the beginning of the next full analysis period 
     // and continues for an integer number of periods.
 
