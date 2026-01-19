@@ -652,6 +652,10 @@ private:
 	void AddChargedBeadForces();	// Add the screened charge force to charged beads
 	void UpdateRenormalisedMom();	// Normalises the momenta to the imposed temperature
 	long MCPolymerRelaxation(PolymerVector& rPolymers);	// Relaxes a set of polymers using MC
+    
+    // Special function to calculate Morse potentials for Helix polymers to create an alpha helix.
+    
+    void AddHelixForces();
 
     // Functions to evolve a parallel simulation
 
@@ -735,6 +739,7 @@ private:
 
 	PolymerVector		m_vAllPolymers;			// Vector of non-wall polymers
 	PolymerVector		m_vWallPolymers;		// Vector of wall polymers
+    PolymerVector       m_vHelixPolymers;       // Vector of polymers capable of forming a helix
 
 	zLongVector			m_vChargedBeadTypes;	// Types of charged beads
 	zLongVector			m_vChargedBeadTotals;	// No of each charged bead type

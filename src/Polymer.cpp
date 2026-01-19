@@ -41,15 +41,50 @@ bool operator==(const CPolymer& a, const CPolymer& b)
 	return a.GetId() == b.GetId();
 }
 
+// Static member variable holding the parameters of the Morse potentials.
+
+// --- Helix “H-bond-like” Morse interactions (Vishnyakov et al., 2012; Doi et al., 2018) ---
+// The Morse potential is used as a dissociable bond to mimic hydrogen-bond effects in DPD,
+// parameterized by: KM (well depth), alpha (width), re (equilibrium distance), and rM (cutoff).
+// Vishnyakov explicitly introduces 1–3 and 1–5 Morse bonds for helix formation, with
+// alpha = 8, re(1–3)=0.9 Rc, re(1–5)=0.6 Rc, and cutoff rM = 2.5 Rc. 
+
+// 1–3 Morse: between helix beads separated by two harmonic bonds (i ↔ i+2).
+// Role (per Vishnyakov): reduces accessible local angles / torsional freedom so the backbone can
+// attain a helical configuration without being rigidly locked in coil/globule states. 
+double CPolymer::m_Morse13Depth          = 36.0;   // KM: Morse well depth (paper baseline: K1–3 = 12 kBT)
+double CPolymer::m_Morse13Width          = 8.0;    // alpha: Morse width parameter (paper baseline: alpha = 8)
+double CPolymer::m_Morse13EqDistance     = 0.9;    // re: equilibrium distance for 1–3 Morse (paper baseline: re = 0.9 Rc)
+double CPolymer::m_Morse13CutoffDistance = 10000.0;// rM: cutoff distance beyond which Morse interaction is disabled - we set very large to disable (paper baseline: rM = 2.5 Rc)
+double CPolymer::m_Morse13Proximity      = 1.0;    // Optional “activation” distance threshold (not used in the shown AddHelixForces(); if used, it typically gates when the Morse term is evaluated)
+
+// 1–5 Morse: helix-forming “vertical” contact along helix axis (i ↔ i+4).
+// Role (per Vishnyakov): models intrachain hydrogen-bonding pattern along the helix axis while
+// respecting steric constraints of the coarse-grained chain.
+double CPolymer::m_Morse15Depth          = 36.0;   // KM: Morse well depth for 1–5 / i↔i+4 (paper varies K1–5 from 0 to 12 kBT)
+double CPolymer::m_Morse15Width          = 8.0;    // alpha: Morse width parameter (paper baseline: alpha = 8)
+double CPolymer::m_Morse15EqDistance     = 0.6;    // re: equilibrium distance for 1–5 / i↔i+4 (paper baseline: re = 0.6 Rc)
+double CPolymer::m_Morse15CutoffDistance = 10000.0;// rM: cutoff distance (paper baseline: rM = 2.5 Rc; very large ≈ “no cutoff”)
+double CPolymer::m_Morse15Proximity      = 1.0;    // Optional “activation” distance threshold (same note as above)
+
+// --- Extra harmonic constraint used in the helix model ---
+// In the Doi/Vishnyakov helix setup, the 1–3 interaction includes a harmonic component with
+// C = 80 and re = 1.2 (in reduced distance units), in addition to the 1–3 Morse term.
+double CPolymer::m_Harmonic13_constant        = 80.0;    // C: harmonic force constant for the 1–3 harmonic constraint (paper baseline: C = 80)
+double CPolymer::m_Harmonic13_EqDistance      = 1.2;     // re: equilibrium distance for the 1–3 harmonic constraint (paper baseline: re = 1.2)
+double CPolymer::m_Harmonic13_cutoffdistance  = 10000.0; // Optional cutoff for applying the harmonic constraint (not part of the paper’s parameter list; large value ≈ “no cutoff”)
+
+
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 // Default constructor used to make empty polymer instances.
 
-CPolymer::CPolymer() : m_id(0), m_Type(0), m_pHead(0), m_pTail(0)
+CPolymer::CPolymer() : m_id(0), m_Type(0), m_pHead(0), m_pTail(0),
+m_HelixPolymerType(1), m_HelixBeadType(1), m_BeadSep13(2), m_BeadSep15(4)
 {
-
+    
 #if EnableParallelSimBox == SimMPSEnabled
     m_pExtPolymer = 0;
 #endif
@@ -83,7 +118,9 @@ CPolymer::CPolymer(long type, bool blinear, double fraction,
 													m_pHead(pHead),
 													m_pTail(pTail),
 													m_vBeads(vBeads),
-													m_vBonds(vBonds)
+													m_vBonds(vBonds),
+                                                    m_HelixPolymerType(1), m_HelixBeadType(1),
+                                                    m_BeadSep13(2), m_BeadSep15(4)
 {
 
 #if EnableParallelSimBox == SimMPSEnabled
@@ -101,7 +138,9 @@ CPolymer::CPolymer(long type, bool blinear, double fraction,
 													m_pTail(pTail),
 													m_vBeads(vBeads),
 													m_vBonds(vBonds),
-													m_vBondPairs(vBondPairs)
+													m_vBondPairs(vBondPairs),
+                                                    m_HelixPolymerType(1), m_HelixBeadType(1),
+                                                    m_BeadSep13(2), m_BeadSep15(4)
 {
 
 #if EnableParallelSimBox == SimMPSEnabled
@@ -109,7 +148,6 @@ CPolymer::CPolymer(long type, bool blinear, double fraction,
 #endif
 
 }
-
 
 // The CPolymer destructor is responsible for destroying its own CBeads, CBonds and
 // CBondPair objects.
@@ -162,7 +200,10 @@ CPolymer::~CPolymer()
 // their owning polymer so that they can navigate upwards when passing beads
 // between processors.
 
-CPolymer::CPolymer(const CPolymer &oldPolymer)
+CPolymer::CPolymer(const CPolymer &oldPolymer): m_HelixPolymerType(oldPolymer.m_HelixPolymerType),
+                                                m_HelixBeadType(oldPolymer.m_HelixBeadType),
+                                                m_BeadSep13(oldPolymer.m_BeadSep13),
+                                                m_BeadSep15(oldPolymer.m_BeadSep15)
 {
 	m_id				=	oldPolymer.m_id;
 	m_Type				=	oldPolymer.m_Type;
@@ -655,6 +696,7 @@ void CPolymer::SetExtendedPolymer(mpuExtendedPolymer* pExtPolymer)
 }
 #endif
 
+
 // Functions to calculate the forces on a polymer's beads due to its bonds.
 // This includes both internal bonds that bind the beads into the polymer itself,
 // and external bonds that result from dynamically binding polymers together
@@ -704,7 +746,162 @@ void CPolymer::AddBondPairForces(ISimBoxBase* const pISimBoxBase)
 	}
 }
 
-// Function to empty all the bead, bond and bondpair containers in the polymer, and reset its id and type, before it is added 
+// Function to add helix-forming forces to the S bead type in the Helix polymers.
+// They are identified by the unique numeric identifier, not the name.
+// All parameters are hard-wired in this class.
+// Note: This is quite inefficient, but we can store the Helix polymers locally later to speed it up.
+
+void CPolymer::AddHelixForces()
+{
+    if( GetType() == m_HelixPolymerType )  // Not really needed as CSimBox already selected Helix polymers.
+    {
+        // iterate over all beads and copy the helix-forming beads beads into a  local vector.
+        // As this doesn't change, we could to it in the constructor to be more efficient.
+        
+        BeadVector vHelixBeads;
+        vHelixBeads.clear();
+        for(BeadVectorIterator iterBead=m_vBeads.begin(); iterBead!=m_vBeads.end(); iterBead++)
+        {
+            if( (*iterBead)->GetType() == m_HelixBeadType )
+            {
+                vHelixBeads.push_back(*iterBead);
+                
+                //std::cout << "Polymer/bead ids " << GetId() << " " << (*iterBead)->GetId() << zEndl;
+            }
+        }
+
+        // Apply the proximity test to the S beads to form the helix, and then the force.
+        // Note that as we iterate over each bead, we know that we must look ahead precisely n beads, so we don't
+        // need a double loop. But we do need to check that the beads that would be connected are S beads.
+        //
+        //  m_BeadSep13 and m_BeadSep15 are the separation of the S beads that are to be tied together.
+        //
+        
+        if( !vHelixBeads.empty() )
+        {
+			int i=1;
+            for(BeadVectorIterator iterBead=vHelixBeads.begin(); iterBead!=vHelixBeads.end(); iterBead++)
+            {
+                CBead* pBead1 = *iterBead; 
+
+				// === 1–3 INTERACTION ===
+				BeadVectorIterator iterBead13 = iterBead;
+
+				if( i<vHelixBeads.size()-1) //problem with this condition ! 58 le last
+                {
+
+                    std::advance(iterBead13, m_BeadSep13);
+
+                    if( iterBead13 != vHelixBeads.end() )// not necessary 
+                    {
+
+                        CBead* pBead2 = *iterBead13;
+
+                        // Both must be S beads by construction of vHelixBeads
+
+                        double dx = pBead1->GetunPBCXPos() - pBead2->GetunPBCXPos(); //Periodic Boundary Conditions are considered here!!
+                        double dy = pBead1->GetunPBCYPos() - pBead2->GetunPBCYPos();
+                        double dz = pBead1->GetunPBCZPos() - pBead2->GetunPBCZPos();
+
+                        double r2 = dx*dx + dy*dy + dz*dz;
+
+						// just in case of numerical round-off
+                        if(r2 > 0.0)
+                        {
+                            double r = sqrt(r2);
+							double invr = 1.0 / r;
+						// === 1-3 HARMONIC INTERACTIONS ===
+
+							// 𝐅𝑖𝑗 = 𝐶(𝑟 𝑒− 𝑟𝑖𝑗)𝐧𝑖𝑗 
+							double forceMag_harmonic=m_Harmonic13_constant*(m_Harmonic13_EqDistance-r);
+							double fx=forceMag_harmonic*dx*invr;
+							double fy=forceMag_harmonic*dy*invr;
+							double fz=forceMag_harmonic*dz*invr;
+
+
+						// === 1-3 MORSE INTERACTIONS ===
+                            // Proximity / cutoff test
+                            if( r < m_Morse13CutoffDistance)
+                            {
+								// Doi et al. describe/implement a modified Morse-force form (with |r - re| in the exponent) 
+                                double dr = fabs(r - m_Morse13EqDistance);
+                                double e = exp(-m_Morse13Width * dr);
+
+                                // |F| = 2 * α * K_M e^{-α(r-r_e)} ( e^{-α(r-r_e)} - 1 ) ## il faut jouer avec le alpha ici
+                                double forceMag = 2.0 * m_Morse13Width * m_Morse13Depth * e * (e - 1.0); // α multiplied here because of derivative
+
+								// Fx,ij = F_mag (r) * dx / r_ij etc
+                                fx += forceMag * dx * invr;
+                                fy += forceMag * dy * invr;
+                                fz += forceMag * dz * invr;
+
+                            }
+						// Apply equal and opposite forces to the bead pair
+                        	pBead1->AddHelixForces( fx,  fy,  fz );
+                            pBead2->AddHelixForces( -fx, -fy, -fz );
+                        }
+                    }
+                }
+
+                // === 1–5 MORSE INTERACTION ===
+				BeadVectorIterator iterBead15 = iterBead;
+
+				if(i<vHelixBeads.size()-3) //problem with this condition !
+                {
+
+                    std::advance(iterBead15, m_BeadSep15);
+
+                    if( iterBead15 != vHelixBeads.end() ) // not necessary 
+                    {
+
+                        CBead* pBead2 = *iterBead15;
+
+                        // Both must be S beads by construction of vHelixBeads
+
+                        double dx = pBead1->GetunPBCXPos() - pBead2->GetunPBCXPos(); //Periodic Boundary Conditions are considered here!!
+                        double dy = pBead1->GetunPBCYPos() - pBead2->GetunPBCYPos();
+                        double dz = pBead1->GetunPBCZPos() - pBead2->GetunPBCZPos();
+
+                        double r2 = dx*dx + dy*dy + dz*dz;
+
+						// just in case of numerical round-off..
+                        if(r2 > 0.0)
+                        {
+                            double r = sqrt(r2);
+
+                            // Proximity / cutoff test
+                            if( r < m_Morse15CutoffDistance)
+                            {
+                                // Doi et al. describe/implement a modified Morse-force form (with |r - re| in the exponent) 
+                                double dr = fabs(r - m_Morse15EqDistance);
+                                double e = exp(-m_Morse15Width * dr);
+
+                                // |F| = 2 * α * K_M e^{-a(r-r_e)} ( e^{-a(r-r_e)} - 1 )
+                                double forceMag = 2.0 * m_Morse15Width * m_Morse15Depth * e * (e - 1.0); // α multiplied here because of derivative
+
+								// Fx,ij = F_mag (r) * dx / r_ij etc
+                                double invr = 1.0 / r;
+                                double fx = forceMag * dx * invr;
+                                double fy = forceMag * dy * invr;
+                                double fz = forceMag * dz * invr;
+
+                                // Apply equal and opposite forces to the bead pair
+                                pBead1->AddHelixForces( fx,  fy,  fz );
+                                pBead2->AddHelixForces( -fx, -fy, -fz );
+                            }
+                        }
+                    }
+                }
+				i+=1;
+            }
+        }
+    }
+}
+
+
+
+
+// Function to empty all the bead, bond and bondpair containers in the polymer, and reset its id and type, before it is added
 // to the empty polymers containers.  This is needed so that the polymer's beads, etc, are released before being owned by one 
 // of the empty bead containers.
 

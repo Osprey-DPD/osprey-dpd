@@ -1,0 +1,36 @@
+# Ignore the build directory
+build/
+
+# CMake cache and generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Compiled binaries
+dpd
+odpd*
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+
+# Simulation output files
+*.con*
+*.dat
+*.pov
+*.xyz
+*.vtk
+*.traj
+*.log
+
+# MacOS junk
+.DS_Store
+
+# Temporary/backup files
+*~
+*.tmp
+*.bak
+*.swp
+*.swo

@@ -63,5 +63,50 @@ J. C. Shillcock, D. B. Thomas, J. R. Beaumont, G. M. Bragg, M. L. Vousden, A. D.
 [Phase behaviour and structure of a model biomolecular condensate,](https://pubs.rsc.org/en/content/articlelanding/2020/SM/D0SM00813C#!divAbstract)
 J. C. Shillcock, M. Brochut, E. Chenais, J. H. Ipsen, Soft Matter, 2020, 16, 6413.
 
+---
+
+## Helix mode: i↔i+4 contacts + coarse-grained H-bond stabilization
+`Last modified: Jan 19, 2026`
+
+Osprey-DPD now includes an optional helix-capable polymer mode designed to capture α-helix–like structure in a coarse-grained setting. This integrates two parts: a helix metric (for analysis/monitoring) and intrachain stabilizing interactions (for dynamics).
+
+### Helix metric (structure detection)
+
+We define a helical contact using the classic i↔i+4 criterion:
+
+* Two helix-forming beads separated by **four bonds** are considered “in helical contact” if their separation is **below `0.85 Rc`**.
+* Along the helix-forming segment, we scan forward bead-by-bead and track continuous runs of i↔i+4 contacts.
+* With 4 beads per turn, the helix length increases in quarter-turn increments as contacts persist. A helix segment consisting of **m full turns** is reported with length **`m − 1`**.
+
+This provides a direct, interpretable measure of helix formation and persistence over time.
+
+### Simulating H-bonds (intrachain stabilization)
+
+To make helices not only *detectable* but also *physically stable*, we added **intrachain “H-bond-like” interactions** on the helix-forming beads:
+
+* Standard backbone bonding remains unchanged (i↔i+1 harmonic).
+* A **secondary harmonic constraint** is included for helix beads at **i↔i+2** (often described as a “1–3” harmonic), which helps reduce excessive torsional freedom and guides the backbone toward helical geometry.
+* Two **Morse interactions** are available to model stabilizing contacts:
+
+  * a Morse term on i↔i+2
+  * a Morse term on i↔i+4 (often referred to as “1–5” in 1-based indexing)
+
+Each Morse interaction is parameterized by an equilibrium distance, width, well depth, and cutoff (`re`, `α`, `KM`, `rM`), so the strength and range of stabilization can be tuned.
+
+### Scope and assumptions (important)
+
+* These forces apply **only within a single polymer** of type **Helix** and only to the designated helix-forming bead type (e.g., “S beads”). No helix–helix coupling occurs between different polymers.
+* End effects are handled naturally: a bead only “projects” interactions forward if the partner bead exists and is also a helix bead. As a result, the first/last helix beads experience fewer helix interactions (no artificial wrap-around).
+
+### Tuning parameters
+
+Helix/Morse parameters are currently hard-coded (by design, for simplicity and reproducibility). If you want to explore different helix strengths, you can modify the constants in the helix force implementation and recompile.
+
+### Implementation note
+
+Most of the helix/H-bond integration is implemented in `src/Polymer.cpp`, primarily in the method `CPolymer::AddHelixForces()`, where the helix-forming bead selection and the additional helix-stabilizing interactions are applied.
+
+
+
 
 

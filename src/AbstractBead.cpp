@@ -321,6 +321,15 @@ CAbstractBead::~CAbstractBead()
 {
 }
 
+// BIOENG 455 Function to add the total Morse force on this bead.
+
+void CAbstractBead::AddHelixForces(const double fx, const double fy, const double fz)
+{
+    m_Force[0] += fx;
+    m_Force[1] += fy;
+    m_Force[2] += fz;
+}
+
 // Function used in the parallel code to set the bead's owning polymer. This allows
 // beads to navigate upwards via their polymers. We only compile this in for a
 // parallel executable as the member variable is not defined in the serial code.

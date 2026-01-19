@@ -35,6 +35,7 @@ class CAbstractBead
 	friend class CExternalCNTCell;
 	friend class CForceTarget;
 	friend class CMonitor;
+    friend class CPolymer;  //BIOENG 2025 needed to add Morces forces
 	friend class CSimBox;
 	friend class taForceDecorator;	// Needed by command target force decorators
 
@@ -69,6 +70,10 @@ public:
 	virtual ~CAbstractBead();
 
 	// Public access functions to bead state and coordinates
+    
+    // BIOENG 455 Function to add the Morse forces to a bead
+    
+    void AddHelixForces(const double fx, const double fy, const double fz);
 
 	inline long	  GetId()		const {return m_id;}
 	inline long	  GetType()		const {return m_Type;}

@@ -25,7 +25,28 @@ class CPolymer
     friend class mpuExtendedPolymer;  // Needed to allow extended polymers to modify their wrapped polymer instances
     friend class mpsSimBox;
 	
-	// ****************************************
+    // ****************************************
+    // Global functions, static member functions and variables
+public:
+
+    static double  m_Morse13Depth;
+    static double  m_Morse13Width;
+    static double  m_Morse13EqDistance;
+    static double  m_Morse13CutoffDistance;
+    static double  m_Morse13Proximity;
+
+    static double  m_Morse15Depth;
+    static double  m_Morse15Width;
+    static double  m_Morse15EqDistance;
+    static double  m_Morse15CutoffDistance;
+    static double  m_Morse15Proximity;
+
+	static double  m_Harmonic13_constant;	
+	static double  m_Harmonic13_EqDistance;
+	static double  m_Harmonic13_cutoffdistance;
+
+    
+    // ****************************************
 	// Construction/Destruction: 
 public:
 
@@ -102,7 +123,6 @@ public:
 	void SetInvisible();
 	void SetDisplayId(long id);
 
-
 	// Functions to calculate the internal forces due to the polymer's bonds
 	// and stiff bonds. The first override just calculates the forces while
 	// the second also sends the bond stresses to the Monitor for the stress profile
@@ -113,6 +133,10 @@ public:
 
 	void AddBondPairForces();
 	void AddBondPairForces(ISimBoxBase* const pISimBoxBase);
+    
+    // Function to add helix-forming forces to specific polymer types. All data are hardwired in this class
+    
+    void AddHelixForces();
 
 	// Function to calculate the potential energy of the bonds and bondpairs
 
@@ -186,6 +210,18 @@ private:
 	BeadVector		m_vBeads;
 	BondVector		m_vBonds;
 	BondPairVector	m_vBondPairs;
+    
+    
+    // Parameters relating to helix-forming forces.
+    //
+    // There are two Morse potentials, 1-3 and 1-4, each with X parameters.
+    
+    const long      m_HelixPolymerType;    // Assumed Helix is type 1
+    const long      m_HelixBeadType;       // Assumed S bead is type 1
+    const long      m_BeadSep13;            // Spacing between beads experiencing Morse 1-3 potential
+    const long      m_BeadSep15;            // Spacing between beads experiencing Morse 1-5 potential
+ 
+
 };
 
 #endif // !defined(AFX_POLYMER_H__A2FACF41_3F61_11D3_820E_0060088AD300__INCLUDED_)

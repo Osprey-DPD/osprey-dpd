@@ -419,6 +419,19 @@ CSimBox::CSimBox(CSimState& simState, const ISimBox* const pISimBox) : ISimState
 	m_vWallPolymers	= simState.GetWallPolymers();
 	m_vWallBeads	= simState.GetWallBeads();
 	m_vGravityBeads	= simState.GetGravityBeads();
+    
+    // BIOENG455 2025 Collect all polymers of type 1 (Helix) and store them locally to
+    // allow the helix-forming forces to be applied to them.
+    
+    m_vHelixPolymers.clear();
+    
+    for(PolymerVectorIterator iterPoly=m_vAllPolymers.begin(); iterPoly!=m_vAllPolymers.end(); iterPoly++)
+    {
+        if( (*iterPoly)->GetType() == 1 )
+        {
+            m_vHelixPolymers.push_back(*iterPoly);
+        }
+    }
 
 	// Construct the CNT cell network and partition the beads amongst the cells.
 	// We distribute the wall beads here if the SimState shows that the wall has
@@ -1035,6 +1048,7 @@ void CSimBox::Evolve()
 
 	AddBondForces();
 	AddBondPairForces();
+    AddHelixForces();
 
 #if EnableShadowSimBox == SimACNEnabled
 	// Add in the forces due to active bonds and polymers if any exist.
@@ -1436,6 +1450,17 @@ void CSimBox::AddBondPairForces()
 			(*iterPoly)->AddBondPairForces();
 		}
 	}
+}
+
+// Function to add the Morse potential forces to a single polymer type (Helix), to create an alpha helical
+// structure out of each polymer.
+
+void CSimBox::AddHelixForces()
+{
+    for(PolymerVectorIterator iterPoly=m_vHelixPolymers.begin(); iterPoly!=m_vHelixPolymers.end(); iterPoly++)
+    {
+        (*iterPoly)->AddHelixForces();
+    }
 }
 
 // Function to add a force due to a uniform field extending throughout the SimBox
