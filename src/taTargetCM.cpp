@@ -127,61 +127,58 @@ void taTargetCM::Execute(long simTime)
 	{
 	    if(simTime > m_Start && simTime <= m_End)
 	    {
-            double x[3];
-            double dx[3];
-			double xcm[3];
-			xcm[0] = 0.0;
-			xcm[1] = 0.0;
-			xcm[2] = 0.0;
+                double x[3];
+                double dx[3];
+		double xcm[3];
+		xcm[0] = 0.0;
+		xcm[1] = 0.0;
+		xcm[2] = 0.0;
 
-            long index = 0;
-			for(BeadVectorIterator iterBead = m_vBeads.begin(); iterBead != m_vBeads.end(); iterBead++)
-			{
-                x[0] = (*iterBead)->GetXPos();
-                x[1] = (*iterBead)->GetYPos();
-                x[2] = (*iterBead)->GetZPos();
+		for(BeadVectorIterator iterBead = m_vBeads.begin(); iterBead != m_vBeads.end(); iterBead++)
+		{
+                    x[0] = (*iterBead)->GetXPos();
+                    x[1] = (*iterBead)->GetYPos();
+                    x[2] = (*iterBead)->GetZPos();
 
-                dx[0] = x[0] - xcm[0];       
-                dx[1] = x[1] - xcm[1];       
-                dx[2] = x[2] - xcm[2];       
+                    dx[0] = x[0] - xcm[0];       
+                    dx[1] = x[1] - xcm[1];       
+                    dx[2] = x[2] - xcm[2];       
 
-                // Correct for the PBCs if a bead is more than half the simbox 
-                // size away from the current CM in any component.
-                // What do we do if the target is larger than half the simbox?
+                    // Correct for the PBCs if a bead is more than half the simbox 
+                    // size away from the current CM in any component.
+                    // What do we do if the target is larger than half the simbox?
 
-                if( dx[0] > IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
-                    dx[0] = dx[0] - IGlobalSimBox::Instance()->GetSimBoxXLength();
-                else if( dx[0] < -IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
-                    dx[0] = dx[0] + IGlobalSimBox::Instance()->GetSimBoxXLength();
+                    if( dx[0] > IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
+                        dx[0] = dx[0] - IGlobalSimBox::Instance()->GetSimBoxXLength();
+                    else if( dx[0] < -IGlobalSimBox::Instance()->GetHalfSimBoxXLength() )
+                        dx[0] = dx[0] + IGlobalSimBox::Instance()->GetSimBoxXLength();
 
-		        if( dx[1] > IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
-			        dx[1] = dx[1] - IGlobalSimBox::Instance()->GetSimBoxYLength();
-		        else if( dx[1] < -IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
-			        dx[1] = dx[1] + IGlobalSimBox::Instance()->GetSimBoxYLength();
+		    if( dx[1] > IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
+		        dx[1] = dx[1] - IGlobalSimBox::Instance()->GetSimBoxYLength();
+		    else if( dx[1] < -IGlobalSimBox::Instance()->GetHalfSimBoxYLength() )
+		        dx[1] = dx[1] + IGlobalSimBox::Instance()->GetSimBoxYLength();
 
 #if SimDimension == 3
-		        if( dx[2] > IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
-			        dx[2] = dx[2] - IGlobalSimBox::Instance()->GetSimBoxZLength();
-		        else if( dx[2] < -IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
-			        dx[2] = dx[2] + IGlobalSimBox::Instance()->GetSimBoxZLength();
+		    if( dx[2] > IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
+		        dx[2] = dx[2] - IGlobalSimBox::Instance()->GetSimBoxZLength();
+		    else if( dx[2] < -IGlobalSimBox::Instance()->GetHalfSimBoxZLength() )
+		        dx[2] = dx[2] + IGlobalSimBox::Instance()->GetSimBoxZLength();
 #else
-                dx[2] = 0.0;
+                    dx[2] = 0.0;
 #endif
 
-                xcm[0] += x[0];
-                xcm[1] += x[1];
-                xcm[2] += x[2];
+                    xcm[0] += x[0];
+                    xcm[1] += x[1];
+                    xcm[2] += x[2];
+		}
 
-                index++;
-			}
+                // Now normalise the data by dividing by the number of beads in the target.
 
-            // Now normalise the data by dividing by the number of beads in the target.
+                xcm[0] /= m_BeadTotal;
+                xcm[1] /= m_BeadTotal;
+                xcm[2] /= m_BeadTotal;
 
-            xcm[0] /= m_BeadTotal;
-            xcm[1] /= m_BeadTotal;
-            xcm[2] /= m_BeadTotal;
-
-            // Write the CM data to the decorator state file
+                // Write the CM data to the decorator state file
 
 	        long dataTotal = 4;
 
@@ -194,8 +191,8 @@ void taTargetCM::Execute(long simTime)
 
 	        m_pState->AddTimeSeriesData(pTSD);
 
-            // ********************
-            // Postconditions
+                // ********************
+                // Postconditions
 
 	        if(simTime == m_End)
 	        {
