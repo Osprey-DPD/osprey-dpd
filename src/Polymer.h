@@ -61,6 +61,15 @@ public:
 	inline long   GetId()         const {return m_id;}
 	inline long   GetType()       const {return m_Type;}
 	inline long   GetSize()       const {return m_vBeads.size();}
+    
+        // Functions to access the number of polymerised bonds at head and tail
+    
+        inline long   GetDynamicHeadBondTotal() const {return m_DynamicHeadBondTotal;}
+        inline long   GetDynamicTailBondTotal() const {return m_DynamicTailBondTotal;}
+
+        inline void   IncrementDynamicHeadBonds()  {++m_DynamicHeadBondTotal;}
+        inline void   IncrementDynamicTailBonds()  {++m_DynamicTailBondTotal;}
+
 
 	inline CAbstractBead*    GetHead() const	 {return m_pHead;}
 	inline CAbstractBead*    GetTail() const	 {return m_pTail;}
@@ -174,6 +183,13 @@ private:
 
 	long m_id;
 	long m_Type;
+    
+        // Parameters to keep track of number of polymerised bonds in this polymer.
+        // We only allow the terminal beads to be polymerised, and keep track separately.
+    
+        long m_DynamicHeadBondTotal;
+        long m_DynamicTailBondTotal;
+
 
 	CAbstractBead* m_pHead;		// allow for CWallBeads to be stored here
 	CAbstractBead* m_pTail;

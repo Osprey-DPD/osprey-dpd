@@ -29,8 +29,10 @@ public:
 	bool IsDPDLG() const;   // Function showing if the lg interactions are used
 
 	const zString GetRunId() const;
+	
+	double GetTemperature() const;
 
-    long GetCurrentTime() const;
+        long GetCurrentTime() const;
 	long GetTotalTime() const;
 	double GetStepSize() const;
 

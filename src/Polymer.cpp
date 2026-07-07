@@ -47,7 +47,7 @@ bool operator==(const CPolymer& a, const CPolymer& b)
 //////////////////////////////////////////////////////////////////////
 // Default constructor used to make empty polymer instances.
 
-CPolymer::CPolymer() : m_id(0), m_Type(0), m_pHead(0), m_pTail(0)
+CPolymer::CPolymer() : m_id(0), m_Type(0), m_DynamicHeadBondTotal(0), m_DynamicTailBondTotal(0), m_pHead(0), m_pTail(0)
 {
 
 #if EnableParallelSimBox == SimMPSEnabled
@@ -56,7 +56,7 @@ CPolymer::CPolymer() : m_id(0), m_Type(0), m_pHead(0), m_pTail(0)
 
     m_vBeads.clear();
     m_vBonds.clear();
-	m_vBondPairs.clear();
+    m_vBondPairs.clear();
 }
 
 
@@ -79,7 +79,7 @@ CPolymer::CPolymer() : m_id(0), m_Type(0), m_pHead(0), m_pTail(0)
 
 CPolymer::CPolymer(long type, bool blinear, double fraction, 
 				   CBead* pHead, CBead* pTail, BeadVector& vBeads, 
-				   BondVector& vBonds) : m_id(-1),  m_Type(type), 
+				   BondVector& vBonds) : m_id(-1),  m_Type(type), m_DynamicHeadBondTotal(0), m_DynamicTailBondTotal(0),
 													m_pHead(pHead),
 													m_pTail(pTail),
 													m_vBeads(vBeads),
@@ -95,13 +95,13 @@ CPolymer::CPolymer(long type, bool blinear, double fraction,
 
 CPolymer::CPolymer(long type, bool blinear, double fraction,
 				   CBead* pHead, CBead* pTail, BeadVector& vBeads, 
-				   BondVector& vBonds, BondPairVector& vBondPairs) : m_id(-1), 
-													m_Type(type), 
-													m_pHead(pHead),
-													m_pTail(pTail),
-													m_vBeads(vBeads),
-													m_vBonds(vBonds),
-													m_vBondPairs(vBondPairs)
+				   BondVector& vBonds, BondPairVector& vBondPairs) : m_id(-1), m_Type(type),
+                                  m_DynamicHeadBondTotal(0), m_DynamicTailBondTotal(0),
+				m_pHead(pHead),
+				m_pTail(pTail),
+				m_vBeads(vBeads),
+				m_vBonds(vBonds),
+			        m_vBondPairs(vBondPairs)
 {
 
 #if EnableParallelSimBox == SimMPSEnabled
@@ -164,8 +164,10 @@ CPolymer::~CPolymer()
 
 CPolymer::CPolymer(const CPolymer &oldPolymer)
 {
-	m_id				=	oldPolymer.m_id;
-	m_Type				=	oldPolymer.m_Type;
+	m_id			   =	oldPolymer.m_id;
+	m_Type			   =	oldPolymer.m_Type;
+       m_DynamicHeadBondTotal     =   oldPolymer.m_DynamicHeadBondTotal;
+       m_DynamicTailBondTotal     =   oldPolymer.m_DynamicTailBondTotal;
 
 	// Now create new beads and bonds to compose this polymer by copying them
 	// from the appropriate template class. We cannot set their ids here as 

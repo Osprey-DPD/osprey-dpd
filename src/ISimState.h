@@ -20,6 +20,9 @@ class IModifySimStatePolymers;
 
 class ISimState : public ISimEvent
 {
+    friend class taPolymerisePolymers;  // Needed to allow polymers to be dynamically bonded
+    
+
 	// ****************************************
 	// Construction/Destruction: protected constructor declared below
 public:

@@ -258,13 +258,35 @@ CMonitor::CMonitor(CSimState* const psState, const ISimBox* const pISimBox) : IS
 
 	m_BeadTotal	= static_cast<double>(m_pSimState->GetBeadTotal());
 
+	// Restart states can expose bead types whose ids are larger than the
+	// initial bead-type container size. Stress arrays are indexed directly by
+	// bead type, so size them for the largest bead type actually present.
+	long maxBeadType = m_BeadTypeSize - 1;
+	const BeadVector& vInitialBeads = m_pSimState->GetInitialStateBeads();
+	for(cBeadVectorIterator iterBead=vInitialBeads.begin(); iterBead!=vInitialBeads.end(); ++iterBead)
+	{
+		if((*iterBead)->GetType() > maxBeadType)
+		{
+			maxBeadType = (*iterBead)->GetType();
+		}
+	}
+	if(maxBeadType + 1 > m_BeadTypeSize)
+	{
+		std::cerr << "TRACE Monitor resizing bead-type stress arrays from "
+			  << m_BeadTypeSize << " to " << (maxBeadType + 1)
+			  << " based on actual bead types" << zEndl;
+		m_BeadTypeSize = maxBeadType + 1;
+		m_StressBeadPairTotal = m_BeadTypeSize*m_BeadTypeSize;
+	}
+
 	// Copy the numbers of each bead type into a local vector 
 
-	m_vBeadTypeTotal.resize(m_BeadTypeSize);
-
-	std::copy( (m_pSimState->GetInitialState()).GetBeadTypeTotals().begin(), 
-				(m_pSimState->GetInitialState()).GetBeadTypeTotals().end(), 
-				m_vBeadTypeTotal.begin());
+	m_vBeadTypeTotal.assign(m_BeadTypeSize, 0);
+	const zLongVector& vInitialBeadTypeTotals = (m_pSimState->GetInitialState()).GetBeadTypeTotals();
+	for(long type=0; type<static_cast<long>(vInitialBeadTypeTotals.size()) && type<m_BeadTypeSize; ++type)
+	{
+		m_vBeadTypeTotal.at(type) = vInitialBeadTypeTotals.at(type);
+	}
 
 	// Initialise the map containing (beadId, displayId) pairs used in colouring
 	// beads in the current state snapshots.
@@ -901,8 +923,25 @@ void CMonitor::CalculateSingleBeadData()
 		long iz = static_cast<long>((*iterBead)->m_Pos[2]/m_GridZCellWidth);	
 #endif
 
-		long index = m_GridXCellNo*(m_GridYCellNo*iz+iy) + ix;
+		// Check index is in range
+		
+		if (ix < 0)
+		    ix = 0;
+		else if(ix >= m_GridXCellNo)
+		   ix = m_GridXCellNo-1;
+			
+		if (iy < 0)
+		    iy = 0;
+		else if(iy >= m_GridYCellNo)
+		   iy = m_GridYCellNo-1;
 
+		if (iz < 0)
+		    iz = 0;
+		else if(iz >= m_GridZCellNo)
+		   iz = m_GridZCellNo-1;
+
+		long index = m_GridXCellNo*(m_GridYCellNo*iz+iy) + ix;
+		
 		m_vGridObservables.at((*iterBead)->GetType())->m_vField.at(index) += 1.0;
 	}
 
@@ -1920,6 +1959,18 @@ void CMonitor::AddBeadStress(const CAbstractBead* const pBead1, const CAbstractB
 	// of contributions from the different bead-bead types.
 
 	const long stressTypeIndex = pBead1->GetType()*m_BeadTypeSize + pBead2->GetType();
+	if(stressTypeIndex < 0 || stressTypeIndex >= m_StressBeadPairTotal)
+	{
+		std::cerr << "TRACE Monitor AddBeadStress bead stress type out of range"
+			  << " beadIds=" << pBead1->GetId() << "," << pBead2->GetId()
+			  << " beadTypes=" << pBead1->GetType() << "," << pBead2->GetType()
+			  << " beadTypeSize=" << m_BeadTypeSize
+			  << " stressTypeIndex=" << stressTypeIndex
+			  << " stressBeadPairTotal=" << m_StressBeadPairTotal
+			  << " sliceStressRows=" << m_vvSliceStress11.size()
+			  << " firstRowSize=" << (m_vvSliceStress11.empty() ? -1 : static_cast<long>(m_vvSliceStress11.at(0).size()))
+			  << zEndl;
+	}
 
 	// Store the product of force*distance for the current interaction. Note that 
 	// because the force is central it does not change sign under reversal of the
@@ -1960,6 +2011,36 @@ void CMonitor::AddBeadStress(const CAbstractBead* const pBead1, const CAbstractB
 
 	m_LowerStressSliceIndex = static_cast<long>(m_LowerStressSliceCoord);
 	m_LowerStressSliceRem   = m_LowerStressSliceCoord - static_cast<double>(m_LowerStressSliceIndex);
+
+	// Interactions across periodic boundaries can put a bead exactly on, or
+	// slightly beyond, the upper slice boundary. Keep slice indices valid before
+	// using them for stress-array writes.
+	if(m_StressSliceTotal > 0)
+	{
+		while(m_UpperStressSliceIndex >= m_StressSliceTotal)
+		{
+			m_UpperStressSliceIndex -= m_StressSliceTotal;
+		}
+		while(m_UpperStressSliceIndex < 0)
+		{
+			m_UpperStressSliceIndex += m_StressSliceTotal;
+		}
+		while(m_LowerStressSliceIndex >= m_StressSliceTotal)
+		{
+			m_LowerStressSliceIndex -= m_StressSliceTotal;
+		}
+		while(m_LowerStressSliceIndex < 0)
+		{
+			m_LowerStressSliceIndex += m_StressSliceTotal;
+		}
+	}
+	else
+	{
+		std::cerr << "TRACE Monitor AddBeadStress has no stress slices"
+			  << " beadIds=" << pBead1->GetId() << "," << pBead2->GetId()
+			  << " beadTypes=" << pBead1->GetType() << "," << pBead2->GetType()
+			  << zEndl;
+	}
 
 	// The next case takes care of coincident and non-coincident beads within a slice and
 	// those coincident on a slice border.
@@ -2357,6 +2438,26 @@ void CMonitor::AddBondStress(const CBond* const pBond)
 	m_LowerStressSliceIndex = static_cast<long>(m_LowerStressSliceCoord);
 	m_LowerStressSliceRem   = m_LowerStressSliceCoord - static_cast<double>(m_LowerStressSliceIndex);
 
+	if(m_StressSliceTotal > 0)
+	{
+		while(m_UpperStressSliceIndex >= m_StressSliceTotal)
+		{
+			m_UpperStressSliceIndex -= m_StressSliceTotal;
+		}
+		while(m_UpperStressSliceIndex < 0)
+		{
+			m_UpperStressSliceIndex += m_StressSliceTotal;
+		}
+		while(m_LowerStressSliceIndex >= m_StressSliceTotal)
+		{
+			m_LowerStressSliceIndex -= m_StressSliceTotal;
+		}
+		while(m_LowerStressSliceIndex < 0)
+		{
+			m_LowerStressSliceIndex += m_StressSliceTotal;
+		}
+	}
+
 	// The next case takes care of coincident and non-coincident beads within a slice and
 	// those coincident on a slice border.
 
@@ -2594,6 +2695,26 @@ void CMonitor::AddBondPairStress(const CBondPair* const pBondPair)
 
 		m_LowerStressSliceIndex = static_cast<long>(m_LowerStressSliceCoord);
 		m_LowerStressSliceRem   = m_LowerStressSliceCoord - static_cast<double>(m_LowerStressSliceIndex);
+
+		if(m_StressSliceTotal > 0)
+		{
+			while(m_UpperStressSliceIndex >= m_StressSliceTotal)
+			{
+				m_UpperStressSliceIndex -= m_StressSliceTotal;
+			}
+			while(m_UpperStressSliceIndex < 0)
+			{
+				m_UpperStressSliceIndex += m_StressSliceTotal;
+			}
+			while(m_LowerStressSliceIndex >= m_StressSliceTotal)
+			{
+				m_LowerStressSliceIndex -= m_StressSliceTotal;
+			}
+			while(m_LowerStressSliceIndex < 0)
+			{
+				m_LowerStressSliceIndex += m_StressSliceTotal;
+			}
+		}
 
 		// The next case takes care of coincident and non-coincident beads within a slice and
 		// those coincident on a slice border.
@@ -3175,5 +3296,3 @@ void CMonitor::InternalToggleEnergyOutput(bool bNormalizePerBead)
 
 	m_pSimState->SetEnergyOutput(m_bEnergyOutput);
 }
-
-

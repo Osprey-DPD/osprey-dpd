@@ -113,7 +113,8 @@ public:
     virtual void      CylindricalDistributionOfCompositeTarget(const xxCommand* const pCommand) = 0;
     virtual void        CylindricalDistributionOfPolymerTarget(const xxCommand* const pCommand) = 0;
 	virtual void			      DistanceMovedByTarget(const xxCommand* const pCommand) = 0;
-	virtual void			     EdgeClampForceOnTarget(const xxCommand* const pCommand) = 0;
+    virtual void      DynamicPolymerisePolymersInTarget(const xxCommand* const pCommand) = 0;
+    virtual void			     EdgeClampForceOnTarget(const xxCommand* const pCommand) = 0;
 	virtual void			       ExternalWorkOnTarget(const xxCommand* const pCommand) = 0;
 	virtual void    ExtractBeadTypesIntoCompositeTarget(const xxCommand* const pCommand) = 0;
 	virtual void			ExtractBeadTypesIntoTargets(const xxCommand* const pCommand) = 0;

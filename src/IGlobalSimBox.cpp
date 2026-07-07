@@ -70,6 +70,11 @@ const zString IGlobalSimBox::GetRunId() const
 	return IGlobalSimBox::m_pInstance->GetRunId();
 }
 
+double IGlobalSimBox::GetTemperature() const
+{
+	return IGlobalSimBox::m_pInstance->GetTemperature();
+}
+
 long IGlobalSimBox::GetCurrentTime() const
 {
 	return IGlobalSimBox::m_pInstance->GetCurrentTime();
