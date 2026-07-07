@@ -100,8 +100,6 @@ private:								// Data specific to the process
 
     long  m_AnalysisPeriods;       		// No of analysis periods to sample over
     long  m_DataPoints;            		// No of bins in the histogram
-
-
     double m_RMax; 						// Maximum distance out to which histogram is calculated
     
     LongLongMap  m_mPolyTypes;          // Map of the polymer numeric type ids to include in calculation
@@ -109,15 +107,15 @@ private:								// Data specific to the process
 // Local data
 
     long  m_SamplePeriod;               // No of time-steps between samples
-	long  m_SampleTotal;				// Total number of samples to take
-	long  m_SamplesTaken;				// Number of samples taken
+    long  m_SampleTotal;				// Total number of samples to take
+    long  m_SamplesTaken;				// Number of samples taken
     long  m_QPoints;                    // Number of q values to use in I(q)
 	
     double m_dr;                        // Radius of the spherical shells
 
-	BeadVector  m_vBeads;				// Set of beads whose RDF is calculated
+    BeadVector  m_vBeads;				// Set of beads whose RDF is calculated
 	
-	zDoubleVector  m_vRDF;				// Vector of values in the RDF
+    zDoubleVector  m_vRDF;				// Vector of values in the RDF
     zDoubleVector  m_vIQ;               // Scattering function I(q)
 };
 

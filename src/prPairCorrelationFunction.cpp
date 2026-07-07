@@ -70,12 +70,11 @@ namespace
 
 // Default constructor
 
-prPairCorrelationFunction::prPairCorrelationFunction() : m_AnalysisPeriods(0), m_DataPoints(0),
-									   m_RMax(0.0),
-									   m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0), m_QPoints(0), m_dr(0.0)
+prPairCorrelationFunction::prPairCorrelationFunction() : m_AnalysisPeriods(0), m_DataPoints(0), m_RMax(0.0),
+							m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0), m_QPoints(0), m_dr(0.0)
 {
     m_mPolyTypes.clear();
-	m_vBeads.clear();
+    m_vBeads.clear();
     m_vRDF.clear();
     m_vIQ.clear();
 }
@@ -88,13 +87,14 @@ prPairCorrelationFunction::prPairCorrelationFunction() : m_AnalysisPeriods(0), m
 // logs an error message to the log file.
 
 prPairCorrelationFunction::prPairCorrelationFunction(const CSimState* const pSimState,
-									long analysisPeriods,
-									long dataPoints, double rMax, LongLongMap mPolyTypes) :
-                                    m_AnalysisPeriods(analysisPeriods),
-									m_DataPoints(dataPoints), m_RMax(rMax),
-									m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0), m_QPoints(100),
-                                    m_dr(m_RMax/static_cast<double>(m_DataPoints)),
-                                    m_mPolyTypes(mPolyTypes)
+							long analysisPeriods,
+							long dataPoints, double rMax, LongLongMap mPolyTypes) :
+                                                      m_AnalysisPeriods(analysisPeriods),
+					               m_DataPoints(dataPoints), m_RMax(rMax),
+                                                      m_mPolyTypes(mPolyTypes),
+							m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0), m_QPoints(100),
+                                                      m_dr(m_RMax/static_cast<double>(m_DataPoints))
+
 {
 	m_vBeads.clear();
     m_vRDF.resize(m_DataPoints, 0.0);
@@ -107,7 +107,7 @@ prPairCorrelationFunction::prPairCorrelationFunction(const CSimState* const pSim
 
     long currentTime      = IGlobalSimBox::Instance()->GetCurrentTime();
     long analysisPeriod   = pSimState->GetAnalysisPeriod();
-    m_SamplePeriod		  = pSimState->GetSamplePeriod();
+    m_SamplePeriod        = pSimState->GetSamplePeriod();
     long duration         = m_AnalysisPeriods*analysisPeriod;
     m_SampleTotal         = duration/m_SamplePeriod;
 
@@ -292,9 +292,9 @@ void prPairCorrelationFunction::UpdateState(CSimState& rSimState, const ISimBox*
 					
 			for(long ir=0; ir < m_DataPoints; ++ir)
 			{
-				const double rin = ir*m_dr;
-				const double rout = rin + m_dr;
-				const double shellVolume = 4.0*xxBase::m_globalPI*(3.0*rin*rout + m_dr*m_dr)*m_dr/3.0;
+//				const double rin = ir*m_dr;
+//				const double rout = rin + m_dr;
+//				const double shellVolume = 4.0*xxBase::m_globalPI*(3.0*rin*rout + m_dr*m_dr)*m_dr/3.0;
 				
 				rdfSum += m_vRDF.at(ir);
 				

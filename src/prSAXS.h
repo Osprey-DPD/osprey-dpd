@@ -123,10 +123,10 @@ private:								// Data specific to the process
 // Local data
 
     long  m_SamplePeriod;               // No of time-steps between samples
-	long  m_SampleTotal;				// Total number of samples to take
-	long  m_SamplesTaken;				// Number of samples taken
+    long  m_SampleTotal;				// Total number of samples to take
+    long  m_SamplesTaken;				// Number of samples taken
 	
-	BeadVector  m_vBeads;				// Set of beads whose RDF is calculated
+    BeadVector  m_vBeads;				// Set of beads whose RDF is calculated
 	
     zDoubleVector  m_vIQ;               // Scattering function I(q)
     zDoubleVector  m_vIQSq;             // Sqaure of the scattering function I(q)*I(q)

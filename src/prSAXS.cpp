@@ -88,7 +88,7 @@ namespace
 prSAXS::prSAXS() : m_AnalysisPeriods(0), m_QPoints(0), m_QMin(0.0), m_QMax(0.0), m_dQ(0.0), m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0)
 {
     m_mBeadTypes.clear();
-	m_vBeads.clear();
+    m_vBeads.clear();
     m_vIQ.clear();
     m_vIQSq.clear();
     m_mElectronNo.clear();
@@ -101,16 +101,14 @@ prSAXS::prSAXS() : m_AnalysisPeriods(0), m_QPoints(0), m_QMin(0.0), m_QMax(0.0),
 // within which this process operates becomes invalid, the process terminates and 
 // logs an error message to the log file.
 
-prSAXS::prSAXS(const CSimState* const pSimState,
-									long analysisPeriods,
-									long qPoints, LongLongMap mBeadTypes) :
+prSAXS::prSAXS(const CSimState* const pSimState, long analysisPeriods, long qPoints, LongLongMap mBeadTypes) :
                                     m_AnalysisPeriods(analysisPeriods),
-									m_QPoints(qPoints),
+				     m_QPoints(qPoints),
                                     m_QMin(xxBase::m_globalTwoPI/IGlobalSimBox::Instance()->GetSimBoxZLength()),
                                     m_QMax(xxBase::m_globalTwoPI),
                                     m_dQ((m_QMax - m_QMin)/static_cast<double>(m_QPoints-1)),
-									m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0),
-                                    m_mBeadTypes(mBeadTypes)
+                                    m_mBeadTypes(mBeadTypes),
+				     m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0)
 {
 	m_vBeads.clear();
     m_vIQ.resize(m_QPoints, 0.0);  // This can be overwritten in the sum over bead pairs
@@ -189,8 +187,9 @@ prSAXS::prSAXS(const CSimState* const pSimState,
                                     m_QPoints(qPoints),
                                     m_QMin(qMin), m_QMax(qMax),
                                     m_dQ((m_QMax - m_QMin)/static_cast<double>(m_QPoints-1)),
-                                    m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0),
-                                    m_mBeadTypes(mBeadTypes)
+                                    m_mBeadTypes(mBeadTypes),
+                                    m_SamplePeriod(0), m_SampleTotal(0), m_SamplesTaken(0)
+                                    
 {
     m_vBeads.clear();
     m_vIQ.resize(m_QPoints, 0.0);

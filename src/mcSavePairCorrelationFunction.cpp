@@ -246,7 +246,7 @@ bool mcSavePairCorrelationFunction::IsDataValid(const CInputData& riData) const
 		return ErrorTrace("Invalid duration or multiple of SamplePeriod for polymer bead RDF analysis");
 	else if(m_RMax > riData.GetSimBoxXLength() || m_RMax > riData.GetSimBoxYLength() || m_RMax > riData.GetSimBoxZLength())
 		return ErrorTrace("Max separation larger than box size");
-	else if( m_vExcludedPolymers.size() != riData.GetPolymerTypeTotal())
+	else if( m_vExcludedPolymers.size() != static_cast<unsigned long>(riData.GetPolymerTypeTotal()))
         return ErrorTrace("Excluded polymer vector has wrong size");
     else
 	    return true;
